@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'home_font';
+    src: url(../fonts/Inconsolata/Inconsolata.otf) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.console {
+    font-family: home_font;
+}
