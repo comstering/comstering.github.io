@@ -1,7 +1,6 @@
 import { Alert } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import { FilePerson, Github, Textarea } from 'react-bootstrap-icons';
 import Typist from 'react-typist';
 import '../../css/fonts.css';
 import '../../css/style.css';
@@ -38,7 +37,7 @@ function MainPage() {
                     <br />
                     <span>Hi! I'm comstering</span>
                     <br />
-                    <p>I'm a Engineer</p>
+                    <span>I'm a Engineer</span>
                 </Typist>
                 <commandLine />
             </Alert>

@@ -1,1 +1,17 @@
-.cursor_test{cursor: pointer}
+.cursor_test {cursor: pointer}
+
+.about_header {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1E1E1E;
+}
+
+.about_body {
+    font-size: 18px;
+    font-weight: 500;
+    color: #999
+}
+
+.about_icon {
+    color: #212529
+}
