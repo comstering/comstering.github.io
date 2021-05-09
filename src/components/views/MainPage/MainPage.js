@@ -5,17 +5,19 @@ import Typist from 'react-typist';
 import '../../css/fonts.css';
 import '../../css/style.css';
 
+
+
 function CommandLine(props) {
     const isDone = props.isDone;
     if(isDone){
         return (
-            <div>
+            <div id='cmdInput'>
             <span>comstering@githyb.io: ~$ </span>
             <input type='text' autocomplete='off' autoFocus='on' id='commandInput' className='console' style={{background: 'black', borderStyle: 'none', color: 'white', outline: 'none'}} />
             </div>
         )
     }
-    else return <div />
+    else return <div id='cmdInput' />
 }
 
 function MainPage() {
@@ -24,16 +26,16 @@ function MainPage() {
     const [typistDone, setTypistDone] = useState(false);
 
     return (
-        <Container>
-            <br/>
+        <Container className='mt-3'>
             <Alert style={consoleStyle}>
                 <span>comstering@github.io: ~$ </span>
-                <Typist className='console' startDelay='1000' cursor={{hideWhenDone: true, hideWhenDoneDelay: 100}} onTypingDone={() => setTypistDone(true)}>
+                <Typist className='console' startDelay='1000' cursor={{hideWhenDone: true, hideWhenDoneDelay: 0}} onTypingDone={() => setTypistDone(true)}>
                     <span>whoami</span>
                     <br />
-                    <span>Hi! I'm comstering</span>
-                    <br />
+                    <span>Hi! I'm comstering </span>
                     <span>I'm a Engineer</span>
+                    <br />
+
                 </Typist>
                 <CommandLine isDone={typistDone} />
             </Alert>
