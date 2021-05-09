@@ -15,16 +15,13 @@ function CommandLine(props) {
             </div>
         )
     }
-    else return <div></div>
+    else return <div />
 }
 
 function MainPage() {
     const consoleStyle = { color: 'white', backgroundColor: 'black', height: '60vh', fontSize: 'x-large' }
 
     const [typistDone, setTypistDone] = useState(false);
-
-    useEffect(() => {
-    });
 
     return (
         <Container>
