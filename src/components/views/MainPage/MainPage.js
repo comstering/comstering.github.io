@@ -5,18 +5,17 @@ import Typist from 'react-typist';
 import '../../css/fonts.css';
 import '../../css/style.css';
 
-function cmdInput() {
-    var command = document.getElementById('commandInput');
-    command.addEventListener('keyup', (e) => {
-        console.log(e.key);
-    });
-}
-
-{/* <input type='text' autocomplete='off' autoFocus='on' onKeyDownn={} id='commandInput' className='console' style={{background: 'black', borderStyle: 'none', color: 'white', outline: 'none'}} /> */}
-
-
-function commandLine() {
-        return <span>comstering@github.io</span>
+function CommandLine(props) {
+    const isDone = props.isDone;
+    if(isDone){
+        return (
+            <div>
+            <span>comstering@githyb.io: ~$ </span>
+            <input type='text' autocomplete='off' autoFocus='on' id='commandInput' className='console' style={{background: 'black', borderStyle: 'none', color: 'white', outline: 'none'}} />
+            </div>
+        )
+    }
+    else return <div></div>
 }
 
 function MainPage() {
@@ -39,7 +38,7 @@ function MainPage() {
                     <br />
                     <span>I'm a Engineer</span>
                 </Typist>
-                <commandLine />
+                <CommandLine isDone={typistDone} />
             </Alert>
         </Container>
     );
