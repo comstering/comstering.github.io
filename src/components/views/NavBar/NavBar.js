@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
   Route,
 } from "react-router-dom";
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Image } from 'react-bootstrap';
 
 import MainPage from '../MainPage/MainPage';
 import AboutPage from '../AboutPage/AboutPage';
 import ProjectPage from '../ProjectPage/ProjectPage';
 import SkillPage from '../SkillPage/SkillPage';
 import ContactPage from '../ContactPage/ContactPage';
-import '../../css/fonts.css'
 
 function returnPage(page) {
   if(page === 'home') {
@@ -35,7 +34,7 @@ function NavBar() {
   return (
     <Router>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand className='cursor_test' onClick={() => setPage('home')}>Comstering</Navbar.Brand>
+        <Navbar.Brand className='nav_cursor nav_font' onClick={() => setPage('home')}><Image src='/images/my_photo.jpg' roundedCircle width='40' height='40' /> Comstering</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">

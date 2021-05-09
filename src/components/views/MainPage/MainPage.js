@@ -2,18 +2,23 @@ import { Alert } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import Typist from 'react-typist';
-import '../../css/fonts.css';
-import '../../css/style.css';
-
-
 
 function CommandLine(props) {
+    const [input, setInput] = useState('');
+    function handleKeyPress(e) {
+        if(e.key === 'Enter') {
+            console.log(input);
+        }
+    }
+    const changeInput = (e) => {
+        setInput(e.target.value);
+    }
     const isDone = props.isDone;
-    if(isDone){
+    if (isDone) {
         return (
             <div id='cmdInput'>
-            <span>comstering@githyb.io: ~$ </span>
-            <input type='text' autocomplete='off' autoFocus='on' id='commandInput' className='console' style={{background: 'black', borderStyle: 'none', color: 'white', outline: 'none'}} />
+                <span>comstering@github.io: ~$ </span>
+                <input type='text' autocomplete='off' autoFocus='on' id='commandInput' onKeyUp={handleKeyPress} onChange={changeInput} className='console' style={{ background: 'black', borderStyle: 'none', color: 'white', outline: 'none' }} />
             </div>
         )
     }
@@ -29,13 +34,16 @@ function MainPage() {
         <Container className='mt-3'>
             <Alert style={consoleStyle}>
                 <span>comstering@github.io: ~$ </span>
-                <Typist className='console' startDelay='1000' cursor={{hideWhenDone: true, hideWhenDoneDelay: 0}} onTypingDone={() => setTypistDone(true)}>
+                <Typist className='console' startDelay='1000' cursor={{ hideWhenDone: true, hideWhenDoneDelay: 0 }} onTypingDone={() => setTypistDone(true)}>
                     <span>whoami</span>
                     <br />
-                    <span>Hi! I'm comstering </span>
-                    <span>I'm a Engineer</span>
+                    <span>Hi!</span>
                     <br />
-
+                    <span>I'm comstering.</span>
+                    <br />
+                    <span>I'm a Full Stack Engineer.</span>
+                    <br />
+                    <span>I love Programming</span>
                 </Typist>
                 <CommandLine isDone={typistDone} />
             </Alert>

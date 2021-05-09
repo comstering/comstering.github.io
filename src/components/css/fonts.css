@@ -5,8 +5,19 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'comstering_nav';
+    src: url(../fonts/DejaVu-Sans-Mono/DejaVuSansMono-Bold.ttf) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .console {
     font-family: home_font;
     white-space: nowrap;
     display: inline;
+}
+
+.nav_font {
+    font-family: 'comstering_nav';
 }
