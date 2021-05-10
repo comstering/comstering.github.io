@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Jumbotron } from 'react-bootstrap'
-import { Github, Instagram, Youtube } from 'react-bootstrap-icons';
+import { Github, Youtube } from 'react-bootstrap-icons';
 
 function AbountPage() {
     return (
