@@ -10,12 +10,12 @@ function MainPage() {
     const [typistDone, setTypistDone] = useState(false);
 
     return (
-        <Container className='mt-3'>
+        <div className='mt-3'>
             <Alert style={consoleStyle}>
                 <div className='console'>
                     <span>comstering@github.io: ~$ </span>
                     <Typist className='console' startDelay='1000' cursor={{ hideWhenDone: true, hideWhenDoneDelay: 0 }} onTypingDone={() => setTypistDone(true)}>
-                        <span>whoami</span><br />
+                        <span>whoami</span> <br />
                         <span>Hi!</span><br />
                         <span>I'm comstering.</span><br />
                         <span>I'm a Full Stack Engineer.</span><br />
@@ -26,7 +26,7 @@ function MainPage() {
                     <CommandInput isDone={typistDone} />
                 </div>
             </Alert>
-        </Container>
+        </div>
     );
 }
 

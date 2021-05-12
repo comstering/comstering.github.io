@@ -7,7 +7,7 @@ function CommandInput(props) {
 
     function handleKeyPress(e) {
         if (e.key === 'Enter') {
-            if (input === 'su -i') {
+            if (input === 'su') {
                 setInputDone(true);
             }
             else {
@@ -21,7 +21,7 @@ function CommandInput(props) {
     const isDone = props.isDone;
     if (inputDone) {
         return (
-            <div id='cmdInput'>
+            <div>
                 <span>comstering@github.io: ~$ {input}</span>
                 <SudoLogin />
             </div>
@@ -29,13 +29,13 @@ function CommandInput(props) {
     }
     else if (isDone) {
         return (
-            <div id='cmdInput'>
+            <div>
                 <span>comstering@github.io: ~$ </span>
                 <input type='text' autocomplete='off' autoFocus='on' onKeyUp={handleKeyPress} onChange={changeInput} className='console' style={{ background: 'black', borderStyle: 'none', color: 'white', outline: 'none' }} />
             </div>
         );
     }
-    else return <div id='cmdInput' />
+    else return <div />
 }
 
 export default CommandInput

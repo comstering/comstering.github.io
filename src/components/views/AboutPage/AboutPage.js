@@ -1,10 +1,9 @@
-import React from 'react'
-import { Container, Jumbotron } from 'react-bootstrap'
-import { Github, Youtube } from 'react-bootstrap-icons';
+import React from 'react';
+import { Container, Jumbotron } from 'react-bootstrap';
 
 function AbountPage() {
     return (
-        <Container className='mt-3'>
+        <div className='mt-3'>
             <Jumbotron>
                 <h4 className='about_header mb-3'>Education</h4>
                 <div className='about_body'>
@@ -25,11 +24,7 @@ function AbountPage() {
                     <p className='mb-1'><span className='mr-4'>2019.03 ~ ing</span><span>Kongju National University Network Security Lab</span></p>
                 </div>
             </Jumbotron>
-            <a href='https://github.com/comstering'><Github className='mr-3 about_icon' size={40} /></a>
-            {/* <Instagram className='mr-3' size={40} /> */}
-            <a href='https://www.youtube.com/channel/UCcAj91sfvJ9aCHpkisdyIww'><Youtube className='mr-3 about_icon' size={40} /></a>
-            <a href='https://blog.naver.com/coms1101'><img src='/images/blog.png' width='40' height='40'></img></a>
-        </Container>
+        </div>
     )
 }
 
