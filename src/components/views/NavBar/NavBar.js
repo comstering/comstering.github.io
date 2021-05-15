@@ -34,7 +34,7 @@ function NavBar() {
   return (
     <Router>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand className='nav_cursor nav_font' onClick={() => setPage('home')}><Image src='/images/my_photo.jpg' roundedCircle width='40' height='40' /> Comstering</Navbar.Brand>
+        <Navbar.Brand className='nav-cursor nav-font' onClick={() => setPage('home')}><Image src='/images/my_photo.jpg' roundedCircle width='40' height='40' /> Comstering</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
