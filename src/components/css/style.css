@@ -23,3 +23,12 @@
     display: flex;
     margin-bottom: 4em;
 }
+
+a {
+    color: #ccb78f
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ccb78f
+}
