@@ -19,8 +19,8 @@ function ProjectPage() {
                 <h3 className='project-title-font mb-3'>IoT Office</h3>
                 <p className='project-date-font'>Nov 25, 2019 ~ Mar 19, 2020</p>
                 <p className='project-body-font mb-4'>Arduino를 이용한 사무실 내 기기 조작 및 사무용품 데이터 자동 연동 환경 구축</p>
-                <p className='project-read'><a href='https://github.com/comstering/IMCP'>Read more <span class='ion-ios-arrow-forward' /></a> IoT Arduino</p>
-                <p className='project-read'><a href='https://github.com/comstering/IMCP'>Read more <span class='ion-ios-arrow-forward' /></a> IoT Server</p>
+                <p className='project-read'><a href='https://github.com/comstering/Lab_IoT_Arduino'>Read more <span class='ion-ios-arrow-forward' /></a> IoT Arduino</p>
+                <p className='project-read'><a href='https://github.com/comstering/Lab_IoT_Arduino_Server'>Read more <span class='ion-ios-arrow-forward' /></a> IoT Server</p>
             </div>
         </div>
         <div className='project-box fadeIn ftco-animated'>
@@ -29,8 +29,8 @@ function ProjectPage() {
                 <h3 className='project-title-font mb-3'>Random Password</h3>
                 <p className='project-date-font'>Sep 25, 2019 ~ Nov 29, 2019</p>
                 <p className='project-body-font mb-4'>사용자의 개인정보 보호를 위한 모바일 기반 비밀번호 자동변환 시스템</p>
-                <p className='project-read'><a href='https://github.com/comstering/IMCP'>Read more <span class='ion-ios-arrow-forward' /></a> Random Password</p>
-                <p className='project-read'><a href='https://github.com/comstering/IMCP'>Read more <span class='ion-ios-arrow-forward' /></a> Random Password Server</p>
+                <p className='project-read'><a href='https://github.com/comstering/RandomPassword'>Read more <span class='ion-ios-arrow-forward' /></a> Random Password</p>
+                <p className='project-read'><a href='https://github.com/comstering/RandomPassword_Server'>Read more <span class='ion-ios-arrow-forward' /></a> Random Password Server</p>
             </div>
         </div>
         </div>
