@@ -74,7 +74,7 @@
     src: url(../fonts/ionicons.ttf) format('woff');
 }
 
-.ion-ios-arrow-forward:before{
+.icon-font{
     font-family: 'ionicons';
     font-weight: normal;
     font-style: normal;
