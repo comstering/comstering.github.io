@@ -32,3 +32,15 @@ a:hover {
     text-decoration: none;
     color: #ccb78f
 }
+
+.skill-star-fill:before {
+    content: '\f55b'
+}
+
+.skill-star-half:before {
+    content: '\f55c'
+}
+
+.skill-star:before {
+    content: '\f55d'
+}
