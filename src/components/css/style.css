@@ -1,5 +1,42 @@
 .nav-cursor {cursor: pointer}
 
+.main-console {
+    color: white;
+    background-color: black;
+    font-size: 3vmin;
+    height: 50vmin;
+}
+
+.console-input {
+    width: 20vw;
+    background: black;
+    border-style: none;
+    color: white;
+    outline: none;
+}
+
+.console-password {
+    width: 20vw;
+    background: black;
+    border-style: none;
+    color: black;
+    outline: none;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select:none;
+}
+
+.no-drag {
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select:none;
+}
+
+
 .about-header {
     font-size: 24px;
     font-weight: 800;

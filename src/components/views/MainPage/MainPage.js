@@ -1,17 +1,14 @@
 import { Alert } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
 import Typist from 'react-typist';
 import CommandInput from './CommandInput';
 
 function MainPage() {
-    const consoleStyle = { color: 'white', backgroundColor: 'black', height: '60vh', fontSize: 'x-large' }
-
     const [typistDone, setTypistDone] = useState(false);
 
     return (
         <div className='mt-3'>
-            <Alert style={consoleStyle}>
+            <Alert className='main-console'>
                 <div className='console'>
                     <span>comstering@github.io: ~$ </span>
                     <Typist className='console' startDelay='1000' cursor={{ hideWhenDone: true, hideWhenDoneDelay: 0 }} onTypingDone={() => setTypistDone(true)}>
