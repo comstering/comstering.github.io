@@ -15,10 +15,10 @@ function MainPage() {
                         <span>whoami</span> <br />
                         <span>Hi!</span><br />
                         <span>I'm comstering.</span><br />
-                        <span>I'm a Full Stack Engineer.</span><br />
-                        <span>I love Programming</span><br />
-                        <span>I make Everything use Coding</span><br />
-                        <span>Can you login sudo?</span>
+                        <span>I dream of becommig a Full Stack Developer.</span><br />
+                        <span>Programming is love.</span><br />
+                        <span>I make Everything using Code.</span><br />
+                        <span>Thank you visit my web site.</span><br />
                     </Typist>
                     <CommandInput isDone={typistDone} />
                 </div>
