@@ -16,7 +16,7 @@
 }
 
 .console-password {
-    width: 20vw;
+    width: 0;
     background: black;
     border-style: none;
     color: black;
@@ -34,19 +34,6 @@
     -webkit-user-select: none;
     -khtml-user-select: none;
     user-select:none;
-}
-
-
-.about-header {
-    font-size: 24px;
-    font-weight: 800;
-    color: #1E1E1E;
-}
-
-.about-body {
-    font-size: 18px;
-    font-weight: 500;
-    color: #999
 }
 
 .footer-icon {

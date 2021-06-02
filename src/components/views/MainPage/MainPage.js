@@ -15,9 +15,9 @@ function MainPage() {
                         <span>whoami</span> <br />
                         <span>Hi!</span><br />
                         <span>I'm comstering.</span><br />
-                        <span>I dream of becommig a Full Stack Developer.</span><br />
+                        <span>I dream becommig a Full Stack Developer.</span><br />
                         <span>Programming is love.</span><br />
-                        <span>I make Everything using Code.</span><br />
+                        <span>I make Everything using code.</span><br />
                         <span>Thank you visit my web site.</span><br />
                     </Typist>
                     <CommandInput isDone={typistDone} />

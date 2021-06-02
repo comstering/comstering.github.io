@@ -22,6 +22,18 @@
     font-family: 'comstering_nav';
 }
 
+.about-header-font {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1E1E1E;
+}
+
+.about-body-font {
+    font-size: 18px;
+    font-weight: 500;
+    color: #999
+}
+
 @font-face {
     font-family: 'project-title';
     src: url(../fonts/TmoneyRoundWindExtraBold.ttf) format('woff');
@@ -79,4 +91,15 @@
     font-weight: normal;
     font-style: normal;
     content:"\f3d1"
+}
+
+.contact-title-font {
+    font-family: 'project-body';
+    color: black;
+}
+
+.contact-body-font {
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
 }
