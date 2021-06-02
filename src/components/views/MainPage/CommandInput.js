@@ -31,7 +31,7 @@ function CommandInput(props) {
         return (
             <div>
                 <span>comstering@github.io: ~$ </span>
-                <input type='text' autocomplete='off' autoFocus='on' onKeyUp={handleKeyPress} onChange={changeInput} className='console' style={{ background: 'black', borderStyle: 'none', color: 'white', outline: 'none' }} />
+                <input type='text' autocomplete='off' autoFocus='on' spellCheck={false} onKeyUp={handleKeyPress} onChange={changeInput} className='console console-input' />
             </div>
         );
     }

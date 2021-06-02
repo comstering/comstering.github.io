@@ -1,17 +1,70 @@
-.nav_cursor {cursor: pointer}
+.nav-cursor {cursor: pointer}
 
-.about_header {
-    font-size: 24px;
-    font-weight: 800;
-    color: #1E1E1E;
+.main-console {
+    color: white;
+    background-color: black;
+    font-size: 3vmin;
+    height: 50vmin;
 }
 
-.about_body {
-    font-size: 18px;
-    font-weight: 500;
-    color: #999
+.console-input {
+    width: 20vw;
+    background: black;
+    border-style: none;
+    color: white;
+    outline: none;
 }
 
-.about_icon {
+.console-password {
+    width: 0;
+    background: black;
+    border-style: none;
+    color: black;
+    outline: none;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select:none;
+}
+
+.no-drag {
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select:none;
+}
+
+.footer-icon {
     color: #212529
+}
+
+.project-body {
+    padding: 2em;
+}
+.project-box {
+    display: flex;
+    margin-bottom: 4em;
+}
+
+a {
+    color: #ccb78f
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ccb78f
+}
+
+.skill-star-fill:before {
+    content: '\f55b'
+}
+
+.skill-star-half:before {
+    content: '\f55c'
+}
+
+.skill-star:before {
+    content: '\f55d'
 }

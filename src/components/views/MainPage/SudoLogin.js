@@ -31,7 +31,7 @@ function SudoLogin() {
     return (
         <div>
             <span>Password: </span>
-            <input type='text' autocomplete='off' autoFocus='on'  onKeyUp={handleKeyPress} onChange={changeInput} style={{ background: 'black', borderStyle: 'none', color: 'black', outline: 'none' }}/>
+            <input type='text' autocomplete='off' autoFocus='on' spellCheck={false} className='console-password' onKeyUp={handleKeyPress} onChange={changeInput} />
         </div>
     )
     }
