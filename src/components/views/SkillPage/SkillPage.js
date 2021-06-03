@@ -29,7 +29,7 @@ function SkillPage() {
                         <td >
                             <StarFill />
                             <StarFill />
-                            <Star />
+                            <StarHalf />
                             <Star />
                             <Star />
                         </td>
