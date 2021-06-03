@@ -13,8 +13,8 @@ function AbountPage() {
             <Jumbotron>
                 <h4 className='about-header-font mb-3'>Certification</h4>
                 <div className='about-body-font'>
+                    <p className='mb-1'><span className='mr-4'>2021.06</span><span>Enginner Information Processing</span></p>
                     <p className='mb-1'><span className='mr-4'>2020.10</span><span>Linux Master Level2</span></p>
-                    <p className='mb-1'><span className='mr-4'>2021.05</span><span>Enginner Information Processing</span></p>
                 </div>
             </Jumbotron>
             <Jumbotron>
