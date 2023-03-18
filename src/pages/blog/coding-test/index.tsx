@@ -1,7 +1,9 @@
 import Head from "next/head";
 
-export default function CodingTest() {
+const CodingTest = () => (
     <Head>
         <title>Comstering Blog</title>
     </Head>
-}
+);
+
+export default CodingTest;

@@ -16,7 +16,7 @@ const Post = ({ allPostsData }: {
     date: string,
     title: string
 }[]
-}) => {
+}) => (
     <>
         <Head>
             <title>Comstering Blog</title>
@@ -31,6 +31,6 @@ const Post = ({ allPostsData }: {
             ))}
         </ul>
     </>
-}
+);
 
 export default Post;

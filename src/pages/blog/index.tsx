@@ -1,7 +1,9 @@
 import Head from "next/head";
 
-export default function Blog() {
+const Blog = () => (
     <Head>
         <title>Comstering Blog</title>
     </Head>
-}
+);
+
+export default Blog;
