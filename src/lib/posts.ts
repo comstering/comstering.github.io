@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), 'content/posts');
 
 export const getSortedPostsData = () => {
     // Get file names under /posts
@@ -59,12 +59,11 @@ export const getAllPostIds = () => {
             },
         };
     });
-
 };
 
 export const getPostData = async (id: string) => {
-    const fullpath = path.join(postsDirectory, `${id}.md`);
-    const fileContents = fs.readFileSync(fullpath, 'utf8');
+    const fullPath = path.join(postsDirectory, `${id}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     const matterResult = matter(fileContents);
 
@@ -76,4 +75,4 @@ export const getPostData = async (id: string) => {
         contentHtml,
         ...matterResult.data as {date: string, title: string},
     }
-}
+};
