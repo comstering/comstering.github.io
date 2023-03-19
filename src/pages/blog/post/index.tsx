@@ -9,14 +9,14 @@ export const getStaticProps = () => {
             allPostsData
         }
     }
-}
+};
 
 const Post = ({ allPostsData }: {
     allPostsData: {
-    id: string,
-    date: string,
-    title: string
-}[]
+        id: string,
+        date: string,
+        title: string
+    }[]
 }) => (
     <>
         <Head>
