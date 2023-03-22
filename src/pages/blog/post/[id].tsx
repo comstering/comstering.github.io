@@ -28,7 +28,7 @@ export const getStaticPaths = async () => {
     return {
         paths,
         fallback: false,
-    }
+    };
 };
 
 export const getStaticProps = async ({ params }: {
@@ -41,5 +41,5 @@ export const getStaticProps = async ({ params }: {
         props: {
             postData,
         }
-    }
-}
+    };
+};

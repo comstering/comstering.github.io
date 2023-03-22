@@ -23,15 +23,17 @@ const Post = ({ allPostsData }: {
             <title>Comstering Blog</title>
         </Head>
         <ul>
-            { allPostsData.map(({ id, date, title }: {id: string, date: string, title: string}) => (
-                <li key={id}>
-                    <Link href={`post/${id}`}>
-                        {title}
-                    </Link>
-                    <br />
-                    <small>{date}</small>
-                </li>
-            ))}
+            {
+                allPostsData.map(({ id, date, title }: {id: string, date: string, title: string}) => (
+                    <li key={id}>
+                        <Link href={`post/${id}`}>
+                            {title}
+                        </Link>
+                        <br />
+                        <small>{date}</small>
+                    </li>
+                ))
+            }
         </ul>
     </>
 );
