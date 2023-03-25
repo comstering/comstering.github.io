@@ -12,16 +12,15 @@ jobs:
     steps:
       - name: Checkout my code
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup git user config
         run: |
           git config user.name "${{ secrets.GH_NAME }}"
           git config user.email "${{ secrets.GH_EMAIL }}"
 
-      - name: Check remote
-        run: git remote -v
+      - name: Setup remote url
+        run: |
+          git remote set-url origin https://${{ secrets.GH_TOKEN }}:x-oauth-basic@github.com/${{ secrets.GH_NAME }}/${{ secrets.GH_REPO }}.git
 
       - name: Setup Node
         uses: actions/setup-node@v3
