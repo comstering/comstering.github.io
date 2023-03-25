@@ -12,13 +12,18 @@ jobs:
     steps:
       - name: Checkout my code
         uses: actions/checkout@v3
-      
+
+      - name: Setup git user config
+        run: |
+          git config user.name "comstering"
+          git config user.email "coms1101@gmail.com"
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: 'yarn'
-      
+
       - name: Package Install
         run: yarn install
 
