@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Checkout my code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup git user config
         run: |
-          git config user.name "comstering"
-          git config user.email "coms1101@gmail.com"
+          git config user.name "${{ secrets.GH_NAME }}"
+          git config user.email "${{ secrets.GH_EMAIL }}"
 
       - name: Setup Node
         uses: actions/setup-node@v3
