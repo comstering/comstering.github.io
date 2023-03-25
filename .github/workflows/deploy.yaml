@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+      
+      - name: Package Install
+        run: yarn install
 
       - name: Build
         run: yarn build && yarn export
