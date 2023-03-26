@@ -27,7 +27,7 @@ const Blog = ({ allPostsData }: {
             <ul>
                 {allPostsData.map(({ id, date, title }) => (
                         <li key={id}>
-                            <Link href={`blog/post/${id}`}>
+                            <Link href={`post/${id}`}>
                                 {title}
                                 <br />
                                 {id}
