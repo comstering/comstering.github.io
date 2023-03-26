@@ -1,5 +1,4 @@
 import { getAllPostIds, getPostData, getSortedPostsData } from "@/lib/posts";
-import { GetStaticProps } from "next";
 import Head from "next/head";
 
 const Post = ({postData}: {
