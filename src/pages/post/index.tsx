@@ -11,7 +11,7 @@ export const getStaticProps = () => {
     }
 };
 
-const Blog = ({ allPostsData }: {
+const Post = ({ allPostsData }: {
     allPostsData: {
         id: string;
         date: string;
@@ -41,4 +41,4 @@ const Blog = ({ allPostsData }: {
     </div>
 );
 
-export default Blog;
+export default Post;
