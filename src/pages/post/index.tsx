@@ -1,3 +1,4 @@
+import PostLayout from "@/layouts/post";
 import { getSortedPostsData } from "@/lib/posts";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,6 +20,7 @@ const Post = ({ allPostsData }: {
     }[];
 }) => (
     <div>
+        <PostLayout>
         <Head>
             <title>Comstering Blog</title>
         </Head>
@@ -38,6 +40,7 @@ const Post = ({ allPostsData }: {
                 ))}
             </ul>
         </section>
+        </PostLayout>
     </div>
 );
 
