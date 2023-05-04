@@ -1,3 +1,4 @@
+import ContentLayout from "@/layouts/content";
 import { getAllPostIds, getPostData, getSortedPostsData } from "@/lib/posts";
 import Head from "next/head";
 
@@ -9,14 +10,9 @@ const Post = ({postData}: {
     }
 }) => (
     <div>
-        <Head>
-            <title>{postData.title}</title>
-        </Head>
-        <article>
-            <h1>{postData.title}</h1>
-            <div>{postData.date}</div>
+        <ContentLayout title={postData.title} date={postData.date}>
             <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-        </article>
+        </ContentLayout>
     </div>
 );
 
