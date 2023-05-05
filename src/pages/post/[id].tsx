@@ -1,6 +1,5 @@
 import ContentLayout from "@/layouts/content";
 import { getAllPostIds, getPostData, getSortedPostsData } from "@/lib/posts";
-import Head from "next/head";
 
 const Post = ({postData}: {
     postData: {
