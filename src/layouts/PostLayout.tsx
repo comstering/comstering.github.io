@@ -1,5 +1,5 @@
 import Image from "next/image"
-import profileImage from "../../public/profile.png"
+import profileImage from "/public/profile.png"
 
 const PostLayout = ({children}: {children: React.ReactNode}) => (
     <div>
