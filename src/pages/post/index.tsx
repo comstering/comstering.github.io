@@ -1,4 +1,4 @@
-import PostLayout from "@/layouts/post";
+import PostLayout from "@/layouts/PostLayout";
 import { getSortedPostsData } from "@/lib/posts";
 import Head from "next/head";
 import Link from "next/link";
