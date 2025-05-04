@@ -2,14 +2,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Moon, Sun, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Header() {
-  const pathname = usePathname();
-
   // 다크모드 상태 관리 (기본 HTML 클래스 토글 방식)
   const [isDark, setIsDark] = useState(false);
 
