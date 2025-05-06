@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   output: "export",
   // 동적 라우트도 슬래시 붙여 정적파일로 생성
   trailingSlash: true,
+  images: {
+    unoptimized: true, // ⚠️ 정적 내보내기 모드에서 이미지 최적화 비활성화
+  },
 };
 
 export default nextConfig;
