@@ -3,28 +3,20 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-
-interface PostMeta {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-  thumbnail: string;
-}
-
-export default function SearchModal({
-  isOpen,
-  onClose,
-}: {
+import { PostMeta } from "@/lib/posts";
+interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-}) {
-  const [query, setQuery] = useState("");
+}
+
+export const SearchModal: React.FC<SearchModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const [query, setQuery] = useState<string>("");
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [filtered, setFiltered] = useState<PostMeta[]>([]);
 
-  // 모달 켜질 때 포스트 메타 받아오기
   useEffect(() => {
     if (!isOpen) return;
     fetch("/api/posts")
@@ -32,26 +24,25 @@ export default function SearchModal({
       .then((data) => setPosts(data));
   }, [isOpen]);
 
-  // 쿼리 변경 시 필터링
   useEffect(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return setFiltered([]);
     setFiltered(
-      posts.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q)
-      )
+      q
+        ? posts.filter(
+            (p) =>
+              p.title.toLowerCase().includes(q) ||
+              p.description.toLowerCase().includes(q)
+          )
+        : []
     );
   }, [query, posts]);
 
-  // ESC로 닫기
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
+    const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-    }
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
 
   if (!isOpen) return null;
@@ -59,7 +50,6 @@ export default function SearchModal({
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4">
       <div className="bg-white dark:bg-zinc-800 rounded-lg w-full max-w-xl shadow-lg">
-        {/* 입력창 & 닫기 */}
         <div className="flex items-center justify-between border-b border-gray-200 dark:border-zinc-700 px-4 py-2">
           <input
             type="text"
@@ -73,8 +63,6 @@ export default function SearchModal({
             ×
           </button>
         </div>
-
-        {/* 결과 리스트 */}
         <ul className="max-h-60 overflow-y-auto">
           {filtered.length > 0
             ? filtered.map((post) => (
@@ -86,7 +74,7 @@ export default function SearchModal({
                   >
                     <div className="font-medium">{post.title}</div>
                     <div className="text-xs text-gray-500">
-                      {post.category} · {post.date}
+                      {post.categories.join(" · ")} · {post.date}
                     </div>
                   </Link>
                 </li>
@@ -99,4 +87,4 @@ export default function SearchModal({
     </div>,
     document.body
   );
-}
+};

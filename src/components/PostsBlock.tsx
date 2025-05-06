@@ -9,46 +9,39 @@ interface PostsBlockProps {
   posts: PostMeta[];
 }
 
-export default function PostsBlock({ posts }: PostsBlockProps) {
+export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
   const [selected, setSelected] = useState<string>("all");
-
-  // 모든 카테고리 수집
   const categories = useMemo(() => {
     const setCats = new Set<string>();
     posts.forEach((p) => p.categories.forEach((c) => setCats.add(c)));
     return ["all", ...Array.from(setCats)];
   }, [posts]);
-
-  // 선택된 카테고리에 따른 필터링
-  const filtered = useMemo(() => {
-    if (selected === "all") return posts;
-    return posts.filter((p) => p.categories.includes(selected));
-  }, [selected, posts]);
+  const filtered = useMemo(
+    () =>
+      selected === "all"
+        ? posts
+        : posts.filter((p) => p.categories.includes(selected)),
+    [selected, posts]
+  );
 
   return (
     <div>
-      {/* 카테고리 버튼 */}
       <div className="flex flex-wrap gap-2 mb-8">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelected(cat)}
-            className={`
-              px-3 py-1 rounded-full text-sm font-medium
-              ${
-                selected === cat
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200"
-              }
-            `}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${
+              selected === cat
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200"
+            }`}
           >
             {cat === "all" ? "All" : cat}
           </button>
         ))}
       </div>
-
-      {/* 포스트 카드 리스트 */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-3">
         {filtered.map((post) => (
           <Link
             key={post.slug}
@@ -76,4 +69,4 @@ export default function PostsBlock({ posts }: PostsBlockProps) {
       </div>
     </div>
   );
-}
+};

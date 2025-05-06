@@ -4,24 +4,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { Moon, Sun, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import SearchModal from "./SearchModal";
+import { SearchModal } from "./SearchModal";
 
-export default function Header() {
+export const Header: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
-    const t = localStorage.getItem("theme");
-    if (t === "dark") {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
       setIsDark(true);
     }
   }, []);
 
-  const toggleDarkMode = () => {
-    const nowDark = document.documentElement.classList.toggle("dark");
-    setIsDark(nowDark);
-    localStorage.setItem("theme", nowDark ? "dark" : "light");
+  const toggleDarkMode = (): void => {
+    const next = document.documentElement.classList.toggle("dark");
+    setIsDark(next);
+    localStorage.setItem("theme", next ? "dark" : "light");
   };
 
   return (
@@ -46,9 +46,7 @@ export default function Header() {
           </button>
         </div>
       </div>
-
-      {/* 검색 모달 */}
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </header>
   );
-}
+};

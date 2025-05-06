@@ -1,25 +1,25 @@
 // src/app/layout.tsx
-import './globals.css'
-import { ReactNode } from 'react'
-import { Inter } from 'next/font/google'
-import Header from '@/components/Header'
+import "./globals.css";
+import { ReactNode } from "react";
+import { Inter } from "next/font/google";
+import { Header } from "@/components/Header";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'My Dev Blog',
-  description: '기술 블로그와 포트폴리오',
-}
+  title: "My Dev Blog",
+  description: "기술 블로그와 포트폴리오",
+};
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="ko">
-      <body className={`${inter.className} bg-white text-black dark:bg-zinc-900 dark:text-white`}>
-        <Header />
-        <main className="max-w-4xl mx-auto px-4 py-8">
-          {children}
-        </main>
-      </body>
-    </html>
-  )
-}
+const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <html lang="ko">
+    <body
+      className={`${inter.className} bg-white text-black dark:bg-zinc-900 dark:text-white`}
+    >
+      <Header />
+      <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+    </body>
+  </html>
+);
+
+export default RootLayout;
