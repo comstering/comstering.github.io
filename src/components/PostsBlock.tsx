@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { PostMeta } from "@/lib/posts";
@@ -12,21 +12,22 @@ interface PostsBlockProps {
 export default function PostsBlock({ posts }: PostsBlockProps) {
   const [selected, setSelected] = useState<string>("all");
 
-  // 포스트에서 카테고리 리스트 뽑기
+  // 모든 카테고리 수집
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(posts.map((p) => p.category)));
-    return ["all", ...cats];
+    const setCats = new Set<string>();
+    posts.forEach((p) => p.categories.forEach((c) => setCats.add(c)));
+    return ["all", ...Array.from(setCats)];
   }, [posts]);
 
-  // 선택한 카테고리에 맞춰 필터링
+  // 선택된 카테고리에 따른 필터링
   const filtered = useMemo(() => {
     if (selected === "all") return posts;
-    return posts.filter((p) => p.category === selected);
+    return posts.filter((p) => p.categories.includes(selected));
   }, [selected, posts]);
 
   return (
     <div>
-      {/* ① 카테고리 버튼들 */}
+      {/* 카테고리 버튼 */}
       <div className="flex flex-wrap gap-2 mb-8">
         {categories.map((cat) => (
           <button
@@ -46,7 +47,7 @@ export default function PostsBlock({ posts }: PostsBlockProps) {
         ))}
       </div>
 
-      {/* ② 카드형 포스트 리스트 */}
+      {/* 포스트 카드 리스트 */}
       <div className="grid gap-6 md:grid-cols-2">
         {filtered.map((post) => (
           <Link
@@ -63,7 +64,7 @@ export default function PostsBlock({ posts }: PostsBlockProps) {
             />
             <div className="p-4">
               <p className="text-sm text-gray-500">
-                {post.category} · {post.date}
+                {post.categories.join(" · ")} · {post.date}
               </p>
               <h2 className="text-lg font-semibold mt-1">{post.title}</h2>
               <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">

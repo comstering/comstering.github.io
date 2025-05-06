@@ -5,67 +5,66 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
 
-// ── 타입 정의 ───────────────────────────────────────────
 export interface PostMeta {
   slug: string;
   title: string;
   description: string;
   date: string;
-  category: string;
+  categories: string[]; // always an array
   thumbnail: string;
 }
 
-export interface Post extends PostMeta {
-  contentHtml: string;
-}
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const dir = path.join(process.cwd(), "posts");
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((fileName) => {
+      const slug = fileName.replace(/\.md$/, "");
+      const raw = fs.readFileSync(path.join(dir, fileName), "utf8");
+      const { data } = matter(raw);
 
-// ── 경로 설정 ───────────────────────────────────────────
-const postsDirectory = path.join(process.cwd(), "posts");
+      // frontmatter may have either `category: "foo"` or `category: ["a","b"]`
+      const rawCats = data.categories ?? data.category ?? [];
+      const categories = Array.isArray(rawCats)
+        ? rawCats.map(String)
+        : [String(rawCats)];
 
-// ── 모든 포스트 메타 정보 가져오기 ───────────────────────
-export function getAllPosts(): PostMeta[] {
-  const fileNames = fs
-    .readdirSync(postsDirectory)
-    .filter((fn) => fn.endsWith(".md"));
-
-  const posts: PostMeta[] = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
-
-    return {
-      slug,
-      title: data.title as string,
-      description: data.description as string,
-      date: data.date as string,
-      category: data.category as string,
-      thumbnail: data.thumbnail as string,
-    };
-  });
-
-  // 날짜 내림차순 정렬
-  return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+      return {
+        slug,
+        title: String(data.title),
+        description: String(data.description),
+        date: String(data.date),
+        categories,
+        thumbnail: String(data.thumbnail),
+      };
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 // ── 특정 슬러그 포스트 가져오기 ───────────────────────────
-export async function getPostBySlug(slug: string): Promise<Post> {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+export async function getPostBySlug(
+  slug: string
+): Promise<PostMeta & { contentHtml: string }> {
+  const file = path.join(process.cwd(), "posts", slug + ".md");
+  const raw = fs.readFileSync(file, "utf8");
+  const { data, content } = matter(raw);
 
   const processed = await remark().use(html).process(content);
   const contentHtml = processed.toString();
 
+  const rawCats = data.categories ?? data.category ?? [];
+  const categories = Array.isArray(rawCats)
+    ? rawCats.map(String)
+    : [String(rawCats)];
+
   return {
     slug,
-    title: data.title as string,
-    description: data.description as string,
-    date: data.date as string,
-    category: data.category as string,
-    thumbnail: data.thumbnail as string,
+    title: String(data.title),
+    description: String(data.description),
+    date: String(data.date),
+    categories,
+    thumbnail: String(data.thumbnail),
     contentHtml,
   };
 }

@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <header className="border-b border-gray-200 dark:border-zinc-700">
-      <div className="max-w-2xl mx-auto flex items-center justify-between px-4 py-4">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center space-x-2">
           <Image
             src="/profile.png"
