@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "touch out/.nojekyll && gh-pages -d out"
+    "deploy": "touch out/.nojekyll && gh-pages --dotfiles -d out"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
