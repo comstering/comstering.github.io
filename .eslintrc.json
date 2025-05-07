@@ -1,8 +1,0 @@
-{
-  "plugins": ["prettier"],
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "next/core-web-vitals"
-  ]
-}
