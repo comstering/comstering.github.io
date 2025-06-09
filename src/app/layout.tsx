@@ -1,25 +1,39 @@
-// src/app/layout.tsx
-import "./globals.css";
-import { ReactNode } from "react";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header } from "@/components/Header";
+import Link from "next/link";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "My Dev Blog",
-  description: "기술 블로그와 포트폴리오",
+export const metadata: Metadata = {
+  title: "My Tech Blog",
+  description: "성장형 개인 기술 블로그",
 };
 
-const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <html lang="ko">
-    <body
-      className={`${inter.className} bg-white text-black dark:bg-zinc-900 dark:text-white`}
-    >
-      <Header />
-      <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
-    </body>
-  </html>
-);
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <html lang="ko" className="darkMode">
+      <body className={inter.className}>
+        <header className="border-b">
+          <div className="container mx-auto flex justify-between items-center p-4">
+            <Link href="/" className="text-2xl font-bold hover:text-gray-700">
+              My Blog
+            </Link>
+            <nav className="flex gap-6">
+              <Link href="/" className="text-lg hover:text-blue-600">
+                Blog
+              </Link>
+              <Link href="/about" className="text-lg hover:text-blue-600">
+                About
+              </Link>
+            </nav>
+          </div>
+        </header>
+
+        <main className="container mx-auto p-4">{children}</main>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;

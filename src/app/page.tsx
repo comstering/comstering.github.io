@@ -1,15 +1,11 @@
-// src/app/page.tsx
-import { PostsBlock } from "@/components/PostsBlock";
-import { getAllPosts, type PostMeta } from "@/lib/posts";
-import { JSX } from "react";
-
-// 1️⃣ async 함수로 변경
-const HomePage = async (): Promise<JSX.Element> => {
-  const posts: PostMeta[] = await getAllPosts();
+const HomePage = () => {
   return (
-    <main className="max-w-4xl mx-auto px-4 py-8">
-      <PostsBlock posts={posts} />
-    </main>
+    <>
+      <h1 className="text-4xl font-bold">My Tech Blog</h1>
+      <p className="mt-2 text-lg text-gray-500">
+        학습하고 성장하는 과정을 기록합니다.
+      </p>
+    </>
   );
 };
 
