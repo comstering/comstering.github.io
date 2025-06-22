@@ -18,10 +18,10 @@ export interface PostData {
   description?: string;
   tags?: string[];
   categories?: string[];
+  thumbnail?: string;
   contentHtml: string;
 }
 
-// <-- 수정: function 선언을 const 화살표 함수로 변경
 export const getSortedPostsData = (): PostData[] => {
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
@@ -30,13 +30,14 @@ export const getSortedPostsData = (): PostData[] => {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
 
-    const { title, date, description, tags, categories } =
+    const { title, date, description, tags, categories, thumbnail } =
       matterResult.data as {
         title: string;
         date: string;
         description?: string;
         tags?: string[];
         categories?: string[];
+        thumbnail?: string;
       };
 
     return {
@@ -46,6 +47,7 @@ export const getSortedPostsData = (): PostData[] => {
       description: description || "",
       tags: tags || [],
       categories: categories || [],
+      thumbnail: thumbnail || "",
       contentHtml: "",
     };
   });
@@ -57,9 +59,28 @@ export const getSortedPostsData = (): PostData[] => {
       return -1;
     }
   });
-}; // <-- 끝에 세미콜론(;)을 추가합니다.
+};
 
-// <-- 수정: function 선언을 const 화살표 함수로 변경
+// src/lib/posts.ts 에 아래 함수 추가 (기존 코드의 가장 아래에 추가하세요)
+
+// 모든 고유한 카테고리 목록을 가져오는 함수
+export const getAllCategories = (): string[] => {
+  const allPosts = getSortedPostsData(); // 이미 정의된 모든 포스트 데이터 가져오기 함수 재활용
+
+  const categoriesSet = new Set<string>();
+  allPosts.forEach((post) => {
+    post.categories?.forEach((category) => {
+      categoriesSet.add(category);
+    });
+  });
+
+  // Set을 배열로 변환하고 알파벳 순으로 정렬
+  const categoriesArray = Array.from(categoriesSet).sort();
+
+  // 'All' 옵션을 맨 앞에 추가하여 반환
+  return ["All", ...categoriesArray];
+};
+
 export const getPostData = async (id: string): Promise<PostData> => {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -73,13 +94,15 @@ export const getPostData = async (id: string): Promise<PostData> => {
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
-  const { title, date, description, tags, categories } = matterResult.data as {
-    title: string;
-    date: string;
-    description?: string;
-    tags?: string[];
-    categories?: string[];
-  };
+  const { title, date, description, tags, categories, thumbnail } =
+    matterResult.data as {
+      title: string;
+      date: string;
+      description?: string;
+      tags?: string[];
+      categories?: string[];
+      thumbnail?: string;
+    };
 
   return {
     id,
@@ -88,6 +111,7 @@ export const getPostData = async (id: string): Promise<PostData> => {
     description: description || "",
     tags: tags || [],
     categories: categories || [],
+    thumbnail: thumbnail || "",
     contentHtml,
   };
-}; // <-- 끝에 세미콜론(;)을 추가합니다.
+};
