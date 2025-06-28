@@ -83,12 +83,11 @@ const PostListClient = ({
                     </h3>
                     <p className="text-sm text-muted-foreground mt-2">{date}</p>
                   </div>
-                  {/* ▼▼▼ 태그와 카테고리 모두 표시 (스타일 분리) ▼▼▼ */}
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {/* 카테고리 (박스 형태, 좀 더 차분한 색상) */}
-                    {categories &&
-                      categories.length > 0 &&
-                      categories.map((category) => (
+
+                  {/* ▼▼▼ 카테고리만 표시하도록 수정 ▼▼▼ */}
+                  {categories && categories.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {categories.map((category) => (
                         <span
                           key={category}
                           className="bg-blue-600/10 text-blue-400 px-2 py-0.5 rounded text-xs font-medium border border-blue-600/20"
@@ -96,7 +95,8 @@ const PostListClient = ({
                           {category}
                         </span>
                       ))}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </Link>
             </div>
