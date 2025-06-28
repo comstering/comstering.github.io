@@ -1,6 +1,6 @@
 // src/app/page.tsx (서버 컴포넌트)
 
-import { getSortedPostsData, getAllCategories, PostData } from "../lib/posts"; // PostData 인터페이스도 임포트
+import { getAllCategories, getSortedPostsData, PostData } from "@/lib/posts";
 import PostListClient from "../components/PostListClient"; // <-- 새로 만든 클라이언트 컴포넌트 임포트
 
 // Server Component는 searchParams를 props로 직접 받을 수 있습니다.
