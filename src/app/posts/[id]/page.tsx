@@ -14,7 +14,7 @@ export const generateStaticParams = () => {
 export const generateMetadata = async ({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) => {
   const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
   const postData = await getPostData(id);
@@ -38,7 +38,7 @@ export const generateMetadata = async ({
 };
 
 // 개별 포스트 페이지 컴포넌트
-const PostPage = async ({ params }: { params: { id: string } }) => {
+const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
   const postData = await getPostData(id); // 해당 ID의 포스트 데이터 가져오기
 

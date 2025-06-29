@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { PostMeta } from "@/lib/posts";
+import { PostMetadata } from "@/lib/posts";
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,8 +14,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   onClose,
 }) => {
   const [query, setQuery] = useState<string>("");
-  const [posts, setPosts] = useState<PostMeta[]>([]);
-  const [filtered, setFiltered] = useState<PostMeta[]>([]);
+  const [posts, setPosts] = useState<PostMetadata[]>([]);
+  const [filtered, setFiltered] = useState<PostMetadata[]>([]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -66,9 +66,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <ul className="max-h-60 overflow-y-auto">
           {filtered.length > 0
             ? filtered.map((post) => (
-                <li key={post.slug}>
+                <li key={post.id}>
                   <Link
-                    href={`/post/${post.slug}`}
+                    href={`/post/${post.id}`}
                     onClick={onClose}
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-zinc-700"
                   >
