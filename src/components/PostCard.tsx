@@ -30,7 +30,7 @@ const PostCard = ({ post }: PostCardProps) => {
           className="w-full h-40 object-cover"
         />
         <div className="p-4">
-          <h2 className="text-lg font-semibold mt-1">{title}</h2>
+          <h2 className="text-lg truncate font-semibold mt-1">{title}</h2>
           <p className="min-h-10 text-sm mt-2 text-gray-600 dark:text-gray-300">
             {description}
           </p>
