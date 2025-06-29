@@ -11,18 +11,18 @@ import rehypeHighlight from "rehype-highlight";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
-export interface PostData {
+export interface PostMetadata {
   id: string;
   title: string;
   date: string;
-  description?: string;
-  tags?: string[];
-  categories?: string[];
-  thumbnail?: string;
+  description: string;
+  tags: string[];
+  categories: string[];
+  thumbnail: string;
   contentHtml: string;
 }
 
-export const getSortedPostsData = (): PostData[] => {
+export const getSortedPostsData = (): PostMetadata[] => {
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
     const id = fileName.replace(/\.md$/, "");
@@ -34,20 +34,20 @@ export const getSortedPostsData = (): PostData[] => {
       matterResult.data as {
         title: string;
         date: string;
-        description?: string;
-        tags?: string[];
-        categories?: string[];
-        thumbnail?: string;
+        description: string;
+        tags: string[];
+        categories: string[];
+        thumbnail: string;
       };
 
     return {
       id,
       title,
       date,
-      description: description || "",
-      tags: tags || [],
-      categories: categories || [],
-      thumbnail: thumbnail || "",
+      description,
+      tags,
+      categories,
+      thumbnail,
       contentHtml: "",
     };
   });
@@ -81,7 +81,7 @@ export const getAllCategories = (): string[] => {
   return ["All", ...categoriesArray];
 };
 
-export const getPostData = async (id: string): Promise<PostData> => {
+export const getPostData = async (id: string): Promise<PostMetadata> => {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
@@ -95,23 +95,16 @@ export const getPostData = async (id: string): Promise<PostData> => {
   const contentHtml = processedContent.toString();
 
   const { title, date, description, tags, categories, thumbnail } =
-    matterResult.data as {
-      title: string;
-      date: string;
-      description?: string;
-      tags?: string[];
-      categories?: string[];
-      thumbnail?: string;
-    };
+    matterResult.data as PostMetadata;
 
   return {
     id,
     title,
     date,
-    description: description || "",
-    tags: tags || [],
-    categories: categories || [],
-    thumbnail: thumbnail || "",
+    description,
+    tags,
+    categories,
+    thumbnail,
     contentHtml,
   };
 };
