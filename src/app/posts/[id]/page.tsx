@@ -3,20 +3,21 @@
 import { getPostData, getSortedPostsData } from "@/lib/posts";
 import Link from "next/link"; // 뒤로가기 링크를 위한 Link 컴포넌트
 
-// generateStaticParams: 빌드 시점에 모든 포스트 페이지를 미리 생성합니다.
-// getStaticPaths (Pages Router)와 유사한 역할
-export async function generateStaticParams() {
+export const generateStaticParams = () => {
   const posts = getSortedPostsData(); // 모든 포스트의 ID를 가져옵니다.
 
   return posts.map((post) => ({
     id: post.id,
   }));
-}
+};
 
-// generateMetadata: 각 포스트 페이지의 동적 SEO 메타데이터를 생성합니다.
-// 여기에서 태그를 meta keywords로 활용합니다.
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const postData = await getPostData(params.id);
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { id: string };
+}) => {
+  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
+  const postData = await getPostData(id);
 
   return {
     title: postData.title,
@@ -27,21 +28,22 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       title: postData.title,
       description: postData.description || postData.title,
       type: "article",
-      url: `https://yourdomain.com/posts/${postData.id}`, // 실제 도메인으로 변경 필요
+      url: `https://comstering.github.io/posts/${postData.id}`, // 실제 도메인으로 변경 필요
       images: postData.thumbnail
-        ? [{ url: `https://yourdomain.com${postData.thumbnail}` }]
+        ? [{ url: `https://comstering.github.io/${postData.thumbnail}` }]
         : [], // 썸네일이 있다면 Open Graph 이미지로 추가
     },
     // 기타 SEO 관련 메타데이터 추가 가능
   };
-}
+};
 
 // 개별 포스트 페이지 컴포넌트
 const PostPage = async ({ params }: { params: { id: string } }) => {
-  const postData = await getPostData(params.id); // 해당 ID의 포스트 데이터 가져오기
+  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
+  const postData = await getPostData(id); // 해당 ID의 포스트 데이터 가져오기
 
   return (
-    <div className="max-w-3xl mx-auto p-4 sm:p-8">
+    <div className="max-w-4xl mx-auto p-4 sm:p-8">
       {/* 뒤로가기 버튼 */}
       <div className="mb-8">
         <Link

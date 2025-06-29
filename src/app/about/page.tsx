@@ -1,19 +1,17 @@
 // src/app/about/page.tsx
-import Image from "next/image";
 import Link from "next/link";
-import { Mail, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import type { Metadata } from "next";
 import {
   SiAmazon,
   SiApachekafka,
   SiDocker,
-  SiGithub,
   SiKotlin,
   SiKubernetes,
-  SiLinkedin,
   SiSpringboot,
   SiTerraform,
 } from "react-icons/si";
+import Bio from "@/components/Bio";
 
 export const metadata: Metadata = {
   title: "About Me",
@@ -206,48 +204,9 @@ export default function AboutPage() {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 space-y-16">
-      {/* Profile & Intro */}
-      <section className="flex flex-col items-center text-center space-y-4">
-        <Image
-          src="/profile.png"
-          alt="Profile"
-          width={120}
-          height={120}
-          className="rounded-full object-cover"
-        />
-        <h1 className="text-4xl font-bold">최한수 (CHOI HANSU)</h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Software Engineer, Devops Engineer
-        </p>
-        <div className="flex space-x-6">
-          <Link
-            href="https://github.com/comstering"
-            target="_blank"
-            aria-label="GitHub"
-          >
-            <SiGithub
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/hansu-choi-05775a244"
-            target="_blank"
-            aria-label="LinkedIn"
-          >
-            <SiLinkedin
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-          <Link href="mailto:comstering@gmail.com" aria-label="Email">
-            <Mail
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-        </div>
-      </section>
+      <header className="items-center text-center flex-col flex">
+        <Bio />
+      </header>
 
       {/* Introduction */}
       <section className="space-y-4">
