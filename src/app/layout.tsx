@@ -1,14 +1,16 @@
-// src/app/layout.tsx
-import "./globals.css";
-import { ReactNode } from "react";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "./globals.css";
 import { Header } from "@/components/Header";
+import { ReactNode } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "My Dev Blog",
-  description: "기술 블로그와 포트폴리오",
+export const metadata: Metadata = {
+  title: "Comstering's Dev Notes",
+  description: "Comstering's personal development blog",
+  keywords:
+    "Comstering, 개발 블로그, Dev Notes, Programming, Software Development",
 };
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getAllPosts } from "@/lib/posts";
+import { getSortedPostsData } from "@/lib/posts";
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = getSortedPostsData();
   return NextResponse.json(posts);
 }

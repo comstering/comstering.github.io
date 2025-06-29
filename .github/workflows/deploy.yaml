@@ -11,16 +11,7 @@ jobs:
 
     steps:
       - name: Checkout my code
-        uses: actions/checkout@v3
-
-      - name: Setup git user config
-        run: |
-          git config user.name "${{ secrets.GH_NAME }}"
-          git config user.email "${{ secrets.GH_EMAIL }}"
-
-      - name: Setup remote url
-        run: |
-          git remote set-url origin https://${{ secrets.GH_TOKEN }}:x-oauth-basic@github.com/${{ secrets.GH_NAME }}/${{ secrets.GH_REPO }}.git
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,5 +25,8 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Deploy
-        run: yarn deploy
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out

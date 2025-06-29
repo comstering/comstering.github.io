@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import type { PostMeta } from "@/lib/posts";
+import type { PostMetadata } from "@/lib/posts";
+import PostCard from "./PostCard";
 
 interface PostsBlockProps {
-  posts: PostMeta[];
+  posts: PostMetadata[];
 }
 
 export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
@@ -26,7 +25,7 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 mb-8">
+      <div className="flex flex-wrap gap-2 mb-8 justify-center">
         {categories.map((cat) => (
           <button
             key={cat}
@@ -43,28 +42,7 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {filtered.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/post/${post.slug}`}
-            className="block border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
-          >
-            <Image
-              src={post.thumbnail}
-              alt={post.title}
-              width={600}
-              height={300}
-              className="w-full h-40 object-cover"
-            />
-            <div className="p-4">
-              <p className="text-sm text-gray-500">
-                {post.categories.join(" · ")} · {post.date}
-              </p>
-              <h2 className="text-lg font-semibold mt-1">{post.title}</h2>
-              <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">
-                {post.description}
-              </p>
-            </div>
-          </Link>
+          <PostCard key={post.id} post={post} />
         ))}
       </div>
     </div>

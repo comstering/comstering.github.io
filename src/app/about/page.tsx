@@ -1,8 +1,17 @@
 // src/app/about/page.tsx
-import Image from "next/image";
 import Link from "next/link";
-import { Github, Linkedin, Mail, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import type { Metadata } from "next";
+import {
+  SiAmazon,
+  SiApachekafka,
+  SiDocker,
+  SiKotlin,
+  SiKubernetes,
+  SiSpringboot,
+  SiTerraform,
+} from "react-icons/si";
+import Bio from "@/components/Bio";
 
 export const metadata: Metadata = {
   title: "About Me",
@@ -195,53 +204,17 @@ export default function AboutPage() {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12 space-y-16">
-      {/* Profile & Intro */}
-      <section className="flex flex-col items-center text-center space-y-4">
-        <Image
-          src="/profile.png"
-          alt="Profile"
-          width={120}
-          height={120}
-          className="rounded-full object-cover"
-        />
-        <h1 className="text-4xl font-bold">최한수 (CHOI HANSU)</h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Software Engineer, Devops Engineer
-        </p>
-        <div className="flex space-x-6">
-          <Link
-            href="https://github.com/comstering"
-            target="_blank"
-            aria-label="GitHub"
-          >
-            <Github
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/hansu-choi-05775a244"
-            target="_blank"
-            aria-label="LinkedIn"
-          >
-            <Linkedin
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-          <Link href="mailto:comstering@gmail.com" aria-label="Email">
-            <Mail
-              size={28}
-              className="hover:text-gray-900 dark:hover:text-white"
-            />
-          </Link>
-        </div>
-      </section>
+      <header className="items-center text-center flex-col flex">
+        <Bio />
+      </header>
 
       {/* Introduction */}
       <section className="space-y-4">
         <h2 className="text-3xl font-bold border-b pb-2">Introduction</h2>
         <div className="bg-gray-100 dark:bg-zinc-800 p-6 rounded-lg space-y-3">
+          <p className="text-lg font-bold text-yellow-200 mb-6">
+            &quot;어제보다 성장하는 개발자 최한수입니다.&quot;
+          </p>
           <p className="flex items-start text-gray-800 dark:text-gray-200">
             <Lightbulb className="mr-2 mt-1" />
             새로운 지식을 배우는 것을 즐기며 다양한 경험을 추구하는
@@ -255,6 +228,60 @@ export default function AboutPage() {
             다양한 직무의 사람들과 협업할 때 의사소통에 걸림돌이 되지 않게 여러
             지식을 계속 추구하고 공부하려고 합니다.
           </p>
+        </div>
+      </section>
+
+      {/* Skills */}
+      <section className="mb-16">
+        <h2 className="text-3xl font-semibold border-b-2 border-card pb-2 mb-6 text-foreground">
+          Skills
+        </h2>
+        <div className="space-y-6">
+          {/* Backend & Language 그룹 */}
+          <div>
+            <h3 className="text-xl font-semibold text-muted-foreground mb-4">
+              Backend & Language
+            </h3>
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 bg-[#7F52FF] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiKotlin size={18} />
+                <span>Kotlin</span>
+              </div>
+              <div className="flex items-center gap-2 bg-[#6DB33F] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiSpringboot size={18} />
+                <span>Spring Boot</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Infra & DevOps 그룹 */}
+          <div>
+            <h3 className="text-xl font-semibold text-muted-foreground mb-4">
+              Infra & DevOps
+            </h3>
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 bg-[#FF9900] text-black px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiAmazon size={18} />
+                <span>AWS</span>
+              </div>
+              <div className="flex items-center gap-2 bg-[#7B42BC] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiTerraform size={18} />
+                <span>Terraform</span>
+              </div>
+              <div className="flex items-center gap-2 bg-[#326CE5] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiKubernetes size={18} />
+                <span>Kubernetes</span>
+              </div>
+              <div className="flex items-center gap-2 bg-[#2496ED] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiDocker size={18} />
+                <span>Docker</span>
+              </div>
+              <div className="flex items-center gap-2 bg-[#231F20] text-white border border-gray-600 px-3 py-1.5 rounded-lg text-sm font-bold">
+                <SiApachekafka size={18} />
+                <span>Kafka</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -305,7 +332,7 @@ export default function AboutPage() {
           {activities.map((act) => (
             <div key={act.title} className="space-y-2">
               <h4 className="text-lg font-medium">
-                {act.title}{" "}
+                {act.title}
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   ({act.period})
                 </span>
@@ -328,50 +355,58 @@ export default function AboutPage() {
       </section>
 
       {/* Education */}
-      <section className="space-y-6">
-        <h2 className="text-3xl font-bold border-b pb-2">Education</h2>
-        <div className="grid grid-cols-[160px_1fr] gap-x-8 items-start">
+      <section className="space-y-6 mb-12">
+        <h2 className="text-3xl font-bold border-b border-gray-700 pb-2 text-white">
+          Education
+        </h2>
+        <div className="space-y-8">
           {education.map((edu) => (
-            <>
-              <div className="text-right space-y-1" key={edu.institution}>
+            <div
+              key={edu.institution}
+              className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-x-8 items-start w-full"
+            >
+              <div className="text-right space-y-1">
                 <h3 className="text-xl font-semibold">{edu.institution}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{edu.degree}</p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  {edu.period}
-                </p>
+                <p className="text-gray-400 text-sm">{edu.degree}</p>
+                <p className="text-gray-400 text-sm">{edu.period}</p>
               </div>
               <div className="space-y-2">
-                {edu.details.map((d) => (
-                  <p key={d} className="text-gray-700 dark:text-gray-300">
-                    {d}
-                  </p>
-                ))}
+                <ul className="list-disc list-inside space-y-1">
+                  {edu.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Other Experience */}
-      <section className="space-y-6">
-        <h2 className="text-3xl font-bold border-b pb-2">Other Experience</h2>
-        <div className="grid grid-cols-[160px_1fr] gap-x-8 items-start">
+      <section className="space-y-6 mb-12">
+        <h2 className="text-3xl font-bold border-b border-gray-700 pb-2">
+          Other Experience
+        </h2>
+        <div className="space-y-8">
           {others.map((o) => (
-            <>
-              <div className="text-right space-y-1" key={o.title}>
+            <div
+              key={o.title}
+              className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-x-8 items-start w-full"
+            >
+              <div className="text-right space-y-1">
                 <h3 className="text-xl font-semibold">{o.title}</h3>
                 <p className="text-gray-500 dark:text-gray-400 text-sm">
                   {o.period}
                 </p>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 flex-grow">
                 <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
                   {o.points.map((pt) => (
                     <li key={pt}>{pt}</li>
                   ))}
                 </ul>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </section>
@@ -386,27 +421,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      {/* Skills & Resume */}
       <section>
-        <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {[
-            "AWS",
-            "Terraform",
-            "Kubernetes",
-            "Docker",
-            "Spring Boot",
-            "Kotlin",
-            "Kafka",
-          ].map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200 rounded-full text-sm"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
         <div className="text-center">
           <Link
             href="/resume.pdf"

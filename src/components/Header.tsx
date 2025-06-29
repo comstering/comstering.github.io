@@ -29,13 +29,12 @@ export const Header: React.FC = () => {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center space-x-2">
           <Image
-            src="/profile.png"
+            src="/blog-logo.png"
             alt="Profile"
-            width={48}
-            height={48}
+            width={180}
+            height={60}
             className="rounded-full object-cover"
           />
-          <span className="font-semibold hidden sm:inline">My Dev Blog</span>
         </Link>
         <div className="flex items-center space-x-4">
           <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode">
