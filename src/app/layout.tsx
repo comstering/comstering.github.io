@@ -7,8 +7,10 @@ import { ReactNode } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Tech Blog",
-  description: "성장형 개인 기술 블로그",
+  title: "Comstering's Dev Notes",
+  description: "Comstering's personal development blog",
+  keywords:
+    "Comstering, 개발 블로그, Dev Notes, Programming, Software Development",
 };
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
