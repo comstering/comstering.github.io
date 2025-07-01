@@ -58,6 +58,18 @@ export default function AboutPage() {
       duration: "~ing",
       projects: [
         {
+          title: "AWS EKS 고도화(2025.06 – 2025.06)",
+          description:
+            "Pod IP 부족 문제 및 VPC CNI의 iptables 성능 이슈 문제를 AWS EKS Custom Networking 및 Cilium CNI를 통해 해결",
+          points: [
+            "VPC CIDR Block을 자유롭게 할당할 수 없어서 VPC 대역이 적은 상태로 Infra 구축",
+            "VPC CNI의 ENI IP 할당 방식으로 Pod IP를 할당하여 Pod IP 부족 문제 발생",
+            "AWS VPC Secondary CIDR과 EKS Custom Networking을 통해 Pod IP 전용 CIDR Block을 할당하여 Pod IP 부족 문제 해결",
+            "Cilium CNI의 eBPF 기반 네트워킹을 통해 VPC CNI의 iptables 성능 이슈 해결",
+            "기존 VPC CNI과 Cilium CNI의 Chaining을 통해 기존 Pod IP를 유지하면서 Cilium CNI로 전환",
+          ],
+        },
+        {
           title: "SCDF 도입 및 구축 (2025.03 – 2025.04)",
           description:
             "조직 내에서 Spring Batch를 주된 Batch 시스템으로 사용하고 있어서 Spring Cloud Dataflow를 도입하여 Batch Job 관리를 통합하여 관리",
