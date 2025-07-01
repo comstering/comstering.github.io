@@ -16,7 +16,7 @@ const Bio = () => {
       <div className="flex flex-col items-center text-center space-y-4">
         <h1 className="text-xl font-bold">최한수 (CHOI HANSU)</h1>
         <p className="text-gray-600 dark:text-gray-400">
-          Software Engineer, Devops Engineer
+          Software Engineer, Infra & DevOps Engineer
         </p>
         <div className="flex space-x-6">
           <Link

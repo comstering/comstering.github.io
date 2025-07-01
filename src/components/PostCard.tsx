@@ -23,7 +23,7 @@ const PostCard = ({ post }: PostCardProps) => {
         className="block border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
       >
         <Image
-          src={thumbnail}
+          src={`/images/posts/thumbnails/${thumbnail}`}
           alt={title}
           width={600}
           height={300}
