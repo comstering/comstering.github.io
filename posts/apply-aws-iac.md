@@ -1,6 +1,6 @@
 ---
 title: "데린이의 AWS Cloud, IaC Terraform Cloud 구축기"
-description: "코드로 간편하게 인프라를 구축하자."
+description: "Terraform 코드로 간편하게 AWS Cloud Infra를 구축하자."
 date: "2025-07-01"
 categories: [infra]
 tags: [infra, aws, terraform, IaC]
