@@ -66,7 +66,7 @@ EKS Control Plane ENI 대역과 Data Plane 대역을 같은 Subnet으로 묶어�
 
 > Kubernetes worker nodes can run in the cluster subnets, but it is not recommended. During cluster upgrades Amazon EKS provisions additional ENIs in the cluster subnets. When your cluster scales out, worker nodes and pods may consume the available IPs in the cluster subnet. Hence in order to make sure there are enough available IPs you might want to consider using dedicated cluster subnets with /28 netmask.
 
-## Create EKS using terraform
+## Create EKS using Terraform
 
 그럼 EKS가 무엇이고 어떤 형태로 EKS를 구성해야되는지 알았으니 EKS를 내 VPC에 만들어서 구성해보자. 저번 포스팅에서 말했듯이 나는 Terraform을 통해 IaC로 Infra를 관리하고 있으므로 Terraform으로 EKS를 구성한다.
 
@@ -80,7 +80,7 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  az = data.aws_availability_zones.available.names
+  az                            = data.aws_availability_zones.available.names
   eks_control_plane_subnet_cidr = ["10.0.0.192/28", "10.0.0.208/28", "10.0.0.224/28"]
 }
 
@@ -304,4 +304,4 @@ Lens는 상용버전이고 오픈소스로 비상용버전인 Open Lens가 있�
 
 이렇게 AWS EKS를 구성하고 실제 정상적으로 Cluster가 운영되는 것까지 확인했다. 이제 만든 k8s Cluster 위에서 애플리케이션을 배포하고 운영하면서 Side Project를 하나씩 올려보려고 한다.
 
-지금은 정말 EKS의 기본을 설정해놓은 상태이기 때문에 추가적인 설정들을 더 해야한다. 내가 추가로 한 설정들은 다음 포스팅에서 또 다루도록 하겠다.
+지금은 정말 EKS의 기본을 설정해놓은 상태이기 때문에 추가적인 설정들을 더 해야한다. 내가 추가로 한 설정들은 다음 포스팅에서 다뤄보려고 한다.

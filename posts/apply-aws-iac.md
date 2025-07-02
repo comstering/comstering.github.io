@@ -100,13 +100,13 @@ Terraform은 Github를 사용해서 VCS를 진행할 수 있으며 IaC 코드가
 
   ```hcl
   resource "aws_vpc" "main" {
-    cidr_block = var.cidr
+    cidr_block = "10.0.0.0/16"
 
     enable_dns_hostnames = true
     enable_dns_support   = true
 
     tags = {
-      Name = "${var.name.vpc}"
+      Name = "my-vpc"
     }
   }
   ```
@@ -119,21 +119,21 @@ Terraform은 Github를 사용해서 VCS를 진행할 수 있으며 IaC 코드가
   }
 
   locals {
-    az = data.aws_availability_zones.available.names
+    az                 = data.aws_availability_zones.available.names
+    public_subnet_cidr = ["10.0.0.0/26", "10.0.0.64/26", "10.0.0.128/26"]
   }
 
   resource "aws_subnet" "public" {
     vpc_id = aws_vpc.main.id
-    count  = length(var.subnet_cidr.public)
+    count  = length(locals.public_subnet_cidr)
 
-    cidr_block        = var.subnet_cidr.public[count.index]
-    availability_zone = local.az[count.index % var.availability_zone_count]
+    cidr_block        = locals.public_subnet_cidr[count.index]
+    availability_zone = local.az[count.index]
 
     map_public_ip_on_launch = true
 
     tags = {
-      "kubernetes.io/role/elb" = 1
-      Name                     = "${var.name.vpc}-${var.name.public_subnet}-${format("%02s", count.index)}-${local.az[count.index % var.availability_zone_count]}"
+      Name = "my-vpc-public-${format("%02s", count.index)}-${local.az[count.index]}"
     }
   }
   ```
@@ -150,7 +150,7 @@ Terraform은 Github를 사용해서 VCS를 진행할 수 있으며 IaC 코드가
     }
 
     tags = {
-      Name = "${var.name.vpc}-${var.name.public_route_table}"
+      Name = "my-vpc-public-route-table"
     }
   }
   ```
