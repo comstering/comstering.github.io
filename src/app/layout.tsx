@@ -11,9 +11,6 @@ export const metadata: Metadata = {
   description: "Comstering's personal development blog",
   keywords:
     "Comstering, 개발 블로그, Dev Notes, Programming, Software Development",
-  icons: {
-    icon: "/icon.png",
-  },
 };
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
