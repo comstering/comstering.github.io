@@ -1,5 +1,6 @@
 // src/app/posts/[id]/page.tsx
 
+import GiscusComments from "@/components/GiscusComment";
 import { getPostData, getSortedPostsData } from "@/lib/posts";
 import Link from "next/link"; // 뒤로가기 링크를 위한 Link 컴포넌트
 
@@ -94,6 +95,26 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <article className="prose lg:prose-xl prose-lg dark:prose-invert max-w-none">
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
+
+      {/* ▼▼▼ Giscus 댓글 섹션 추가 ▼▼▼ */}
+      <div className="mt-16 pt-8 border-t border-card">
+        {/* 상단 여백 및 구분선 */}
+        <h2 className="text-2xl font-bold text-foreground mb-6">Comments</h2>
+        <GiscusComments
+          repo="comstering/comstering.github.io" // <-- 필수: 본인의 GitHub 유저이름/저장소이름 (예: 'your-username/your-blog-comments')
+          repoId="MDEwOlJlcG9zaXRvcnkzNjI0MjQ3NDk=" // <-- 필수: Giscus 설치 후 제공되는 Repo ID (숫자+문자 조합)
+          category="Announcements" // <-- 필수: Giscus 설치 후 선택한 Discussion 카테고리 이름 (예: 'Comments', 'General')
+          categoryId="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTQ4OTYw" // <-- 필수: Giscus 설치 후 제공되는 Category ID (숫자+문자 조합)
+          mapping="pathname" // 'pathname' (현재 페이지 경로에 매핑) 또는 'url', 'title' 등
+          strict="0" // Strict 매핑 여부 (0 또는 1)
+          reactionsEnabled="1" // 좋아요/이모지 반응 활성화 (0 또는 1)
+          emitMetadata="0" // Giscus 메타데이터 전송 여부 (0 또는 1)
+          inputPosition="top" // 댓글 입력창 위치 (top 또는 bottom)
+          theme="dark_high_contrast" // 'light', 'dark', 'preferred_color_scheme' 등. 저희 테마에 맞추려면 'dark'도 고려
+          lang="ko" // 언어 설정
+          loading="lazy" // 로딩 방식
+        />
+      </div>
     </div>
   );
 };
