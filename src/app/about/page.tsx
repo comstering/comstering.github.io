@@ -62,9 +62,8 @@ export default function AboutPage() {
           description:
             "Pod IP 부족 문제 및 VPC CNI의 iptables 성능 이슈 문제를 AWS EKS Custom Networking 및 Cilium CNI를 통해 해결",
           points: [
-            "VPC CIDR Block을 자유롭게 할당할 수 없어서 VPC 대역이 적은 상태로 Infra 구축",
-            "VPC CNI의 ENI IP 할당 방식으로 Pod IP를 할당하여 Pod IP 부족 문제 발생",
             "AWS VPC Secondary CIDR과 EKS Custom Networking을 통해 Pod IP 전용 CIDR Block을 할당하여 Pod IP 부족 문제 해결",
+            "500개 정도 사용가능하던 Pod IP를 16,000개 이상으로 약 30배 이상 확장",
             "Cilium CNI의 eBPF 기반 네트워킹을 통해 VPC CNI의 iptables 성능 이슈 해결",
             "기존 VPC CNI과 Cilium CNI의 Chaining을 통해 기존 Pod IP를 유지하면서 Cilium CNI로 전환",
           ],
@@ -75,21 +74,12 @@ export default function AboutPage() {
             "조직 내에서 Spring Batch를 주된 Batch 시스템으로 사용하고 있어서 Spring Cloud Dataflow를 도입하여 Batch Job 관리를 통합하여 관리",
           points: [
             "k8s 환경에서 SCDF 설치 및 배포",
-            "AWS Airflow인 MWAA를 Deprecate하여 비용 절감",
-            "기존 Airflow보다 직관적인 Batch Job 관리",
+            "AWS Managed Airflow인 MWAA를 Deprecate하여 비용 절감",
+            "기존 Airflow보다 직관적인 Spring Batch Job 관리",
           ],
         },
         {
-          title: "Legacy Service Migrate (2024.12 – ~ing)",
-          description:
-            "외주사를 통해서 개발된 Legacy Service를 k8s 환경으로 마이그레이션 및 Seoul Region에서 N.Virginia Region으로 마이그레이션",
-          points: [
-            "EC2 클라우드 컴퓨팅 -> k8s 서비스 마이그레이션",
-            "Aurora DB의 글로벌 Cluster를 사용한 리전 마이그레이션",
-          ],
-        },
-        {
-          title: "Kafka System 구축 (2024.07 – 2024.12)",
+          title: "Kafka System 구축 (2024.07 – 2024.10)",
           description:
             "내부 시스템 간의 데이터 전송을 위한 Kafka 시스템을 구축하였습니다.",
           points: [
@@ -100,12 +90,19 @@ export default function AboutPage() {
           ],
         },
         {
+          title: "초기 Infra 구축 (2024.07 – 2024.12)",
+          description:
+            "신규 MSA 시스템을 위한 Network, k8s 등의 초기 Infra 구축을 진행했습니다.",
+          points: [
+            "VPC Subnet 구성 및 설계",
+            "MSK, Kafka Connect, Schema Registry 등의 Kafka 시스템 구축",
+          ],
+        },
+        {
           title: "기타 작업",
           description: "",
           points: [
             "Braze Sender Email 적용 (2025.01): Braze Sender Email 적용 및 Route53 Record 관리",
-            "Schema Registry 구축 (2025.02): Kafka Schema Registry 구축 및 관리",
-            "AWS SSO 적용 (2024.11): AWS SSO를 통한 IAM Role 관리 및 권한 관리?????",
           ],
         },
       ],
@@ -190,7 +187,7 @@ export default function AboutPage() {
       details: [
         "네트워크 보안 연구실 학부연구생 (2019.03 – 2022.02)",
         "모바일 기반 암호 변환 프로그램 개발",
-        "위치 데이터 기반 미아방지 프로그램 설계",
+        "위치 데이터 기반 미아방지 프로그램 설계 및 개발",
         "랩실 사무환경 IoT를 이용한 환경 개선",
       ],
     },
