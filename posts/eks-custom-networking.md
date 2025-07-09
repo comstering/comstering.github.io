@@ -78,6 +78,10 @@ EKS에서 pod는 기본적으로 Node와 동일한 subnet에서 ip를 할당 받
 
 Custom Networking은 Node의 Secondary ENI를 Node와 다른 Subnet에 할당하여 Pod의 CNI를 Node와 다른 Subnet으로 할당하는 방법이다.
 
+![custom-networking](/images/posts/contents/eks-custom-networking/custom-networking.png)
+
+_출처: [AWS Documentation](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cni-custom-network.html)_
+
 ### 해결방법
 
 위에서 말한 CGNAT 대역의 VPC Secondary CIDR과 EKS Custom Networking을 사용하면 IP 부족문제를 해결할 수 있게 된다.
@@ -192,34 +196,11 @@ resource "kubernetes_manifest" "eni_config" {
 }
 ```
 
-### Karpenter 추가 설정
-
-AWS EC2에는 EC2가 사용가능한 Primary ENI 개수가 있고 해당 Primary ENI에서 할당 가능한 Secondary ENI가 있다. EKS에서 Pod는 Node에서 할당하는 Primary ENI 1개를 제외하고 남은 Primary ENI와 Secondary ENI를 모두 사용한다.
-
-하지만 Custom Networking을 사용할 경우 Node는 기존 사설 IP Subnet에 있어야하기 때문에 1개의 Primary ENI와 해당 ENI에 연결된 Secondary ENI는 사설 IP 대역을 그대로 사용하고 나머지 ENI들이 Custom Networking으로 지정된 Subnet에 사용된다.
-
-간단하게 말해 Node는 사설 IP 대역에 IP를 1개는 할당받아야되니 EC2 Instance가 사용 가능한 Primary ENI 개수 중 1개와 연결된 Secondary ENI를 Custom Networking에서 사용할 수 없다는 뜻이다.
-
-EKS node group에 해당하는 Node들은 해당 설정이 자동으로 된다. 하지만 Karpenter가 관리하는 Node는 해당 설정이 안되어 있기 때문에 Karpenter가 관리하는 Node에서는 할당 가능한 IP보다 더 많은 Pod를 할당하려고 하다가 실패해서 Pod가 Pending 상태로 남아있게 되는 상황이 생긴다.
-
-#### ReservedENIs
-
-가장 간단한 해결책으로는 Karpenter Node에 Primary ENI 1개를 예약된 ENI로 등록하여 사용하지 않게 설정하면 된다. 기존 Karpenter values에서 아래의 값만 추가하면 된다.
-
-```yaml
-# Karpenter values.yaml
-## 중략...
-settings:
-  clusterName: ${EKS_CLUSTER_NAME}
-  interruptionQueue: Karpenter-${EKS_CLUSTER_NAME}-SpotInterruptionQueue
-  reservedENIs: "1" # 여기 추가
-```
-
 ## Result
 
 node ip는 10.x.x.x 대역인 것에 대비해서 Pod의 IP는 100.64.x.x 대역인 것을 확인할 수 있다.
 
-![custom-networking](/images/posts/contents/eks-custom-networking/custom-networking.png)
+![custom-networking-result](/images/posts/contents/eks-custom-networking/custom-networking-result.png)
 
 나는 대역을 netmask /19 대역으로 3개 설정했다. 대충 24,000개의 IP를 사용할 수 있게 된 것이다. 기존 760개 정도 할당 가능했던 IP개수와 비교하면 약 31배 정도 더 많아진 양이다. 계속 Pod 수가 늘고 서비스가 많아지면 해당 대역의 IP가 부족해질 수도 있겠지만 그러면 다시 또 새로운 CIDR Block을 추가해서 100.64.x.x 대역을 추가하면 된다.
 
@@ -230,4 +211,3 @@ node ip는 10.x.x.x 대역인 것에 대비해서 Pod의 IP는 100.64.x.x 대역
 - [VPC CIDR Block](https://docs.aws.amazon.com/ko_kr/vpc/latest/userguide/vpc-cidr-blocks.html)
 - [EKS Custom Networking](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cni-custom-network.html)
 - [EKS Best Practice Custom Networking](https://docs.aws.amazon.com/ko_kr/eks/latest/best-practices/custom-networking.html)
-- [Karpenter Settings](https://karpenter.sh/docs/reference/settings/)
