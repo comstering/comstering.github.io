@@ -53,7 +53,7 @@ t4g.large와 t4g.medium의 network interface를 확인해본 결과 각각 3개�
 
 #### Custom Networking의 할당 가능한 Pod 개수
 
-Custom Netoworking이 기존 EC2 Node의 Pod에 할당 가능한 IP 개수 계산은 아래와 같다.
+Custom Netoworking이 적용되지 않은 기존 EC2 Node의 Pod에 할당 가능한 IP 개수 계산은 아래와 같다.
 
 ```
 (ENI count) * (IP addr per interface) - 1
