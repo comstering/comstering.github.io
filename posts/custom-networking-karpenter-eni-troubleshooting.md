@@ -87,7 +87,7 @@ Node는 10.0.0.0/24 대역의 IP를 사용해야하기 때문에 ENI 하나를 �
 
 ## Karpenter는 이 사실을 모른다!
 
-eks의 node group는 vpc-cni addon과 eks 자체 managed를 통해서 자동적으로 Node에 할당 가능한 IP를 알고 그 이상으로 Pod를 Scheduling하지 않는다.
+eks의 node group node는 vpc-cni addon과 eks 자체 managed를 통해서 자동적으로 할당 가능한 IP를 알고 그 이상으로 Pod를 Scheduling하지 않는다.
 
 하지만 Karpenter의 Node는 EKS에서 Managed되고 있는 Node가 아니라 Karpenter가 직접 Managed하고 있는 Node이다. 그래서 현재 EC2의 ENI 개수가 몇개인지, 할당 가능한 IP 개수가 변경되었는지도 모르고 기존의 IP할당 가능한 개수만큼의 Pod를 Node에 할당할 수 있다고 판단한다.
 
