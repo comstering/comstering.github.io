@@ -1,0 +1,151 @@
+1:"$Sreact.fragment"
+2:I[7114,["874","static/chunks/874-3b2e13d78f8618dd.js","63","static/chunks/63-28726393f539b62f.js","177","static/chunks/app/layout-16f2661fbedcd9f0.js"],"Header"]
+3:I[7555,[],""]
+4:I[1295,[],""]
+6:I[9665,[],"OutletBoundary"]
+9:I[9665,[],"ViewportBoundary"]
+b:I[9665,[],"MetadataBoundary"]
+d:I[6614,[],""]
+:HL["/_next/static/media/e4af272ccee01ff0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/css/c9a6334638ac74e5.css","style"]
+0:{"P":null,"b":"ne44pUMAOTh_2pcXuIjSZ","p":"","c":["","posts","bitnami-helm-chart-contribute"],"i":false,"f":[[["",{"children":["posts",{"children":[["id","bitnami-helm-chart-contribute","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/c9a6334638ac74e5.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"ko","children":["$","body",null,{"className":"__className_e8ce0c bg-white text-black dark:bg-zinc-900 dark:text-white","children":[["$","$L2",null,{}],["$","main",null,{"className":"max-w-6xl mx-auto px-4 py-8","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}],{"children":["posts",["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["id","bitnami-helm-chart-contribute","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L5","$undefined",null,["$","$L6",null,{"children":["$L7","$L8",null]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","C81LwYbXBmBjTgbvcAbfd",{"children":[["$","$L9",null,{"children":"$La"}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],["$","$Lb",null,{"children":"$Lc"}]]}],false]],"m":"$undefined","G":["$d","$undefined"],"s":false,"S":true}
+e:I[6874,["874","static/chunks/874-3b2e13d78f8618dd.js","880","static/chunks/app/posts/%5Bid%5D/page-bb0e289bc5bd1f55.js"],""]
+10:I[7161,["874","static/chunks/874-3b2e13d78f8618dd.js","880","static/chunks/app/posts/%5Bid%5D/page-bb0e289bc5bd1f55.js"],"default"]
+f:T2ec3,<h2>Schema Registry Helm Chart 배포 에러</h2>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/helm-install-error.png" alt="helm-install-error"></p>
+<p>bitnami의 helm chart를 사용해서 schema-registry를 배포하려고 했더니 위와 같은 에러가 났다. 로그에서 보인 문제는 jsk secret이 설정되어 있지 않다는 것!</p>
+<h3>helm values</h3>
+<p>내가 set한 values.yaml는 아래와 같다.</p>
+<pre><code class="hljs language-yaml"><span class="hljs-attr">global:</span>
+  <span class="hljs-attr">imageRegistry:</span> <span class="hljs-string">"{ECR Image pull through cache registry}"</span>
+  <span class="hljs-attr">security:</span>
+    <span class="hljs-attr">allowInsecureImages:</span> <span class="hljs-literal">true</span>
+
+<span class="hljs-attr">usePasswordFiles:</span> <span class="hljs-literal">false</span>
+
+<span class="hljs-attr">image:</span>
+  <span class="hljs-attr">debug:</span> <span class="hljs-literal">true</span>
+
+<span class="hljs-attr">auth:</span>
+  <span class="hljs-attr">tls:</span>
+    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span>
+  <span class="hljs-attr">kafka:</span>
+    <span class="hljs-attr">saslMechanism:</span> <span class="hljs-string">SCRAM-SHA-512</span>
+
+<span class="hljs-attr">extraEnvVars:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">SCHEMA_REGISTRY_SCHEMA_REGISTRY_GROUP_ID</span>
+    <span class="hljs-attr">value:</span> <span class="hljs-string">schema-registry-prd</span>
+
+<span class="hljs-attr">pdb:</span>
+  <span class="hljs-attr">minAvailable:</span> <span class="hljs-number">1</span>
+
+<span class="hljs-attr">autoscaling:</span>
+  <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span>
+  <span class="hljs-attr">minReplicas:</span> <span class="hljs-number">2</span>
+  <span class="hljs-attr">targetCPU:</span> <span class="hljs-number">80</span>
+
+<span class="hljs-attr">service:</span>
+  <span class="hljs-attr">ports:</span>
+    <span class="hljs-attr">http:</span> <span class="hljs-number">80</span>
+
+<span class="hljs-attr">serviceAccount:</span>
+  <span class="hljs-attr">create:</span> <span class="hljs-string">create</span>
+  <span class="hljs-attr">annotations:</span>
+    <span class="hljs-attr">eks.amazonaws.com/role-arn:</span> <span class="hljs-string">"{iam role arn}"</span>
+
+<span class="hljs-attr">kafka:</span>
+  <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span>
+
+<span class="hljs-attr">externalKafka:</span>
+  <span class="hljs-attr">brokers:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">SASL_SSL://{msk-broker-1}:9096</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">SASL_SSL://{msk-broker-2}:9096</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">SASL_SSL://{msk-broker-3}:9096</span>
+  <span class="hljs-attr">listener:</span>
+    <span class="hljs-attr">protocol:</span> <span class="hljs-string">SASL_SSL</span>
+  <span class="hljs-attr">sasl:</span>
+    <span class="hljs-attr">user:</span> <span class="hljs-comment"># scram username</span>
+    <span class="hljs-attr">password:</span> <span class="hljs-comment"># scram password</span>
+</code></pre>
+<h3>MSK 연동</h3>
+<p>나는 kafka broker를 MSK를 사용하고 있다. MSK는 SASL_SSL/AWS_MSK_IAM 인증 방식과 SASL_SSL/SCRAM 인증방식을 지원한다. bitnami의 schema registry는 iam 인증을 기본적으로 지원하지 않기 때문에 SCRAM 인증방식을 사용해서 인증해야한다.</p>
+<h4>kafka SSL 인증서</h4>
+<p>여기서 문제되는 부분은 SASL_SSL 통신방식에서가 문제가 된다. 인증은 SASL/SCRAM으로 인증은 하지만 네트워크 통신은 SSL/TLS 통신으로 암호화된 통신을 진행한다. 이때 kafka에서는 이 TLS를 위해서 인증서를 만들고 client에서는 이 인증에 필요한 jks라는 key를 가지고 있어야한다. 즉, 상호 인증이 필요하고 이 과정을 mTLS라고도 한다.</p>
+<h4>MSK SSL 통신</h4>
+<p>MSK는 mTLS를 하지 않는다. 기본적으로 암호화된 통신을 진행하고 여기에 사용되는 인증서는 CA에 정식으로 등록된 인증서를 사용하기 때문에 따로 Client에서 인증서 관련 jks를 가지고 있을 필요가 없다.</p>
+<h2>Helm chart 문제점</h2>
+<p>helm chart의 문제점은 명확하다. kafka와의 통신에서 security.protocol에 SSL이 있으면 jsk를 필수 값으로 입력받도록 chart가 구성되어 있다.</p>
+<pre><code class="hljs language-txt">// NOTES.txt
+{{/* Validate values of Schema Registry - TLS authentication */}}
+{{- define "schema-registry.validateValues.authentication.tls" -}}
+{{- $kafkaProtocol := upper (ternary .Values.kafka.listeners.client.protocol .Values.externalKafka.listener.protocol .Values.kafka.enabled) -}}
+{{- if and (contains "SSL" $kafkaProtocol) (not .Values.auth.kafka.jksSecret) }}
+kafka: auth.kafka.jksSecret
+    A secret containing the Schema Registry JKS files is required when TLS encryption in enabled
+{{- end -}}
+{{- end -}}
+</code></pre>
+<pre><code class="hljs language-yaml"><span class="hljs-comment"># statefulset.yaml</span>
+{{<span class="hljs-bullet">-</span> <span class="hljs-string">$kafkaProtocol</span> <span class="hljs-string">:=</span> <span class="hljs-string">upper</span> <span class="hljs-string">(ternary</span> <span class="hljs-string">.Values.kafka.listeners.client.protocol</span> <span class="hljs-string">.Values.externalKafka.listener.protocol</span> <span class="hljs-string">.Values.kafka.enabled)</span> }}
+
+<span class="hljs-comment"># 중략...</span>
+
+{{<span class="hljs-bullet">-</span> <span class="hljs-string">if</span> <span class="hljs-string">or</span> <span class="hljs-string">(contains</span> <span class="hljs-string">"SSL"</span> <span class="hljs-string">$kafkaProtocol)</span> <span class="hljs-string">.Values.auth.tls.enabled</span> }}
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">certificates</span>
+  <span class="hljs-attr">projected:</span>
+    <span class="hljs-attr">defaultMode:</span> <span class="hljs-number">0400</span>
+    <span class="hljs-attr">sources:</span>
+    {{<span class="hljs-bullet">-</span> <span class="hljs-string">if</span> <span class="hljs-string">contains</span> <span class="hljs-string">"SSL"</span> <span class="hljs-string">$kafkaProtocol</span> }}
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">secret:</span>
+        <span class="hljs-attr">name:</span> {{ <span class="hljs-string">printf</span> <span class="hljs-string">"%s"</span> <span class="hljs-string">(tpl</span> <span class="hljs-string">.Values.auth.kafka.jksSecret</span> <span class="hljs-string">$)</span> }}
+    {{<span class="hljs-bullet">-</span> <span class="hljs-string">end</span> }}
+    {{<span class="hljs-bullet">-</span> <span class="hljs-string">if</span> <span class="hljs-string">.Values.auth.tls.enabled</span> }}
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">secret:</span>
+        <span class="hljs-attr">name:</span> {{ <span class="hljs-string">printf</span> <span class="hljs-string">"%s"</span> <span class="hljs-string">(tpl</span> <span class="hljs-string">.Values.auth.tls.jksSecret</span> <span class="hljs-string">$)</span> }}
+    {{<span class="hljs-bullet">-</span> <span class="hljs-string">end</span> }}
+{{<span class="hljs-bullet">-</span> <span class="hljs-string">end</span> }}
+</code></pre>
+<h3>jks가 꼭 필요한가?</h3>
+<p>위에서 말했 듯 MSK는 jks파일이 전혀 필요없다. 이 chart는 일반적인 kafka broker를 대상으로 연결할 때 필요한 상황을 require하고 있다.</p>
+<h2>Issue 문의</h2>
+<p>일단 나는 먼저 <a href="https://github.com/bitnami/charts">bitnami chart repo</a>에 가서 Issue로 먼저 등록하여 현재 내 상황과 문제점을 report했다.</p>
+<p><a href="https://github.com/bitnami/charts/issues/35731">Issue #35731</a></p>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/create-issue.png" alt="create-issue"></p>
+<h3>Issue 답변</h3>
+<p>Issue에 달린 답변은 너무 명확했다.</p>
+<blockquote>
+<p>Issue를 올려주고 참여해줘서 고맙다. 만약 해결책을 제시하고 싶으면 가이드라인을 읽고 PR을 올려라.</p>
+</blockquote>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/issue-comment.png" alt="issue-comment"></p>
+<p>나는 내가 해결책을 바라고 어떻게 해결할 수 있는지에 대해서 얻고 싶었는데 오히려 내가 해결하라는 답변을 받은 것 같아 조금 당황스러웠다.</p>
+<h2>Issue Solved</h2>
+<p>일단 chart의 value만을 수정하는 것으로는 내가 해결할 수 있는 방법이 없는 것 같았다. 결국 내가 직접 chart를 수정해서 내 k8s에 배포했고 해당 변경사항을 PR로 올렸다.</p>
+<h3>Fork Repo</h3>
+<p>일단 모든 contribution 방식인 repo fork를 먼저 했다. <a href="https://github.com/comstering/charts">Fork-Repository</a></p>
+<h3>Fixed chart</h3>
+<p>그리고 브랜치를 새로 파서 helm chart를 수정했다. 수정 방향은 아래와 아래와 같이 잡았다.</p>
+<ol>
+<li>jksSecret이라는 value를 optional로 입력하고 싶다.</li>
+<li>기존의 values 형태를 수정하지 않게 하고 싶다.</li>
+</ol>
+<p>2번을 넣은 이유는 values에 추가해야되는 값이 늘어나면 그 values에 대해서 설명을 README에 추가해야되고 사용성에도 더 안좋아질 것 같아서였다.</p>
+<p>일단 validate error가 발생했던 Notes.txt 부분의 검증 부분에서 더이상 이 문제로 검증되지 않도록 검증 로직을 제거했다.</p>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/chart-fix-notes.png" alt="chart-fix-notes"></p>
+<p>그리고 statefulset.yaml의 모든 jks 파일 사용 부분에 조건을 추가시켰다. security.protocol에 SSL이 포함되었을 때만이 아니라 jksSecret이 명시되었을 때의 조건도 추가했다.</p>
+<p>즉, security.protocol이 SSL을 포함하면서 jksSecret도 값이 있어야 jsk파일에 관련된 resource 정의가 되도록 설정했다.</p>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/chart-fix-statefulset.png" alt="issue-comment"></p>
+<h3><a href="https://github.com/bitnami/charts/pull/35772">Pull Request #35772</a></h3>
+<p>위 변경사항으로 Pull Request를 만들었다. bitnami chart에서 조금 독특했던 부분은 Chart의 버전을 contributor가 직접 올리는 것이었다.</p>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/chart-bump-comment.png" alt="chart-bump-comment"></p>
+<p>그래서 내가 직접 minor version을 올렸다.</p>
+<p><img src="/images/posts/contents/bitnami-helm-chart-contribute/chart-bump.png" alt="chart-bump"></p>
+<h2>Contribute</h2>
+<p>생각보다 Review 속도가 빨라서 놀랐다. Issue와 PR에 들어가서 작성 시간을 보면 알 수 있겠지만 처음 Bug Issue를 올리고 하루만에 comment가 달렸고 다음 날(오늘)에 helm chart를 수정해서 PR을 올렸다.</p>
+<p>PR이 생성되고 1시간 정도만에 Chart.yaml의 버전업에 대한 코멘트가 달렸고 오늘 저녁 10시 경에 바로 maintainer로 부터 approve를 받고 머지가 되었다.</p>
+<h3>후기</h3>
+<p>이번이 2번째 open source에 기여였다. 이전에는 그저 UI의 오타를 수정하는 정도의 contribution이었다면 이번에는 실제 helm chart 배포에 문제가 발생하는 부분을 수정하고 contribution했다는게 조금 다른 점이면서 좋았던 점이었다.</p>
+<p>open source에 기여한다는게 어떤 의미를 가지고 어떻게 다가와질지는 모르겠지만 이런 contribution을 하나씩 해보는 경험이 되게 좋은 것 같다.</p>5:["$","div",null,{"className":"max-w-4xl mx-auto p-4 sm:p-8","children":[["$","div",null,{"className":"mb-8","children":["$","$Le",null,{"href":"/","className":"text-accent hover:underline flex items-center","children":[["$","svg",null,{"className":"w-4 h-4 mr-1","fill":"none","stroke":"currentColor","viewBox":"0 0 24 24","xmlns":"http://www.w3.org/2000/svg","children":["$","path",null,{"strokeLinecap":"round","strokeLinejoin":"round","strokeWidth":"2","d":"M10 19l-7-7m0 0l7-7m-7 7h18"}]}],"Back to home"]}]}],["$","h1",null,{"className":"text-4xl font-extrabold text-foreground mb-4 leading-tight","children":"Bitnami helm chart open source contribute"}],["$","p",null,{"className":"text-lg text-muted-foreground mb-6","children":"2025-08-13"}],["$","div",null,{"className":"mb-6 flex flex-wrap gap-2","children":[["$","span","project",{"className":"bg-blue-600/10 text-blue-400 px-2 py-0.5 rounded text-xs font-medium border border-blue-600/20","children":"project"}],["$","span","infra",{"className":"bg-blue-600/10 text-blue-400 px-2 py-0.5 rounded text-xs font-medium border border-blue-600/20","children":"infra"}],["$","span","backend",{"className":"bg-blue-600/10 text-blue-400 px-2 py-0.5 rounded text-xs font-medium border border-blue-600/20","children":"backend"}]]}],["$","article",null,{"className":"prose lg:prose-xl prose-lg dark:prose-invert max-w-none","children":["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$f"}}]}],["$","div",null,{"className":"mt-16 pt-8 border-t border-card","children":[["$","h2",null,{"className":"text-2xl font-bold text-foreground mb-6","children":"Comments"}],["$","$L10",null,{"repo":"comstering/comstering.github.io","repoId":"MDEwOlJlcG9zaXRvcnkzNjI0MjQ3NDk=","category":"Announcements","categoryId":"MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTQ4OTYw","mapping":"pathname","strict":"0","reactionsEnabled":"1","emitMetadata":"0","inputPosition":"top","theme":"dark_high_contrast","lang":"ko","loading":"lazy"}]]}]]}]
+a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+7:null
+8:null
+c:[["$","title","0",{"children":"Bitnami helm chart open source contribute"}],["$","meta","1",{"name":"description","content":"두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!"}],["$","meta","2",{"name":"keywords","content":"project, kafka, open source, contribute, helm, schema registry, k8s"}],["$","meta","3",{"property":"og:title","content":"Bitnami helm chart open source contribute"}],["$","meta","4",{"property":"og:description","content":"두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!"}],["$","meta","5",{"property":"og:url","content":"https://comstering.github.io/posts/bitnami-helm-chart-contribute"}],["$","meta","6",{"property":"og:image","content":"https://comstering.github.io/confluent.png"}],["$","meta","7",{"property":"og:type","content":"article"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Bitnami helm chart open source contribute"}],["$","meta","10",{"name":"twitter:description","content":"두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!"}],["$","meta","11",{"name":"twitter:image","content":"https://comstering.github.io/confluent.png"}],["$","link","12",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"1024x1024"}]]
