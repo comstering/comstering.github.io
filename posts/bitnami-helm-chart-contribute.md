@@ -11,7 +11,7 @@ thumbnail: "confluent.png"
 
 ![helm-install-error](/images/posts/contents/bitnami-helm-chart-contribute/helm-install-error.png)
 
-bitnami의 helm chart를 사용해서 schema-registry를 배포하려고 했더니 위와 같은 에러가 났다. 로그에서 보인 문제는 jsk secret이 설정되어 있지 않다는 것!
+bitnami의 helm chart를 사용해서 schema-registry를 배포하려고 했더니 위와 같은 에러가 났다. 로그에서 보인 문제는 jks secret이 설정되어 있지 않다는 것!
 
 ### helm values
 
@@ -84,7 +84,7 @@ MSK는 mTLS를 하지 않는다. 기본적으로 암호화된 통신을 진행�
 
 ## Helm chart 문제점
 
-helm chart의 문제점은 명확하다. kafka와의 통신에서 security.protocol에 SSL이 있으면 jsk를 필수 값으로 입력받도록 chart가 구성되어 있다.
+helm chart의 문제점은 명확하다. kafka와의 통신에서 security.protocol에 SSL이 있으면 jks를 필수 값으로 입력받도록 chart가 구성되어 있다.
 
 ```txt
 // NOTES.txt
@@ -165,7 +165,7 @@ Issue에 달린 답변은 너무 명확했다.
 
 그리고 statefulset.yaml의 모든 jks 파일 사용 부분에 조건을 추가시켰다. security.protocol에 SSL이 포함되었을 때만이 아니라 jksSecret이 명시되었을 때의 조건도 추가했다.
 
-즉, security.protocol이 SSL을 포함하면서 jksSecret도 값이 있어야 jsk파일에 관련된 resource 정의가 되도록 설정했다.
+즉, security.protocol이 SSL을 포함하면서 jksSecret도 값이 있어야 jks파일에 관련된 resource 정의가 되도록 설정했다.
 
 ![issue-comment](/images/posts/contents/bitnami-helm-chart-contribute/chart-fix-statefulset.png)
 
