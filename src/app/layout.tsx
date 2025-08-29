@@ -15,6 +15,13 @@ export const metadata: Metadata = {
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
   <html lang="ko">
+    <head>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2657417531473772"
+        crossOrigin="anonymous"
+      ></script>
+    </head>
     <body
       className={`${inter.className} bg-white text-black dark:bg-zinc-900 dark:text-white`}
     >
