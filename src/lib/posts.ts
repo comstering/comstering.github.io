@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypeHighlight from "rehype-highlight";
+import rehypeExternalLinks from "rehype-external-links";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
@@ -91,6 +92,10 @@ export const getPostData = async (id: string): Promise<PostMetadata> => {
     .use(remarkRehype)
     .use(rehypeHighlight, { detect: true })
     .use(rehypeStringify)
+    .use(rehypeExternalLinks, {
+      target: "_blank",
+      rel: "nofollow",
+    })
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
