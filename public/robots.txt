@@ -2,8 +2,5 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://comstering.github.io/
-
 # Sitemaps
 Sitemap: https://comstering.github.io/sitemap.xml
