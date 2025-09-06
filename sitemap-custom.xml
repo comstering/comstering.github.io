@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap>
+<loc>https://comstering.github.io/about</loc>
+<loc>https://comstering.github.io</loc>
+<loc>https://comstering.github.io/posts/apply-aws-iac</loc>
+<loc>https://comstering.github.io/posts/bitnami-helm-chart-contribute</loc>
+<loc>https://comstering.github.io/posts/create-eks</loc>
+<loc>https://comstering.github.io/posts/custom-networking-karpenter-eni-troubleshooting</loc>
+<loc>https://comstering.github.io/posts/eks-custom-networking</loc>
+<loc>https://comstering.github.io/posts/first-contribute-opensource</loc>
+<loc>https://comstering.github.io/posts/implement-my-site</loc>
+<loc>https://comstering.github.io/posts/install-cilium-eks</loc>
+<loc>https://comstering.github.io/posts/install-karpenter</loc>
+<loc>https://comstering.github.io/posts/introduce-cilium-cni</loc>
+<loc>https://comstering.github.io/posts/karpenter</loc>
+<loc>https://comstering.github.io/posts/troubleshoot-cilium</loc>
+</sitemap>
+</sitemapindex>
