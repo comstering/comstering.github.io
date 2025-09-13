@@ -170,6 +170,22 @@ export default function AboutPage() {
 
   const activities: Activity[] = [
     {
+      title: "Schema Registry helm chart contribution",
+      period: "2025.08",
+      description:
+        "SASL_SSL 인증 과정에서 mTLS 인증이 필수인 부분을 선택적으로 변경하는 데 기여했습니다.",
+      link: "https://github.com/bitnami/charts/pull/35772",
+      linkText: "GitHub Pull Request",
+    },
+    {
+      title: "kafbat-ui contribution",
+      period: "2025.07",
+      description:
+        "kafbat-ui의 일부 문구를 수정하여 UX를 개선하는 데 기여했습니다.",
+      link: "https://github.com/kafbat/kafka-ui/pull/1205",
+      linkText: "GitHub Pull Request",
+    },
+    {
       title: "Lomeone",
       period: "2024.01 – Present",
       description:
