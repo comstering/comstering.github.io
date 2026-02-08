@@ -8,9 +8,9 @@ const Home = () => {
   return (
     <div className="space-y-16 max-w-7xl mx-auto">
       <section className="text-center py-12 space-y-6">
-        <h1 className="text-6xl sm:text-8xl font-black tracking-tight text-gray-900 dark:text-white">
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-gray-900 dark:text-white leading-tight">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600">
-            Dev.Archives
+            Comstering&apos;s Dev Notes
           </span>
         </h1>
         <p className="max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 leading-relaxed font-medium">

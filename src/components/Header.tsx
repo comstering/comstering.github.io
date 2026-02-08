@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
                 D
               </div>
               <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">
-                Dev<span className="text-sky-500">Log</span>
+                Dev<span className="text-sky-500">Notes</span>
               </span>
             </Link>
           </div>

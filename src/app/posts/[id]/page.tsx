@@ -123,8 +123,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               Written by Comstering
             </h4>
             <p className="text-sm text-gray-500">
-              프론트엔드 개발자 및 테크니컬 라이터입니다. Software Engineer,
-              Infra & DevOps Engineer
+              개발과 운영의 경계를 좁히는 클라우드 네이티브 엔지니어입니다.
             </p>
           </div>
         </div>
