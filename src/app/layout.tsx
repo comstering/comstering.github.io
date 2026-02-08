@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
 import { ReactNode } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "Comstering's Dev Notes",
@@ -23,10 +22,23 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
       ></script>
     </head>
     <body
-      className={`${inter.className} bg-white text-black dark:bg-zinc-900 dark:text-white`}
+      className={
+        "min-h-screen flex flex-col font-sans transition-colors duration-500 ease-in-out bg-slate-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100"
+      }
     >
-      <Header />
-      <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+      <ThemeProvider>
+        {/* Background Ornaments */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+          <div className="absolute -top-40 -left-40 w-80 h-80 bg-sky-500/10 dark:bg-sky-500/5 rounded-full blur-[100px]"></div>
+          <div className="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[120px]"></div>
+        </div>
+
+        <Header />
+        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+          {children}
+        </main>
+        <Footer />
+      </ThemeProvider>
     </body>
   </html>
 );

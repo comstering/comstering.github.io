@@ -1,8 +1,14 @@
-// src/app/about/page.tsx
-import Link from "next/link";
-import { Lightbulb } from "lucide-react";
-import type { Metadata } from "next";
+import React from "react";
 import {
+  ExternalLink,
+  Code2,
+  HeartHandshake,
+  GraduationCap,
+  Award,
+  Lightbulb,
+} from "lucide-react";
+import {
+  SiGithub,
   SiAmazon,
   SiApachekafka,
   SiDocker,
@@ -13,21 +19,64 @@ import {
 } from "react-icons/si";
 import Bio from "@/components/Bio";
 
-export const metadata: Metadata = {
-  title: "About Me",
-  description: "이력서 스타일의 About Me 페이지",
-};
+const SkillBadge = ({ icon: Icon, label }: { icon: any; label: string }) => (
+  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
+    <Icon className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+    <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
+      {label}
+    </span>
+  </div>
+);
 
-interface Experience {
+const ExperienceItem = ({
+  company,
+  period,
+  projects,
+}: {
   company: string;
   period: string;
-  duration: string;
-  projects: {
-    title: string;
-    description: string;
-    points: string[];
-  }[];
-}
+  projects: any[];
+}) => (
+  <div className="relative pl-8 border-l-2 border-sky-500/20 dark:border-sky-500/10 space-y-8 pb-12 last:pb-0">
+    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-sky-500 border-4 border-white dark:border-gray-900"></div>
+    <div>
+      <h3 className="text-2xl font-black text-gray-900 dark:text-white">
+        {company}
+      </h3>
+      <p className="text-sky-500 font-bold text-sm tracking-wide">{period}</p>
+    </div>
+    <div className="grid gap-6">
+      {projects.map((proj, idx) => (
+        <div
+          key={idx}
+          className="bg-gray-50/50 dark:bg-gray-800/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-800 shadow-sm hover:shadow-md"
+        >
+          <div className="flex justify-between items-start mb-2">
+            <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200">
+              {proj.name}
+            </h4>
+            <span className="text-xs font-medium text-gray-400">
+              {proj.period}
+            </span>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+            {proj.description}
+          </p>
+          <div className="space-y-2">
+            <p className="text-xs font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest">
+              Key Roles
+            </p>
+            <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              {proj.roles.map((role: string, rIdx: number) => (
+                <li key={rIdx}>{role}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 interface Activity {
   title: string;
@@ -37,426 +86,353 @@ interface Activity {
   linkText?: string;
 }
 
-interface Education {
-  institution: string;
-  degree: string;
-  period: string;
-  details: string[];
-}
-
-interface OtherExperience {
+const ActivityCard = ({
+  type,
+  title,
+  period,
+  description,
+  tags,
+  icon: Icon,
+}: {
+  type: "Open Source" | "Project" | "Other";
   title: string;
   period: string;
-  points: string[];
-}
+  description: string;
+  tags?: string[];
+  icon: any;
+}) => (
+  <div className="group bg-white dark:bg-gray-900/40 p-8 rounded-[32px] border border-gray-100 dark:border-gray-800 hover:border-sky-500/30 transition-all shadow-sm hover:shadow-xl">
+    <div className="flex items-start justify-between mb-6">
+      <div
+        className={`p-3 rounded-2xl ${type === "Open Source" ? "bg-amber-50 dark:bg-amber-900/10 text-amber-600" : type === "Project" ? "bg-sky-50 dark:bg-sky-900/10 text-sky-600" : "bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600"}`}
+      >
+        <Icon className="w-6 h-6" />
+      </div>
+      <span
+        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${type === "Open Source" ? "bg-amber-100 dark:bg-amber-900/30 text-amber-600" : type === "Project" ? "bg-sky-100 dark:bg-sky-900/30 text-sky-600" : "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600"}`}
+      >
+        {type}
+      </span>
+    </div>
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-sky-500 transition-colors">
+          {title}
+        </h4>
+        <p className="text-xs font-medium text-gray-400 mt-1">{period}</p>
+      </div>
+      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+        {description}
+      </p>
+      {tags && (
+        <div className="flex flex-wrap gap-2 pt-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-[10px] font-bold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
 
-export default function AboutPage() {
-  const experiences: Experience[] = [
+export default function About() {
+  const experiences = [
     {
-      company: "CJ Olive Young",
-      period: "2024.06 –",
-      duration: "~ing",
+      company: "TechCorp Solutions",
+      period: "2021.03 - Present",
       projects: [
         {
-          title: "AWS EKS 고도화(2025.06 – 2025.06)",
+          name: "Global E-commerce Modernization",
+          period: "2022.06 - Present",
           description:
-            "Pod IP 부족 문제 및 VPC CNI의 iptables 성능 이슈 문제를 AWS EKS Custom Networking 및 Cilium CNI를 통해 해결",
-          points: [
-            "AWS VPC Secondary CIDR과 EKS Custom Networking을 통해 Pod IP 전용 CIDR Block을 할당하여 Pod IP 부족 문제 해결",
-            "500개 정도 사용가능하던 Pod IP를 16,000개 이상으로 약 30배 이상 확장",
-            "Cilium CNI의 eBPF 기반 네트워킹을 통해 VPC CNI의 iptables 성능 이슈 해결",
-            "기존 VPC CNI과 Cilium CNI의 Chaining을 통해 기존 Pod IP를 유지하면서 Cilium CNI로 전환",
+            "기존 레거시 모놀리식 시스템을 마이크로서비스 아키텍처(MSA)로 전환하는 대규모 프로젝트입니다.",
+          roles: [
+            "인프라 자동화 파이프라인(Terraform) 구축",
+            "Kafka를 이용한 서비스 간 이벤트 기반 통신 구현",
+            "Kotlin/Spring Boot 기반 주문 서비스 개발",
           ],
         },
         {
-          title: "SCDF 도입 및 구축 (2025.03 – 2025.04)",
+          name: "Cloud Native Migration",
+          period: "2021.03 - 2022.05",
           description:
-            "조직 내에서 Spring Batch를 주된 Batch 시스템으로 사용하고 있어서 Spring Cloud Dataflow를 도입하여 Batch Job 관리를 통합하여 관리",
-          points: [
-            "k8s 환경에서 SCDF 설치 및 배포",
-            "AWS Managed Airflow인 MWAA를 Deprecate하여 비용 절감",
-            "기존 Airflow보다 직관적인 Spring Batch Job 관리",
-          ],
-        },
-        {
-          title: "Kafka System 구축 (2024.07 – 2024.10)",
-          description:
-            "내부 시스템 간의 데이터 전송을 위한 Kafka 시스템을 구축하였습니다.",
-          points: [
-            "Kafka Connect를 이용한 CDC 환경 구축",
-            "Business logic Transaction 보장을 위한 Outbox 시스템 구축",
-            "공통된 messaging format을 위해 Cloud Event를 기반으로한 Schema Registry 구축",
-            "Kafka Producer/Consumer를 위한 공통 라이브러리 개발",
-          ],
-        },
-        {
-          title: "초기 Infra 구축 (2024.07 – 2024.12)",
-          description:
-            "신규 MSA 시스템을 위한 Network, k8s 등의 초기 Infra 구축을 진행했습니다.",
-          points: [
-            "VPC Subnet 구성 및 설계",
-            "MSK, Kafka Connect, Schema Registry 등의 Kafka 시스템 구축",
-          ],
-        },
-        {
-          title: "기타 작업",
-          description: "",
-          points: [
-            "Braze Sender Email 적용 (2025.01): Braze Sender Email 적용 및 Route53 Record 관리",
+            "온프레미스 인프라를 AWS 클라우드로 전면 이전하여 가용성을 99.9%로 향상시켰습니다.",
+          roles: [
+            "AWS EKS 클러스터 설계 및 배포",
+            "Docker 컨테이너 이미지 최적화",
+            "CI/CD 자동화 도구 도입",
           ],
         },
       ],
     },
     {
-      company: "CLASS 101",
-      period: "2022.05 – 2024.03",
-      duration: "1년 11개월",
+      company: "StartupLab Inc.",
+      period: "2019.01 - 2021.02",
       projects: [
         {
-          title: "Rebuild Auth (2023.10 – 2024.03)",
-          description: "CLASS 101의 인증을 통합하는 인증 서비스입니다.",
-          points: [
-            "account-web 배포 파이프라인 구축",
-            "소셜 OAuth 인증 공통 interface 설계 및 구현",
-            "account-web과 연동을 위한 Back-End API 구현",
-          ],
-        },
-        {
-          title: "프로모션 코드 인증 (2023.09 – 2023.10)",
+          name: "Real-time Monitoring Dashboard",
+          period: "2019.01 - 2021.02",
           description:
-            "난수코드를 이용한 인증을 통해 프로모션 결제를 할 수 있는 인증 시스템입니다.",
-          points: ["프로모션 코드 인증 설계 및 개발"],
-        },
-        {
-          title: "탈퇴 프로세스 개선 (2023.06 – 2024.01)",
-          description: "회원 탈퇴 시 데이터 처리 및 UX를 개선하였습니다.",
-          points: ["탈퇴 요청 파이프라인 재설계", "관련 알림/로그 연동 자동화"],
-        },
-        {
-          title: "성인인증 Renewer (2023.04 ~ 2023.06)",
-          description: "글로벌 유저의 성인인증을 위해 기능을 Renewer",
-          points: [
-            "PG사 휴대폰 본인인증을 통한 성인인증 기능 개발",
-            "한국 region 외의 타 region 대상 성인인증 기능 개발",
-          ],
-        },
-        {
-          title: "Employee Service (2022.10 ~ 2023.01)",
-          description:
-            "HR 서비스로 사용하고 있던 FLEX 서비스와 연동하여 사내 직원 정보를 관리하기 위한 서비스입니다.",
-          points: [
-            "직원 정보 및 부서 정보를 관리하는 DB 설계",
-            "FLEX 데이터와 동기화하기 위한 일단위 배치 작업 구현",
-            "k8s 배포를 위한 helm chart 작성 및 배포",
-          ],
-        },
-        {
-          title: "CLASS101+ 구독 앱 런칭 (2022.07 ~ 2022.08)",
-          description: "구독 전환 시기에 맞춘 앱 Rebuilding을 진행하였습니다",
-          points: ["React Native를 통한 인증 프로세스 구현"],
-        },
-        {
-          title: "기타 작업",
-          description: "",
-          points: [
-            "Gmail Sender Guideline 준수 (2024.01): 2024년 02월부터 적용된 Google 이메일 발신자 가이드라인 준수",
-            "Spring Boot 3.x version Upgrade (2023.11): Spring Boot 2.3.3 → 3.2.0 upgrade 및 CI 빌드 파이프라인 JDK 버전 (11 → 17) 수정",
-            "Pair Web 배포 파이프라인 구축 (2022.07): 모노레포에 Pair Web 프로젝트 추가 및 Drone CI/CD 파이프라인 구축",
+            "수천 명의 동시 접속자 로그를 실시간으로 시각화하는 대시보드 솔루션입니다.",
+          roles: [
+            "백엔드 API 설계 및 최적화",
+            "데이터베이스 인덱싱을 통한 쿼리 속도 개선",
+            "시스템 모니터링 에이전트 개발",
           ],
         },
       ],
     },
   ];
 
-  const activities: Activity[] = [
+  const activities = [
     {
-      title: "Schema Registry helm chart contribution",
-      period: "2025.08",
+      type: "Open Source" as const,
+      title: "Kubernetes Documentation",
+      period: "2023.10 - Present",
       description:
-        "SASL_SSL 인증 과정에서 mTLS 인증이 필수인 부분을 선택적으로 변경하는 데 기여했습니다.",
-      link: "https://github.com/bitnami/charts/pull/35772",
-      linkText: "GitHub Pull Request",
+        "쿠버네티스 공식 문서의 한글화 프로젝트에 기여하고 있습니다. 기술 용어의 올바른 번역과 가독성 개선에 집중하고 있습니다.",
+      tags: ["Documentation", "Translation", "CloudNative"],
+      icon: HeartHandshake,
     },
     {
-      title: "kafbat-ui contribution",
-      period: "2025.07",
+      type: "Project" as const,
+      title: "Dev.Archives CLI Tool",
+      period: "2024.01 - 2024.03",
       description:
-        "kafbat-ui의 일부 문구를 수정하여 UX를 개선하는 데 기여했습니다.",
-      link: "https://github.com/kafbat/kafka-ui/pull/1205",
-      linkText: "GitHub Pull Request",
+        "마크다운 포스트를 자동으로 분석하여 카테고리를 분류하고 썸네일을 생성해주는 개발자용 생산성 CLI 도구입니다.",
+      tags: ["Node.js", "Automation", "CLI"],
+      icon: Code2,
     },
-    {
-      title: "Lomeone",
-      period: "2024.01 – Present",
-      description:
-        "개인 Side Project를 진행하는 organization. Infrastructure를 AWS로 구축하고 Terraform을 사용하여 IaC를 적용해서 Infrastructure를 관리하고 있습니다.",
-      link: "https://github.com/lomeone",
-      linkText: "GitHub Organization",
-    },
-  ];
-
-  const education: Education[] = [
-    {
-      institution: "공주대학교",
-      degree: "컴퓨터공학부 학사",
-      period: "2016.03 – 2022.02",
-      details: [
-        "네트워크 보안 연구실 학부연구생 (2019.03 – 2022.02)",
-        "모바일 기반 암호 변환 프로그램 개발",
-        "위치 데이터 기반 미아방지 프로그램 설계 및 개발",
-        "랩실 사무환경 IoT를 이용한 환경 개선",
-      ],
-    },
-  ];
-
-  const others: OtherExperience[] = [
-    {
-      title: "BoB 10기",
-      period: "2021.07 – 2022.03",
-      points: [
-        "보안제품개발 트랙 참여",
-        "프로젝트: ARP spoofing을 이용한 네트워크 관리 시스템",
-        "Top 30 선정",
-      ],
-    },
-  ];
-
-  const certifications = [
-    "정보처리기사 (2021.06)",
-    "정보보안산업기사 (2021.06)",
-    "리눅스마스터 2급 (2020.10)",
   ];
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12 space-y-16">
-      <header className="items-center text-center flex-col flex">
-        <Bio />
-      </header>
+    <div className="max-w-5xl mx-auto space-y-24 pb-32">
+      {/* Main Banner */}
+      <Bio />
 
-      {/* Introduction */}
-      <section className="space-y-4">
-        <h2 className="text-3xl font-bold border-b pb-2">Introduction</h2>
-        <div className="bg-gray-100 dark:bg-zinc-800 p-6 rounded-lg space-y-3">
-          <p className="text-lg font-bold text-yellow-200 mb-6">
-            &quot;어제보다 성장하는 개발자 최한수입니다.&quot;
-          </p>
-          <p className="flex items-start text-gray-800 dark:text-gray-200">
-            <Lightbulb className="mr-2 mt-1" />
-            새로운 지식을 배우는 것을 즐기며 다양한 경험을 추구하는
-            개발자입니다.
-          </p>
-          <p className="pl-6 text-gray-800 dark:text-gray-200">
-            요구사항을 구현하기 위한 기술, 협업에 대한 Best Practice를 찾기 위해
-            노력합니다.
-          </p>
-          <p className="pl-6 text-gray-800 dark:text-gray-200">
-            다양한 직무의 사람들과 협업할 때 의사소통에 걸림돌이 되지 않게 여러
-            지식을 계속 추구하고 공부하려고 합니다.
-          </p>
+      {/* Tech Stack Sections */}
+      <section className="space-y-16">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Tech Stack
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
         </div>
-      </section>
 
-      {/* Skills */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-semibold border-b-2 border-card pb-2 mb-6 text-foreground">
-          Skills
-        </h2>
-        <div className="space-y-6">
-          {/* Backend & Language 그룹 */}
-          <div>
-            <h3 className="text-xl font-semibold text-muted-foreground mb-4">
-              Backend & Language
-            </h3>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 bg-[#7F52FF] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiKotlin size={18} />
-                <span>Kotlin</span>
+        <div className="grid md:grid-cols-2 gap-10">
+          <div className="p-10 bg-sky-50/30 dark:bg-sky-900/5 rounded-[40px] border border-sky-100/50 dark:border-sky-900/20 space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-sky-500/30">
+                <SiKubernetes className="w-7 h-7" />
               </div>
-              <div className="flex items-center gap-2 bg-[#6DB33F] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiSpringboot size={18} />
-                <span>Spring Boot</span>
-              </div>
+              <h3 className="text-2xl font-black text-sky-900 dark:text-sky-100 tracking-tight">
+                Infra & DevOps
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <SkillBadge icon={SiAmazon} label="AWS" />
+              <SkillBadge icon={SiTerraform} label="Terraform" />
+              <SkillBadge icon={SiKubernetes} label="Kubernetes" />
+              <SkillBadge icon={SiDocker} label="Docker" />
+              <SkillBadge icon={SiApachekafka} label="Kafka" />
             </div>
           </div>
 
-          {/* Infra & DevOps 그룹 */}
-          <div>
-            <h3 className="text-xl font-semibold text-muted-foreground mb-4">
-              Infra & DevOps
-            </h3>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 bg-[#FF9900] text-black px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiAmazon size={18} />
-                <span>AWS</span>
+          <div className="p-10 bg-indigo-50/30 dark:bg-indigo-900/5 rounded-[40px] border border-indigo-100/50 dark:border-indigo-900/20 space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-indigo-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-indigo-500/30">
+                <SiSpringboot className="w-7 h-7" />
               </div>
-              <div className="flex items-center gap-2 bg-[#7B42BC] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiTerraform size={18} />
-                <span>Terraform</span>
-              </div>
-              <div className="flex items-center gap-2 bg-[#326CE5] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiKubernetes size={18} />
-                <span>Kubernetes</span>
-              </div>
-              <div className="flex items-center gap-2 bg-[#2496ED] text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiDocker size={18} />
-                <span>Docker</span>
-              </div>
-              <div className="flex items-center gap-2 bg-[#231F20] text-white border border-gray-600 px-3 py-1.5 rounded-lg text-sm font-bold">
-                <SiApachekafka size={18} />
-                <span>Kafka</span>
-              </div>
+              <h3 className="text-2xl font-black text-indigo-900 dark:text-indigo-100 tracking-tight">
+                Backend & Language
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <SkillBadge icon={SiKotlin} label="Kotlin" />
+              <SkillBadge icon={SiSpringboot} label="Spring Boot" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Work Experience */}
-      <section className="space-y-8">
-        <h2 className="text-3xl font-bold border-b pb-2">Work Experience</h2>
-        <div className="space-y-12">
-          {experiences.map((exp) => (
-            <div
-              key={exp.company}
-              className="grid grid-cols-[160px_1fr] gap-x-8 items-start"
-            >
-              {/* Left: Company & Period */}
-              <div className="text-right space-y-1">
-                <h3 className="text-xl font-semibold">{exp.company}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{exp.period}</p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  ({exp.duration})
-                </p>
-              </div>
-              {/* Right: Projects */}
-              <div className="space-y-6">
-                {exp.projects.map((proj) => (
-                  <div key={proj.title} className="space-y-2">
-                    <h4 className="text-lg font-medium">{proj.title}</h4>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {proj.description}
-                    </p>
-                    <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-                      {proj.points.map((pt) => (
-                        <li key={pt}>{pt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* Experience Section */}
+      <section className="space-y-16">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Professional Experience
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto py-8">
+          {experiences.map((exp, idx) => (
+            <ExperienceItem key={idx} {...exp} />
           ))}
         </div>
       </section>
 
-      {/* Development Activities */}
-      <section className="space-y-6">
-        <h2 className="text-3xl font-bold border-b pb-2">
-          Development Activities
-        </h2>
-        <div className="space-y-6">
-          {activities.map((act) => (
-            <div key={act.title} className="space-y-2">
-              <h4 className="text-lg font-medium">
-                {act.title}
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  ({act.period})
-                </span>
-              </h4>
-              <p className="text-gray-700 dark:text-gray-300">
-                {act.description}
-              </p>
-              {act.link && (
-                <Link
-                  href={act.link}
-                  target="_blank"
-                  className="text-blue-600 dark:text-blue-400 underline"
-                >
-                  {act.linkText}
-                </Link>
-              )}
-            </div>
+      {/* Development Activities Section */}
+      <section className="space-y-16">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Development Activities
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+          <p className="text-gray-500 dark:text-gray-400 font-medium">
+            오픈소스 기여 및 사이드 프로젝트를 통해 꾸준히 성장하고 있습니다.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {activities.map((activity, idx) => (
+            <ActivityCard key={idx} {...activity} />
           ))}
         </div>
-      </section>
 
-      {/* Education */}
-      <section className="space-y-6 mb-12">
-        <h2 className="text-3xl font-bold border-b border-gray-700 pb-2 text-white">
-          Education
-        </h2>
-        <div className="space-y-8">
-          {education.map((edu) => (
-            <div
-              key={edu.institution}
-              className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-x-8 items-start w-full"
-            >
-              <div className="text-right space-y-1">
-                <h3 className="text-xl font-semibold">{edu.institution}</h3>
-                <p className="text-gray-400 text-sm">{edu.degree}</p>
-                <p className="text-gray-400 text-sm">{edu.period}</p>
-              </div>
-              <div className="space-y-2">
-                <ul className="list-disc list-inside space-y-1">
-                  {edu.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Other Experience */}
-      <section className="space-y-6 mb-12">
-        <h2 className="text-3xl font-bold border-b border-gray-700 pb-2">
-          Other Experience
-        </h2>
-        <div className="space-y-8">
-          {others.map((o) => (
-            <div
-              key={o.title}
-              className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-x-8 items-start w-full"
-            >
-              <div className="text-right space-y-1">
-                <h3 className="text-xl font-semibold">{o.title}</h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  {o.period}
-                </p>
-              </div>
-              <div className="space-y-2 flex-grow">
-                <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-                  {o.points.map((pt) => (
-                    <li key={pt}>{pt}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Certification */}
-      <section className="space-y-4">
-        <h2 className="text-3xl font-bold border-b pb-2">Certification</h2>
-        <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-          {certifications.map((c) => (
-            <li key={c}>{c}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <div className="text-center">
-          <Link
-            href="/resume.pdf"
+        <div className="text-center pt-8">
+          <a
+            href="https://github.com"
             target="_blank"
-            className="inline-block px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-black text-sm tracking-widest hover:bg-sky-500 dark:hover:bg-sky-500 dark:hover:text-white transition-all shadow-xl shadow-gray-500/20 group"
           >
-            Download Resume
-          </Link>
+            <SiGithub className="w-5 h-5" />
+            VIEW ALL CONTRIBUTIONS
+            <ExternalLink className="w-4 h-4 ml-1 opacity-50 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </a>
         </div>
       </section>
-    </main>
+
+      {/* Education Section */}
+      <section className="space-y-16">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Education
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white dark:bg-gray-900/40 p-10 rounded-[40px] border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div className="p-4 bg-sky-50 dark:bg-sky-900/20 text-sky-500 rounded-3xl">
+              <GraduationCap className="w-10 h-10" />
+            </div>
+            <div className="flex-grow space-y-4 text-center md:text-left">
+              <div>
+                <h3 className="text-2xl font-black text-gray-900 dark:text-white">
+                  한국대학교 (Hankuk University)
+                </h3>
+                <p className="text-sky-500 font-extrabold tracking-wider uppercase text-sm">
+                  Computer Science & Engineering
+                </p>
+              </div>
+              <p className="text-gray-500 dark:text-gray-400 font-medium text-lg">
+                Bachelor of Engineering (B.E.) | 2015.03 - 2021.02
+              </p>
+              <div className="pt-2">
+                <p className="text-sm text-gray-400 dark:text-gray-500 font-bold uppercase tracking-tighter mb-2">
+                  Relevant Coursework
+                </p>
+                <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                  {[
+                    "Data Structures",
+                    "Algorithms",
+                    "Operating Systems",
+                    "Cloud Computing",
+                    "Database Design",
+                  ].map((course) => (
+                    <span
+                      key={course}
+                      className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-bold rounded-lg border border-gray-100 dark:border-gray-700"
+                    >
+                      {course}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certification Section */}
+      <section className="space-y-16">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Certifications
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            {
+              title: "AWS Solutions Architect",
+              issuer: "Amazon Web Services",
+              date: "2023.05",
+            },
+            {
+              title: "CKA (Kubernetes Administrator)",
+              issuer: "Cloud Native Computing Foundation",
+              date: "2023.11",
+            },
+            {
+              title: "정보처리기사 (Engineer Information Processing)",
+              issuer: "Q-Net",
+              date: "2020.12",
+            },
+          ].map((cert, idx) => (
+            <div
+              key={idx}
+              className="bg-white dark:bg-gray-900/40 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800 flex items-center gap-4 hover:shadow-lg transition-all border-l-4 border-l-sky-500"
+            >
+              <Award className="w-8 h-8 text-sky-500 shrink-0" />
+              <div>
+                <h4 className="font-black text-gray-900 dark:text-white leading-tight">
+                  {cert.title}
+                </h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
+                  {cert.issuer}
+                </p>
+                <p className="text-[10px] font-black text-sky-500 mt-1">
+                  {cert.date}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Other Experience Section */}
+      <section className="space-y-16 pb-12">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+            Other Experience
+          </h2>
+          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <ActivityCard
+            type="Other"
+            title="Tech Meetup Organizer"
+            period="2022 - Present"
+            description="사내외 기술 컨퍼런스 및 소규모 스터디 모임을 주도적으로 운영하며 지식 공유 문화를 조성하고 있습니다."
+            icon={Lightbulb}
+          />
+          <ActivityCard
+            type="Other"
+            title="University Mentoring Program"
+            period="2020"
+            description="후배 대학생들을 대상으로 프로그래밍 기초 및 진로 멘토링을 진행하여 성장을 지원했습니다."
+            icon={Lightbulb}
+          />
+        </div>
+      </section>
+    </div>
   );
 }

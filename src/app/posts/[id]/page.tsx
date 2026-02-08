@@ -1,8 +1,6 @@
-// src/app/posts/[id]/page.tsx
-
-import GiscusComments from "@/components/GiscusComment";
 import { getPostData, getSortedPostsData } from "@/lib/posts";
-import Link from "next/link"; // 뒤로가기 링크를 위한 Link 컴포넌트
+import Image from "next/image";
+import Link from "next/link";
 
 export const generateStaticParams = () => {
   const posts = getSortedPostsData(); // 모든 포스트의 ID를 가져옵니다.
@@ -12,110 +10,111 @@ export const generateStaticParams = () => {
   }));
 };
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
-  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
+const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
   const postData = await getPostData(id);
 
-  return {
-    title: postData.title,
-    description: postData.description || postData.title, // 설명이 없으면 제목 사용
-    keywords: postData.tags ? postData.tags.join(", ") : "", // 태그를 콤마로 구분하여 keywords 메타 태그에 추가
-    openGraph: {
-      // 소셜 미디어 공유를 위한 Open Graph 메타데이터
-      title: postData.title,
-      description: postData.description || postData.title,
-      type: "article",
-      url: `https://comstering.github.io/posts/${postData.id}`, // 실제 도메인으로 변경 필요
-      images: postData.thumbnail
-        ? [{ url: `https://comstering.github.io/${postData.thumbnail}` }]
-        : [], // 썸네일이 있다면 Open Graph 이미지로 추가
-    },
-    // 기타 SEO 관련 메타데이터 추가 가능
-  };
-};
-
-// 개별 포스트 페이지 컴포넌트
-const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
-  const postData = await getPostData(id); // 해당 ID의 포스트 데이터 가져오기
-
-  return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-8">
-      {/* 뒤로가기 버튼 */}
-      <div className="mb-8">
+  if (!postData) {
+    return (
+      <div className="text-center py-32 space-y-6">
+        <h1 className="text-6xl font-black text-gray-200 dark:text-gray-800">
+          404
+        </h1>
+        <p className="text-xl font-medium text-gray-500">
+          포스트를 찾을 수 없습니다.
+        </p>
         <Link
           href="/"
-          className="text-accent hover:underline flex items-center"
+          className="inline-block px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-transform hover:-translate-y-1 shadow-lg shadow-sky-500/20"
         >
-          <svg
-            className="w-4 h-4 mr-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            ></path>
-          </svg>
-          Back to home
+          홈으로 돌아가기
         </Link>
       </div>
+    );
+  }
 
-      {/* 포스트 제목 */}
-      <h1 className="text-4xl font-extrabold text-foreground mb-4 leading-tight">
-        {postData.title}
-      </h1>
-
-      {/* 작성일 */}
-      <p className="text-lg text-muted-foreground mb-6">{postData.date}</p>
-
-      {/* 카테고리 및 태그 표시 (선택 사항: 여기서는 태그를 SEO에만 사용하기로 했으므로, UI에는 카테고리만 표시) */}
-      {postData.categories && postData.categories.length > 0 && (
-        <div className="mb-6 flex flex-wrap gap-2">
-          {postData.categories.map((category) => (
-            <span
-              key={category}
-              className="bg-blue-600/10 text-blue-400 px-2 py-0.5 rounded text-xs font-medium border border-blue-600/20"
+  return (
+    <article className="max-w-3xl mx-auto">
+      {/* Article Header */}
+      <header className="mb-12 space-y-8">
+        <div className="flex justify-center">
+          <Link
+            href="/"
+            className="text-xs font-bold text-sky-500 flex items-center hover:gap-2 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {category}
-            </span>
-          ))}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            BACK TO BLOG
+          </Link>
         </div>
-      )}
 
-      {/* 포스트 내용 (HTML로 렌더링) */}
-      <article className="prose lg:prose-xl prose-lg dark:prose-invert max-w-none">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight">
+            {postData.title}
+          </h1>
+          <div className="flex items-center justify-center gap-4 text-sm text-gray-500 font-medium">
+            <span>{postData.date}</span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span>6 min read</span>
+          </div>
+        </div>
+
+        <div className="rounded-3xl overflow-hidden shadow-2xl shadow-sky-500/10 border border-gray-200 dark:border-gray-800 aspect-[21/9]">
+          <Image
+            src={`/images/posts/thumbnails/${postData.thumbnail}`}
+            alt={postData.title}
+            width={840}
+            height={360}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </header>
+
+      {/* Article Content */}
+      <div className="prose prose-lg dark:prose-invert max-w-none">
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-      </article>
-
-      {/* ▼▼▼ Giscus 댓글 섹션 추가 ▼▼▼ */}
-      <div className="mt-16 pt-8 border-t border-card">
-        {/* 상단 여백 및 구분선 */}
-        <h2 className="text-2xl font-bold text-foreground mb-6">Comments</h2>
-        <GiscusComments
-          repo="comstering/comstering.github.io" // <-- 필수: 본인의 GitHub 유저이름/저장소이름 (예: 'your-username/your-blog-comments')
-          repoId="MDEwOlJlcG9zaXRvcnkzNjI0MjQ3NDk=" // <-- 필수: Giscus 설치 후 제공되는 Repo ID (숫자+문자 조합)
-          category="Announcements" // <-- 필수: Giscus 설치 후 선택한 Discussion 카테고리 이름 (예: 'Comments', 'General')
-          categoryId="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTQ4OTYw" // <-- 필수: Giscus 설치 후 제공되는 Category ID (숫자+문자 조합)
-          mapping="pathname" // 'pathname' (현재 페이지 경로에 매핑) 또는 'url', 'title' 등
-          strict="0" // Strict 매핑 여부 (0 또는 1)
-          reactionsEnabled="1" // 좋아요/이모지 반응 활성화 (0 또는 1)
-          emitMetadata="0" // Giscus 메타데이터 전송 여부 (0 또는 1)
-          inputPosition="top" // 댓글 입력창 위치 (top 또는 bottom)
-          theme="dark_high_contrast" // 'light', 'dark', 'preferred_color_scheme' 등. 저희 테마에 맞추려면 'dark'도 고려
-          lang="ko" // 언어 설정
-          loading="lazy" // 로딩 방식
-        />
       </div>
-    </div>
+
+      {/* Article Footer */}
+      <footer className="mt-20 pt-10 border-t border-gray-100 dark:border-gray-800 flex flex-col items-center gap-8">
+        <div className="flex items-center gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 w-full">
+          <Image
+            src="/profile.png"
+            width={64}
+            height={64}
+            className="w-16 h-16 rounded-full object-cover border-2 border-sky-400"
+            alt="Author"
+          />
+          <div>
+            <h4 className="font-bold text-gray-900 dark:text-white">
+              Written by Comstering
+            </h4>
+            <p className="text-sm text-gray-500">
+              프론트엔드 개발자 및 테크니컬 라이터입니다. Software Engineer,
+              Infra & DevOps Engineer
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/"
+          className="font-bold text-gray-900 dark:text-white hover:text-sky-500 transition-colors"
+        >
+          모든 글 보기 →
+        </Link>
+      </footer>
+    </article>
   );
 };
 

@@ -1,68 +1,22 @@
 // src/app/page.tsx (서버 컴포넌트)
-
 import { getSortedPostsData, PostMetadata } from "@/lib/posts";
 import { PostsBlock } from "@/components/PostsBlock";
-import Image from "next/image";
-import { Mail } from "lucide-react";
-import { SiGithub, SiLinkedin } from "react-icons/si";
-import Link from "next/link";
 
-const BlogHome = () => {
-  // 서버에서 데이터 패칭 (fs 모듈 사용 가능)
+const Home = () => {
   const allPostsData: PostMetadata[] = getSortedPostsData(); // 모든 포스트 데이터
 
   return (
-    <div className="mx-auto p-4 sm:p-8">
-      {/* 블로그 메인 헤더 */}
-
-      <h1 className="sr-only">Comstering&lsquo;s Dev Notes</h1>
-      <div className="flex items-center justify-center">
-        <div className="relative w-full aspect-[3/1] mb-8 max-w-md">
-          <Image
-            src="/blog-logo.png"
-            alt="Comstering's Dev Notes"
-            fill
-            className="object-contain"
-          />
-        </div>
-        <div className="space-x-6 gap-2">
-          <Link
-            href="https://github.com/comstering"
-            target="_blank"
-            aria-label="GitHub"
-            className="flex m-2"
-          >
-            <SiGithub
-              size={20}
-              className="hover:text-gray-900 dark:hover:text-white mr-2"
-            />
-            <span>Github</span>
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/hansu-choi-05775a244"
-            target="_blank"
-            aria-label="LinkedIn"
-            className="flex m-2"
-          >
-            <SiLinkedin
-              size={20}
-              className="hover:text-gray-900 dark:hover:text-white mr-2"
-            />
-            <span>LinkedIn</span>
-          </Link>
-          <Link
-            href="mailto:comstering@gmail.com"
-            aria-label="Email"
-            className="flex m-2"
-          >
-            <Mail
-              size={20}
-              className="hover:text-gray-900 dark:hover:text-white mr-2"
-            />
-            <span>Mail</span>
-          </Link>
-        </div>
-      </div>
+    <div className="space-y-16 max-w-7xl mx-auto">
+      <section className="text-center py-12 space-y-6">
+        <h1 className="text-6xl sm:text-8xl font-black tracking-tight text-gray-900 dark:text-white">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600">
+            Dev.Archives
+          </span>
+        </h1>
+        <p className="max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+          기술적 깊이와 일상의 영감을 기록하는 공간입니다.
+        </p>
+      </section>
 
       <section>
         <PostsBlock posts={allPostsData} />
@@ -71,4 +25,4 @@ const BlogHome = () => {
   );
 };
 
-export default BlogHome;
+export default Home;
