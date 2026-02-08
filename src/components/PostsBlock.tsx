@@ -20,27 +20,25 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
       selected === "all"
         ? posts
         : posts.filter((p) => p.categories.includes(selected)),
-    [selected, posts]
+    [selected, posts],
   );
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 mb-8 justify-center">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelected(cat)}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${
-              selected === cat
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200"
-            }`}
-          >
-            {cat === "all" ? "All" : cat}
-          </button>
-        ))}
+      <div className="sticky top-20 z-40 py-4 backdrop-blur-md bg-slate-50/50 dark:bg-gray-950/50 -mx-4 px-4 overflow-x-auto flex justify-center">
+        <div className="flex items-center gap-2 min-w-max pb-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelected(category)}
+              className={`px-6 py-2 rounded-full text-xs font-black tracking-widest transition-all ${selected === category ? "bg-sky-500 text-white shadow-lg" : "bg-white dark:bg-gray-900 text-gray-500 border border-gray-200 dark:border-gray-800"}`}
+            >
+              {category.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
