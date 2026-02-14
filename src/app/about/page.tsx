@@ -260,40 +260,60 @@ const About = () => {
               </h3>
             </div>
             <div className="flex flex-wrap gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#FF9900] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiAmazon className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://aws.amazon.com"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#FF9900] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiAmazon className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   AWS
                 </span>
-              </div>
+              </Link>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#7B42BC] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiTerraform className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://www.terraform.io"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#7B42BC] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiTerraform className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Terraform
                 </span>
-              </div>
+              </Link>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-sky-500 border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiKubernetes className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://kubernetes.io"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-sky-500 border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiKubernetes className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Kubernetes
                 </span>
-              </div>
+              </Link>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#2496ED] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiDocker className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://www.docker.com"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#2496ED] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiDocker className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Docker
                 </span>
-              </div>
+              </Link>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#231F20] border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiApachekafka className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://kafka.apache.org"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#231F20] border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiApachekafka className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Kafka
                 </span>
-              </div>
+              </Link>
             </div>
           </div>
 
@@ -307,19 +327,27 @@ const About = () => {
               </h3>
             </div>
             <div className="flex flex-wrap gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#7F52FF] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiKotlin className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://kotlinlang.org"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#7F52FF] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiKotlin className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Kotlin
                 </span>
-              </div>
+              </Link>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#6DB33F] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group">
-                <SiSpringboot className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-sky-500 transition-colors" />
+              <Link
+                href={"https://spring.io/projects/spring-boot"}
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#6DB33F] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              >
+                <SiSpringboot className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
                   Spring Boot
                 </span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
