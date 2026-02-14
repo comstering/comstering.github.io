@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://comstering.github.io/about</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/2025-retrospective-2026-resolutions</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/apply-aws-iac</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/bitnami-helm-chart-contribute</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/create-eks</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/custom-networking-karpenter-eni-troubleshooting</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/eks-custom-networking</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/first-contribute-opensource</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/implement-my-site</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/install-cilium-eks</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/install-karpenter</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/introduce-cilium-cni</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/karpenter</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://comstering.github.io/posts/troubleshoot-cilium</loc><lastmod>2026-02-14T13:35:25.071Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/about</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/2025-retrospective-2026-resolutions</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/apply-aws-iac</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/bitnami-helm-chart-contribute</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/create-eks</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/custom-networking-karpenter-eni-troubleshooting</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/eks-custom-networking</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/first-contribute-opensource</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/implement-my-site</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/install-cilium-eks</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/install-karpenter</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/introduce-cilium-cni</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/karpenter</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://comstering.github.io/posts/troubleshoot-cilium</loc><lastmod>2026-02-14T14:05:30.124Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
