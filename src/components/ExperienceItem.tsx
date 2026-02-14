@@ -22,7 +22,7 @@ export const ExperienceItem = ({ company, period, projects }: Experience) => (
       {projects.map((project, idx) => (
         <div
           key={idx}
-          className="bg-gray-50/50 dark:bg-gray-800/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-800 shadow-sm hover:shadow-md"
+          className="bg-gray-50/50 dark:bg-gray-800/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all shadow-sm"
         >
           <div className="flex justify-between items-start mb-2">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200">
