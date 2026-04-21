@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { ThemeScript } from "@/components/ThemeScript";
 
 export const metadata: Metadata = {
   title: "Comstering's Dev Notes",
@@ -15,15 +14,7 @@ export const metadata: Metadata = {
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
   <html lang="ko" suppressHydrationWarning>
-    <head suppressHydrationWarning>
-      <ThemeScript />
-    </head>
-    <body
-      suppressHydrationWarning
-      className={
-        "min-h-screen flex flex-col font-sans transition-colors duration-300 bg-white dark:bg-[#0F172A] text-[#111827] dark:text-[#F8FAFC]"
-      }
-    >
+    <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#0F172A] text-[#111827] dark:text-[#F8FAFC]">
       <ThemeProvider>
         {/* Background Ornaments */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">

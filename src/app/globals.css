@@ -3,6 +3,13 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* Prevent FOUC by matching system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
 @theme {
   /* White Mode - 깔끔하고 신뢰감 있는 종이 느낌 */
   --color-bg-primary: #FFFFFF;
