@@ -3,6 +3,8 @@ import { getPostData, getSortedPostsData } from "@/lib/posts";
 import Image from "next/image";
 import Link from "next/link";
 
+export const dynamicParams = false;
+
 export const generateStaticParams = () => {
   const posts = getSortedPostsData(); // 모든 포스트의 ID를 가져옵니다.
 

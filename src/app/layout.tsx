@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeScript } from "@/components/ThemeScript";
 
 export const metadata: Metadata = {
   title: "Comstering's Dev Notes",
@@ -13,24 +14,21 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <html lang="ko">
-    <head>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2657417531473772"
-        crossOrigin="anonymous"
-      ></script>
+  <html lang="ko" suppressHydrationWarning>
+    <head suppressHydrationWarning>
+      <ThemeScript />
     </head>
     <body
+      suppressHydrationWarning
       className={
-        "min-h-screen flex flex-col font-sans transition-colors duration-500 ease-in-out bg-slate-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100"
+        "min-h-screen flex flex-col font-sans transition-colors duration-300 bg-white dark:bg-[#0F172A] text-[#111827] dark:text-[#F8FAFC]"
       }
     >
       <ThemeProvider>
         {/* Background Ornaments */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute -top-40 -left-40 w-80 h-80 bg-sky-500/10 dark:bg-sky-500/5 rounded-full blur-[100px]"></div>
-          <div className="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[120px]"></div>
+          <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#2563EB]/5 dark:bg-[#38BDF8]/5 rounded-full blur-[120px]"></div>
+          <div className="absolute top-1/2 -right-40 w-96 h-96 bg-[#2563EB]/5 dark:bg-[#38BDF8]/5 rounded-full blur-[140px]"></div>
         </div>
 
         <Header />
@@ -39,6 +37,11 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
         </main>
         <Footer />
       </ThemeProvider>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2657417531473772"
+        crossOrigin="anonymous"
+      />
     </body>
   </html>
 );

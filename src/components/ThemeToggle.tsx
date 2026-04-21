@@ -1,41 +1,33 @@
 "use client";
 
-import { useTheme } from "@/context/ThemeContext";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const ThemeToggle: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const handleToggle = () => {
+    const root = document.documentElement;
+    const isDark = root.classList.contains("dark");
 
-  // useEffect는 브라우저에서만 실행됩니다.
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // 아직 마운트되지 않았다면(서버 렌더링 중이라면) 아무것도 그리지 않거나
-  // 레이아웃이 깨지지 않게 빈 박스만 보여줍니다.
-  if (!mounted) {
-    return <div className="w-6 h-6" />; // 아이콘 크기만큼 빈 공간 확보
-  }
+    if (isDark) {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
 
   return (
     <button
-      onClick={toggleTheme}
-      className="relative p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:ring-2 hover:ring-sky-500/50 transition-all duration-300 overflow-hidden group"
+      onClick={handleToggle}
+      className="relative p-2 rounded-xl bg-[#F3F4F6] dark:bg-[#1E293B] text-[#111827] dark:text-[#F8FAFC] hover:ring-2 hover:ring-[#2563EB]/50 dark:hover:ring-[#38BDF8]/50 transition-all duration-300 overflow-hidden group"
       aria-label="Toggle theme"
     >
       <div className="relative w-6 h-6 flex items-center justify-center">
-        {/* Sun Icon */}
-        <div
-          className={`absolute transition-all duration-500 transform ${
-            theme === "light"
-              ? "translate-y-0 opacity-100 rotate-0 scale-100"
-              : "translate-y-8 opacity-0 rotate-45 scale-50"
-          }`}
-        >
+        {/* Sun Icon - visible in light mode */}
+        <div className="absolute transition-all duration-500 transform translate-y-0 opacity-100 rotate-0 scale-100 dark:translate-y-8 dark:opacity-0 dark:rotate-45 dark:scale-50">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-yellow-500"
+            className="h-6 w-6 text-[#2563EB]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -56,17 +48,11 @@ const ThemeToggle: React.FC = () => {
           </svg>
         </div>
 
-        {/* Moon Icon */}
-        <div
-          className={`absolute transition-all duration-500 transform ${
-            theme === "dark"
-              ? "translate-y-0 opacity-100 rotate-0 scale-100"
-              : "-translate-y-8 opacity-0 rotate-[-45deg] scale-50"
-          }`}
-        >
+        {/* Moon Icon - visible in dark mode */}
+        <div className="absolute transition-all duration-500 transform -translate-y-8 opacity-0 rotate-[-45deg] scale-50 dark:translate-y-0 dark:opacity-100 dark:rotate-0 dark:scale-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-indigo-400"
+            className="h-6 w-6 text-[#38BDF8]"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -76,7 +62,7 @@ const ThemeToggle: React.FC = () => {
       </div>
 
       {/* Glow Effect on Hover */}
-      <div className="absolute inset-0 bg-sky-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      <div className="absolute inset-0 bg-[#2563EB]/5 dark:bg-[#38BDF8]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </button>
   );
 };

@@ -1,2 +1,22 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* White Mode - 깔끔하고 신뢰감 있는 종이 느낌 */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-surface: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-accent: #2563EB;
+  --color-border: #E5E7EB;
+
+  /* Dark Mode - 깊이 있고 세련된 터미널 느낌 */
+  --color-bg-primary-dark: #0F172A;
+  --color-bg-surface-dark: #1E293B;
+  --color-text-primary-dark: #F8FAFC;
+  --color-text-secondary-dark: #94A3B8;
+  --color-accent-dark: #38BDF8;
+  --color-border-dark: #334155;
+}
