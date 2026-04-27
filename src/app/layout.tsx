@@ -33,6 +33,11 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2657417531473772"
         crossOrigin="anonymous"
       />
+      <script
+        data-goatcounter="https://comstering.goatcounter.com/count"
+        async
+        src="//gc.zgo.at/count.js"
+      />
     </body>
   </html>
 );

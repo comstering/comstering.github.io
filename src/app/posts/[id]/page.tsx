@@ -1,4 +1,5 @@
 import GiscusComments from "@/components/GiscusComment";
+import { ViewCounter } from "@/components/ViewCounter";
 import { getPostData, getSortedPostsData } from "@/lib/posts";
 import Image from "next/image";
 import Link from "next/link";
@@ -70,7 +71,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="flex items-center justify-center gap-4 text-sm text-gray-500 font-medium">
             <span>{postData.date}</span>
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-            <span>6 min read</span>
+            <ViewCounter path={`/posts/${id}`} />
           </div>
         </div>
 
