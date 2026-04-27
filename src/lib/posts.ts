@@ -82,13 +82,8 @@ export const getAllCategories = (): string[] => {
   return ["All", ...categoriesArray];
 };
 
-export const getPostData = async (id: string): Promise<PostMetadata | null> => {
+export const getPostData = async (id: string): Promise<PostMetadata> => {
   const fullPath = path.join(postsDirectory, `${id}.md`);
-
-  if (!fs.existsSync(fullPath)) {
-    return null;
-  }
-
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
 

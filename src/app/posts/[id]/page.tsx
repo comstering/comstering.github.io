@@ -14,6 +14,32 @@ export const generateStaticParams = () => {
   }));
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
+  const postData = await getPostData(id);
+
+  return {
+    title: postData.title,
+    description: postData.description || postData.title, // 설명이 없으면 제목 사용
+    keywords: postData.tags ? postData.tags.join(", ") : "", // 태그를 콤마로 구분하여 keywords 메타 태그에 추가
+    openGraph: {
+      // 소셜 미디어 공유를 위한 Open Graph 메타데이터
+      title: postData.title,
+      description: postData.description || postData.title,
+      type: "article",
+      url: `https://comstering.github.io/posts/${postData.id}`, // 실제 도메인으로 변경 필요
+      images: postData.thumbnail
+        ? [{ url: `https://comstering.github.io/${postData.thumbnail}` }]
+        : [], // 썸네일이 있다면 Open Graph 이미지로 추가
+    },
+    // 기타 SEO 관련 메타데이터 추가 가능
+  };
+};
+
 const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const postData = await getPostData(id);
