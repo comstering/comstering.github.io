@@ -528,6 +528,11 @@ const About = () => {
             //   date: "2023.11",
             // },
             {
+              title: "HashiCorp Certified: Terraform Associate (004)",
+              issuer: "HashiCorp",
+              date: "2026.04",
+            },
+            {
               title: "정보처리기사 (Engineer Information Processing)",
               issuer: "HRDK",
               date: "2021.06",
