@@ -20,7 +20,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="relative p-2 rounded-xl bg-[#F3F4F6] dark:bg-[#1E293B] text-[#111827] dark:text-[#F8FAFC] hover:ring-2 hover:ring-[#2563EB]/50 dark:hover:ring-[#38BDF8]/50 transition-all duration-300 overflow-hidden group"
+      className="relative p-2 rounded-xl bg-[#F3F4F6] dark:bg-[#1E293B] text-[#111827] dark:text-[#F8FAFC] hover:ring-2 hover:ring-[#2563EB]/50 dark:hover:ring-[#38BDF8]/50 transition-all duration-300 overflow-hidden group cursor-pointer"
       aria-label="Toggle theme"
     >
       <div className="relative w-6 h-6 flex items-center justify-center">
