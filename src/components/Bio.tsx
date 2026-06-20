@@ -64,21 +64,21 @@ const Bio = () => {
 
             <div className="flex justify-center md:justify-start gap-4 pt-8">
               <Link
-                href="https://github.com"
+                href="https://github.com/comstering"
                 target="_blank"
                 className="p-3.5 bg-gray-50 dark:bg-gray-800 hover:bg-sky-500 hover:text-white transition-all rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm group"
               >
                 <SiGithub className="w-5 h-5" />
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/hansu-choi-05775a244"
                 target="_blank"
                 className="p-3.5 bg-gray-50 dark:bg-gray-800 hover:bg-sky-500 hover:text-white transition-all rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm"
               >
                 <SiLinkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="mailto:gildong@example.com"
+                href="mailto:comstering@gmail.com"
                 className="p-3.5 bg-gray-50 dark:bg-gray-800 hover:bg-sky-500 hover:text-white transition-all rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm"
               >
                 <Mail className="w-5 h-5" />
