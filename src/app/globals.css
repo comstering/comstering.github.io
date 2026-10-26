@@ -181,3 +181,63 @@ body {
 .hljs-strong {
   font-weight: 700;
 }
+
+/* 글 본문: 제목 앵커, 코드 복사 버튼, 이미지/표 */
+.prose :where(h2, h3, h4) {
+  scroll-margin-top: 5rem;
+  letter-spacing: -0.02em;
+}
+.prose .heading-anchor {
+  margin-left: 0.4em;
+  color: var(--mute);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+.prose :where(h2, h3, h4):hover .heading-anchor,
+.prose .heading-anchor:focus-visible {
+  opacity: 1;
+}
+.prose pre {
+  position: relative;
+}
+.code-copy {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--syntax-comment);
+  font: 500 0.7rem var(--font-mono);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 150ms,
+    color 150ms,
+    border-color 150ms;
+}
+.prose pre:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+@media (hover: none) {
+  .code-copy {
+    opacity: 1;
+  }
+}
+.prose :where(img):not(:where([class~="not-prose"] *)) {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+  display: block;
+  overflow-x: auto;
+}
