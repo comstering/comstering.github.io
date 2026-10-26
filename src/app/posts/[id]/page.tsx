@@ -1,167 +1,159 @@
-import GiscusComments from "@/components/GiscusComment";
-import { ViewCounter } from "@/components/ViewCounter";
-import { getPostData, getSortedPostsData } from "@/lib/posts";
 import Image from "next/image";
 import Link from "next/link";
+import GiscusComments from "@/components/GiscusComment";
+import { PostContent } from "@/components/PostContent";
+import { PostToc } from "@/components/PostToc";
+import { ViewCounter } from "@/components/ViewCounter";
+import {
+  getAdjacentPosts,
+  getPostData,
+  getSortedPostsData,
+  type PostMetadata,
+} from "@/lib/posts";
 
 export const dynamicParams = false;
 
-export const generateStaticParams = () => {
-  const posts = getSortedPostsData(); // 모든 포스트의 ID를 가져옵니다.
+const SITE_URL = "https://comstering.github.io";
 
-  return posts.map((post) => ({
-    id: post.id,
-  }));
-};
+export const generateStaticParams = () =>
+  getSortedPostsData().map((post) => ({ id: post.id }));
 
 export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const { id } = await params; // URL 파라미터에서 ID를 가져옵니다.
-  const postData = await getPostData(id);
+  const { id } = await params;
+  const post = await getPostData(id);
+  const description = post.description || post.title;
 
   return {
-    title: postData.title,
-    description: postData.description || postData.title, // 설명이 없으면 제목 사용
-    keywords: postData.tags ? postData.tags.join(", ") : "", // 태그를 콤마로 구분하여 keywords 메타 태그에 추가
+    title: post.title,
+    description,
+    keywords: post.tags ? post.tags.join(", ") : "",
     openGraph: {
-      // 소셜 미디어 공유를 위한 Open Graph 메타데이터
-      title: postData.title,
-      description: postData.description || postData.title,
+      title: post.title,
+      description,
       type: "article",
-      url: `https://comstering.github.io/posts/${postData.id}`, // 실제 도메인으로 변경 필요
-      images: postData.thumbnail
-        ? [{ url: `https://comstering.github.io/${postData.thumbnail}` }]
-        : [], // 썸네일이 있다면 Open Graph 이미지로 추가
+      url: `${SITE_URL}/posts/${post.id}`,
+      images: post.thumbnail
+        ? [{ url: `${SITE_URL}/images/posts/thumbnails/${post.thumbnail}` }]
+        : [],
     },
-    // 기타 SEO 관련 메타데이터 추가 가능
   };
+};
+
+const AdjacentLink = ({
+  post,
+  label,
+  align,
+}: {
+  post: PostMetadata | null;
+  label: string;
+  align: "left" | "right";
+}) => {
+  if (!post) return <span />;
+  return (
+    <Link
+      href={`/posts/${post.id}`}
+      className={`group block rounded-md border border-line p-4 transition-colors hover:border-accent ${
+        align === "right" ? "text-right" : ""
+      }`}
+    >
+      <span className="font-mono text-xs text-mute">{label}</span>
+      <span className="mt-1 block break-keep font-semibold leading-snug text-fg transition-colors group-hover:text-accent">
+        {post.title}
+      </span>
+    </Link>
+  );
 };
 
 const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const postData = await getPostData(id);
-
-  if (!postData) {
-    return (
-      <div className="text-center py-32 space-y-6">
-        <h1 className="text-6xl font-black text-gray-200 dark:text-gray-800">
-          404
-        </h1>
-        <p className="text-xl font-medium text-gray-500">
-          포스트를 찾을 수 없습니다.
-        </p>
-        <Link
-          href="/"
-          className="inline-block px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-transform hover:-translate-y-1 shadow-lg shadow-sky-500/20"
-        >
-          홈으로 돌아가기
-        </Link>
-      </div>
-    );
-  }
+  const post = await getPostData(id);
+  const { older, newer } = getAdjacentPosts(id);
 
   return (
-    <article className="max-w-3xl mx-auto">
-      {/* Article Header */}
-      <header className="mb-12 space-y-8">
-        <div className="flex justify-center">
-          <Link
-            href="/"
-            className="text-xs font-bold text-sky-500 flex items-center hover:gap-2 transition-all"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            BACK TO BLOG
-          </Link>
-        </div>
-
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight">
-            {postData.title}
-          </h1>
-          <div className="flex items-center justify-center gap-4 text-sm text-gray-500 font-medium">
-            <span>{postData.date}</span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-            <ViewCounter path={`/posts/${id}`} />
-          </div>
-        </div>
-
-        <div className="rounded-3xl overflow-hidden shadow-2xl shadow-sky-500/10 border border-gray-200 dark:border-gray-800 aspect-[21/9]">
-          <Image
-            src={`/images/posts/thumbnails/${postData.thumbnail}`}
-            alt={postData.title}
-            width={840}
-            height={360}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </header>
-
-      {/* Article Content */}
-      <div className="prose prose-lg dark:prose-invert max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-      </div>
-
-      {/* ▼▼▼ Giscus 댓글 섹션 추가 ▼▼▼ */}
-      <div className="mt-16 pt-8 border-t border-card border-gray-100 dark:border-gray-800">
-        {/* 상단 여백 및 구분선 */}
-        <h2 className="text-2xl font-bold text-foreground mb-6">Comments</h2>
-        <GiscusComments
-          repo="comstering/comstering.github.io" // <-- 필수: 본인의 GitHub 유저이름/저장소이름 (예: 'your-username/your-blog-comments')
-          repoId="MDEwOlJlcG9zaXRvcnkzNjI0MjQ3NDk=" // <-- 필수: Giscus 설치 후 제공되는 Repo ID (숫자+문자 조합)
-          category="Announcements" // <-- 필수: Giscus 설치 후 선택한 Discussion 카테고리 이름 (예: 'Comments', 'General')
-          categoryId="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTQ4OTYw" // <-- 필수: Giscus 설치 후 제공되는 Category ID (숫자+문자 조합)
-          mapping="pathname" // 'pathname' (현재 페이지 경로에 매핑) 또는 'url', 'title' 등
-          strict="0" // Strict 매핑 여부 (0 또는 1)
-          reactionsEnabled="1" // 좋아요/이모지 반응 활성화 (0 또는 1)
-          emitMetadata="0" // Giscus 메타데이터 전송 여부 (0 또는 1)
-          inputPosition="top" // 댓글 입력창 위치 (top 또는 bottom)
-          theme="preferred_color_scheme" // 'light', 'dark', 'preferred_color_scheme' 등. 저희 테마에 맞추려면 'dark'도 고려
-          lang="ko" // 언어 설정
-          loading="lazy" // 로딩 방식
-        />
-      </div>
-
-      {/* Article Footer */}
-      <footer className="mt-20 pt-10 border-t border-gray-100 dark:border-gray-800 flex flex-col items-center gap-8">
-        <div className="flex items-center gap-4 p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 w-full">
-          <Image
-            src="/profile.png"
-            width={64}
-            height={64}
-            className="w-16 h-16 rounded-full object-cover border-2 border-sky-400"
-            alt="Author"
-          />
-          <div>
-            <h4 className="font-bold text-gray-900 dark:text-white">
-              Written by Comstering
-            </h4>
-            <p className="text-sm text-gray-500">
-              개발과 운영의 경계를 좁히는 클라우드 네이티브 엔지니어입니다.
-            </p>
-          </div>
-        </div>
+    <article className="relative mx-auto max-w-[720px]">
+      <header className="pb-10 pt-4 sm:pt-8">
         <Link
           href="/"
-          className="font-bold text-gray-900 dark:text-white hover:text-sky-500 transition-colors"
+          className="font-mono text-sm text-mute transition-colors hover:text-accent"
         >
-          모든 글 보기 →
+          &larr; posts
         </Link>
+
+        <p className="mt-8 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-mute">
+          <time dateTime={post.date}>{post.date}</time>
+          <span>{post.categories.join(" / ")}</span>
+          <span>{post.readingTime} min read</span>
+          <ViewCounter path={`/posts/${id}`} />
+        </p>
+        <h1 className="mt-4 break-keep text-3xl font-bold leading-tight tracking-tight text-fg sm:text-[40px]">
+          {post.title}
+        </h1>
+        {post.description && (
+          <p className="mt-4 break-keep text-lg leading-relaxed text-mute">
+            {post.description}
+          </p>
+        )}
+        {post.tags?.length > 0 && (
+          <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-mute">
+            {post.tags.map((tag) => (
+              <li key={tag}>#{tag}</li>
+            ))}
+          </ul>
+        )}
+      </header>
+
+      <aside className="absolute left-full top-0 ml-10 hidden h-full w-52 xl:block">
+        <div className="sticky top-24 pt-8">
+          <PostToc headings={post.headings} />
+        </div>
+      </aside>
+
+      <PostContent html={post.contentHtml} />
+
+      <nav
+        aria-label="이전/다음 글"
+        className="mt-16 grid gap-4 sm:grid-cols-2"
+      >
+        <AdjacentLink post={older} label="← 이전 글" align="left" />
+        <AdjacentLink post={newer} label="다음 글 →" align="right" />
+      </nav>
+
+      <section aria-label="댓글" className="mt-16 border-t border-line pt-8">
+        <h2 className="font-mono text-xs text-mute">comments</h2>
+        <GiscusComments
+          repo="comstering/comstering.github.io"
+          repoId="MDEwOlJlcG9zaXRvcnkzNjI0MjQ3NDk="
+          category="Announcements"
+          categoryId="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTQ4OTYw"
+          mapping="pathname"
+          strict="0"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="dark"
+          lang="ko"
+          loading="lazy"
+        />
+      </section>
+
+      <footer className="mt-16 flex items-center gap-4 border-t border-line pt-8">
+        <Image
+          src="/profile.png"
+          width={48}
+          height={48}
+          className="h-12 w-12 rounded-full border border-line object-cover"
+          alt=""
+        />
+        <div>
+          <p className="font-semibold text-fg">Comstering</p>
+          <p className="text-sm text-mute">
+            개발과 운영의 경계를 좁히는 클라우드 네이티브 엔지니어입니다.
+          </p>
+        </div>
       </footer>
     </article>
   );

@@ -2,6 +2,7 @@
 "use client"; // 이 컴포넌트는 클라이언트 컴포넌트입니다.
 
 import React, { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 // Giscus 컴포넌트가 받을 props의 타입을 정의합니다.
 interface GiscusCommentsProps {
@@ -48,8 +49,12 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
   loading = "lazy",
 }) => {
   const ref = useRef<HTMLDivElement>(null); // Giscus 스크립트를 삽입할 DOM 요소를 참조합니다.
+  const { resolvedTheme } = useTheme();
+  // 사이트 테마(다크 기본)를 따라가도록 resolvedTheme이 있으면 theme prop보다 우선합니다.
+  const appliedTheme = resolvedTheme === "dark" ? "dark" : resolvedTheme ? "light" : null;
 
   useEffect(() => {
+    if (!appliedTheme) return;
     // Giscus 스크립트 요소를 생성합니다.
     const scriptElement = document.createElement("script");
     scriptElement.src = "https://giscus.app/client.js"; // Giscus 클라이언트 스크립트 URL
@@ -66,7 +71,7 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
     scriptElement.setAttribute("data-reactions-enabled", reactionsEnabled);
     scriptElement.setAttribute("data-emit-metadata", emitMetadata);
     scriptElement.setAttribute("data-input-position", inputPosition);
-    scriptElement.setAttribute("data-theme", theme); // 테마 설정
+    scriptElement.setAttribute("data-theme", appliedTheme ?? theme); // 테마 설정
     scriptElement.setAttribute("data-lang", lang); // 언어 설정
     scriptElement.setAttribute("data-loading", loading); // 로딩 방식
 
@@ -89,6 +94,7 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
     emitMetadata,
     inputPosition,
     theme,
+    appliedTheme,
     lang,
     loading,
   ]);
