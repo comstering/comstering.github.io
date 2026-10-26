@@ -4,7 +4,7 @@ comstering.github.io 디자인 시스템. UI를 만들거나 고칠 때 이 문�
 
 - 방향: **Terminal Graphite** — 개발자/인프라 감성, 다크 중심, 단일 형광 그린 포인트
 - 읽기 구조: **세로 리스트** (joshwcomeau.com, toss.tech 참고). 카드 그리드를 쓰지 않는다.
-- 상태: 토큰 구현 완료(`src/app/globals.css`). 컴포넌트 마이그레이션은 다음 PR부터.
+- 상태: 토큰 구현 완료(`src/app/globals.css`), 레이아웃 셸(Header/Footer/ThemeToggle, `ui/Container`, `ui/IconButton`) 적용 완료. 홈/글 상세/About 마이그레이션은 다음 PR.
 
 ## 원칙
 
@@ -25,7 +25,7 @@ Tailwind 유틸리티 이름 = `bg-canvas`, `text-fg`, `border-line`, `text-acce
 | `fg` | 본문/제목 | `#0E1512` | `#E6EDE9` |
 | `mute` | 보조 텍스트, 메타 | `#5A6B63` | `#8A9A92` |
 | `line` | 구분선, 테두리 | `#D5DED9` | `#1F2A26` |
-| `accent` | 링크, 활성, 포커스 | `#0B8F4D` | `#5BF29B` |
+| `accent` | 링크, 활성, 포커스 | `#087A41` | `#5BF29B` |
 | `accent-on` | accent 위의 글자 | `#FFFFFF` | `#06210F` |
 
 코드 블록은 라이트에서도 어두운 배경(`code-bg`)을 유지한다. 하이라이트 색은 `--syntax-*` 토큰.
@@ -75,7 +75,7 @@ Node Group보다 빠르고 유연하게 ...           └──────┘
 
 ## 컴포넌트 규칙 (마이그레이션 대상)
 
-`src/components/ui/`에 만들 공통 컴포넌트: `Container`, `Button`, `Badge`/`Tag`, `Chip`, `Input`, `PostListItem`.
+`src/components/ui/` 공통 컴포넌트. 만든 것: `Container`, `IconButton`. 처음 쓰는 PR에서 추가할 것: `Tag`, `Chip`, `Button`, `Input`, `PostListItem`.
 
 - variant는 boolean prop 대신 명시적 variant(`variant="primary" | "ghost"`)로. (vercel-composition-patterns)
 - 포커스 링은 전역 `:focus-visible`(accent)을 사용, 제거하지 않는다.
@@ -103,8 +103,8 @@ Node Group보다 빠르고 유연하게 ...           └──────┘
 
 ## 작업 순서 (단계별 PR)
 
-1. 토큰·폰트·본문 타이포·코드 하이라이트 + 이 문서 ← 현재
-2. 공통 UI 컴포넌트 + Header/Footer + 레이아웃 셸
+1. 토큰·폰트·본문 타이포·코드 하이라이트 + 이 문서 (완료)
+2. 공통 UI 컴포넌트 + Header/Footer + 레이아웃 셸 (완료)
 3. 홈: 세로 리스트(PostListItem), 필터
 4. 글 상세: 본문, 목차, 이전/다음 글
 5. About, 404 정리

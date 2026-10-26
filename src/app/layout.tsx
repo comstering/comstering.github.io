@@ -21,16 +21,16 @@ export const metadata: Metadata = {
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
   <html lang="ko" className={jetbrainsMono.variable} suppressHydrationWarning>
-    <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#0F172A] text-[#111827] dark:text-[#F8FAFC]">
+    <body className="flex min-h-screen flex-col">
       <ThemeProvider>
-        {/* Background Ornaments */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#2563EB]/5 dark:bg-[#38BDF8]/5 rounded-full blur-[120px]"></div>
-          <div className="absolute top-1/2 -right-40 w-96 h-96 bg-[#2563EB]/5 dark:bg-[#38BDF8]/5 rounded-full blur-[140px]"></div>
-        </div>
-
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-on"
+        >
+          본문으로 건너뛰기
+        </a>
         <Header />
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <main id="main" className="relative z-10 mx-auto w-full max-w-[1120px] flex-grow px-5 py-12 sm:px-6">
           {children}
         </main>
         <Footer />
