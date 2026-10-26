@@ -79,3 +79,7 @@ public/               # Static assets
 ## Skills
 
 사용하는 skill 목록과 설치/복구 명령은 [SKILLS.md](./SKILLS.md)에 기록한다. skill을 추가/삭제하면 SKILLS.md를 같이 갱신한다. 새 skill 설치 전에는 반드시 사용자에게 확인받는다.
+
+## Design System
+
+UI 작업은 [DESIGN.md](./DESIGN.md)의 토큰과 규칙만 사용한다. 컴포넌트에 hex 값, `dark:` 색상 클래스, Tailwind 기본 팔레트(`gray-*`, `sky-*` 등)를 쓰지 않는다. 글 목록은 카드 그리드가 아니라 세로 리스트.

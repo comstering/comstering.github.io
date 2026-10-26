@@ -4,6 +4,13 @@ import { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { JetBrains_Mono } from "next/font/google";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Comstering's Dev Notes",
@@ -13,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <html lang="ko" suppressHydrationWarning>
+  <html lang="ko" className={jetbrainsMono.variable} suppressHydrationWarning>
     <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#0F172A] text-[#111827] dark:text-[#F8FAFC]">
       <ThemeProvider>
         {/* Background Ornaments */}
