@@ -1,5 +1,5 @@
 import React from "react";
-import { ExternalLink, GraduationCap, Award } from "lucide-react";
+import { GraduationCap, Award } from "lucide-react";
 import {
   SiGithub,
   SiAmazon,
@@ -13,12 +13,81 @@ import {
 import Bio from "@/components/Bio";
 import { Experience, ExperienceItem } from "@/components/ExperienceItem";
 import { Activity, ActivityCard } from "@/components/ActivityCard";
+import { SectionHead } from "@/components/ui/SectionHead";
+import { buttonClass } from "@/components/ui/Button";
 import Link from "next/link";
+
+type Tech = { name: string; href: string; icon: React.ElementType };
+
+const TECH_GROUPS: { title: string; icon: React.ElementType; items: Tech[] }[] =
+  [
+    {
+      title: "Cloud & Infrastructure",
+      icon: SiKubernetes,
+      items: [
+        { name: "AWS", href: "https://aws.amazon.com", icon: SiAmazon },
+        { name: "Terraform", href: "https://www.terraform.io", icon: SiTerraform },
+        { name: "Kubernetes", href: "https://kubernetes.io", icon: SiKubernetes },
+        { name: "Docker", href: "https://www.docker.com", icon: SiDocker },
+        { name: "Kafka", href: "https://kafka.apache.org", icon: SiApachekafka },
+      ],
+    },
+    {
+      title: "Backend Engineering",
+      icon: SiSpringboot,
+      items: [
+        { name: "Kotlin", href: "https://kotlinlang.org", icon: SiKotlin },
+        {
+          name: "Spring Boot",
+          href: "https://spring.io/projects/spring-boot",
+          icon: SiSpringboot,
+        },
+      ],
+    },
+  ];
+
+const COURSEWORK = [
+  "Data Structures",
+  "Algorithms",
+  "Database Design",
+  "Computer Networks",
+  "Software Engineering",
+  "Security",
+];
+
+const CERTIFICATIONS = [
+  // {
+  //   title: "AWS Solutions Architect",
+  //   issuer: "Amazon Web Services",
+  //   date: "2023.05",
+  // },
+  // {
+  //   title: "CKA (Kubernetes Administrator)",
+  //   issuer: "Cloud Native Computing Foundation",
+  //   date: "2023.11",
+  // },
+  {
+    title: "HashiCorp Certified: Terraform Associate (004)",
+    issuer: "HashiCorp",
+    date: "2026.04",
+  },
+  {
+    title: "정보처리기사 (Engineer Information Processing)",
+    issuer: "HRDK",
+    date: "2021.06",
+  },
+  {
+    title: "정보보안산업기사 (Industrial Engineer Information Security)",
+    issuer: "KISA",
+    date: "2021.06",
+  },
+];
 
 const About = () => {
   const experiences: Experience[] = [
     {
       company: "CJ Olive Young",
+      role: "DevOps · Cloud Native Engineer",
       period: "2024.06 ~ Present",
       projects: [
         {
@@ -187,6 +256,7 @@ const About = () => {
     },
     {
       company: "CLASS 101",
+      role: "Web Developer (backend 중심)",
       period: "2022.05 ~ 2024.03",
       projects: [
         {
@@ -280,7 +350,7 @@ const About = () => {
     {
       type: "Project",
       title: "Lomeone",
-      period: "2024.01 – Present",
+      period: "2024.01 ~ Present",
       description:
         "개인 Side Project를 진행하는 organization. Infrastructure를 AWS로 구축하고 Terraform을 사용하여 IaC를 적용해서 Infrastructure를 관리하고 있습니다.",
       tags: ["aws", "terraform", "kubernetes", "project"],
@@ -289,133 +359,50 @@ const About = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-24 pb-32">
+    <div className="mx-auto max-w-[720px] space-y-20 pb-12 pt-4 sm:pt-8">
       {/* Main Banner */}
       <Bio />
 
       {/* Tech Stack Sections */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Tech Stack
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-10">
-          <div className="p-10 bg-sky-50/30 dark:bg-sky-900/5 rounded-[40px] border border-sky-100/50 dark:border-sky-900/20 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-sky-500/30">
-                <SiKubernetes className="w-7 h-7" />
+      <section aria-labelledby="tech-stack-title" className="space-y-6">
+        <SectionHead id="tech-stack-title">Tech Stack</SectionHead>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {TECH_GROUPS.map(({ title, icon: GroupIcon, items }) => (
+            <div
+              key={title}
+              className="space-y-5 rounded-lg border border-line bg-surface p-6"
+            >
+              <div className="flex items-center gap-3">
+                <GroupIcon aria-hidden className="h-5 w-5 text-mute" />
+                <h3 className="text-h3 font-bold tracking-tight text-fg">
+                  {title}
+                </h3>
               </div>
-              <h3 className="text-2xl font-black text-sky-900 dark:text-sky-100 tracking-tight">
-                Cloud & Infrastructure
-              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {items.map(({ name, href, icon: Icon }) => (
+                  <li key={name}>
+                    <Link
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-(--tap) items-center gap-2 rounded-md border border-line-strong px-3 text-small text-fg transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <Icon aria-hidden className="h-4 w-4 text-mute" />
+                      {name}
+                      <span className="sr-only"> (새 창에서 열림)</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={"https://aws.amazon.com"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#FF9900] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiAmazon className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  AWS
-                </span>
-              </Link>
-
-              <Link
-                href={"https://www.terraform.io"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#7B42BC] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiTerraform className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Terraform
-                </span>
-              </Link>
-
-              <Link
-                href={"https://kubernetes.io"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-sky-500 border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiKubernetes className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Kubernetes
-                </span>
-              </Link>
-
-              <Link
-                href={"https://www.docker.com"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#2496ED] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiDocker className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Docker
-                </span>
-              </Link>
-
-              <Link
-                href={"https://kafka.apache.org"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#231F20] border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiApachekafka className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Kafka
-                </span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="p-10 bg-indigo-50/30 dark:bg-indigo-900/5 rounded-[40px] border border-indigo-100/50 dark:border-indigo-900/20 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-indigo-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-indigo-500/30">
-                <SiSpringboot className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-black text-indigo-900 dark:text-indigo-100 tracking-tight">
-                Backend Engineering
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={"https://kotlinlang.org"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#7F52FF] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiKotlin className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Kotlin
-                </span>
-              </Link>
-
-              <Link
-                href={"https://spring.io/projects/spring-boot"}
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2 bg-[#6DB33F] border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 group"
-              >
-                <SiSpringboot className="w-5 h-5 text-gray-600 dark:text-gray-400 transition-colors" />
-                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">
-                  Spring Boot
-                </span>
-              </Link>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* Experience Section */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Professional Experience
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto py-8">
+      <section aria-labelledby="experience-title" className="space-y-6">
+        <SectionHead id="experience-title">Professional Experience</SectionHead>
+        <div>
           {experiences.map((exp, idx) => (
             <ExperienceItem key={idx} {...exp} />
           ))}
@@ -423,162 +410,90 @@ const About = () => {
       </section>
 
       {/* Development Activities Section */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Development Activities
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-          <p className="text-gray-500 dark:text-gray-400 font-medium">
-            오픈소스 기여 및 사이드 프로젝트를 통해 꾸준히 성장하고 있습니다.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <section aria-labelledby="activities-title" className="space-y-6">
+        <SectionHead id="activities-title">Development Activities</SectionHead>
+        <p className="text-small text-mute">
+          오픈소스 기여 및 사이드 프로젝트를 통해 꾸준히 성장하고 있습니다.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
           {activities.map((activity, idx) => (
             <ActivityCard key={idx} {...activity} />
           ))}
         </div>
-
-        <div className="text-center pt-8">
-          <Link
-            href="https://github.com/comstering"
-            target="_blank"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-black text-sm tracking-widest hover:bg-sky-500 dark:hover:bg-sky-500 dark:hover:text-white transition-all shadow-xl shadow-gray-500/20 group"
-          >
-            <SiGithub className="w-5 h-5" />
-            VIEW ALL CONTRIBUTIONS
-            <ExternalLink className="w-4 h-4 ml-1 opacity-50 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </Link>
-        </div>
+        <Link
+          href="https://github.com/comstering"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={buttonClass("primary")}
+        >
+          <SiGithub aria-hidden className="h-4 w-4" />
+          view all contributions
+          <span className="sr-only"> (새 창에서 열림)</span>
+        </Link>
       </section>
 
       {/* Education Section */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Education
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-gray-900/40 p-10 rounded-[40px] border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col md:flex-row gap-8 items-center md:items-start">
-            <div className="p-4 bg-sky-50 dark:bg-sky-900/20 text-sky-500 rounded-3xl">
-              <GraduationCap className="w-10 h-10" />
-            </div>
-            <div className="flex-grow space-y-4 text-center md:text-left">
-              <div>
-                <h3 className="text-2xl font-black text-gray-900 dark:text-white">
-                  공주대학교 (Kongju National University)
-                </h3>
-                <p className="text-sky-500 font-extrabold tracking-wider uppercase text-sm">
-                  Computer Science
-                </p>
-              </div>
-              <p className="text-gray-500 dark:text-gray-400 font-medium text-lg">
-                Bachelor of Engineering (B.E.) | 2016.03 - 2022.02
+      <section aria-labelledby="education-title" className="space-y-6">
+        <SectionHead id="education-title">Education</SectionHead>
+        <div className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-6 sm:flex-row sm:gap-6">
+          <GraduationCap aria-hidden className="h-8 w-8 shrink-0 text-mute" />
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-h3 font-bold tracking-tight text-fg">
+                공주대학교 (Kongju National University)
+              </h3>
+              <p className="mt-1 text-small text-fg">Computer Science</p>
+              <p className="mt-1 font-mono text-cap text-mute">
+                Bachelor of Engineering (B.E.) | 2016.03 ~ 2022.02
               </p>
-              <div className="pt-2">
-                <p className="text-sm text-gray-400 dark:text-gray-500 font-bold uppercase tracking-tighter mb-2">
-                  Relevant Coursework
-                </p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                  {[
-                    "Data Structures",
-                    "Algorithms",
-                    "Database Design",
-                    "Computer Networks",
-                    "Software Engineering",
-                    "Security",
-                  ].map((course) => (
-                    <span
-                      key={course}
-                      className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-bold rounded-lg border border-gray-100 dark:border-gray-700"
-                    >
-                      {course}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            </div>
+            <div>
+              <p className="font-mono text-cap text-mute">Relevant Coursework</p>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {COURSEWORK.map((course) => (
+                  <li
+                    key={course}
+                    className="rounded-md border border-line px-2.5 py-1 font-mono text-cap text-mute"
+                  >
+                    {course}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* Certification Section */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Certifications
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            // {
-            //   title: "AWS Solutions Architect",
-            //   issuer: "Amazon Web Services",
-            //   date: "2023.05",
-            // },
-            // {
-            //   title: "CKA (Kubernetes Administrator)",
-            //   issuer: "Cloud Native Computing Foundation",
-            //   date: "2023.11",
-            // },
-            {
-              title: "HashiCorp Certified: Terraform Associate (004)",
-              issuer: "HashiCorp",
-              date: "2026.04",
-            },
-            {
-              title: "정보처리기사 (Engineer Information Processing)",
-              issuer: "HRDK",
-              date: "2021.06",
-            },
-            {
-              title:
-                "정보보안산업기사 (Industrial Engineer Information Security)",
-              issuer: "KISA",
-              date: "2021.06",
-            },
-          ].map((cert, idx) => (
-            <div
-              key={idx}
-              className="bg-white dark:bg-gray-900/40 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800 flex items-center gap-4 hover:shadow-lg transition-all border-l-4 border-l-sky-500"
+      <section aria-labelledby="certifications-title" className="space-y-6">
+        <SectionHead id="certifications-title">Certifications</SectionHead>
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {CERTIFICATIONS.map((cert) => (
+            <li
+              key={cert.title}
+              className="flex items-start gap-4 rounded-lg border border-line bg-surface p-5"
             >
-              <Award className="w-8 h-8 text-sky-500 shrink-0" />
+              <Award aria-hidden className="mt-0.5 h-6 w-6 shrink-0 text-mute" />
               <div>
-                <h4 className="font-black text-gray-900 dark:text-white leading-tight">
+                <h4 className="font-semibold leading-snug text-fg">
                   {cert.title}
                 </h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
-                  {cert.issuer}
-                </p>
-                <p className="text-[10px] font-black text-sky-500 mt-1">
-                  {cert.date}
-                </p>
+                <p className="mt-1 text-small text-mute">{cert.issuer}</p>
+                <p className="mt-1 font-mono text-cap text-mute">{cert.date}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       {/* Other Experience Section */}
-      <section className="space-y-16 pb-12">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Other Experience
-          </h2>
-          <div className="w-16 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <section aria-labelledby="other-title" className="space-y-6">
+        <SectionHead id="other-title">Other Experience</SectionHead>
+        <div className="grid gap-4 sm:grid-cols-2">
           <ActivityCard
             type="Other"
             title="BoB 10기"
-            period="2021.07 – 2022.03"
+            period="2021.07 ~ 2022.03"
             tags={["security"]}
             description="보안제품개발트랙에 참여하여 Host 기반 네트워크 제어 솔루션(ARP Spoofing 기반 네트워크 관제도구)을 개발했습니다. (Top 30)"
             link="https://www.kitribob.kr/trainee_walk/projects"

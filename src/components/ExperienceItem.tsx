@@ -1,5 +1,6 @@
 export interface Experience {
   company: string;
+  role?: string;
   period: string;
   projects: {
     title: string;
@@ -9,37 +10,40 @@ export interface Experience {
   }[];
 }
 
-export const ExperienceItem = ({ company, period, projects }: Experience) => (
-  <div className="relative pl-8 border-l-2 border-sky-500/20 dark:border-sky-500/10 space-y-8 pb-12 last:pb-0">
-    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-sky-500 border-4 border-white dark:border-gray-900"></div>
+export const ExperienceItem = ({
+  company,
+  role,
+  period,
+  projects,
+}: Experience) => (
+  <div className="space-y-6 border-l border-line pb-12 pl-6 last:pb-0 sm:pl-8">
     <div>
-      <h3 className="text-2xl font-black text-gray-900 dark:text-white">
-        {company}
-      </h3>
-      <p className="text-sky-500 font-bold text-sm tracking-wide">{period}</p>
+      <h3 className="text-h3 font-bold tracking-tight text-fg">{company}</h3>
+      {role && <p className="mt-1 text-small text-fg">{role}</p>}
+      <p className="mt-1 font-mono text-cap text-mute">{period}</p>
     </div>
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       {projects.map((project, idx) => (
         <div
           key={idx}
-          className="bg-gray-50/50 dark:bg-gray-800/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all shadow-sm"
+          className="rounded-lg border border-line bg-surface p-5 sm:p-6"
         >
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <h4 className="font-semibold leading-snug text-fg">
               {project.title}
             </h4>
-            <span className="text-xs font-medium text-gray-400">
-              {project.period}
-            </span>
+            {project.period && (
+              <span className="shrink-0 font-mono text-cap text-mute tabular-nums">
+                {project.period}
+              </span>
+            )}
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+          <p className="mt-2 text-small leading-relaxed text-mute">
             {project.description}
           </p>
-          <div className="space-y-2">
-            <p className="text-xs font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest">
-              Engineering Highlights
-            </p>
-            <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <div className="mt-4">
+            <p className="font-mono text-cap text-mute">Engineering Highlights</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-small leading-relaxed text-mute marker:text-line-strong">
               {project.points.map((point: string, rIdx: number) => (
                 <li key={rIdx}>{point}</li>
               ))}

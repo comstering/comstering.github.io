@@ -3,13 +3,15 @@ import Link from "next/link";
 import type { PostMetadata } from "@/lib/posts";
 
 type PostListItemProps = {
+  /** 썸네일과 태그를 숨기는 간결한 목록 (404 등) */
+  compact?: boolean;
   post: Pick<
     PostMetadata,
     "id" | "title" | "description" | "date" | "category" | "tags" | "thumbnail" | "draft"
   >;
 };
 
-export const PostListItem = ({ post }: PostListItemProps) => {
+export const PostListItem = ({ post, compact = false }: PostListItemProps) => {
   const { id, title, description, date, category, tags, thumbnail, draft } =
     post;
 
@@ -30,7 +32,7 @@ export const PostListItem = ({ post }: PostListItemProps) => {
         <p className="mt-2 line-clamp-2 break-keep text-[15px] leading-relaxed text-mute">
           {description}
         </p>
-        {tags?.length > 0 && (
+        {!compact && tags?.length > 0 && (
           <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-mute">
             {tags.slice(0, 4).map((tag) => (
               <li key={tag}>#{tag}</li>
@@ -38,7 +40,7 @@ export const PostListItem = ({ post }: PostListItemProps) => {
           </ul>
         )}
       </article>
-      {thumbnail && (
+      {!compact && thumbnail && (
         <Image
           src={`/images/posts/thumbnails/${thumbnail}`}
           alt=""
