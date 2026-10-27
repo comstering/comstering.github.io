@@ -135,7 +135,7 @@ comstering.github.io 디자인 시스템 (v1.3 기준). UI를 만들거나 고�
 
 공통 UI는 `src/components/ui/`에 두고, variant는 boolean prop 대신 명시적 variant(`variant="primary" | "ghost"`)로 만든다.
 
-- 만든 것: `Container`, `IconButton`, `Chip`, `Input` (+ `components/PostListItem`, `Header`, `Footer`, `ThemeToggle`, `PostToc`, `PostContent`)
+- 만든 것: `Container`, `IconButton`, `Chip`, `Input`, `SectionHead` (+ `components/PostListItem`, `Header`, `Footer`, `ThemeToggle`, `PostToc`, `PostContent`, `post/PostPath`, `post/PostHeader`, `post/AuthorBox`, `post/PostPager`)
 - 처음 쓰는 PR에서 추가할 것: `Tag`, `Button`, `Badge`, `Field`
 - 전체 목록과 상태 표현(`aria-pressed`, `aria-current`, `aria-selected`, `[hidden]`, `data-copied`)은 `cowork/design/04-design-system.md` 4장 참고.
 
@@ -145,5 +145,6 @@ Phase 0 안정화(PRD-002)를 PR 단위로 진행한다. 이 문서는 PR-0에�
 
 | PR | 내용 | 상태 |
 |---|---|---|
-| PR-0 | 토큰 v1.3 + DESIGN.md | 진행 중 |
-| PR-1 ~ PR-8 | 정리, frontmatter v2, SEO, 서드파티, 글 상세, About/404, CI, 배포 재개 | 예정 |
+| PR-0 ~ PR-4 | 토큰 v1.3, 죽은 코드 정리, frontmatter v2, SEO·RSS·푸터, 서드파티·Giscus | 완료 |
+| PR-5 | 글 상세 v1.3 정렬 | 진행 중 |
+| PR-6 ~ PR-8 | About·404 토큰 정리, PR CI, 자동 배포 재개 | 예정 |

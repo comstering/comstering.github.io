@@ -105,7 +105,7 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
     loading,
   ]);
 
-  return <div className="giscus-container mt-16" ref={containerRef} />;
+  return <div className="giscus-container mt-4" ref={containerRef} />;
 };
 
 export default GiscusComments;
