@@ -1,0 +1,9 @@
+# 시리즈 레지스트리. 키(slug)를 글 frontmatter의 series에 쓰고, seriesOrder는 1부터 빠짐없이 지정한다.
+# label: 글 목록 메타용 짧은 이름 (예: series eks 5/5)
+# title: 시리즈 박스에 보일 제목
+eks-from-scratch:
+  label: eks
+  title: EKS를 처음부터 구축하고 운영하기
+cilium-on-eks:
+  label: cilium
+  title: EKS에 Cilium CNI 적용하기

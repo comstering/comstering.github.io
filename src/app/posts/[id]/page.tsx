@@ -85,7 +85,8 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <p className="mt-8 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-mute">
           <time dateTime={post.date}>{post.date}</time>
-          <span>{post.categories.join(" / ")}</span>
+          <span>{post.category}</span>
+          {post.draft && <span className="text-warn">draft</span>}
           <span>{post.readingTime} min read</span>
           <ViewCounter path={`/posts/${id}`} />
         </p>

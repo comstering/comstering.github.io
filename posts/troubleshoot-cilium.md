@@ -2,21 +2,10 @@
 title: "Cilium CNI 설치 후 일부 Pod들이 정상동작하지 않는 문제 해결"
 description: "Cilium Operator의 unmanagedPodWatcher를 사용해서 cilium이 관리하지 않는 Pod가 없도록 하자"
 date: "2025-09-02"
-categories: [infra]
-tags:
-  [
-    infra,
-    kubernetes,
-    k8s,
-    eks,
-    cilium,
-    cni,
-    vpc,
-    troubleshoot,
-    taint,
-    toleration,
-    unmanagedPodWatcher,
-  ]
+category: infra
+tags: [kubernetes, eks, cilium, cni, vpc, troubleshooting, taint, toleration, unmanaged-pod-watcher]
+series: cilium-on-eks
+seriesOrder: 3
 thumbnail: "eks-cilium.png"
 ---
 

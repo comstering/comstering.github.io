@@ -2,8 +2,8 @@
 title: "Terraform Associate 004 자격증 취득 후기"
 description: "Terraform을 사용하고 있으니 terraform 지식 점검을 진행해보자."
 date: "2026-04-28"
-categories: [infra]
-tags: [infra, terraform, IaC, associate, certification]
+category: infra
+tags: [terraform, iac, associate, certification]
 thumbnail: "hashicorp-certified-terraform-associate-004.png"
 ---
 

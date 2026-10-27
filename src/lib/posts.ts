@@ -1,9 +1,6 @@
 // src/lib/posts.ts
 
 import { cache } from "react";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
@@ -14,17 +11,22 @@ import { hcl } from "./hljs-hcl";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-
-const postsDirectory = path.join(process.cwd(), "posts");
+import { loadPostSources, type PostSource } from "./content/load";
+import type { Category } from "./content/schema";
 
 export interface PostMetadata {
   id: string;
   title: string;
   date: string;
   description: string;
+  updated?: string;
   tags: string[];
-  categories: string[];
-  thumbnail: string;
+  category: Category;
+  series?: string;
+  seriesOrder?: number;
+  thumbnail?: string;
+  draft: boolean;
+  relatedProject?: string;
   contentHtml: string;
   readingTime: number;
   headings: PostHeading[];
@@ -44,13 +46,24 @@ const estimateReadingTime = (markdown: string): number => {
   return Math.max(1, Math.round(hangul / 500 + words / 220));
 };
 
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+};
+
+// 목차 텍스트용: 이름 엔티티(&amp;)와 숫자 엔티티(&#x26;, &#38;)를 복원한다
 const decodeEntities = (value: string): string =>
-  value
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#x27;|&#39;/g, "'")
-    .replace(/&amp;/g, "&");
+  value.replace(
+    /&(?:#x([0-9a-f]+)|#(\d+)|([a-z]+));/gi,
+    (match, hex, dec, name) => {
+      if (hex) return String.fromCodePoint(parseInt(hex, 16));
+      if (dec) return String.fromCodePoint(Number(dec));
+      return NAMED_ENTITIES[name.toLowerCase()] ?? match;
+    },
+  );
 
 // rehype-slug가 부여한 id를 사용해 h2/h3 목차를 추출한다
 const extractHeadings = (html: string): PostHeading[] =>
@@ -67,71 +80,41 @@ const extractHeadings = (html: string): PostHeading[] =>
     }),
   );
 
-export const getSortedPostsData = (): PostMetadata[] => {
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const matterResult = matter(fileContents);
+const toMetadata = (
+  { id, data, content }: PostSource,
+  contentHtml = "",
+  headings: PostHeading[] = [],
+): PostMetadata => ({
+  id,
+  title: data.title,
+  description: data.description,
+  date: data.date,
+  updated: data.updated,
+  tags: data.tags,
+  category: data.category,
+  series: data.series,
+  seriesOrder: data.seriesOrder,
+  thumbnail: data.thumbnail,
+  draft: data.draft,
+  relatedProject: data.relatedProject,
+  contentHtml,
+  readingTime: estimateReadingTime(content),
+  headings,
+});
 
-    const { title, date, description, tags, categories, thumbnail } =
-      matterResult.data as {
-        title: string;
-        date: string;
-        description: string;
-        tags: string[];
-        categories: string[];
-        thumbnail: string;
-      };
-
-    return {
-      id,
-      title,
-      date,
-      description,
-      tags,
-      categories,
-      thumbnail,
-      contentHtml: "",
-      readingTime: estimateReadingTime(matterResult.content),
-      headings: [],
-    };
-  });
-
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-};
-
-// src/lib/posts.ts 에 아래 함수 추가 (기존 코드의 가장 아래에 추가하세요)
-
-// 모든 고유한 카테고리 목록을 가져오는 함수
-export const getAllCategories = (): string[] => {
-  const allPosts = getSortedPostsData(); // 이미 정의된 모든 포스트 데이터 가져오기 함수 재활용
-
-  const categoriesSet = new Set<string>();
-  allPosts.forEach((post) => {
-    post.categories?.forEach((category) => {
-      categoriesSet.add(category);
+export const getSortedPostsData = (): PostMetadata[] =>
+  loadPostSources()
+    .map((source) => toMetadata(source))
+    .sort((a, b) => {
+      if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+      return a.id < b.id ? -1 : 1;
     });
-  });
-
-  // Set을 배열로 변환하고 알파벳 순으로 정렬
-  const categoriesArray = Array.from(categoriesSet).sort();
-
-  // 'All' 옵션을 맨 앞에 추가하여 반환
-  return ["All", ...categoriesArray];
-};
 
 export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const matterResult = matter(fileContents);
+  const source = loadPostSources().find((post) => post.id === id);
+  if (!source) {
+    throw new Error(`글을 찾을 수 없습니다: ${id}`);
+  }
 
   const processedContent = await remark()
     .use(remarkGfm)
@@ -151,24 +134,10 @@ export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
       target: "_blank",
       rel: "nofollow",
     })
-    .process(matterResult.content);
+    .process(source.content);
   const contentHtml = processedContent.toString();
 
-  const { title, date, description, tags, categories, thumbnail } =
-    matterResult.data as PostMetadata;
-
-  return {
-    id,
-    title,
-    date,
-    description,
-    tags,
-    categories,
-    thumbnail,
-    contentHtml,
-    readingTime: estimateReadingTime(matterResult.content),
-    headings: extractHeadings(contentHtml),
-  };
+  return toMetadata(source, contentHtml, extractHeadings(contentHtml));
 });
 
 // 정렬된 목록 기준으로 이전(더 오래된) 글과 다음(더 최신) 글

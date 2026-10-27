@@ -2,8 +2,10 @@
 title: "Custom network Kapenter ENI troubleshooting"
 description: "Karpenter Node가 할당 가능한 IP 개수보다 더 많은 Pod를 Scheduling 하는 문제 해결"
 date: "2025-07-10"
-categories: [infra]
-tags: [infra, aws, eks, custom networking, karpenter, troubleshooting]
+category: infra
+tags: [aws, eks, custom-networking, karpenter, troubleshooting]
+series: eks-from-scratch
+seriesOrder: 5
 thumbnail: "eks.png"
 ---
 
