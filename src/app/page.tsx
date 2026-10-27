@@ -1,5 +1,20 @@
 import { getSortedPostsData } from "@/lib/posts";
 import { PostsBlock } from "@/components/PostsBlock";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  pageAlternates,
+  pageOpenGraph,
+} from "@/lib/site";
+
+export const metadata = {
+  alternates: pageAlternates("/"),
+  openGraph: pageOpenGraph({
+    url: "/",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  }),
+};
 
 const Home = () => {
   const posts = getSortedPostsData();
