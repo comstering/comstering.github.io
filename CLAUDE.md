@@ -13,7 +13,6 @@ yarn dev          # Start dev server (localhost:3000, Turbopack enabled)
 yarn build        # Production build (static export)
 yarn start        # Start production server
 yarn lint         # Run ESLint
-yarn deploy       # Deploy to GitHub Pages (gh-pages branch)
 ```
 
 ## Tech Stack
@@ -31,7 +30,7 @@ yarn deploy       # Deploy to GitHub Pages (gh-pages branch)
   - remark-html (HTML conversion)
   - rehype-highlight (code syntax highlighting)
   - rehype-external-links (external link handling)
-- **Deployment**: gh-pages (static files to gh-pages branch)
+- **Deployment**: GitHub Actions (`.github/workflows/deploy.yaml`) → GitHub Pages
 - **Package Manager**: Yarn
 
 ## Architecture
@@ -51,8 +50,6 @@ src/
 │   └── about/        # About page
 ├── components/       # React components
 ├── lib/              # Utility functions
-├── api/              # API-like data fetching
-│   └── posts/        # Post data fetching logic
 └── context/          # React Context providers (e.g., theme)
 
 posts/                # Markdown blog posts (*.md files)
@@ -68,9 +65,13 @@ public/               # Static assets
 
 ## Deployment Workflow
 
-1. `yarn build` - Generates static files in `/out` directory
-2. `yarn deploy` - Creates `.nojekyll` file and pushes to gh-pages branch
-3. GitHub Pages serves from gh-pages branch
+배포 경로는 GitHub Actions 하나다. 수동 배포 스크립트와 별도 배포 브랜치는 쓰지 않는다.
+
+1. `main`에 push (또는 Actions의 `workflow_dispatch`) → `.github/workflows/deploy.yaml` 실행
+2. `yarn build`로 `/out`에 정적 파일 생성 → Pages artifact로 업로드
+3. `actions/deploy-pages`가 GitHub Pages에 배포
+
+> 현재 디자인 리팩토링(PRD-002) 기간이라 `push` 트리거는 꺼져 있고 `workflow_dispatch`만 동작한다. PR-8에서 복구한다.
 
 ## Path Aliases
 
