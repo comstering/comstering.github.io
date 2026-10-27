@@ -50,17 +50,22 @@ src/
 │   ├── posts/        # Blog post listings
 │   │   └── [id]/     # Individual post pages (dynamic route)
 │   └── about/        # About page
-├── components/       # React components
-├── lib/              # Utility functions
+├── components/       # React components (ui/ = 공통 UI, post/ = 글 상세)
+├── lib/              # posts.ts, content/(frontmatter 스키마·검증), site.ts
 └── context/          # React Context providers (e.g., theme)
 
 posts/                # Markdown blog posts (*.md files)
+content/              # tags.yaml(정규 태그), series.yaml(시리즈 레지스트리)
 public/               # Static assets
+scripts/              # CI 검사 스크립트 (check-design-tokens, check-build-output)
+cowork/prd/           # 기획서 (PRD-001 마스터, PRD-002 Phase 0 ...)
+cowork/design/        # 디자인 시스템 명세와 시안
 ```
 
 ### Blog Post System
-- Posts are stored as Markdown files in `/posts/` directory
-- Frontmatter parsed with gray-matter
+- Posts are stored as Markdown files in `/posts/` directory (파일명이 URL이므로 발행 후 바꾸지 않는다)
+- Frontmatter parsed with gray-matter, validated with zod at build time (`src/lib/content/`) — 규칙은 README의 "글 작성 가이드" 참고
+- `draft: true` 글은 프로덕션 빌드(목록·상세·sitemap·RSS)에서 제외된다
 - Markdown converted to HTML with remark/rehype pipeline
 - Syntax highlighting via rehype-highlight
 - Dynamic routes: `/posts/[id]`
@@ -73,7 +78,13 @@ public/               # Static assets
 2. `yarn build`로 `/out`에 정적 파일 생성 → Pages artifact로 업로드
 3. `actions/deploy-pages`가 GitHub Pages에 배포
 
-> 현재 디자인 리팩토링(PRD-002) 기간이라 `push` 트리거는 꺼져 있고 `workflow_dispatch`만 동작한다. PR-8에서 복구한다.
+`main`에 머지되면 10분 안에 라이브에 반영된다. 이전 커밋으로 되돌리려면 Actions 탭에서 `Deploy`를 `workflow_dispatch`로 실행한다. PR에서는 `CI`(Quality)가 먼저 돈다.
+
+## 문서 읽는 순서
+
+- **UI 작업 전**: [DESIGN.md](./DESIGN.md)의 토큰과 규칙을 확인한다. 명세 원본과 시안은 `cowork/design/`.
+- **기능 작업 전**: 해당 영역의 PRD를 확인한다. `cowork/prd/README.md`의 목록에서 찾는다 (마스터 PRD-001, Phase 0 PRD-002).
+- **현재 상태와 알려진 이슈**: [CONTEXT.md](./CONTEXT.md)
 
 ## CI
 
