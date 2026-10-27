@@ -13,6 +13,8 @@ yarn dev          # Start dev server (localhost:3000, Turbopack enabled)
 yarn build        # Production build (static export)
 yarn start        # Start production server
 yarn lint         # Run ESLint
+yarn check:tokens # DESIGN.md 금지 패턴 검사 (src/)
+yarn check:output # 빌드 산출물 검사 (yarn build 이후, out/)
 ```
 
 ## Tech Stack
@@ -72,6 +74,13 @@ public/               # Static assets
 3. `actions/deploy-pages`가 GitHub Pages에 배포
 
 > 현재 디자인 리팩토링(PRD-002) 기간이라 `push` 트리거는 꺼져 있고 `workflow_dispatch`만 동작한다. PR-8에서 복구한다.
+
+## CI
+
+`pull_request`(대상 `main`)마다 `.github/workflows/ci.yaml`의 **Quality** 잡이 돈다: `yarn install --frozen-lockfile` → `yarn lint` → `yarn check:tokens` → `yarn build`(frontmatter 검증 포함) → `yarn check:output`. 로컬에서 PR 전에 같은 순서로 확인할 수 있다.
+
+- `check:tokens`: `src/`(`globals.css` 제외)에서 Tailwind 기본 팔레트 색 클래스, `dark:`, hex 색상, 시안 표시(`ph`)를 찾으면 실패
+- `check:output`: 모든 글의 og:image 파일 존재, `rss.xml`·`sitemap.xml` 유효성과 항목 수, `adsbygoogle` 0건
 
 ## Path Aliases
 
