@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import GiscusComments from "@/components/GiscusComment";
 import { PostContent } from "@/components/PostContent";
 import { PostToc } from "@/components/PostToc";
+import { JsonLd } from "@/components/JsonLd";
 import { ViewCounter } from "@/components/ViewCounter";
 import {
   getAdjacentPosts,
@@ -10,36 +12,50 @@ import {
   getSortedPostsData,
   type PostMetadata,
 } from "@/lib/posts";
+import {
+  AUTHOR,
+  DEFAULT_OG_IMAGE,
+  SITE_URL,
+  pageAlternates,
+  pageOpenGraph,
+} from "@/lib/site";
 
 export const dynamicParams = false;
 
-const SITE_URL = "https://comstering.github.io";
-
 export const generateStaticParams = () =>
   getSortedPostsData().map((post) => ({ id: post.id }));
+
+const thumbnailUrl = (post: PostMetadata): string =>
+  post.thumbnail
+    ? `${SITE_URL}/images/posts/thumbnails/${post.thumbnail}`
+    : `${SITE_URL}${DEFAULT_OG_IMAGE}`;
 
 export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
-}) => {
+}): Promise<Metadata> => {
   const { id } = await params;
   const post = await getPostData(id);
   const description = post.description || post.title;
+  const path = `/posts/${post.id}`;
 
   return {
     title: post.title,
     description,
-    keywords: post.tags ? post.tags.join(", ") : "",
-    openGraph: {
+    keywords: post.tags.join(", "),
+    alternates: pageAlternates(path),
+    openGraph: pageOpenGraph({
       title: post.title,
       description,
       type: "article",
-      url: `${SITE_URL}/posts/${post.id}`,
-      images: post.thumbnail
-        ? [{ url: `${SITE_URL}/images/posts/thumbnails/${post.thumbnail}` }]
-        : [],
-    },
+      url: path,
+      publishedTime: `${post.date}T00:00:00+09:00`,
+      modifiedTime: `${post.updated ?? post.date}T00:00:00+09:00`,
+      authors: [AUTHOR.name],
+      tags: post.tags,
+      images: [{ url: thumbnailUrl(post) }],
+    }),
   };
 };
 
@@ -75,6 +91,26 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <article className="relative mx-auto max-w-[720px]">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.description,
+          datePublished: post.date,
+          dateModified: post.updated ?? post.date,
+          image: thumbnailUrl(post),
+          url: `${SITE_URL}/posts/${post.id}`,
+          mainEntityOfPage: `${SITE_URL}/posts/${post.id}`,
+          inLanguage: "ko",
+          keywords: post.tags.join(", "),
+          author: {
+            "@type": "Person",
+            name: AUTHOR.name,
+            url: `${SITE_URL}/about`,
+          },
+        }}
+      />
       <header className="pb-10 pt-4 sm:pt-8">
         <Link
           href="/"
