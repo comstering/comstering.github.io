@@ -2,8 +2,10 @@
 title: "EKS에 Karpenter 설치"
 description: "EKS에 Karpenter 설치해서 유연한 Node Autoscaling 적용하기"
 date: "2025-07-07"
-categories: [infra]
-tags: [infra, aws, eks, karpenter, kubernetes, k8s]
+category: infra
+tags: [aws, eks, karpenter, kubernetes]
+series: eks-from-scratch
+seriesOrder: 3
 thumbnail: "karpenter.png"
 ---
 

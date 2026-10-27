@@ -2,8 +2,10 @@
 title: "EKS로 Kubernetes Cluster 구축하기"
 description: "AWS에게 Kubernetes 관리를 맡기자"
 date: "2025-07-03"
-categories: [infra]
-tags: [infra, aws, eks, kubernetes, k8s, terraform]
+category: infra
+tags: [aws, eks, kubernetes, terraform]
+series: eks-from-scratch
+seriesOrder: 1
 thumbnail: "eks.png"
 ---
 

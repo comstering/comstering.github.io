@@ -134,6 +134,9 @@ body {
   color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  /* 한글은 어절 단위로 줄바꿈하고, 긴 URL·영문은 넘치지 않게 끊는다 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 :focus-visible {

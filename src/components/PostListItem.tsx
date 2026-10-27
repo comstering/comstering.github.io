@@ -5,12 +5,13 @@ import type { PostMetadata } from "@/lib/posts";
 type PostListItemProps = {
   post: Pick<
     PostMetadata,
-    "id" | "title" | "description" | "date" | "categories" | "tags" | "thumbnail"
+    "id" | "title" | "description" | "date" | "category" | "tags" | "thumbnail" | "draft"
   >;
 };
 
 export const PostListItem = ({ post }: PostListItemProps) => {
-  const { id, title, description, date, categories, tags, thumbnail } = post;
+  const { id, title, description, date, category, tags, thumbnail, draft } =
+    post;
 
   return (
     <Link
@@ -20,7 +21,8 @@ export const PostListItem = ({ post }: PostListItemProps) => {
       <article className="min-w-0">
         <p className="flex gap-3 font-mono text-xs text-mute">
           <time dateTime={date}>{date}</time>
-          <span>{categories.join(" / ")}</span>
+          <span>{category}</span>
+          {draft && <span className="text-warn">draft</span>}
         </p>
         <h3 className="mt-2 break-keep text-xl font-semibold leading-snug tracking-tight text-fg transition-colors group-hover:text-accent sm:text-[22px]">
           {title}

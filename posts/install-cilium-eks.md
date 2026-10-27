@@ -2,8 +2,10 @@
 title: "EKS에 Cilium CNI 설치하기 (with CNI Chaining AWS VPC CNI Plugin)"
 description: "Cilium CNI Chaining을 통해서 VPC CNI와 Cilium CNI를 함께 사용해보자"
 date: "2025-09-01"
-categories: [infra]
-tags: [infra, kubernetes, k8s, eks, cilium, cni, vpc, taint, helm]
+category: infra
+tags: [kubernetes, eks, cilium, cni, vpc, taint, helm]
+series: cilium-on-eks
+seriesOrder: 2
 thumbnail: "eks-cilium.png"
 ---
 

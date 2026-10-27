@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import type { PostMetadata } from "@/lib/posts";
+import { CATEGORIES } from "@/lib/content/schema";
 import { Chip } from "@/components/ui/Chip";
 import { Input } from "@/components/ui/Input";
 import { PostListItem } from "./PostListItem";
@@ -17,16 +18,25 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
   const [selected, setSelected] = useState<string>(ALL);
   const [query, setQuery] = useState("");
 
+  // 칩 순서는 CATEGORIES 순서를 따르고, 글이 0편인 카테고리는 숨긴다.
   const categories = useMemo(() => {
-    const set = new Set<string>();
-    posts.forEach((post) => post.categories.forEach((c) => set.add(c)));
-    return [ALL, ...Array.from(set)];
+    const counts = new Map<string, number>();
+    posts.forEach((post) =>
+      counts.set(post.category, (counts.get(post.category) ?? 0) + 1),
+    );
+    return [
+      { name: ALL, count: posts.length },
+      ...CATEGORIES.filter((name) => counts.has(name)).map((name) => ({
+        name,
+        count: counts.get(name) ?? 0,
+      })),
+    ];
   }, [posts]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return posts.filter((post) => {
-      const inCategory = selected === ALL || post.categories.includes(selected);
+      const inCategory = selected === ALL || post.category === selected;
       const inQuery =
         !q ||
         post.title.toLowerCase().includes(q) ||
@@ -83,13 +93,13 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
         aria-label="카테고리 필터"
         className="no-scrollbar mt-4 flex gap-2 overflow-x-auto"
       >
-        {categories.map((category) => (
+        {categories.map(({ name, count }) => (
           <Chip
-            key={category}
-            selected={selected === category}
-            onClick={() => setSelected(category)}
+            key={name}
+            selected={selected === name}
+            onClick={() => setSelected(name)}
           >
-            {category}
+            {name} <span className="opacity-60">{count}</span>
           </Chip>
         ))}
       </div>
