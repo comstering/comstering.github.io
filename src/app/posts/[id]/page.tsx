@@ -171,7 +171,6 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           reactionsEnabled="1"
           emitMetadata="0"
           inputPosition="top"
-          theme="dark"
           lang="ko"
           loading="lazy"
         />

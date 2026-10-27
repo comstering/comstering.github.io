@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import Script from "next/script";
 import { JetBrains_Mono } from "next/font/google";
 import {
   AUTHOR,
@@ -49,15 +50,10 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
         </main>
         <Footer />
       </ThemeProvider>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2657417531473772"
-        crossOrigin="anonymous"
-      />
-      <script
-        data-goatcounter="https://comstering.goatcounter.com/count"
-        async
+      <Script
         src="//gc.zgo.at/count.js"
+        data-goatcounter="https://comstering.goatcounter.com/count"
+        strategy="lazyOnload"
       />
     </body>
   </html>
