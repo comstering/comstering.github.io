@@ -1,10 +1,10 @@
 name: Deploy
 
-# NOTE: 디자인 시스템 리팩토링 기간 동안 main push 자동 배포를 중지함.
-# 모든 작업이 끝나면 아래 주석을 해제하고 workflow_dispatch는 유지/제거를 선택한다.
+# main에 머지되면 자동 배포한다. 문제가 생기면 Actions 탭에서 workflow_dispatch로
+# 이전 커밋을 골라 다시 배포할 수 있다.
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
