@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 import type { PostMetadata } from "@/lib/posts";
 import { CATEGORIES } from "@/lib/content/schema";
@@ -14,15 +15,52 @@ interface PostsBlockProps {
 
 const ALL = "all";
 
-export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
-  const [selected, setSelected] = useState<string>(ALL);
+interface PostsViewProps extends PostsBlockProps {
+  selected: string;
+  onSelect: (category: string) => void;
+}
+
+// 선택된 카테고리는 URL(?category=)이 정한다. 정적 HTML에는 필터 없는 전체 목록이 들어간다.
+export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => (
+  <Suspense
+    fallback={<PostsView posts={posts} selected={ALL} onSelect={() => {}} />}
+  >
+    <PostsWithUrlFilter posts={posts} />
+  </Suspense>
+);
+
+const PostsWithUrlFilter: React.FC<PostsBlockProps> = ({ posts }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const param = useSearchParams().get("category");
+
+  // 글이 있는 카테고리만 유효하다. 그 밖의 값(?category=xyz)은 all로 본다.
+  const selected =
+    param && posts.some((post) => post.categories.some((c) => c === param))
+      ? param
+      : ALL;
+
+  const onSelect = (category: string) => {
+    // push: 뒤로가기로 이전 필터가 복원되도록 방문 기록을 남긴다.
+    router.push(
+      category === ALL ? pathname : `${pathname}?category=${category}`,
+      { scroll: false },
+    );
+  };
+
+  return <PostsView posts={posts} selected={selected} onSelect={onSelect} />;
+};
+
+const PostsView: React.FC<PostsViewProps> = ({ posts, selected, onSelect }) => {
   const [query, setQuery] = useState("");
 
   // 칩 순서는 CATEGORIES 순서를 따르고, 글이 0편인 카테고리는 숨긴다.
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
     posts.forEach((post) =>
-      counts.set(post.category, (counts.get(post.category) ?? 0) + 1),
+      post.categories.forEach((category) =>
+        counts.set(category, (counts.get(category) ?? 0) + 1),
+      ),
     );
     return [
       { name: ALL, count: posts.length },
@@ -36,7 +74,7 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return posts.filter((post) => {
-      const inCategory = selected === ALL || post.category === selected;
+      const inCategory = selected === ALL || post.categories.some((category) => category === selected);
       const inQuery =
         !q ||
         post.title.toLowerCase().includes(q) ||
@@ -56,7 +94,7 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
   }, [filtered]);
 
   const reset = () => {
-    setSelected(ALL);
+    onSelect(ALL);
     setQuery("");
   };
 
@@ -97,7 +135,7 @@ export const PostsBlock: React.FC<PostsBlockProps> = ({ posts }) => {
           <Chip
             key={name}
             selected={selected === name}
-            onClick={() => setSelected(name)}
+            onClick={() => onSelect(name)}
           >
             {name} <span className="opacity-60">{count}</span>
           </Chip>

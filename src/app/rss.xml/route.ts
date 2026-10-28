@@ -22,7 +22,7 @@ export function GET() {
   const posts = getSortedPostsData().filter((post) => !post.draft);
   // 빌드 시각이 아니라 최신 글 날짜를 쓰므로 같은 내용이면 같은 결과가 나온다
   const lastBuildDate = toDate(
-    posts[0] ? (posts[0].updated ?? posts[0].date) : "1970-01-01",
+    posts[0] ? posts[0].date : "1970-01-01",
   ).toUTCString();
 
   const items = posts
@@ -34,7 +34,9 @@ export function GET() {
       <guid isPermaLink="true">${link}</guid>
       <pubDate>${toDate(post.date).toUTCString()}</pubDate>
       <description>${escapeXml(post.description)}</description>
-      <category>${escapeXml(post.category)}</category>
+${post.categories
+  .map((category) => `      <category>${escapeXml(category)}</category>`)
+  .join("\n")}
     </item>`;
     })
     .join("\n");

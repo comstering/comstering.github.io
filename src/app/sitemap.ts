@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getSortedPostsData().filter((post) => !post.draft);
-  const modified = (post: (typeof posts)[number]) => post.updated ?? post.date;
+  const modified = (post: (typeof posts)[number]) => post.date;
 
   // 빌드 시각을 쓰지 않는다: 같은 콘텐츠면 같은 sitemap이 나온다.
   const latest = posts.reduce(

@@ -2,7 +2,7 @@
 title: "Karpenter로 유연한 Node Autoscaling 하기"
 description: "Node Group의 Autoscaling보다 빠르고 유연하게 Node를 늘리고 줄이자."
 date: "2025-07-06"
-category: infra
+categories: [infra]
 tags: [aws, eks, karpenter, kubernetes, node, autoscaling]
 series: eks-from-scratch
 seriesOrder: 2

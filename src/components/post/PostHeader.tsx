@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { PostMetadata } from "@/lib/posts";
 import { ViewCounter } from "@/components/ViewCounter";
 
@@ -8,8 +9,7 @@ interface PostHeaderProps {
     | "title"
     | "description"
     | "date"
-    | "updated"
-    | "category"
+    | "categories"
     | "readingTime"
     | "draft"
   >;
@@ -18,7 +18,23 @@ interface PostHeaderProps {
 export const PostHeader = ({ post }: PostHeaderProps) => (
   <header className="pt-4 sm:pt-6">
     <p className="flex flex-wrap gap-x-3 font-mono text-meta text-mute">
-      <span className="text-accent">{post.category}</span>
+      <span>
+        {post.categories.map((category, index) => (
+          <span key={category}>
+            {index > 0 && (
+              <span aria-hidden className="text-mute">
+                ,{" "}
+              </span>
+            )}
+            <Link
+              href={`/?category=${category}`}
+              className="text-accent hover:underline"
+            >
+              {category}
+            </Link>
+          </span>
+        ))}
+      </span>
       <time dateTime={post.date}>{post.date}</time>
       {post.draft && <span className="text-warn">draft</span>}
     </p>
@@ -33,7 +49,6 @@ export const PostHeader = ({ post }: PostHeaderProps) => (
     <p className="mt-6 flex flex-wrap gap-x-4 gap-y-1 border-b border-line pb-6 font-mono text-cap text-mute tabular-nums">
       <span>{post.readingTime} min read</span>
       <ViewCounter path={`/posts/${post.id}`} />
-      {post.updated && <span>updated {post.updated}</span>}
     </p>
   </header>
 );

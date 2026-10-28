@@ -21,9 +21,8 @@ export interface PostMetadata {
   title: string;
   date: string;
   description: string;
-  updated?: string;
   tags: string[];
-  category: Category;
+  categories: Category[];
   series?: string;
   seriesOrder?: number;
   thumbnail?: string;
@@ -91,9 +90,8 @@ const toMetadata = (
   title: data.title,
   description: data.description,
   date: data.date,
-  updated: data.updated,
   tags: data.tags,
-  category: data.category,
+  categories: data.categories,
   series: data.series,
   seriesOrder: data.seriesOrder,
   thumbnail: data.thumbnail,

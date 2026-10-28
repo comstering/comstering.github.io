@@ -2,7 +2,7 @@
 title: "EKS Custom Networking"
 description: "Subnet에 Pod가 할당받을 IP가 부족한 문제를 해결하는 방법"
 date: "2025-07-08"
-category: infra
+categories: [infra]
 tags: [aws, eks, custom-networking]
 series: eks-from-scratch
 seriesOrder: 4

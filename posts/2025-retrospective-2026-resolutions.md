@@ -2,7 +2,7 @@
 title: "2025 Retrospective & 2026 Resolutions"
 description: "지난 한 해의 성장을 되짚어보고, 더 나은 개발자와 블로그를 향한 2026년의 이정표를 세우자"
 date: "2026-01-06"
-category: note
+categories: [note]
 tags: [retrospective, resolution, new-year]
 thumbnail: "2025-retrospective-2026-resolutions.png"
 ---

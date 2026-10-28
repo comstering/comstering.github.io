@@ -2,7 +2,7 @@
 title: "나의 첫 OpenSource Contribute (feat. 오타수정)"
 description: "처음으로 Contribution 해본 경험"
 date: "2025-07-21"
-category: oss
+categories: [frontend, oss]
 tags: [kafka, open-source, contribution]
 thumbnail: "kafbat.png"
 ---

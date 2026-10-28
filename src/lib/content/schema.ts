@@ -11,13 +11,22 @@ const dateString = z
   )
   .refine((value) => !Number.isNaN(Date.parse(value)), "존재하지 않는 날짜입니다");
 
+// 글 안에서는 항상 CATEGORIES의 고정 순서로 둔다(작성 순서는 의미 없음, PRD-003 4장 B안).
+const categoriesField = z
+  .array(z.enum(CATEGORIES))
+  .min(1, "카테고리를 1개 이상 지정해야 합니다")
+  .max(2, "카테고리는 최대 2개입니다")
+  .refine((values) => new Set(values).size === values.length, "카테고리가 중복되었습니다")
+  .transform((values) =>
+    [...values].sort((a, b) => CATEGORIES.indexOf(a) - CATEGORIES.indexOf(b)),
+  );
+
 export const frontmatterSchema = z
   .strictObject({
     title: z.string().min(1),
     description: z.string().min(1),
     date: dateString,
-    updated: dateString.optional(),
-    category: z.enum(CATEGORIES),
+    categories: categoriesField,
     tags: z.array(z.string().min(1)).min(1, "태그를 1개 이상 지정해야 합니다"),
     series: z.string().min(1).optional(),
     seriesOrder: z.number().int().positive().optional(),
@@ -47,7 +56,8 @@ export type Frontmatter = z.infer<typeof frontmatterSchema>;
 export const seriesRegistrySchema = z.record(
   z.string(),
   z.strictObject({
-    label: z.string().min(1),
+    // 360px 글 목록 메타 줄에 들어가도록 8자 이하 (디자인 12번 E8)
+    label: z.string().min(1).max(8, "label은 8자 이하여야 합니다"),
     title: z.string().min(1),
   }),
 );
