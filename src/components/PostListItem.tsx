@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { PostMetadata } from "@/lib/posts";
+import { cn } from "@/lib/cn";
 
 type PostListItemProps = {
   /** 태그를 숨기는 간결한 목록 (404 등) */
@@ -36,7 +37,10 @@ export const PostListItem = ({ post, compact = false }: PostListItemProps) => {
   return (
     <Link
       href={`/posts/${id}`}
-      className="group block border-b border-line py-7"
+      className={cn(
+        "group block border-b border-line",
+        compact ? "py-4" : "py-7",
+      )}
     >
       <article className="min-w-0">
         <p className="flex flex-wrap gap-x-3 font-mono text-xs text-mute">
@@ -49,10 +53,20 @@ export const PostListItem = ({ post, compact = false }: PostListItemProps) => {
           )}
           {draft && <span className="text-warn">draft</span>}
         </p>
-        <h3 className="mt-2 break-keep text-xl font-semibold leading-snug tracking-tight text-fg transition-colors group-hover:text-accent sm:text-[22px]">
+        <h3
+          className={cn(
+            "mt-2 break-keep font-semibold leading-snug tracking-tight text-fg transition-colors group-hover:text-accent",
+            compact ? "text-lead" : "text-xl sm:text-[22px]",
+          )}
+        >
           {title}
         </h3>
-        <p className="mt-2 line-clamp-2 break-keep text-[15px] leading-relaxed text-mute">
+        <p
+          className={cn(
+            "mt-2 break-keep text-[15px] leading-relaxed text-mute",
+            compact ? "line-clamp-1" : "line-clamp-2",
+          )}
+        >
           {description}
         </p>
         {!compact && tags?.length > 0 && (

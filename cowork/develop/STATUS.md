@@ -1,81 +1,33 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-10-28 · 기준 커밋 `5d0874b`(main) + PR #33 · 기준 기획서 PRD-003(approved) · 디자인 v1.4_
+_최종 갱신: 2026-10-28 · 기준 커밋 `691c01b`(main) + PR #35 · 기준 기획서 PRD-003(approved) · 디자인 v1.4_
 
 ## 한눈에 보기
 
 | 단계 | 상태 |
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
-| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 리뷰 대기, 나머지 대기 |
+| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 머지, PR-13 리뷰 대기, 나머지 대기 |
 | 지금 막힌 것 | 없음. 기획(PRD-003 approved)·디자인(v1.4, 썸네일 C안)이 확정돼 PR-9 바로 시작 가능 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
-1. `gh pr list`로 #33(PR-12) 머지 여부 확인. 머지됐으면 `git checkout main && git pull`(다른 세션의 미커밋 변경이 있으면 `git stash` 후 pull, `stash pop`), 안 됐으면 사용자에게 묻는다
-2. **PR-13 관련 글** (`cowork/prd/003_blog_reading-experience.md` PR-13 절)
-   - 먼저 시안 대조: `cowork/design/site/post.html`의 관련 글 영역과 `post-item--compact`(`components.css`)
-   - 규칙(F-PO-06): 태그 교집합 수가 점수, 같으면 최신순. **같은 시리즈 글과 이전/다음 글은 제외**, 점수 0은 채우지 않음, 최대 3편, 0편이면 섹션 숨김, draft 제외, 빌드 타임 계산
-   - 위치: 이전/다음(`PostPager`) 아래, 댓글 위. 신규 `post/RelatedPosts.tsx`, `posts.ts`에 `getRelatedPosts(id)`
-   - 수용 기준: 같은 글이 시리즈 박스·이전/다음·관련 글에 두 번 이상 나오지 않음(단위 테스트 또는 산출물 검사). E2E 추가
-3. 이후 PR-14(이미지, Lighthouse 경고→error) → PR-15 → PR-16 → PR-17
+1. `gh pr list`로 #35(PR-13) 머지 여부 확인. 머지됐으면 `git checkout main && git pull`(`would be overwritten`으로 막히면 미추적 파일이 머지본과 같은지 비교하고 백업으로 옮긴 뒤 pull, 삭제는 하지 않는다)
+2. **PR-14 이미지 파이프라인** (`cowork/prd/003_blog_reading-experience.md` PR-14 절, 디자인 12번 E3, 시안 `app.js`의 lightbox)
+   - 변환: 빌드 전 sharp로 `public/images/**` png·jpg → WebP, 본문 이미지 최대 폭 1440px, 결과는 `public/_img/`(git 제외), 해시 캐시. **`public/images/posts/thumbnails/`는 변환하지 않는다**(PR-15 전까지 og:image)
+   - rehype 플러그인: `src`를 변환본으로, 실제 `width`·`height`, 첫 이미지 외 `loading="lazy" decoding="async"`, alt 비면 빌드 경고
+   - 확대: 네이티브 `<dialog>` 라이트박스, **원본 폭이 표시 폭(720px)보다 큰 이미지에만**(E3), Esc·바깥 클릭·44px 닫기·포커스 복귀·캡션
+   - 수용: G1-5(본문 이미지 ≤200KB), CLS ≤ 0.05, **Lighthouse 경고를 error로 전환**(`lighthouserc.json`)
+   - 새 의존성(sharp)이 필요하다. 설치 전 사용자에게 알린다
+3. 이후 PR-15(OG 자동 생성, PoC 먼저) → PR-16 → PR-17
 
-## Phase 1 PR별 상태
+## PR-13에서 정한 동작 (디자이너 확인 요청)
 
-| PR | 내용 | 상태 | 링크 |
-| --- | --- | --- | --- |
-| PR-10 | E2E(Playwright)·Lighthouse CI | ✅ 머지 | #27 |
-| PR-11 | 본문: 코드 블록·콜아웃·표 | ✅ 머지 | #28 |
-| (추가) | PR 댓글 Lighthouse 요약 | ✅ 머지 | #29 |
-| PR-9 | categories 다중화·`updated` 삭제·필터 URL·목록 썸네일 제거 | ✅ 머지 | #30 |
-| (추가) | CLAUDE.md에 개발 인수인계 지침 추가(기록 규칙) | ✅ 머지 | #31 |
-| PR-12 | 글 상단 바: 목차·시리즈 | 🔍 리뷰 대기 | #33 |
-| PR-13 | 관련 글 | ⏳ 대기 | |
-| PR-14 | 이미지 파이프라인(WebP·lazy·확대) | ⏳ 대기. Lighthouse 경고→실패 전환 | |
-| PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ⏳ 대기. 첫 단계는 정적 export PoC | |
-| PR-16 | 읽기 진행률·링크 체커 | ⏳ 대기 | |
-| PR-17 | 게이트 측정·문서 | ⏳ 대기 | |
-
-개발 순서(PRD-003 확정): PR-10 → PR-9 → PR-11·12·13 → PR-14 → PR-15 → PR-16 → PR-17. 한 번에 PR 하나, 사용자가 머지하면 다음으로 간다.
-
-## 사용자에게 보이는 현재 상태 (라이브 사이트)
-
-- 디자인 시스템 v1.3(Terminal Graphite) 적용, 자동 배포 가동
-- 홈: 연도별 세로 리스트, 카테고리 칩, 검색. PR #30 머지 전까지는 목록 썸네일이 있고 필터가 URL에 반영되지 않는다
-- 글 상세: 오른쪽 sticky 목차(1280 이상만), 코드 복사, 이전/다음, 저자 박스, Giscus
-- 아직 없음: 모바일 목차·시리즈 바, 시리즈 박스, 관련 글, 이미지 확대, 진행률, OG 자동 생성
-- 머지됨(#28): 코드 파일명·줄 하이라이트·복사 아이콘, 콜아웃 2종, 표 가장자리 흐림
-- PR #30 머지 후: categories 2개(`infra, oss`), 필터 URL(`/?category=infra`), 목록 썸네일 없음, 수정일 없음
-
-## 시안 대비 차이 (디자이너 확인 요청)
-
-PR #28(PR-11)을 최종 시안(`cowork/design/system/components.css`, `site/post.html`)과 대조했다. 처음 구현에서 달랐던 곳은 모두 시안대로 고쳤고, 지금 남은 차이는 없다.
-
-| # | 항목 | 처음 구현 | 처리 |
-| --- | --- | --- | --- |
-| D-1 | 콜아웃 라벨 | 텍스트만, `warn` | 아이콘 추가, 라벨 `note`/`warning` ✅ |
-| D-2 | 복사 버튼 | 텍스트만 | 아이콘 + `.code__copy-label`(aria-live), 2초 복귀 ✅ |
-| D-3 | 셸 `$ ` 프롬프트 | 화면에 그대로 | `.p` 분리(선택 불가, 녹색) ✅ |
-| D-4 | 표 가장자리 | 양쪽 | 오른쪽만, `fg 14%` ✅ |
-
-확인 못 한 것: **실제 Chrome(Claude in Chrome) 확인**은 도구가 세션에 없어 못 했다. Playwright Chromium으로만 봤다. Safari·Firefox 미확인.
-
-## 측정값 (Lighthouse, 로컬 정적 빌드, 모바일)
-
-PR-10 시점. 이미지 작업(PR-14) 전이라 목표 미달이 정상이다.
-
-| 지표 | 목표(G1) | 현재 |
-| --- | --- | --- |
-| 성능 | ≥ 95 | 0.74 (홈) |
-| 접근성 | 100 | 0.98 (홈) |
-| LCP | ≤ 2.0s | 약 5.0s |
-| CLS | ≤ 0.05 | About 0.128이 Phase 0 측정에서 발견됨. 원인 미확인 → PR-14에서 확인 |
-
-## 기획·디자인이 결정해야 하는 것
-
-| # | 질문 | 누구 | 영향 PR |
-| --- | --- | --- | --- |
-| Q4 | 기존 글에 콜아웃·`$ ` 셸 블록 적용 여부. 지금은 기능 확인용 1편(values.yaml)에만 적용했다. 나머지 글에 소급 적용할지 | 기획 | 글 작성 |
+| # | 내용 |
+| --- | --- |
+| P-10 | 관련 글 섹션은 이전/다음 아래·댓글 위, 제목 `// related`. 항목은 시안 `post-item--compact`(메타 → 제목 → 설명 1줄, 태그 없음). 0편이면 섹션을 그리지 않는다(현재 3편 글 11개, 0편 글 3개: `implement-my-site`, `first-contribute-opensource`, `2025-retrospective…`) |
+| P-11 | 같은 `compact` 스타일을 쓰는 404의 최신 글 목록도 시안(`404.html`)대로 함께 바뀐다(패딩·제목 18px·설명 1줄) |
+| P-12 | 점수는 태그 교집합 수뿐이다(카테고리는 점수에 안 넣음). 시리즈가 다른 글끼리는 시리즈 위치 메타(`series cilium 3/3`)가 목록에 그대로 보인다 |
 
 ## PR-12(#33)에서 정한 동작 (디자이너 확인 요청)
 
@@ -113,4 +65,5 @@ PR-10 시점. 이미지 작업(PR-14) 전이라 목표 미달이 정상이다.
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-10-28 | PR-13 오픈(#35): 관련 글(점수·시리즈/이전·다음 제외), compact 목록 시안 맞춤(404도 같이 바뀜), E2E 7건. #33·#32 머지 확인, main pull(`691c01b`). 로컬 미추적 `cowork` 58개가 머지본과 동일함을 확인하고 scratchpad 백업으로 옮긴 뒤 pull(삭제는 하지 않음) | PR-13 시작: `git checkout -b feat/related-posts` |
 | 2026-10-28 | PR-10(#27), PR-11(#28), Lighthouse 댓글(#29) 머지. PR-9(#30) 오픈, CI 통과. CLAUDE.md 지침 PR(#31) 오픈, 기록 규칙을 CONTEXT 4.5장·메모리에 명시. `cowork/develop` 문서·도구 신설(CONTEXT, STATUS, REQUESTS, tools/) | #30 머지 확인 → PR-12 시작. `gh pr view 30 --json state` |
