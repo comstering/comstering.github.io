@@ -43,3 +43,23 @@ jobs:
 
       - name: Check build output
         run: yarn check:output
+
+      - name: Install Playwright browser
+        run: yarn playwright install --with-deps chromium
+
+      - name: E2E
+        run: yarn test:e2e
+
+      # PRD-003 PR-10: 처음에는 경고(warn)만. PR-14 이미지 작업 후 error로 올린다.
+      - name: Lighthouse CI
+        run: yarn lhci
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-lighthouse-reports
+          path: |
+            playwright-report
+            .lighthouseci
+          retention-days: 7
