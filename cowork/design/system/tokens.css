@@ -1,0 +1,108 @@
+/* ==========================================================================
+   comstering design tokens  v1.0 (proposal)
+   Brand: Terminal Graphite — dark first, one green accent, vertical lists.
+   Source of truth for mockups in cowork/design. Mirrors /DESIGN.md + extensions
+   proposed in 02-direction.md (line-strong, warn, overlay, code-hl).
+   ========================================================================== */
+
+:root {
+  /* ---- color · light ---------------------------------------------------- */
+  --canvas: #f3f6f4;
+  --surface: #ffffff;
+  --surface-2: #e9eeeb;
+  --fg: #0e1512;
+  --mute: #5a6b63;
+  --line: #d5ded9;
+  --line-strong: #7d8e86;   /* NEW: interactive borders, ≥3:1 */
+  --accent: #087a41;
+  --accent-on: #ffffff;
+  --accent-soft: rgb(8 122 65 / 0.08);
+  --warn: #8a5a00;          /* NEW: warning callout only */
+  --overlay: rgb(12 15 14 / 0.6);
+
+  /* code stays dark in both themes */
+  --code-bg: #0e1512;
+  --code-bar: #141c18;
+  --code-fg: #cfe8da;
+  --code-line: #1f2a26;
+  --code-hl: rgb(91 242 155 / 0.09);
+  --syntax-comment: #7f9a8c;
+  --syntax-keyword: #5bf29b;
+  --syntax-string: #f2c14e;
+  --syntax-number: #7dd3fc;
+  --syntax-title: #e6ede9;
+  --syntax-meta: #c4a7f5;
+
+  /* ---- type ------------------------------------------------------------- */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --text-display: clamp(2rem, 1.2rem + 3.2vw, 3rem);      /* 32 → 48 */
+  --text-title: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);   /* 30 → 40 */
+  --text-h2: clamp(1.375rem, 1.2rem + 0.7vw, 1.625rem);    /* 22 → 26 */
+  --text-h3: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);    /* 18 → 20 */
+  --text-item: clamp(1.25rem, 1.18rem + 0.3vw, 1.375rem);  /* 20 → 22 */
+  --text-lead: 1.125rem;   /* 18 */
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);    /* 16 → 17 */
+  --text-sm: 0.9375rem;    /* 15 */
+  --text-meta: 0.8125rem;  /* 13 mono */
+  --text-cap: 0.75rem;     /* 12 mono */
+
+  --leading-body: 1.8;
+  --leading-tight: 1.3;
+  --tracking-title: -0.03em;
+  --tracking-display: -0.04em;
+
+  /* ---- space (4px grid) ------------------------------------------------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-14: 56px;
+  --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* ---- layout ----------------------------------------------------------- */
+  --w-container: 1120px;
+  --w-read: 720px;
+  --w-toc: 200px;
+  --gutter: 20px;
+  --header-h: 64px;
+  --tap: 44px;
+
+  /* ---- shape ------------------------------------------------------------ */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-full: 999px;
+
+  /* ---- motion ----------------------------------------------------------- */
+  --dur: 160ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layers ----------------------------------------------------------- */
+  --z-header: 40;
+  --z-progress: 41;
+  --z-overlay: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}
+
+@media (min-width: 640px) {
+  :root { --gutter: 24px; }
+}
+
+/* ---- color · dark (default) --------------------------------------------- */
+.dark {
+  --canvas: #0c0f0e;
+  --surface: #111715;
+  --surface-2: #161d1a;
+  --fg: #e6ede9;
+  --mute: #8a9a92;
+  --line: #1f2a26;
+  --line-strong: #5a6d65;
+  --accent: #5bf29b;
+  --accent-on: #06210f;
+  --accent-soft: rgb(91 242 155 / 0.08);
+  --warn: #f2c14e;
+  --overlay: rgb(0 0 0 / 0.72);
+  --code-bg: #070908;
+  --code-bar: #0d1210;
+}

@@ -85,7 +85,22 @@ cowork/design/        # 디자인 시스템 명세와 시안
 - **UI 작업 전**: [DESIGN.md](./DESIGN.md)의 토큰과 규칙을 확인한다. 명세 원본과 시안은 `cowork/design/`.
 - **기능 작업 전**: 해당 영역의 PRD를 확인한다. `cowork/prd/README.md`의 목록에서 찾는다 (마스터 PRD-001, Phase 0 PRD-002).
 - **현재 상태와 알려진 이슈**: [CONTEXT.md](./CONTEXT.md)
-- **개발 세션 시작 시 (항상 먼저)**: `cowork/develop/CONTEXT.md` → `cowork/develop/STATUS.md`를 읽고 STATUS.md의 "다음 작업"부터 이어 간다. 작업(PR 오픈, 머지 확인, 결정, 세션 종료)이 끝날 때마다 사용자가 시키지 않아도 `cowork/develop/STATUS.md`와 `REQUESTS.md`를 갱신한다. `cowork/`는 저장소에 커밋하지 않는다(로컬 전용)
+- **개발 세션 시작 시 (항상 먼저)**: `cowork/develop/CONTEXT.md` → `cowork/develop/STATUS.md`를 읽고 STATUS.md의 "다음 작업"부터 이어 간다. 작업(PR 오픈, 머지 확인, 결정, 세션 종료)이 끝날 때마다 사용자가 시키지 않아도 `cowork/develop/STATUS.md`와 `REQUESTS.md`를 갱신한다. `cowork/develop/`는 저장소에 커밋하지 않는다(로컬 전용). `cowork/prd`·`cowork/design`은 커밋한다
+
+## 세션별 기록 (cowork)
+
+기획·디자인·개발 세션이 따로 돌고 사용자가 문서로 중계한다. 세션이 바뀌어도 이어갈 수 있도록 **역할에 맞는 문서를 시작할 때 읽고, 작업이 끝날 때마다 기록한다.** 사용자가 매번 지시하지 않아도 항상 적용한다.
+
+| 역할 | 시작할 때 읽기 | 끝날 때 기록 |
+| --- | --- | --- |
+| 디자인 (시안 검토·디자인 답변) | `cowork/design/CONTEXT.md` → `STATUS.md` | `STATUS.md`(할 일·열린 항목·변경 이력·최종 갱신), 새 질문·답은 `NN-주제.md` + `cowork/design/README.md` 목록 |
+| 개발 (PR 구현) | `cowork/develop/README.md` → `STATUS.md`, `REQUESTS.md` | `STATUS.md`, 질문은 `REQUESTS.md` |
+| 기획 | `cowork/prd/README.md` | PRD 문서와 목록 |
+
+- 작업이 끝나기 전에 기록을 먼저 고치고 응답한다. 확인하지 못한 것은 "못 했다"고 적는다.
+- 다른 세션 폴더의 답은 해당 폴더에 쓰고, 질문 쪽 문서에는 번호만 링크한다.
+- `cowork/prd`·`cowork/design`은 저장소에 커밋한다. 저장소가 public이므로 비밀·연락처·내부 수치는 쓰지 않는다. `cowork/develop`은 로컬 전용이라 커밋하지 않는다.
+- 커밋·푸시는 사용자가 요청할 때만 한다.
 
 ## CI
 

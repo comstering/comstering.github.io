@@ -1,0 +1,76 @@
+/* comstering giscus theme (light) - mirrors system/tokens.css.
+   giscus renders in an iframe and cannot read the site's CSS variables, so the
+   token values are copied here. Serve from /public and pass the absolute URL as
+   data-theme; on theme toggle, postMessage { giscus: { setConfig: { theme } } }.
+   Keep in sync with tokens.css (review R5). */
+main {
+  color-scheme: light;
+  --color-prettylights-syntax-comment: #7f9a8c;
+  --color-prettylights-syntax-constant: #7dd3fc;
+  --color-prettylights-syntax-entity: #e6ede9;
+  --color-prettylights-syntax-storage-modifier-import: #e6ede9;
+  --color-prettylights-syntax-entity-tag: #5bf29b;
+  --color-prettylights-syntax-keyword: #5bf29b;
+  --color-prettylights-syntax-string: #f2c14e;
+  --color-prettylights-syntax-variable: #e6ede9;
+  --color-prettylights-syntax-markup-bold: #0e1512;
+  --color-prettylights-syntax-markup-italic: #0e1512;
+
+  --color-fg-default: #0e1512;
+  --color-fg-muted: #5a6b63;
+  --color-fg-subtle: #5a6b63;
+  --color-canvas-default: #f3f6f4;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #f3f6f4;
+  --color-canvas-subtle: #ffffff;
+  --color-border-default: #7d8e86;
+  --color-border-muted: #d5ded9;
+  --color-neutral-muted: #e9eeeb;
+  --color-accent-fg: #087a41;
+  --color-accent-emphasis: #087a41;
+  --color-accent-muted: color-mix(in srgb, #087a41 40%, transparent);
+  --color-accent-subtle: color-mix(in srgb, #087a41 10%, transparent);
+  --color-success-fg: #087a41;
+  --color-attention-fg: #8a5a00;
+  --color-attention-muted: color-mix(in srgb, #8a5a00 40%, transparent);
+  --color-attention-subtle: color-mix(in srgb, #8a5a00 10%, transparent);
+  --color-danger-fg: #b3261e;
+  --color-danger-muted: color-mix(in srgb, #b3261e 40%, transparent);
+  --color-danger-subtle: color-mix(in srgb, #b3261e 10%, transparent);
+  --color-primer-shadow-inset: none;
+  --color-scale-gray-7: #e9eeeb;
+  --color-scale-blue-8: #087a41;
+
+  --color-btn-text: #0e1512;
+  --color-btn-bg: #f3f6f4;
+  --color-btn-border: #7d8e86;
+  --color-btn-shadow: none;
+  --color-btn-inset-shadow: none;
+  --color-btn-hover-bg: #e9eeeb;
+  --color-btn-hover-border: #087a41;
+  --color-btn-active-bg: #e9eeeb;
+  --color-btn-active-border: #087a41;
+  --color-btn-selected-bg: #e9eeeb;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #087a41;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-shadow: none;
+  --color-btn-primary-inset-shadow: none;
+  --color-btn-primary-hover-bg: color-mix(in srgb, #087a41 86%, #0e1512);
+  --color-btn-primary-hover-border: transparent;
+  --color-btn-primary-selected-bg: #087a41;
+  --color-btn-primary-selected-shadow: none;
+  --color-btn-primary-disabled-text: #5a6b63;
+  --color-btn-primary-disabled-bg: #e9eeeb;
+  --color-btn-primary-disabled-border: transparent;
+  --color-action-list-item-default-hover-bg: #e9eeeb;
+  --color-segmented-control-bg: #ffffff;
+  --color-segmented-control-button-bg: #f3f6f4;
+  --color-segmented-control-button-selected-border: #7d8e86;
+  --color-social-reaction-bg-hover: #e9eeeb;
+  --color-social-reaction-bg-reacted-hover: color-mix(in srgb, #087a41 18%, transparent);
+}
+main .gsc-comment-box, main .gsc-comment > div { border-radius: 10px; }
+main .gsc-reactions-count, main .gsc-comment-author { font-family: "JetBrains Mono", ui-monospace, monospace; }
+main .pagination-loader-container { background-image: none; }
+main .gsc-loading-image { background-image: none; }
