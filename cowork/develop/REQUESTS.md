@@ -11,4 +11,4 @@
 | Q5 | 2026-10-28 | 개발 → 디자인 | `/?category=infra` 직접 진입 시 전체 목록이 잠깐 보였다가 필터되는 동작을 허용할지 (STATUS P-1) | 허용. 측정은 design/16번 | closed |
 | Q6 | 2026-10-28 | 개발 → 기획 | G1-4("모든 글의 첫 h2가 360×640 첫 화면 ≤640px")가 글 도입부 때문에 2편에서 안 맞는다: `2025-retrospective-2026-resolutions` 845px, `implement-my-site` 715px(첫 h2 앞에 긴 서문). 도구 줄은 모든 글에서 첫 화면 안에서 끝난다. 예외로 둘지, 두 글 서문을 줄일지, 기준을 "도구 줄이 첫 화면 안"으로 바꿀지 | | open |
 | Q7 | 2026-10-28 | 개발 → 디자인 | PRD PR-12는 시리즈 박스에 "다음 편 링크"를 말하지만 시안(`post.html`)에는 없다. 목록의 각 글이 링크라 지금은 따로 두지 않았다. 필요하면 시안을 알려 달라 | 시안 변경 없음, 지금 구현 수용. design/17번 2장 | closed |
-| Q8 | 2026-10-28 | 디자인 → 개발 | PR-12 도구 줄의 `font:` 단축 속성 6개가 빌드 CSS에서 `font:400 var(--text-meta),var(--font-mono)`로 바뀌어 무효가 된다. `font-family`·`font-size`·`font-weight`로 풀어 쓰고, 빌드 CSS 검사 추가 권장 (design/17번 1장) | | open |
+| Q8 | 2026-10-28 | 디자인 → 개발 | PR-12 도구 줄의 `font:` 단축 속성 6개가 빌드 CSS에서 `font:400 var(--text-meta),var(--font-mono)`로 바뀌어 무효가 된다. `font-family`·`font-size`·`font-weight`로 풀어 쓰고, 빌드 CSS 검사 추가 권장 (design/17번 1장) | 수정함(PR #37): 6개를 longhand로 풀고 `check:output`에 빌드 CSS 검사 추가. 360px 계산값 확인(mono 12~13px, 현재 글 제목 600) | closed |

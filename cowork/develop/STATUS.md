@@ -1,18 +1,18 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-10-28 · 기준 커밋 `691c01b`(main) + PR #35 · 기준 기획서 PRD-003(approved) · 디자인 v1.4_
+_최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37 · 기준 기획서 PRD-003(approved) · 디자인 v1.4_
 
 ## 한눈에 보기
 
 | 단계 | 상태 |
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
-| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 머지, PR-13 리뷰 대기, 나머지 대기 |
+| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 머지, PR-13 머지, 나머지 대기 |
 | 지금 막힌 것 | 없음. 기획(PRD-003 approved)·디자인(v1.4, 썸네일 C안)이 확정돼 PR-9 바로 시작 가능 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
-1. `gh pr list`로 #35(PR-13) 머지 여부 확인. 머지됐으면 `git checkout main && git pull`(`would be overwritten`으로 막히면 미추적 파일이 머지본과 같은지 비교하고 백업으로 옮긴 뒤 pull, 삭제는 하지 않는다)
+1. #37(font 수정) 머지 여부 확인(`gh pr list`). 머지됐으면 `git checkout main && git pull`(`would be overwritten`으로 막히면 미추적 파일이 머지본과 같은지 비교하고 백업으로 옮긴 뒤 pull, 삭제는 하지 않는다)
 2. **PR-14 이미지 파이프라인** (`cowork/prd/003_blog_reading-experience.md` PR-14 절, 디자인 12번 E3, 시안 `app.js`의 lightbox)
    - 변환: 빌드 전 sharp로 `public/images/**` png·jpg → WebP, 본문 이미지 최대 폭 1440px, 결과는 `public/_img/`(git 제외), 해시 캐시. **`public/images/posts/thumbnails/`는 변환하지 않는다**(PR-15 전까지 og:image)
    - rehype 플러그인: `src`를 변환본으로, 실제 `width`·`height`, 첫 이미지 외 `loading="lazy" decoding="async"`, alt 비면 빌드 경고
@@ -65,5 +65,6 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `691c01b`(main) + PR #35 · 기준 �
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-10-29 | 디자인 17번(Q8) 반영: PR-12의 `font:` 단축 속성 6개가 CSS 압축에서 무효가 되던 것을 longhand로 수정, `check:output`에 검사 추가, PR #37. PR-14는 그다음 | #37 머지 확인 → PR-14 시작 |
 | 2026-10-28 | PR-13 오픈(#35): 관련 글(점수·시리즈/이전·다음 제외), compact 목록 시안 맞춤(404도 같이 바뀜), E2E 7건. #33·#32 머지 확인, main pull(`691c01b`). 로컬 미추적 `cowork` 58개가 머지본과 동일함을 확인하고 scratchpad 백업으로 옮긴 뒤 pull(삭제는 하지 않음) | PR-13 시작: `git checkout -b feat/related-posts` |
 | 2026-10-28 | PR-10(#27), PR-11(#28), Lighthouse 댓글(#29) 머지. PR-9(#30) 오픈, CI 통과. CLAUDE.md 지침 PR(#31) 오픈, 기록 규칙을 CONTEXT 4.5장·메모리에 명시. `cowork/develop` 문서·도구 신설(CONTEXT, STATUS, REQUESTS, tools/) | #30 머지 확인 → PR-12 시작. `gh pr view 30 --json state` |

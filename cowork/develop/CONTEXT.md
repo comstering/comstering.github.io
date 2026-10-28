@@ -98,6 +98,10 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 
 ## 8. 함정 (겪은 것)
 
+- **CSS `font:` 단축 속성에 `var()`를 여러 개 쓰지 않는다.** 빌드 CSS 압축이 `font:400 var(--a),var(--b)`로 쉼표를 끼워 넣어 선언이 통째로 무효가 된다(dev 서버에서는 정상으로 보여 PR 스크린샷으로는 안 잡힌다, PR-12). `font-family`·`font-size`·`font-weight`로 나눠 쓴다. `check:output`이 빌드 CSS에서 이 패턴을 잡는다
+- **화면 확인은 `yarn build` 결과(`out/`)로 한다.** dev 서버와 빌드 CSS가 다를 수 있다
+- 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
+
 - macOS `sed -i`는 `sed -i '' 's/…/…/'` 형식이어야 한다. 실패하면 `&&` 뒤 명령이 안 돈다
 - hast 속성 값은 문자열이어야 한다(`strokeWidth: "2"`). 숫자를 넣으면 `next build`가 타입 오류
 - `output: "export"`라 `generateStaticParams`에 없는 경로는 404. `dynamicParams = false`

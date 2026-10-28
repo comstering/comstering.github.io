@@ -432,7 +432,9 @@ body {
 .toc__label {
   margin-bottom: 0.75rem;
   color: var(--mute);
-  font: 400 var(--text-cap) var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  font-weight: 400;
 }
 .toc__list {
   border-left: 1px solid var(--line);
@@ -477,7 +479,9 @@ body {
   min-height: var(--tap);
   padding-inline: 1rem;
   color: var(--fg);
-  font: 400 var(--text-meta) var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  font-weight: 400;
   cursor: pointer;
   list-style: none;
 }
@@ -515,7 +519,9 @@ body {
   min-height: var(--tap);
   padding: 0 1rem;
   color: var(--mute);
-  font: 400 var(--text-cap) var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  font-weight: 400;
   text-align: left;
   cursor: pointer;
 }
@@ -536,7 +542,9 @@ body {
   min-width: 0;
   overflow: hidden;
   color: var(--fg);
-  font: 600 var(--text-small) var(--font-sans);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -570,7 +578,9 @@ body {
 .series__list a::before,
 .series__list span.is-current::before {
   content: counter(s, decimal-leading-zero);
-  font: 400 var(--text-cap) var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  font-weight: 400;
 }
 .series__list a:hover {
   background: var(--surface-2);
@@ -586,7 +596,9 @@ body {
 .series__list .is-current::after {
   content: "← 지금 글";
   color: var(--accent);
-  font: 400 var(--text-cap) var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  font-weight: 400;
 }
 
 /* 한 줄 도구 바: 1280 미만에서 목차·시리즈를 나란히(H1). 연 쪽이 한 줄을 다 쓰고 다른 쪽은 아래로 */
