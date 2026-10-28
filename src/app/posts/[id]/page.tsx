@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import GiscusComments from "@/components/GiscusComment";
 import { PostContent } from "@/components/PostContent";
 import { PostToc } from "@/components/PostToc";
+import { hasToc } from "@/lib/toc";
 import { JsonLd } from "@/components/JsonLd";
 import { AuthorBox } from "@/components/post/AuthorBox";
 import { PostHeader } from "@/components/post/PostHeader";
 import { PostPager } from "@/components/post/PostPager";
 import { PostPath } from "@/components/post/PostPath";
+import { PostToolbar } from "@/components/post/PostToolbar";
 import { SectionHead } from "@/components/ui/SectionHead";
 import {
   getAdjacentPosts,
   getPostData,
+  getSeriesInfo,
   getSortedPostsData,
   type PostMetadata,
 } from "@/lib/posts";
@@ -65,6 +68,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const post = await getPostData(id);
   const { older, newer } = getAdjacentPosts(id);
+  const series = getSeriesInfo(id);
 
   return (
     <article className="relative mx-auto max-w-[720px]">
@@ -92,13 +96,16 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <PostPath slug={post.id} />
       <PostHeader post={post} />
 
-      <aside className="absolute left-full top-0 ml-10 hidden h-full w-52 xl:block">
-        <div className="sticky top-24 pt-10">
-          <PostToc headings={post.headings} />
-        </div>
-      </aside>
+      {hasToc(post.headings) && (
+        <aside className="absolute left-full top-0 ml-10 hidden h-full w-52 xl:block">
+          <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pt-10">
+            <PostToc headings={post.headings} variant="sticky" />
+          </div>
+        </aside>
+      )}
 
       <div className="mt-10">
+        <PostToolbar headings={post.headings} series={series} />
         <PostContent html={post.contentHtml} />
       </div>
 

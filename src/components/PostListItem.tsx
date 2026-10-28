@@ -6,12 +6,32 @@ type PostListItemProps = {
   compact?: boolean;
   post: Pick<
     PostMetadata,
-    "id" | "title" | "description" | "date" | "categories" | "tags" | "draft"
+    | "id"
+    | "title"
+    | "description"
+    | "date"
+    | "categories"
+    | "tags"
+    | "draft"
+    | "seriesOrder"
+    | "seriesLabel"
+    | "seriesTotal"
   >;
 };
 
 export const PostListItem = ({ post, compact = false }: PostListItemProps) => {
-  const { id, title, description, date, categories, tags, draft } = post;
+  const {
+    id,
+    title,
+    description,
+    date,
+    categories,
+    tags,
+    draft,
+    seriesOrder,
+    seriesLabel,
+    seriesTotal,
+  } = post;
 
   return (
     <Link
@@ -19,9 +39,14 @@ export const PostListItem = ({ post, compact = false }: PostListItemProps) => {
       className="group block border-b border-line py-7"
     >
       <article className="min-w-0">
-        <p className="flex gap-3 font-mono text-xs text-mute">
+        <p className="flex flex-wrap gap-x-3 font-mono text-xs text-mute">
           <time dateTime={date}>{date}</time>
           <span className="text-fg">{categories.join(", ")}</span>
+          {seriesLabel && (
+            <span>
+              series {seriesLabel} {seriesOrder}/{seriesTotal}
+            </span>
+          )}
           {draft && <span className="text-warn">draft</span>}
         </p>
         <h3 className="mt-2 break-keep text-xl font-semibold leading-snug tracking-tight text-fg transition-colors group-hover:text-accent sm:text-[22px]">

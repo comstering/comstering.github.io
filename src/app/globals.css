@@ -247,7 +247,7 @@ body {
 
 /* 글 본문: 제목 앵커, 코드 복사 버튼, 이미지/표 */
 .prose :where(h2, h3, h4) {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 5.5rem;
   letter-spacing: -0.02em;
 }
 .prose .heading-anchor {
@@ -420,4 +420,220 @@ body {
 }
 .table-scroll > table {
   margin-block: 0;
+}
+
+/* 글 상단 바: 목차(sticky/inline) + 시리즈 박스 (시안 components.css .toc / .series / .post-tools) */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+.toc {
+  font-size: var(--text-meta);
+}
+.toc__label {
+  margin-bottom: 0.75rem;
+  color: var(--mute);
+  font: 400 var(--text-cap) var(--font-mono);
+}
+.toc__list {
+  border-left: 1px solid var(--line);
+}
+.toc__list a {
+  display: block;
+  margin-left: -1px;
+  padding: 5px 0 5px 14px;
+  border-left: 1px solid transparent;
+  color: var(--mute);
+  line-height: 1.5;
+  transition:
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.toc__list a:hover {
+  color: var(--fg);
+}
+.toc__list a[aria-current="true"] {
+  border-left-color: var(--accent);
+  color: var(--fg);
+  font-weight: 600;
+}
+.toc__list .lvl-3 a {
+  padding-left: 26px;
+  font-size: var(--text-cap);
+}
+.toc__top {
+  margin-top: 1.25rem;
+}
+
+.toc-inline {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.toc-inline > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: var(--tap);
+  padding-inline: 1rem;
+  color: var(--fg);
+  font: 400 var(--text-meta) var(--font-mono);
+  cursor: pointer;
+  list-style: none;
+}
+.toc-inline > summary::-webkit-details-marker {
+  display: none;
+}
+.toc-inline > summary svg {
+  width: 16px;
+  height: 16px;
+  color: var(--mute);
+  transition: transform var(--dur) var(--ease);
+}
+.toc-inline[open] > summary svg {
+  transform: rotate(180deg);
+}
+.toc-inline .toc__list {
+  margin: 0 1rem 1rem;
+}
+.toc-inline .toc__list a {
+  min-height: var(--tap);
+  padding-block: 12px;
+}
+
+.series {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.series__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 1rem;
+  color: var(--mute);
+  font: 400 var(--text-cap) var(--font-mono);
+  text-align: left;
+  cursor: pointer;
+}
+.series__toggle:hover {
+  color: var(--fg);
+}
+.series__toggle svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  transition: transform var(--dur) var(--ease);
+}
+.series__toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.series__toggle .series__now {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--fg);
+  font: 600 var(--text-small) var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.series__name {
+  color: var(--fg);
+}
+.series__list {
+  counter-reset: s;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.series:not(.is-expanded) .series__list {
+  display: none;
+}
+.series__list li {
+  counter-increment: s;
+}
+.series__list a,
+.series__list span.is-current {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 12px 1rem;
+  color: var(--mute);
+  font-size: var(--text-small);
+  transition:
+    color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+}
+.series__list a::before,
+.series__list span.is-current::before {
+  content: counter(s, decimal-leading-zero);
+  font: 400 var(--text-cap) var(--font-mono);
+}
+.series__list a:hover {
+  background: var(--surface-2);
+  color: var(--fg);
+}
+.series__list .is-current {
+  color: var(--fg);
+  font-weight: 600;
+}
+.series__list .is-current::before {
+  color: var(--accent);
+}
+.series__list .is-current::after {
+  content: "← 지금 글";
+  color: var(--accent);
+  font: 400 var(--text-cap) var(--font-mono);
+}
+
+/* 한 줄 도구 바: 1280 미만에서 목차·시리즈를 나란히(H1). 연 쪽이 한 줄을 다 쓰고 다른 쪽은 아래로 */
+.post-tools {
+  margin-block: 0 2rem;
+}
+.series__label,
+.toc-inline__short {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .toc-inline {
+    display: none;
+  }
+}
+@media (max-width: 1279px) {
+  .post-tools {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: start;
+  }
+  .post-tools > details[open],
+  .post-tools > .series.is-expanded {
+    grid-column: 1 / -1;
+  }
+  .post-tools > details[open] {
+    order: -1;
+  }
+  .toc-inline > summary {
+    gap: 0.75rem;
+  }
+}
+@media (max-width: 639px) {
+  .toc-inline__long,
+  .series__name {
+    display: none;
+  }
+  .toc-inline__short,
+  .series__label {
+    display: inline;
+  }
+  .series:not(.is-expanded) .series__now {
+    display: none;
+  }
+}
+/* 목차가 없으면 시리즈 버튼이 한 줄 전체를 쓴다 */
+.post-tools > :only-child {
+  grid-column: 1 / -1;
 }

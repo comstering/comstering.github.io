@@ -14,6 +14,7 @@ import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { loadPostSources, type PostSource } from "./content/load";
+import { loadSeriesRegistry } from "./content/registry";
 import type { Category } from "./content/schema";
 
 export interface PostMetadata {
@@ -25,6 +26,9 @@ export interface PostMetadata {
   categories: Category[];
   series?: string;
   seriesOrder?: number;
+  /** 글 목록 메타용: `series eks 3/5` */
+  seriesLabel?: string;
+  seriesTotal?: number;
   thumbnail?: string;
   draft: boolean;
   relatedProject?: string;
@@ -81,6 +85,15 @@ const extractHeadings = (html: string): PostHeading[] =>
     }),
   );
 
+// 시리즈 글 수(레지스트리 label과 함께 목록 메타 `series eks 3/5`에 쓴다)
+const seriesCounts = (): Map<string, number> => {
+  const counts = new Map<string, number>();
+  loadPostSources().forEach(({ data }) => {
+    if (data.series) counts.set(data.series, (counts.get(data.series) ?? 0) + 1);
+  });
+  return counts;
+};
+
 const toMetadata = (
   { id, data, content }: PostSource,
   contentHtml = "",
@@ -94,6 +107,10 @@ const toMetadata = (
   categories: data.categories,
   series: data.series,
   seriesOrder: data.seriesOrder,
+  seriesLabel: data.series
+    ? loadSeriesRegistry()[data.series]?.label
+    : undefined,
+  seriesTotal: data.series ? seriesCounts().get(data.series) : undefined,
   thumbnail: data.thumbnail,
   draft: data.draft,
   relatedProject: data.relatedProject,
@@ -152,5 +169,40 @@ export const getAdjacentPosts = (
   return {
     newer: posts[index - 1] ?? null,
     older: posts[index + 1] ?? null,
+  };
+};
+
+export interface SeriesInfo {
+  slug: string;
+  label: string;
+  title: string;
+  order: number;
+  total: number;
+  items: { id: string; title: string; current: boolean }[];
+}
+
+// 글이 속한 시리즈의 전체 목록(순서대로). 시리즈가 아니면 null
+export const getSeriesInfo = (id: string): SeriesInfo | null => {
+  const sources = loadPostSources();
+  const current = sources.find((source) => source.id === id);
+  const slug = current?.data.series;
+  if (!current || !slug) return null;
+  const entry = loadSeriesRegistry()[slug];
+  if (!entry) return null;
+
+  const members = sources
+    .filter((source) => source.data.series === slug)
+    .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
+  return {
+    slug,
+    label: entry.label,
+    title: entry.title,
+    order: current.data.seriesOrder ?? 0,
+    total: members.length,
+    items: members.map((member) => ({
+      id: member.id,
+      title: member.data.title,
+      current: member.id === id,
+    })),
   };
 };
