@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "check:tokens": "bash scripts/check-design-tokens.sh",
-    "check:output": "node scripts/check-build-output.mjs"
+    "check:output": "node scripts/check-build-output.mjs",
+    "test:e2e": "playwright test",
+    "lhci": "lhci autorun"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -35,6 +37,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
     "@types/mdast": "^4.0.4",
@@ -44,6 +48,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "fast-xml-parser": "^5.11.2",
+    "serve": "^14.2.6",
     "tailwindcss": "^4.1.11",
     "typescript": "^5"
   }
