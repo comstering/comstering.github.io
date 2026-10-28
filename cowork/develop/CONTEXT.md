@@ -101,6 +101,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 
 - **CSS `font:` 단축 속성에 `var()`를 여러 개 쓰지 않는다.** 빌드 CSS 압축이 `font:400 var(--a),var(--b)`로 쉼표를 끼워 넣어 선언이 통째로 무효가 된다(dev 서버에서는 정상으로 보여 PR 스크린샷으로는 안 잡힌다, PR-12). `font-family`·`font-size`·`font-weight`로 나눠 쓴다. `check:output`이 빌드 CSS에서 이 패턴을 잡는다
 - **화면 확인은 `yarn build` 결과(`out/`)로 한다.** dev 서버와 빌드 CSS가 다를 수 있다
+- **`sharp`는 0.33.5로 고정한다(`--exact`).** Next.js가 자체로 `sharp@^0.33.5`를 선택 의존성으로 가져와서, 새 버전(0.35.x)을 같이 설치하면 libvips 버전 두 개가 한 `node_modules/@img` 아래 섞여 **리눅스 CI에서만** `libvips-cpp.so: cannot open shared object file`로 빌드가 실패한다(맥에서는 통과해서 PR #38 첫 CI가 실패함). 올리려면 Next가 쓰는 버전과 함께 올릴 때 리눅스 CI로 확인한다
 - **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 

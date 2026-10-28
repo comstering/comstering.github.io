@@ -25,7 +25,7 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37·#38 · 기
 
 | # | 내용 |
 | --- | --- |
-| P-13 | 본문 이미지는 빌드 전 `sharp`로 WebP 변환(최대 폭 1440px, 200KB 이하까지 품질→폭 순으로 낮춤): 64개 26.5MB → 3.3MB, 가장 큰 변환본 191KB. 원본은 저장소에 그대로 두고 배포물(`out/`)에서는 본문 원본을 뺀다(48MB → 15MB) |
+| P-13 | 본문 이미지는 빌드 전 `sharp`(0.33.5 고정)로 WebP 변환(최대 폭 1440px, 200KB 이하까지 품질→폭 순으로 낮춤): 64개 26.5MB → 3.3MB, 가장 큰 변환본 191KB. 원본은 저장소에 그대로 두고 배포물(`out/`)에서는 본문 원본을 뺀다(48MB → 15MB) |
 | P-14 | 확대는 **변환본 폭이 720px보다 큰 이미지에만** 붙는다(E3). 60개 중 59개가 해당, 720px 이하는 `introduce-cilium-cni`의 `compare-latency-service` 1개. 확대 가능한 이미지는 `role="button"`·`tabindex=0`·`aria-label="… 확대"`, 확대가 없으면 아무 표시도 없다 |
 | P-15 | 이미지만 든 문단은 `<figure>`로 바뀌고, 마크다운 이미지 title(`![alt](src "캡션")`)이 있으면 `<figcaption>`과 확대 창 캡션이 된다. 지금 글에는 title이 없어 캡션은 안 보인다 |
 | P-16 | 확대 창은 시안(`dialog.lightbox`)대로: Esc·배경 클릭·44px 닫기 버튼, 닫으면 누른 이미지로 포커스 복귀, `prefers-reduced-motion`이면 애니메이션 없음 |
@@ -76,6 +76,6 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37·#38 · 기
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
-| 2026-10-29 | PR-14 오픈(#38, #37 위): sharp 이미지 파이프라인, 확대 `<dialog>`, favicon 1.7MB→4.7KB, Lighthouse SEO·CLS error. 디자인 17번(Q8) 반영: PR-12의 `font:` 단축 속성 6개가 CSS 압축에서 무효가 되던 것을 longhand로 수정, `check:output`에 검사 추가, PR #37. PR-14는 그다음 | #37 머지 확인 → PR-14 시작 |
+| 2026-10-29 | #38·#39 CI 실패(리눅스에서 sharp libvips 못 찾음) → sharp 0.33.5 고정으로 수정. PR-14 오픈(#38, #37 위): sharp 이미지 파이프라인, 확대 `<dialog>`, favicon 1.7MB→4.7KB, Lighthouse SEO·CLS error. 디자인 17번(Q8) 반영: PR-12의 `font:` 단축 속성 6개가 CSS 압축에서 무효가 되던 것을 longhand로 수정, `check:output`에 검사 추가, PR #37. PR-14는 그다음 | #37 머지 확인 → PR-14 시작 |
 | 2026-10-28 | PR-13 오픈(#35): 관련 글(점수·시리즈/이전·다음 제외), compact 목록 시안 맞춤(404도 같이 바뀜), E2E 7건. #33·#32 머지 확인, main pull(`691c01b`). 로컬 미추적 `cowork` 58개가 머지본과 동일함을 확인하고 scratchpad 백업으로 옮긴 뒤 pull(삭제는 하지 않음) | PR-13 시작: `git checkout -b feat/related-posts` |
 | 2026-10-28 | PR-10(#27), PR-11(#28), Lighthouse 댓글(#29) 머지. PR-9(#30) 오픈, CI 통과. CLAUDE.md 지침 PR(#31) 오픈, 기록 규칙을 CONTEXT 4.5장·메모리에 명시. `cowork/develop` 문서·도구 신설(CONTEXT, STATUS, REQUESTS, tools/) | #30 머지 확인 → PR-12 시작. `gh pr view 30 --json state` |

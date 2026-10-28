@@ -19,7 +19,7 @@ const MAX_BYTES = 200 * 1024;
 const QUALITIES = [82, 76, 70, 64];
 const WIDTH_STEPS = [1200, 1000, 800];
 // 변환 방식을 바꾸면 값을 올려 캐시를 무효화한다
-const PIPELINE_VERSION = 1;
+const PIPELINE_VERSION = 2; // 2: sharp 0.33.5(libvips 8.15)로 고정하며 변환본을 다시 만든다
 
 const walk = (dir) =>
   fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
