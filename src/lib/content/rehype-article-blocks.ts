@@ -1,9 +1,10 @@
 import type { Element, ElementContent, Root } from "hast";
 import { visit } from "unist-util-visit";
+import { infoIcon, warnIcon } from "./hast-icons";
 
 const CALLOUTS = {
-  NOTE: { variant: "note", label: "note" },
-  WARNING: { variant: "warn", label: "warn" },
+  NOTE: { variant: "note", label: "note", icon: infoIcon },
+  WARNING: { variant: "warn", label: "warning", icon: warnIcon },
 } as const;
 
 const MARKER = /^\s*\[!(NOTE|WARNING)\][ \t]*\n?/;
@@ -34,7 +35,7 @@ export const rehypeArticleBlocks = () => (tree: Root) => {
     const match = first.value.match(MARKER);
     if (!match) return;
 
-    const { variant, label } = CALLOUTS[match[1] as keyof typeof CALLOUTS];
+    const { variant, label, icon } = CALLOUTS[match[1] as keyof typeof CALLOUTS];
     first.value = first.value.replace(MARKER, "");
     // 마커 뒤에 본문이 비었으면 빈 첫 줄을 버린다.
     if (!first.value && paragraph.children.length === 1) {
@@ -45,6 +46,7 @@ export const rehypeArticleBlocks = () => (tree: Root) => {
       variant === "warn" ? ["callout", "callout--warn"] : ["callout"];
     parent.children[index] = el("div", { className, role: "note" }, [
       el("div", { className: ["callout__label"] }, [
+        icon(),
         { type: "text", value: label },
       ]),
       ...node.children.filter(

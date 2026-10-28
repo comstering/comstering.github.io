@@ -1,5 +1,6 @@
 import type { Element, ElementContent, Root } from "hast";
 import { visit } from "unist-util-visit";
+import { copyIcon } from "./hast-icons";
 
 // 코드 펜스 meta: ```yaml title="values.yaml" {3,5-6}
 interface CodeMeta {
@@ -58,6 +59,21 @@ const el = (
   children: ElementContent[] = [],
 ): Element => ({ type: "element", tagName, properties, children });
 
+const SHELL_LANGS = new Set(["bash", "sh", "shell", "console", "zsh"]);
+
+// 셸 블록의 줄 맨 앞 "$ "를 선택되지 않는 .p 프롬프트로 분리한다(시안 .code .p).
+const markPrompt = (children: ElementContent[]): ElementContent[] => {
+  const [first, ...rest] = children;
+  if (first?.type !== "text" || !first.value.startsWith("$ ")) return children;
+  const prompt = el("span", { className: ["p"] }, [
+    { type: "text", value: "$ " },
+  ]);
+  const tail = first.value.slice(2);
+  return tail
+    ? [prompt, { type: "text", value: tail }, ...rest]
+    : [prompt, ...rest];
+};
+
 const languageOf = (code: Element): string => {
   const classes = (code.properties?.className as string[] | undefined) ?? [];
   const found = classes.find((name) => name.startsWith("language-"));
@@ -79,6 +95,8 @@ export const rehypeCodeMeta = () => (tree: Root) => {
     );
     const lang = languageOf(code);
 
+    const shell = SHELL_LANGS.has(lang);
+
     // 줄 래퍼(.ln)는 항상 쓴다. 복사 시 줄 단위로 합쳐 원문을 복원한다.
     const lines = splitLines(code.children);
     code.children = lines.map((children, i) =>
@@ -87,7 +105,11 @@ export const rehypeCodeMeta = () => (tree: Root) => {
         {
           className: meta.highlight.has(i + 1) ? ["ln", "ln--hl"] : ["ln"],
         },
-        children.length ? children : [{ type: "text", value: " " }],
+        children.length
+          ? shell
+            ? markPrompt(children)
+            : children
+          : [{ type: "text", value: " " }],
       ),
     );
 
@@ -106,7 +128,12 @@ export const rehypeCodeMeta = () => (tree: Root) => {
             className: ["code__copy"],
             ariaLabel: "코드 복사",
           },
-          [{ type: "text", value: "copy" }],
+          [
+            copyIcon(),
+            el("span", { className: ["code__copy-label"], ariaLive: "polite" }, [
+              { type: "text", value: "copy" },
+            ]),
+          ],
         ),
       ]),
     ]);

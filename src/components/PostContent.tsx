@@ -37,21 +37,22 @@ export const PostContent = ({ html }: PostContentProps) => {
       const block = button?.closest<HTMLElement>(".code");
       if (!button || !block) return;
 
+      const label = button.querySelector(".code__copy-label") ?? button;
       try {
         await navigator.clipboard.writeText(rawCode(block));
-        button.textContent = "copied";
+        label.textContent = "copied";
         button.dataset.copied = "true";
       } catch {
-        button.textContent = "failed";
+        label.textContent = "failed";
       }
       window.clearTimeout(timers.get(button));
       timers.set(
         button,
         window.setTimeout(() => {
-          button.textContent = "copy";
+          label.textContent = "copy";
           delete button.dataset.copied;
           timers.delete(button);
-        }, 1600),
+        }, 2000),
       );
     };
 

@@ -300,8 +300,10 @@ body {
   text-transform: lowercase;
 }
 .code__copy {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   height: 32px;
   padding-inline: 10px;
   border-radius: var(--radius-sm);
@@ -311,6 +313,15 @@ body {
   transition:
     color 150ms,
     background-color 150ms;
+}
+.code__copy::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
+}
+.code__copy svg {
+  width: 14px;
+  height: 14px;
 }
 .code__copy:hover,
 .code__copy:focus-visible {
@@ -342,6 +353,10 @@ body {
   border-left: 1px solid transparent;
   white-space: pre;
 }
+.code .p {
+  color: var(--syntax-keyword);
+  user-select: none;
+}
 .code .ln--hl {
   background: var(--code-hl);
   border-left-color: var(--syntax-keyword);
@@ -369,9 +384,16 @@ body {
   background: color-mix(in srgb, var(--warn) 6%, var(--surface));
 }
 .callout__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 0.25rem;
   color: var(--accent);
   font: 600 0.75rem var(--font-mono);
+}
+.callout__label svg {
+  width: 14px;
+  height: 14px;
 }
 .callout--warn .callout__label {
   color: var(--warn);
@@ -387,18 +409,14 @@ body {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
 }
-/* 가로 스크롤 표: 넘치는 쪽 가장자리를 흐리게 (background local 방식, 그림자 없음) */
+/* 가로 스크롤 표: 더 있는 오른쪽 가장자리만 흐리게 (시안 L2, background local, 그림자 없음) */
 .table-scroll {
   overflow-x: auto;
   background:
-    linear-gradient(to right, var(--canvas) 60%, transparent) left center / 48px 100%
+    linear-gradient(to left, var(--canvas) 40%, transparent) right center / 48px 100%
       no-repeat local,
-    linear-gradient(to left, var(--canvas) 60%, transparent) right center / 48px 100%
-      no-repeat local,
-    linear-gradient(to right, var(--line), transparent) left center / 24px 100%
-      no-repeat scroll,
-    linear-gradient(to left, var(--line), transparent) right center / 24px 100%
-      no-repeat scroll;
+    linear-gradient(to left, color-mix(in srgb, var(--fg) 14%, transparent), transparent)
+      right center / 16px 100% no-repeat scroll;
 }
 .table-scroll > table {
   margin-block: 0;
