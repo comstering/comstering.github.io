@@ -11,6 +11,7 @@ concurrency:
 
 permissions:
   contents: read
+  pull-requests: write # Lighthouse 요약 댓글
 
 jobs:
   quality:
@@ -54,6 +55,30 @@ jobs:
       - name: Lighthouse CI
         run: yarn lhci
 
+      # 점수 요약을 Actions 요약 화면과 PR 댓글(1개를 계속 갱신)에 남긴다.
+      - name: Summarize Lighthouse
+        if: always()
+        run: |
+          node scripts/lighthouse-summary.mjs lighthouse-summary.md
+          cat lighthouse-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      # 포크 PR은 토큰이 읽기 전용이라 댓글을 못 단다. 실패해도 CI를 깨뜨리지 않는다.
+      - name: Comment Lighthouse summary
+        if: always() && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          marker='<!-- lighthouse-ci-summary -->'
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq "[.[] | select(.body | contains(\"$marker\"))][0].id // empty")
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -F body=@lighthouse-summary.md
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@lighthouse-summary.md
+          fi
+
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,4 +87,5 @@ jobs:
           path: |
             playwright-report
             .lighthouseci
+            lighthouse-summary.md
           retention-days: 7
