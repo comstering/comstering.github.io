@@ -109,7 +109,7 @@ Karpenter 공식문서에서 이미 이 내용에 대해서 명시해주고 있�
 
 내용은 간단하다. Karpenter Node에 ENI 1개를 예약된 ENI로 등록하여 사용하지 않게 설정하면 된다. 기존 Karpenter values에서 아래의 값만 추가하면 된다.
 
-```yaml
+```yaml title="values.yaml" {6}
 # Karpenter values.yaml
 ## 중략...
 settings:
