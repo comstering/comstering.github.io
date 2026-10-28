@@ -7,26 +7,26 @@ _최종 갱신: 2026-10-28 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 | 항목 | 상태 |
 |---|---|
 | Phase 1 시안 v1.4 | **확정.** R1(목록 썸네일 제거)까지 반영 완료 |
-| 디자인 → 기획·개발 열린 요청 | 없음. 기획·개발에서 온 미답변 질문도 없음(Q5는 16번으로 답함) |
+| 디자인에 열린 질문 | **Q7**(개발 → 디자인): PR-12 시리즈 박스의 "다음 편 링크"가 시안에 없다. 아래 "다음 작업" 1번. Q5는 16번으로 답해 closed |
 | 지금 막힌 것 | 없음 |
-| 다음 디자인 작업 | 개발 PR이 열리면 구현을 시안과 대조해 검토(아래 "다음 작업") |
-| 저장소 상태 | `cowork/prd`·`cowork/design`을 PR [#32](https://github.com/comstering/comstering.github.io/pull/32)(`docs/cowork-prd-design`)로 커밋, 머지 대기. `cowork/develop`은 로컬 전용 |
+| 다음 디자인 작업 | Q7 답변 → 머지된 PR-9·PR-12 구현을 시안과 대조 |
+| 저장소 상태 | `main`(`691c01b`). `cowork/prd`·`cowork/design`은 PR #32, `cowork/develop`은 PR #33에서 커밋됨. 이 문서 갱신은 PR `docs/cowork-sync-after-merge` |
 
 ## 개발 진행 (참고, 원본은 `cowork/develop/STATUS.md`)
 
 | PR | 상태 |
 |---|---|
-| PR-10 E2E·Lighthouse CI, PR-11 본문(코드·콜아웃·표) | 머지 |
-| PR-9 categories·`updated`·필터 URL·썸네일 제거 | 리뷰 대기(#30) |
-| PR-12 목차·시리즈 바 → PR-13 관련 글 → PR-14 이미지 → PR-15 OG → PR-16 진행률 → PR-17 게이트 | 대기. 한 번에 PR 하나 |
+| PR-10 E2E·Lighthouse CI(#27), PR-11 본문(#28), PR-9 categories·`updated`·필터 URL·썸네일 제거(#30), PR-12 목차·시리즈 바(#33) | 머지 |
+| PR-13 관련 글 → PR-14 이미지 → PR-15 OG → PR-16 진행률 → PR-17 게이트 | 대기. 한 번에 PR 하나 |
 
 ## 다음 작업 (위에서부터)
 
-1. **PR-9(#30) 구현 검토.** 시안 `index.html`·`post.html`과 대조: `infra, oss` 표시, 필터 칩 숫자(`all 14 · infra 11 · frontend 2 · oss 2 · note 1`), 글 상세 헤더 `.cats`(쉼표 mute·링크 밖), 목록에 썸네일 없음, `updated` 없음. 360px 메타 줄 한 줄 유지. 개발이 스크린샷을 PR에 올리므로 그것을 보고, 필요하면 `yarn build` 후 `out/`로 직접 확인.
-2. PR-12(목차·시리즈 바)·PR-13(관련 글) 구현이 열리면 같은 방식으로 검토. 기준은 12번 E7·E8과 시안 `components.css`의 `.post-tools`, `post-item--compact`.
-3. PR-14(이미지)에서 확대 `<dialog>`가 12번 E3와 시안 `app.js` 그대로인지(원본 폭 > 720px만, Esc·바깥 클릭·44px 닫기·포커스 복귀) 확인.
-4. PR-15(OG) 후: 시안용 `site/og/*.png`(16개, 약 0.7MB)를 대표 2~3장만 남기고 정리(13번 R2).
-5. 개발이 Q4(기존 글에 콜아웃·셸 블록 소급 적용)에 대한 의견을 구하면 답한다. 현재는 기획 대기.
+1. **Q7 답변**(`cowork/develop/REQUESTS.md`). PRD PR-12는 시리즈 박스에 "다음 편 링크"를 말하지만 시안 `post.html`에 없고, 개발은 목록의 각 글이 링크라 따로 두지 않았다. 시안의 시리즈 박스와 이전/다음 영역(날짜 기준)을 보고 필요 여부를 정해 `NN-주제.md`로 답한다. 답은 개발 `REQUESTS.md`에 번호만 링크.
+2. **머지된 PR-9(#30)·PR-12(#33) 구현 검토.** `yarn build` 후 `out/`을 `python3 -m http.server`로 띄워 시안과 대조한다. PR-9: `infra, oss` 표시, 칩 숫자(`all 14 · infra 11 · frontend 2 · oss 2 · note 1`), 글 상세 헤더 `.cats`(쉼표 mute·링크 밖), 목록에 썸네일·`updated` 없음, 360px 메타 줄 한 줄. PR-12: 12번 E7·E8, 시안 `components.css`의 `.post-tools`, 360×640 첫 h2. 개발 쪽 `STATUS.md`에 "시안 대비 차이"가 있으면 그것부터.
+3. PR-13(관련 글)이 열리면 같은 방식으로 검토. 기준은 시안 `post-item--compact`.
+4. PR-14(이미지)에서 확대 `<dialog>`가 12번 E3와 시안 `app.js` 그대로인지(원본 폭 > 720px만, Esc·바깥 클릭·44px 닫기·포커스 복귀) 확인.
+5. PR-15(OG) 후: 시안용 `site/og/*.png`(16개, 약 0.7MB)를 대표 2~3장만 남기고 정리(13번 R2).
+6. 개발이 Q4(기존 글에 콜아웃·셸 블록 소급 적용)에 대한 의견을 구하면 답한다. 현재는 기획 대기.
 
 ## 열린 항목 (디자인이 판단하거나 사용자 확인이 필요한 것)
 
@@ -37,7 +37,7 @@ _최종 갱신: 2026-10-28 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 | O-3 | 실제 Chrome 확인 | 지금까지 Playwright Chromium으로만 확인. 규칙은 Claude in Chrome 확인 | 도구가 있는 세션 |
 | O-4 | 확대 `<dialog>` 동작 | 12번에는 확인했다고 적혀 있으나 이 세션에서 재현하지 않음 | PR-14 때 확인 |
 | O-5 | 필터 깜빡임 재검토 조건 | 실기기·느린 네트워크에서 약 1초 이상 보이거나 필터 URL 유입이 늘면 16번의 (a)안(data 속성 + 인라인 스크립트) 검토 | 데이터가 생기면 |
-| O-6 | `cowork/` 커밋 | **결정됨(2026-10-28).** prd·design만 PR로 커밋, develop은 로컬 전용. public 저장소라 시안·PRD의 회사 성과 수치(`$16,000 절감`, `-50%` 등)가 공개된다. 공개를 원치 않는 수치가 있으면 시안에서 고쳐야 한다 | 사용자 |
+| O-6 | `cowork/` 커밋 | **완료.** prd·design은 #32, develop은 #33에서 커밋됨(2026-10-28 머지). public 저장소라 시안·PRD의 회사 성과 수치(`$16,000 절감`, `-50%` 등)가 이미 공개 상태. 공개를 원치 않는 수치가 있으면 시안·PRD를 고쳐 새 PR로 올려야 하고, 이미 기록된 Git 이력에는 남는다 | 사용자 |
 
 ## 이번 세션에서 확인된 것 (재확인 불필요)
 
@@ -53,3 +53,4 @@ _최종 갱신: 2026-10-28 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 |---|---|
 | 2026-10-28 | 디자인 검토 시작(PRD 001~003, 디자인 01~13 읽음). 14번 썸네일 최종 결정 요청 작성, 기획이 15번으로 C안 확정. R1 반영: `index/tag/404/project/post/design-system.html`의 썸네일 삭제, `components.css`의 썸네일 규칙·2열 grid 정리, `phase1-compare.html`은 기록용이라 규칙을 파일 안으로 이동. 16번(Q5 답변) 작성. `CONTEXT.md`·`STATUS.md`·`tools/check-site.mjs` 신설. 개발 `REQUESTS.md` Q5를 16번 링크와 함께 closed. "시작 시 읽고, 끝날 때 기록" 규칙을 저장소 `CLAUDE.md`의 "세션별 기록 (cowork)"에 명시(메모리가 아니라 파일에 기록) |
 | 2026-10-28 | `cowork/prd`·`cowork/design`을 `main` 기준 별도 worktree에서 브랜치 `docs/cowork-prd-design`으로 커밋하고 PR #32. 작업 폴더에서 개발 세션이 PR-12를 진행 중이라 브랜치를 바꾸지 않음. `CLAUDE.md`에 "세션별 기록 (cowork)" 절 추가, 커밋 결정 반영 |
+| 2026-10-28 | PR #32(prd·design)와 #33(PR-12, develop 포함) 머지 후 정리. stash(`CLAUDE.md`)를 `main`과 비교해 빠진 내용이 없음을 확인. `CLAUDE.md`·`CONTEXT.md`·`STATUS.md`의 "develop은 로컬 전용"을 현재 상태(커밋됨)로 수정. 개발 `REQUESTS.md`의 Q7(디자인에 열림)을 다음 작업 1번으로 추가. 개발 진행 표를 PR-9·10·11·12 머지로 갱신 |
