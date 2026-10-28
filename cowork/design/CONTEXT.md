@@ -20,7 +20,7 @@
 | `/DESIGN.md` | 확정된 디자인 시스템. 코드가 따르는 단일 기준 | 구현(합의된 것만) |
 | `cowork/prd/` | 기획서. `README.md`에 목록·규칙. 마스터 001, Phase 0 002, Phase 1 003(approved) | 기획 |
 | `cowork/design/` | 시안·디자인 명세·디자인 답변 (이 폴더) | **디자인(이 세션)** |
-| `cowork/develop/` | 개발 진행(`STATUS.md`)과 개발→기획·디자인 질문(`REQUESTS.md`, Q1~). **로컬 전용, 저장소에 없다** | 개발 |
+| `cowork/develop/` | 개발 진행(`STATUS.md`)과 개발→기획·디자인 질문(`REQUESTS.md`, Q1~). 저장소에 커밋됨(#33부터) | 개발 |
 | `/CONTEXT.md` | 사이트 전체의 현재 상태와 알려진 이슈 | 구현 |
 
 흐름: PRD 요구사항 → `cowork/design` 제안·시안 → 리뷰·합의 → `/DESIGN.md` 반영 → 구현.
@@ -84,4 +84,4 @@ node cowork/design/tools/check-site.mjs <스크린샷 저장 폴더>
 4. 확인하지 못한 것은 "못 했다"고 적는다. 측정값에는 환경(로컬 서버, 브라우저)을 같이 적는다.
 5. 기획 결정이 필요한 것은 사용자에게 알리고, 문서에는 "기획 결정 대기"로 표시한다.
 6. 저장소에 쓰지 않고 한 시안·측정은 재현할 수 있게 방법을 문서에 적는다.
-7. `cowork/prd`와 `cowork/design`은 저장소에 커밋한다(2026-10-28 사용자 결정, PR `docs/cowork-prd-design`). 저장소가 public이므로 비밀·연락처·내부 수치는 쓰지 않는다. `cowork/develop`은 개발 세션 로컬 전용이라 커밋하지 않는다. 커밋·푸시는 사용자가 요청할 때만 한다.
+7. `cowork/`(prd·design·develop)는 저장소에 커밋한다(PR #32로 prd·design, #33으로 develop). 저장소가 public이므로 비밀·연락처·내부 수치는 쓰지 않는다. 커밋·푸시는 사용자가 요청할 때만 한다. 개발 세션이 같은 작업 폴더를 쓰는 중이면 브랜치를 바꾸지 말고 `origin/main` 기준 별도 `git worktree`에서 PR을 만든다.
