@@ -15,6 +15,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { loadPostSources, type PostSource } from "./content/load";
 import { loadSeriesRegistry } from "./content/registry";
+import { selectRelated } from "./related";
 import type { Category } from "./content/schema";
 
 export interface PostMetadata {
@@ -170,6 +171,19 @@ export const getAdjacentPosts = (
     newer: posts[index - 1] ?? null,
     older: posts[index + 1] ?? null,
   };
+};
+
+// 관련 글: 태그가 겹치는 글(시리즈 글, 이전/다음 글 제외), 최대 3편
+export const getRelatedPosts = (id: string): PostMetadata[] => {
+  const posts = getSortedPostsData();
+  const current = posts.find((post) => post.id === id);
+  if (!current) return [];
+  const { older, newer } = getAdjacentPosts(id);
+  return selectRelated(
+    current,
+    posts,
+    [older?.id, newer?.id].filter((value): value is string => Boolean(value)),
+  );
 };
 
 export interface SeriesInfo {

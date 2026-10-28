@@ -8,11 +8,13 @@ import { AuthorBox } from "@/components/post/AuthorBox";
 import { PostHeader } from "@/components/post/PostHeader";
 import { PostPager } from "@/components/post/PostPager";
 import { PostPath } from "@/components/post/PostPath";
+import { RelatedPosts } from "@/components/post/RelatedPosts";
 import { PostToolbar } from "@/components/post/PostToolbar";
 import { SectionHead } from "@/components/ui/SectionHead";
 import {
   getAdjacentPosts,
   getPostData,
+  getRelatedPosts,
   getSeriesInfo,
   getSortedPostsData,
   type PostMetadata,
@@ -69,6 +71,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const post = await getPostData(id);
   const { older, newer } = getAdjacentPosts(id);
   const series = getSeriesInfo(id);
+  const related = getRelatedPosts(id);
 
   return (
     <article className="relative mx-auto max-w-[720px]">
@@ -123,6 +126,8 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <AuthorBox />
 
         <PostPager prev={older} next={newer} />
+
+        <RelatedPosts posts={related} />
 
         <section aria-labelledby="comments-title">
           <SectionHead id="comments-title">comments</SectionHead>
