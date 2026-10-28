@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>projects · Comstering</title>
+<meta name="description" content="비용 절감, 네트워크, 인증 등 실무 인프라 프로젝트를 문제·접근·결과로 정리했습니다.">
+<meta name="color-scheme" content="dark light">
+<script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../system/tokens.css">
+<link rel="stylesheet" href="../system/base.css">
+<link rel="stylesheet" href="../system/components.css">
+<style>
+.theme-icon-light{display:none}.theme-icon-dark{display:inline-flex}
+html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-icon-dark{display:none}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="index.html" aria-label="comstering 홈"><span>~/</span><span class="logo__name">comstering</span><span class="logo__cursor">_</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a class="nav__link" href="index.html">posts</a>
+      <a class="nav__link" href="projects.html" aria-current="page">projects</a>
+      <a class="nav__link" href="about.html">about</a>
+      <div class="nav__tools">
+        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (⌘K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="테마 전환"><span class="theme-icon-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="theme-icon-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="read">
+  <header class="page-head">
+    <nav class="path" aria-label="현재 위치"><a href="index.html">~</a><span class="path__sep">/</span><span aria-current="page">projects</span></nav>
+    <h1 class="page-head__title">projects</h1>
+    <p class="page-head__lead">문제, 접근, 결과로 정리한 실무 프로젝트입니다. 같은 기술을 개인 환경에서 정리한 글이 있으면 바로 이어서 읽을 수 있어요.</p>
+  </header>
+
+  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="work-title">
+    <h2 class="sec-head" id="work-title"><span class="sec-head__label">work</span><span class="sec-head__action mono"><span data-result-count>14</span> items</span></h2>
+    <div class="chip-row" role="group" aria-label="기술 스택 필터" data-filter-group="stack" data-filter-target=".proj-item" style="margin-top:var(--s-4)"><button class="chip" type="button" data-value="all" aria-pressed="true">all <span class="chip__count">14</span></button><button class="chip" type="button" data-value="kubernetes" aria-pressed="false">kubernetes <span class="chip__count">7</span></button><button class="chip" type="button" data-value="aws" aria-pressed="false">aws <span class="chip__count">4</span></button><button class="chip" type="button" data-value="kafka" aria-pressed="false">kafka <span class="chip__count">3</span></button><button class="chip" type="button" data-value="terraform" aria-pressed="false">terraform <span class="chip__count">2</span></button><button class="chip" type="button" data-value="security" aria-pressed="false">security <span class="chip__count">6</span></button><button class="chip" type="button" data-value="networking" aria-pressed="false">networking <span class="chip__count">3</span></button></div>
+    <div style="margin-top:var(--s-2)"><article class="proj-item" id="p-oauth2-proxy" data-stack="security kubernetes">
+  <p class="proj-item__meta"><span class="num">2026.03</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">OAuth2 Proxy 기반 Zero Trust 인증 게이트웨이</a></h3>
+  <p class="proj-item__impact">Dev·QA·Stg <b>3</b>개 환경 접근 제어를 게이트웨이 하나로 통합</p>
+  <div class="stack-list"><span class="stack-token">oauth2-proxy</span><span class="stack-token">keycloak</span><span class="stack-token">istio</span></div>
+</article><article class="proj-item" id="p-mwaa-argo" data-stack="kubernetes cicd">
+  <p class="proj-item__meta"><span class="num">2025.12 ~ 2026.02</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">Airflow MWAA → Argo Workflows 전환</a></h3>
+  <p class="proj-item__impact">MWAA 제거로 연 <b>$16,000</b> 비용 절감</p>
+  <div class="stack-list"><span class="stack-token">argo-workflows</span><span class="stack-token">kubernetes</span><span class="stack-token">gitops</span></div>
+</article><article class="proj-item" id="p-cloudflare" data-stack="networking security">
+  <p class="proj-item__meta"><span class="num">2025.11 ~ 2026.02</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">CloudFront → Cloudflare 전환으로 CDN·보안 최적화</a></h3>
+  <p class="proj-item__impact">TTFB 기준 전송 속도 <b>35%</b> 개선</p>
+  <div class="stack-list"><span class="stack-token">cloudflare</span><span class="stack-token">waf</span><span class="stack-token">dns</span></div>
+</article><article class="proj-item" id="p-okta-sso" data-stack="security terraform">
+  <p class="proj-item__meta"><span class="num">2025.11 ~ 2026.01</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">Okta SSO 통합 인증 · Keycloak IdP Broker 설계</a></h3>
+  <p class="proj-item__impact">개인 IAM User <b>250+</b> 계정 완전 폐기</p>
+  <div class="stack-list"><span class="stack-token">okta</span><span class="stack-token">keycloak</span><span class="stack-token">terraform</span></div>
+</article><article class="proj-item" id="p-tgw-peering" data-stack="aws networking terraform">
+  <p class="proj-item__meta"><span class="num">2025.09 ~ 2025.10</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">Transit Gateway → VPC Peering 전환</a></h3>
+  <p class="proj-item__impact">월간 네트워크 비용 <b>50%</b> 절감</p>
+  <div class="stack-list"><span class="stack-token">aws</span><span class="stack-token">vpc</span><span class="stack-token">terraform</span></div>
+</article><article class="proj-item" id="p-eks-networking" data-stack="kubernetes aws networking">
+  <p class="proj-item__meta"><span class="num">2025.06</span><span class="company">CJ Olive Young</span><a class="proj-item__proof" href="project.html#proof-title">관련 글 4</a></p>
+  <h3 class="proj-item__title"><a href="project.html">EKS 네트워킹 아키텍처 고도화</a></h3>
+  <p class="proj-item__impact">Pod IP 풀 <b>500 → 16,000</b> (32배)</p>
+  <div class="stack-list"><span class="stack-token">eks</span><span class="stack-token">cilium</span><span class="stack-token">ebpf</span></div>
+</article><article class="proj-item" id="p-temporal" data-stack="kubernetes">
+  <p class="proj-item__meta"><span class="num">2025.05 ~ 2026.03</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">Temporal 기반 분산 워크플로우 엔진 구축</a></h3>
+  <p class="proj-item__impact">SaaS 대비 연 <b>$50,000</b> 절감</p>
+  <div class="stack-list"><span class="stack-token">temporal</span><span class="stack-token">kubernetes</span><span class="stack-token">postgresql</span></div>
+</article><article class="proj-item" id="p-kafka-stability" data-stack="kafka kubernetes">
+  <p class="proj-item__meta"><span class="num">2025.04 ~ 2025.10</span><span class="company">CJ Olive Young</span><a class="proj-item__proof" href="project.html#proof-title">관련 글 2</a></p>
+  <h3 class="proj-item__title"><a href="project.html">Kafka 에코시스템 안정성 강화</a></h3>
+  <p class="proj-item__impact">Connect 재시작 시간 <b>80%</b> 단축</p>
+  <div class="stack-list"><span class="stack-token">kafka</span><span class="stack-token">strimzi</span><span class="stack-token">debezium</span></div>
+</article><article class="proj-item" id="p-cloud-native" data-stack="kubernetes aws">
+  <p class="proj-item__meta"><span class="num">2024.07 ~ 2025.02</span><span class="company">CJ Olive Young</span><a class="proj-item__proof" href="project.html#proof-title">관련 글 3</a></p>
+  <h3 class="proj-item__title"><a href="project.html">Cloud Native 인프라 구축 및 MSA 전환</a></h3>
+  <p class="proj-item__impact">self-hosted runner로 빌드 비용 <b>99%</b> 절감</p>
+  <div class="stack-list"><span class="stack-token">eks</span><span class="stack-token">karpenter</span><span class="stack-token">istio</span></div>
+</article><article class="proj-item" id="p-event-driven-kafka" data-stack="kafka aws">
+  <p class="proj-item__meta"><span class="num">2024.07 ~ 2024.10</span><span class="company">CJ Olive Young</span></p>
+  <h3 class="proj-item__title"><a href="project.html">Event-Driven Kafka 메시징 플랫폼 구축</a></h3>
+  <p class="proj-item__impact">초당 <b>50,000+</b> 메시지 처리</p>
+  <div class="stack-list"><span class="stack-token">msk</span><span class="stack-token">kafka-connect</span><span class="stack-token">outbox</span></div>
+</article><article class="proj-item" id="p-rebuild-auth" data-stack="security">
+  <p class="proj-item__meta"><span class="num">2023.10 ~ 2024.03</span><span class="company">Class101</span></p>
+  <h3 class="proj-item__title"><a href="project.html">통합 인증 시스템 재구축 (Rebuild Auth)</a></h3>
+  <p class="proj-item__impact">소셜 로그인 <b>6개</b> 제공자 통합</p>
+  <div class="stack-list"><span class="stack-token">oauth2</span><span class="stack-token">jwt</span><span class="stack-token">helm</span></div>
+</article><article class="proj-item" id="p-gdpr-withdrawal" data-stack="kafka security">
+  <p class="proj-item__meta"><span class="num">2023.06 ~ 2024.01</span><span class="company">Class101</span></p>
+  <h3 class="proj-item__title"><a href="project.html">회원 탈퇴 프로세스 개선, GDPR 대응</a></h3>
+  <p class="proj-item__impact">Kafka 이벤트로 연관 시스템 개인정보 삭제 <span class="ph" title="시안 값: 수치 확인 필요">자동화</span></p>
+  <div class="stack-list"><span class="stack-token">kafka</span><span class="stack-token ph" title="시안 값: 작성자 확인 필요">spring boot</span></div>
+</article><article class="proj-item" id="p-adult-verification" data-stack="security">
+  <p class="proj-item__meta"><span class="num">2023.04 ~ 2023.06</span><span class="company">Class101</span></p>
+  <h3 class="proj-item__title"><a href="project.html">글로벌 성인 인증 시스템 리뉴얼</a></h3>
+  <p class="proj-item__impact">국내 휴대폰 본인인증과 해외 연령 확인을 <span class="ph" title="시안 값: 수치 확인 필요">하나의 흐름으로</span></p>
+  <div class="stack-list"><span class="stack-token ph" title="시안 값: 작성자 확인 필요">kotlin</span><span class="stack-token ph" title="시안 값: 작성자 확인 필요">spring boot</span></div>
+</article><article class="proj-item" id="p-employee-service" data-stack="kubernetes">
+  <p class="proj-item__meta"><span class="num">2022.10 ~ 2023.01</span><span class="company">Class101</span></p>
+  <h3 class="proj-item__title"><a href="project.html">HR 연동 직원 관리 시스템 구축</a></h3>
+  <p class="proj-item__impact">FLEX 일배치 동기화 오차율 <b>0.1%</b> 미만</p>
+  <div class="stack-list"><span class="stack-token">mongodb</span><span class="stack-token">helm</span><span class="stack-token">drone ci</span></div>
+</article></div>
+    <div class="empty" data-empty hidden><p class="empty__code">$ grep → 0 results</p><p class="empty__title">해당 스택의 프로젝트가 없어요</p><div class="btn-row"><button class="btn btn--secondary btn--sm" type="button" data-filter-reset>필터 초기화</button></div></div>
+  </section>
+
+  <section class="section" aria-labelledby="oss-title">
+    <h2 class="sec-head" id="oss-title"><span class="sec-head__label">open source</span></h2>
+    <ul class="def-list">
+      <li><span class="def-list__title">bitnami/charts: Schema Registry mTLS 선택화</span><span class="def-list__aside"><span class="badge badge--accent">merged</span></span><span class="def-list__sub">SASL_SSL 인증에서 필수였던 mTLS를 선택 항목으로 변경, <span class="mono">#35772</span>, 2025.08</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="https://github.com/bitnami/charts/pull/35772" target="_blank" rel="noopener noreferrer">pr<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
+      <li><span class="def-list__title">kafbat/kafka-ui: UI 문구 수정</span><span class="def-list__aside"><span class="badge badge--accent">merged</span></span><span class="def-list__sub">첫 오픈소스 기여, 사용자 문구 개선, <span class="mono">#1205</span>, 2025.07</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="https://github.com/kafbat/kafka-ui/pull/1205" target="_blank" rel="noopener noreferrer">pr<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="side-title">
+    <h2 class="sec-head" id="side-title"><span class="sec-head__label">side project</span></h2>
+    <ul class="def-list">
+      <li><span class="def-list__title">lomeone</span><span class="def-list__aside num">2024.01 ~ now</span><span class="def-list__sub">개인 사이드 프로젝트 organization. AWS 인프라 전체를 Terraform으로 관리</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="https://github.com/lomeone" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
+    </ul>
+  </section>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>© 2026 comstering</p>
+    <p class="ph-note">점선 밑줄과 점선 테두리는 시안용 예시 값</p>
+    <nav class="site-footer__links" aria-label="외부 링크">
+      <a href="https://github.com/comstering" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="mailto:comstering@gmail.com">email</a>
+      <a href="#rss">rss</a>
+    </nav>
+  </div>
+</footer>
+<div class="palette-backdrop" aria-hidden="true"></div>
+<div class="palette" role="dialog" aria-modal="true" aria-label="사이트 검색">
+  <div class="palette__input-wrap">
+    <span class="palette__prompt" aria-hidden="true">&gt;</span>
+    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="글, 프로젝트, 태그 검색" autocomplete="off" spellcheck="false">
+    <span class="kbd">esc</span>
+  </div>
+  <div class="palette__results" id="palette-results" role="listbox" aria-label="검색 결과"></div>
+  <div class="palette__foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> 이동</span><span><span class="kbd">↵</span> 열기</span><span><span class="kbd">esc</span> 닫기</span></div>
+</div>
+<script src="../system/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>about · 최한수 · Comstering</title>
+<meta name="description" content="클라우드 네이티브 엔지니어 최한수의 경력, 프로젝트, 연락처">
+<meta name="color-scheme" content="dark light">
+<script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../system/tokens.css">
+<link rel="stylesheet" href="../system/base.css">
+<link rel="stylesheet" href="../system/components.css">
+<style>
+.theme-icon-light{display:none}.theme-icon-dark{display:inline-flex}
+html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-icon-dark{display:none}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="index.html" aria-label="comstering 홈"><span>~/</span><span class="logo__name">comstering</span><span class="logo__cursor">_</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a class="nav__link" href="index.html">posts</a>
+      <a class="nav__link" href="projects.html">projects</a>
+      <a class="nav__link" href="about.html" aria-current="page">about</a>
+      <div class="nav__tools">
+        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (⌘K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="테마 전환"><span class="theme-icon-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="theme-icon-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="read">
+  <nav class="path" aria-label="현재 위치" style="padding-top:var(--s-4)"><a href="index.html">~</a><span class="path__sep">/</span><span aria-current="page">about</span></nav>
+
+  <section class="intro" aria-labelledby="me">
+    <img class="avatar" src="../../../public/profile.png" alt="최한수 프로필 사진" width="112" height="112">
+    <div>
+      <h1 class="intro__name" id="me">최한수 <small>Choi Hansu</small></h1>
+      <p class="intro__role"><span class="nowrap">DevOps · 클라우드 네이티브 엔지니어</span> <span aria-hidden="true">·</span> <span class="nowrap">경력 4년+</span></p>
+      <p class="intro__facts"><span>cloud native engineer</span><span>CJ Olive Young</span></p>
+    </div>
+    <div class="intro__contact btn-row">
+      <a class="btn btn--primary" href="mailto:comstering@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> email</a>
+      <a class="btn btn--secondary" href="#resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> resume.pdf</a>
+      <a class="btn btn--ghost" href="https://github.com/comstering" target="_blank" rel="noopener noreferrer"><span class="icon-arrow link-arrow--ext" style="gap:6px">github</span><span class="sr-only"> (새 창에서 열림)</span></a>
+      <a class="btn btn--ghost" href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer"><span class="icon-arrow link-arrow--ext" style="gap:6px">linkedin</span><span class="sr-only"> (새 창에서 열림)</span></a>
+    </div>
+    <p class="intro__headline">개발과 운영의 경계를 좁혀 비즈니스의 <strong>연속성</strong>을 만드는 엔지니어입니다.</p>
+  </section>
+
+  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="caps-title">
+    <h2 class="sec-head" id="caps-title"><span class="sec-head__label">what i do</span></h2>
+    <ol class="caps">
+      <li><span class="caps__title">Kubernetes 플랫폼 설계·운영</span><span class="caps__desc">EKS, Karpenter, Cilium, Istio로 MSA 인프라를 처음부터 구축</span><a class="link-arrow" href="project.html">EKS 네트워킹</a></li>
+      <li><span class="caps__title">비용·성능 최적화</span><span class="caps__desc">MWAA 제거 연 $16,000, TGW → Peering 네트워크 비용 50% 절감</span><a class="link-arrow" href="projects.html">비용 절감 사례</a></li>
+      <li><span class="caps__title">인증·보안 인프라</span><span class="caps__desc">Okta SSO, Keycloak, Zero Trust 게이트웨이로 접근 통제 체계화</span><a class="link-arrow" href="projects.html#p-okta-sso">Okta SSO</a></li>
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="exp-title">
+    <h2 class="sec-head" id="exp-title"><span class="sec-head__label">experience</span></h2>
+    <div class="timeline">
+      <div class="tl-org">
+        <p class="tl-org__period">2024.06 ~ now</p>
+        <div>
+          <h3 class="tl-org__name">CJ Olive Young <span class="badge badge--accent">now</span></h3>
+          <p class="tl-org__role">DevOps · Cloud Native Engineer, 클라우드 네이티브 인프라, 인증, 메시징</p>
+          <ul class="tl-projects"><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-oauth2-proxy">OAuth2 Proxy 기반 Zero Trust 인증 게이트웨이</a></span><span class="tl-proj__period">2026.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-mwaa-argo">Airflow MWAA → Argo Workflows 전환</a></span><span class="tl-proj__period">2025.12 ~ 2026.02</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-cloudflare">CloudFront → Cloudflare 전환</a></span><span class="tl-proj__period">2025.11 ~ 2026.02</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-okta-sso">Okta SSO 통합 인증, Keycloak IdP Broker</a></span><span class="tl-proj__period">2025.11 ~ 2026.01</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-tgw-peering">Transit Gateway → VPC Peering 전환</a></span><span class="tl-proj__period">2025.09 ~ 2025.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="project.html">EKS 네트워킹 아키텍처 고도화</a></span><span class="tl-proj__period">2025.06</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-temporal">Temporal 기반 분산 워크플로우 엔진</a></span><span class="tl-proj__period">2025.05 ~ 2026.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-kafka-stability">Kafka 에코시스템 안정성 강화</a></span><span class="tl-proj__period">2025.04 ~ 2025.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-event-driven-kafka">Event-Driven Kafka 메시징 플랫폼</a></span><span class="tl-proj__period">2024.07 ~ 2024.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-cloud-native">Cloud Native 인프라 구축 및 MSA 전환</a></span><span class="tl-proj__period">2024.07 ~ 2025.02</span></li></ul>
+        </div>
+      </div>
+      <div class="tl-org">
+        <p class="tl-org__period">2022.05 ~ 2024.03</p>
+        <div>
+          <h3 class="tl-org__name">Class101</h3>
+          <p class="tl-org__role">Web Developer (backend 중심), 인증, 회원, 사내 시스템</p>
+          <ul class="tl-projects"><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-rebuild-auth">통합 인증 시스템 재구축 (Rebuild Auth)</a></span><span class="tl-proj__period">2023.10 ~ 2024.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-gdpr-withdrawal">회원 탈퇴 프로세스 개선, GDPR 대응</a></span><span class="tl-proj__period">2023.06 ~ 2024.01</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-adult-verification">글로벌 성인 인증 시스템 리뉴얼</a></span><span class="tl-proj__period">2023.04 ~ 2023.06</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-employee-service">HR 연동 직원 관리 시스템 구축</a></span><span class="tl-proj__period">2022.10 ~ 2023.01</span></li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-title">
+    <h2 class="sec-head" id="skills-title"><span class="sec-head__label">skills</span></h2>
+    <dl class="skills">
+      <div><dt>platform</dt><dd class="stack-list"><span class="stack-token">kubernetes</span><span class="stack-token">eks</span><span class="stack-token">karpenter</span><span class="stack-token">cilium</span><span class="stack-token">istio</span><span class="stack-token">argo</span></dd></div>
+      <div><dt>cloud · iac</dt><dd class="stack-list"><span class="stack-token">aws</span><span class="stack-token">terraform</span><span class="stack-token">cloudflare</span><span class="stack-token">helm</span></dd></div>
+      <div><dt>data · messaging</dt><dd class="stack-list"><span class="stack-token">kafka</span><span class="stack-token">strimzi</span><span class="stack-token">debezium</span><span class="stack-token">temporal</span></dd></div>
+      <div><dt>auth · security</dt><dd class="stack-list"><span class="stack-token">okta</span><span class="stack-token">keycloak</span><span class="stack-token">oauth2</span><span class="stack-token">kms</span></dd></div>
+      <div><dt>backend</dt><dd class="stack-list"><span class="stack-token">kotlin</span><span class="stack-token">spring boot</span><span class="stack-token">mongodb</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="section" aria-labelledby="cert-title">
+    <h2 class="sec-head" id="cert-title"><span class="sec-head__label">certifications</span></h2>
+    <ul class="def-list">
+      <li><span class="def-list__title">HashiCorp Certified: Terraform Associate (004)</span><span class="def-list__aside num">2026.04</span><span class="def-list__sub">HashiCorp</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="#credly" target="_blank" rel="noopener noreferrer">verify<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
+      <li><span class="def-list__title">정보보안산업기사</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">KISA</span></li>
+      <li><span class="def-list__title">정보처리기사</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">HRDK</span></li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="edu-title">
+    <h2 class="sec-head" id="edu-title"><span class="sec-head__label">education · activity</span></h2>
+    <ul class="def-list">
+      <li><span class="def-list__title">공주대학교 컴퓨터공학</span><span class="def-list__aside num">2016.03 ~ 2022.02</span><span class="def-list__sub">B.E. · 자료구조, 알고리즘, 네트워크, 보안</span></li>
+      <li><span class="def-list__title">BoB (Best of the Best) 10기</span><span class="def-list__aside num">2021</span><span class="def-list__sub">KITRI 차세대 보안 리더 양성 프로그램</span></li>
+    </ul>
+  </section>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>© 2026 comstering</p>
+    <p class="ph-note">점선 밑줄과 점선 테두리는 시안용 예시 값</p>
+    <nav class="site-footer__links" aria-label="외부 링크">
+      <a href="https://github.com/comstering" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="mailto:comstering@gmail.com">email</a>
+      <a href="#rss">rss</a>
+    </nav>
+  </div>
+</footer>
+<div class="palette-backdrop" aria-hidden="true"></div>
+<div class="palette" role="dialog" aria-modal="true" aria-label="사이트 검색">
+  <div class="palette__input-wrap">
+    <span class="palette__prompt" aria-hidden="true">&gt;</span>
+    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="글, 프로젝트, 태그 검색" autocomplete="off" spellcheck="false">
+    <span class="kbd">esc</span>
+  </div>
+  <div class="palette__results" id="palette-results" role="listbox" aria-label="검색 결과"></div>
+  <div class="palette__foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> 이동</span><span><span class="kbd">↵</span> 열기</span><span><span class="kbd">esc</span> 닫기</span></div>
+</div>
+<script src="../system/app.js" defer></script>
+</body>
+</html>

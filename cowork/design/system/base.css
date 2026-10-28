@@ -1,0 +1,87 @@
+/* ==========================================================================
+   base — reset, page, typography, prose
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { color-scheme: light; -webkit-text-size-adjust: 100%; touch-action: manipulation; scrollbar-color: var(--line-strong) var(--canvas); caret-color: var(--accent); scroll-padding-top: calc(var(--header-h) + 24px); }
+html.dark { color-scheme: dark; }
+body {
+  background: var(--canvas);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+img, svg, video { display: block; max-width: 100%; }
+pre, .chip-row, .palette__results, .diagram { scrollbar-width: thin; }
+.code pre { scrollbar-color: var(--line-strong) transparent; }
+button, input { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3, h4 { font-weight: 700; line-height: var(--leading-tight); letter-spacing: var(--tracking-title); }
+main { flex: 1; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+::selection { background: var(--accent); color: var(--accent-on); }
+
+.mono { font-family: var(--font-mono); }
+.num { font-variant-numeric: tabular-nums; }
+.mute { color: var(--mute); }
+@media (max-width: 639px) { .br-desk { display: none; } }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; left: var(--gutter); top: -100px; z-index: 100; background: var(--accent); color: var(--accent-on); padding: 8px 12px; border-radius: var(--r-sm); font-family: var(--font-mono); font-size: var(--text-meta); }
+.skip-link:focus { top: 12px; }
+
+/* layout primitives */
+.container { width: 100%; max-width: var(--w-container); margin-inline: auto; padding-inline: var(--gutter); }
+.read { width: 100%; max-width: calc(var(--w-read) + var(--gutter) * 2); margin-inline: auto; padding-inline: var(--gutter); }
+.stack > * + * { margin-top: var(--stack, var(--s-4)); }
+.section { margin-top: var(--s-20); }
+@media (min-width: 640px) { .section { margin-top: var(--s-24); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* --------------------------------------------------------------------------
+   prose — long-form Korean technical writing
+   -------------------------------------------------------------------------- */
+.prose { font-size: var(--text-body); line-height: var(--leading-body); color: var(--fg); }
+.prose > * + * { margin-top: 1.25em; }
+.prose h2 { font-size: var(--text-h2); margin-top: var(--s-14); padding-top: var(--s-2); }
+.prose h3 { font-size: var(--text-h3); font-weight: 600; margin-top: var(--s-10); }
+.prose h4 { font-size: var(--text-body); font-weight: 600; margin-top: var(--s-8); letter-spacing: -0.01em; }
+.prose h2 + *, .prose h3 + *, .prose h4 + * { margin-top: 0.75em; }
+.prose :is(h2, h3, h4) { position: relative; }
+.prose .anchor { position: absolute; left: -1.1em; width: 1em; color: var(--mute); opacity: 0; font-family: var(--font-mono); font-weight: 400; transition: opacity var(--dur) var(--ease); }
+.prose :is(h2, h3, h4):hover .anchor, .prose .anchor:focus-visible { opacity: 1; }
+.prose a:not(.anchor) { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose a:not(.anchor):hover { text-decoration-thickness: 2px; }
+.prose strong { font-weight: 700; }
+.prose em { font-style: normal; color: var(--mute); }
+.prose ul, .prose ol { padding-left: 1.4em; }
+.prose ul { list-style: none; }
+.prose ul > li { position: relative; }
+.prose ul > li::before { content: "–"; position: absolute; left: -1.2em; color: var(--mute); font-family: var(--font-mono); }
+.prose ol { list-style: decimal; }
+.prose ol > li::marker { color: var(--mute); font-family: var(--font-mono); font-size: 0.9em; }
+.prose li + li { margin-top: 0.4em; }
+.prose blockquote { border-left: 2px solid var(--line-strong); padding-left: var(--s-4); color: var(--mute); }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin-block: var(--s-12); }
+.prose :not(pre) > code {
+  font-family: var(--font-mono); font-size: 0.86em; font-weight: 500;
+  background: var(--surface-2); border-radius: var(--r-sm); padding: 0.12em 0.4em;
+}
+.prose figure img { border-radius: var(--r-md); border: 1px solid var(--line); width: 100%; height: auto; cursor: zoom-in; background: var(--surface); }
+.prose figcaption { margin-top: var(--s-2); text-align: center; font-size: var(--text-sm); color: var(--mute); }
+.prose table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); display: block; overflow-x: auto; }
+.prose th, .prose td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.prose th { font-family: var(--font-mono); font-size: var(--text-meta); font-weight: 500; color: var(--mute); }

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EKS 네트워킹 아키텍처 고도화 · projects · Comstering</title>
+<meta name="description" content="Custom Networking과 Cilium으로 Pod IP 32배 확장">
+<meta name="color-scheme" content="dark light">
+<script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../system/tokens.css">
+<link rel="stylesheet" href="../system/base.css">
+<link rel="stylesheet" href="../system/components.css">
+<style>
+.theme-icon-light{display:none}.theme-icon-dark{display:inline-flex}
+html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-icon-dark{display:none}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="index.html" aria-label="comstering 홈"><span>~/</span><span class="logo__name">comstering</span><span class="logo__cursor">_</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a class="nav__link" href="index.html">posts</a>
+      <a class="nav__link" href="projects.html" aria-current="page">projects</a>
+      <a class="nav__link" href="about.html">about</a>
+      <div class="nav__tools">
+        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (⌘K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="테마 전환"><span class="theme-icon-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="theme-icon-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="read">
+  <header class="page-head">
+    <nav class="path" aria-label="현재 위치"><a href="index.html">~</a><span class="path__sep">/</span><a href="projects.html">projects</a><span class="path__sep">/</span><span aria-current="page">eks-networking</span></nav>
+    <p class="post-head__meta" style="margin-top:var(--s-4)"><span class="num">2025.06</span><span>CJ Olive Young</span><span class="ph" title="시안 값: 작성자 확인 필요">플랫폼 설계와 구축 담당</span><a class="link-arrow" href="#proof-title">관련 글 4</a></p>
+    <h1 class="page-head__title">EKS 네트워킹 아키텍처 고도화</h1>
+    <p class="page-head__lead">Pod IP 고갈과 VPC CNI의 iptables 성능 한계를 Custom Networking과 Cilium CNI 체이닝으로 해결했습니다.</p>
+    <div class="stack-list" style="margin-top:var(--s-5)"><span class="stack-token">eks</span><span class="stack-token">vpc-cni</span><span class="stack-token">cilium</span><span class="stack-token">ebpf</span><span class="stack-token">karpenter</span><span class="stack-token">terraform</span></div>
+  </header>
+
+  <section class="star-sec" aria-labelledby="s1"><h2 id="s1">문제</h2><p class="star-sec__lead">서비스가 늘수록 Pod에 줄 IP가 없었다.</p>
+    <div class="prose ph-block"><p>기존 서브넷 대역만으로는 클러스터 전체에서 Pod에 줄 수 있는 IP가 약 500개였습니다. MSA 전환으로 서비스가 늘면서 배포 때마다 <code>Failed to assign an IP</code>가 발생했고, iptables 기반 VPC CNI는 서비스 수에 비례해 네트워크 처리 비용이 커졌습니다.</p></div></section>
+
+  <section class="star-sec" aria-labelledby="s2"><h2 id="s2">접근</h2><p class="star-sec__lead">IP 대역은 분리하고, 데이터 경로는 eBPF로.</p>
+    <div class="prose"><ul>
+      <li>VPC Secondary CIDR를 Pod 전용 서브넷으로 할당하고 EKS Custom Networking 구성</li>
+      <li>VPC CNI와 Cilium을 체이닝해 AWS 네이티브 라우팅은 유지하고 eBPF 기반 정책·관찰성을 추가</li>
+      <li>Karpenter Node가 ENI 1개를 점유하는 문제를 <code>reservedENIs</code>로 보정</li>
+    </ul></div></section>
+
+  <section class="star-sec" aria-labelledby="s3"><h2 id="s3">구조</h2>
+    <figure class="diagram"><svg viewBox="0 0 640 300" role="img" aria-labelledby="dg-t dg-d">
+  <title id="dg-t">EKS Custom Networking + Cilium chaining 구성</title>
+  <desc id="dg-d">VPC 안에서 Node 서브넷(기존 대역)과 Pod 서브넷(VPC secondary CIDR)이 분리되어 있다. Node의 ENI0은 Node 서브넷, ENI1·2는 Pod 서브넷에 연결된다. Pod 트래픽은 VPC CNI 다음 Cilium eBPF 체인을 거친다. Pod IP는 500개에서 16,000개로 늘었다.</desc>
+  <rect class="d-group" x="8" y="8" width="624" height="284" rx="14"/>
+  <text x="24" y="32" class="d-mute">vpc · pod ip 500 → 16,000</text>
+  <rect class="d-box" x="28" y="54" width="250" height="56" rx="8"/>
+  <text x="44" y="78">node subnet</text><text x="44" y="96" class="d-mute">기존 대역</text>
+  <rect class="d-box d-box--accent" x="362" y="54" width="250" height="56" rx="8"/>
+  <text x="378" y="78">pod subnet</text><text x="378" y="96" class="d-mute">vpc secondary cidr</text>
+  <rect class="d-box" x="110" y="150" width="420" height="124" rx="10"/>
+  <rect class="d-box" x="130" y="166" width="100" height="30" rx="6"/><text x="144" y="186">eni0 · node</text>
+  <rect class="d-box d-box--accent" x="250" y="166" width="100" height="30" rx="6"/><text x="264" y="186">eni1 · pod</text>
+  <rect class="d-box d-box--accent" x="370" y="166" width="100" height="30" rx="6"/><text x="384" y="186">eni2 · pod</text>
+  <text x="130" y="230">karpenter node</text>
+  <text x="130" y="254" class="d-mute">vpc-cni → cilium (eBPF chaining) · reservedENIs</text>
+  <path class="d-edge" d="M180 166 V132 H153 V110"/>
+  <path class="d-edge d-edge--accent" d="M300 166 V132 H487 V110"/>
+  <path class="d-edge d-edge--accent" d="M420 166 V132"/>
+</svg></figure></section>
+
+  <section class="star-sec" aria-labelledby="s4"><h2 id="s4">결과</h2>
+    <div class="metrics" style="margin-bottom:var(--s-5)">
+      <div class="metric"><div class="metric__value num">500 → 16K</div><div class="metric__label">Pod IP 풀 (32배)</div></div>
+      <div class="metric"><div class="metric__value num">−30<small>%</small></div><div class="metric__label">Pod 간 통신 레이턴시</div></div>
+      <div class="metric"><div class="metric__value num">−20<small>%</small></div><div class="metric__label">노드 CPU 사용률</div></div>
+    </div>
+    <div class="prose"><ul>
+      <li>IP 풀은 VPC Secondary CIDR로 Pod 전용 대역을 분리해 늘렸고, 레이턴시·CPU는 Cilium CNI chaining의 eBPF 데이터 경로로 줄였다</li>
+      <li>Hubble UI로 네트워크 흐름 가시성 확보, Cilium Network Policy로 서비스 간 트래픽 제어</li>
+    </ul></div></section>
+
+  <section class="star-sec" aria-labelledby="s5"><h2 id="s5">배운 점</h2>
+    <div class="prose ph-block"><p>관리형 노드와 Karpenter 노드는 같은 클러스터 안에서도 "알고 있는 정보"가 다릅니다. 네트워크 설정을 바꿀 때는 노드를 만드는 주체마다 같은 전제를 공유하는지 먼저 확인해야 한다는 것을 배웠습니다.</p></div></section>
+
+  <section class="section" style="margin-top:var(--s-16)" aria-labelledby="proof-title">
+    <h2 class="sec-head" id="proof-title"><span class="sec-head__label">관련 글</span><span class="sec-head__action mono">4 posts</span></h2>
+    <p class="proof-note">개인 EKS에서 같은 기술을 재현하고 정리한 글입니다. 수치는 회사 환경과 다릅니다.</p>
+    <article class="post-item post-item--compact" data-category="infra">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-09-02">2025-09-02</time><span class="cat">infra</span><span>series cilium 3/3</span><span class="personal">personal</span></p>
+    <h3 class="post-item__title"><a href="post.html">Cilium CNI 설치 후 일부 Pod들이 정상동작하지 않는 문제 해결</a></h3>
+    <p class="post-item__desc">Cilium Operator의 unmanagedPodWatcher를 사용해서 cilium이 관리하지 않는 Pod가 없도록 하자</p>
+    <div class="tags"><a class="tag" href="tag.html">cilium</a><a class="tag" href="tag.html">eks</a><a class="tag" href="tag.html">troubleshooting</a></div>
+  </div>
+</article><article class="post-item post-item--compact" data-category="infra">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-09-01">2025-09-01</time><span class="cat">infra</span><span>series cilium 2/3</span><span class="personal">personal</span></p>
+    <h3 class="post-item__title"><a href="post.html">EKS에 Cilium CNI 설치하기 (with CNI Chaining AWS VPC CNI Plugin)</a></h3>
+    <p class="post-item__desc">Cilium CNI Chaining을 통해서 VPC CNI와 Cilium CNI를 함께 사용해보자</p>
+    <div class="tags"><a class="tag" href="tag.html">cilium</a><a class="tag" href="tag.html">eks</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+</article><article class="post-item post-item--compact" data-category="infra">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-07-10">2025-07-10</time><span class="cat">infra</span><span>series eks 5/5</span><span class="personal">personal</span></p>
+    <h3 class="post-item__title"><a href="post.html">Custom network Karpenter ENI troubleshooting</a></h3>
+    <p class="post-item__desc">Karpenter Node가 할당 가능한 IP 개수보다 더 많은 Pod를 Scheduling 하는 문제 해결</p>
+    <div class="tags"><a class="tag" href="tag.html">eks</a><a class="tag" href="tag.html">karpenter</a><a class="tag" href="tag.html">custom-networking</a><a class="tag" href="tag.html">troubleshooting</a></div>
+  </div>
+</article><article class="post-item post-item--compact" data-category="infra">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-07-08">2025-07-08</time><span class="cat">infra</span><span>series eks 4/5</span><span class="personal">personal</span></p>
+    <h3 class="post-item__title"><a href="post.html">EKS Custom Networking</a></h3>
+    <p class="post-item__desc">Subnet에 Pod가 할당받을 IP가 부족한 문제를 해결하는 방법</p>
+    <div class="tags"><a class="tag" href="tag.html">eks</a><a class="tag" href="tag.html">custom-networking</a><a class="tag" href="tag.html">aws</a></div>
+  </div>
+</article>
+  </section>
+
+  <nav class="pager" style="margin-top:var(--s-12);border-top:1px solid var(--line)" aria-label="이전/다음 프로젝트">
+    <a href="project.html"><span class="pager__dir icon-arrow icon-arrow--back">prev</span><span class="pager__title">Temporal 기반 분산 워크플로우 엔진 구축</span></a>
+    <a class="pager__next" href="project.html"><span class="pager__dir icon-arrow">next</span><span class="pager__title">Transit Gateway → VPC Peering 전환</span></a>
+  </nav>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>© 2026 comstering</p>
+    <p class="ph-note">점선 밑줄과 점선 테두리는 시안용 예시 값</p>
+    <nav class="site-footer__links" aria-label="외부 링크">
+      <a href="https://github.com/comstering" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="mailto:comstering@gmail.com">email</a>
+      <a href="#rss">rss</a>
+    </nav>
+  </div>
+</footer>
+<div class="palette-backdrop" aria-hidden="true"></div>
+<div class="palette" role="dialog" aria-modal="true" aria-label="사이트 검색">
+  <div class="palette__input-wrap">
+    <span class="palette__prompt" aria-hidden="true">&gt;</span>
+    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="글, 프로젝트, 태그 검색" autocomplete="off" spellcheck="false">
+    <span class="kbd">esc</span>
+  </div>
+  <div class="palette__results" id="palette-results" role="listbox" aria-label="검색 결과"></div>
+  <div class="palette__foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> 이동</span><span><span class="kbd">↵</span> 열기</span><span><span class="kbd">esc</span> 닫기</span></div>
+</div>
+<script src="../system/app.js" defer></script>
+</body>
+</html>

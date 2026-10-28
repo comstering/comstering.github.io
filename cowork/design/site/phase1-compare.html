@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 1 비교 · Comstering</title>
+<meta name="description" content="PRD-003 categories A/B안과 목록 썸네일 비교">
+<meta name="color-scheme" content="dark light">
+<script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../system/tokens.css">
+<link rel="stylesheet" href="../system/base.css">
+<link rel="stylesheet" href="../system/components.css">
+<style>
+.theme-icon-light{display:none}.theme-icon-dark{display:inline-flex}
+html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-icon-dark{display:none}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:var(--s-8);margin-top:var(--s-6)}
+.cmp__col{min-width:0}
+.cmp__label{font-family:var(--font-mono);font-size:var(--text-cap);color:var(--mute);margin-bottom:var(--s-3)}
+.cmp__label b{color:var(--fg);font-weight:600}
+.post-item{grid-template-columns:1fr auto;gap:var(--s-5)}
+.post-item__thumb{width:128px;aspect-ratio:1200/630;margin-top:4px;border-radius:var(--r-md);border:1px solid var(--line);object-fit:cover;background:var(--surface)}
+.phone{width:320px;max-width:100%;padding-block:var(--s-2);border-block:1px dashed var(--line-strong)}
+.phone .post-item{grid-template-columns:1fr}
+.phone .post-item__thumb{display:none}
+.cat--sub{color:var(--mute)!important}
+.cmp__note{margin-top:var(--s-3);font-size:var(--text-sm);color:var(--mute)}
+.cmp img.og-img{width:100%;height:auto;border-radius:var(--r-md);border:1px solid var(--line)}
+.no-thumb .post-item{grid-template-columns:1fr}
+.no-thumb .post-item__thumb{display:none}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="index.html" aria-label="comstering 홈"><span>~/</span><span class="logo__name">comstering</span><span class="logo__cursor">_</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a class="nav__link" href="index.html">posts</a>
+      <a class="nav__link" href="projects.html">projects</a>
+      <a class="nav__link" href="about.html">about</a>
+      <div class="nav__tools">
+        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (⌘K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="테마 전환"><span class="theme-icon-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="theme-icon-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="container">
+  <header class="page-head">
+    <nav class="path" aria-label="현재 위치"><a href="index.html">~</a><span class="path__sep">/</span><span aria-current="page">phase1-compare</span></nav>
+    <h1 class="page-head__title">Phase 1 비교 시안</h1>
+    <p class="page-head__lead">PRD-003 4장 categories 대표 유무(A안·B안)와 목록 썸네일 교체를 같은 데이터로 나란히 놓았다. 답변은 12-phase1-design-response.md.</p>
+  </header>
+
+  <section class="section" style="margin-top:var(--s-10)" aria-labelledby="q1">
+    <h2 class="sec-head" id="q1"><span class="sec-head__label">홈 목록 · 360px</span></h2>
+    <div class="cmp">
+      <div class="cmp__col"><p class="cmp__label"><b>A안</b> 대표 1개</p><div class="phone" data-measure><article class="post-item" data-category="infra oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-13">2025-08-13</time><span class="cat">oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">Bitnami helm chart open source contribute</a></h3>
+    <p class="post-item__desc">두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">open-source</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/bitnami-helm-chart-contribute.png" alt="" width="128" height="67" loading="lazy">
+</article><article class="post-item" data-category="frontend oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-07-21">2025-07-21</time><span class="cat">oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">나의 첫 OpenSource Contribute (feat. 오타수정)</a></h3>
+    <p class="post-item__desc">처음으로 Contribution 해본 경험</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">open-source</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/first-contribute-opensource.png" alt="" width="128" height="67" loading="lazy">
+</article><article class="post-item" data-category="frontend oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-09-01">2025-09-01</time><span class="cat">oss</span><span>series cilium 3/3</span></p>
+    <h3 class="post-item__title"><a href="post.html">가상의 최악 조합: 카테고리 2개 + 시리즈</a></h3>
+    <p class="post-item__desc">360px 메타 줄 길이 확인용 행</p>
+    <div class="tags"><a class="tag" href="tag.html">test</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/worst-case.png" alt="" width="128" height="67" loading="lazy">
+</article></div><p class="cmp__note">infra 칩으로 들어와도 Bitnami 행에는 oss만 보인다.</p></div>
+      <div class="cmp__col"><p class="cmp__label"><b>B안</b> 전부, 고정 순서</p><div class="phone" data-measure><article class="post-item" data-category="infra oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-13">2025-08-13</time><span class="cat">infra, oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">Bitnami helm chart open source contribute</a></h3>
+    <p class="post-item__desc">두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">open-source</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/bitnami-helm-chart-contribute.png" alt="" width="128" height="67" loading="lazy">
+</article><article class="post-item" data-category="frontend oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-07-21">2025-07-21</time><span class="cat">frontend, oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">나의 첫 OpenSource Contribute (feat. 오타수정)</a></h3>
+    <p class="post-item__desc">처음으로 Contribution 해본 경험</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">open-source</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/first-contribute-opensource.png" alt="" width="128" height="67" loading="lazy">
+</article><article class="post-item" data-category="frontend oss">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-09-01">2025-09-01</time><span class="cat">frontend, oss</span><span>series cilium 3/3</span></p>
+    <h3 class="post-item__title"><a href="post.html">가상의 최악 조합: 카테고리 2개 + 시리즈</a></h3>
+    <p class="post-item__desc">360px 메타 줄 길이 확인용 행</p>
+    <div class="tags"><a class="tag" href="tag.html">test</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/worst-case.png" alt="" width="128" height="67" loading="lazy">
+</article></div><p class="cmp__note">세 번째 행(가상 최악 조합)까지 메타가 한 줄에 들어간다.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="q2">
+    <h2 class="sec-head" id="q2"><span class="sec-head__label">글 상세 헤더</span></h2>
+    <div class="cmp">
+      <div class="cmp__col"><p class="cmp__label"><b>A안</b> 대표 accent + 두 번째 mute</p><header class="post-head"><p class="post-head__meta"><a class="cat" href="index.html?category=oss">oss</a><a class="cat cat--sub" href="index.html?category=infra">infra</a><time datetime="2025-08-13">2025-08-13</time></p><p class="post-head__title" style="font-size:var(--text-h2)">Bitnami helm chart open source contribute</p></header><p class="cmp__note">mute인 infra도 링크인데 링크처럼 보이지 않는다(08 M4와 같은 문제).</p></div>
+      <div class="cmp__col"><p class="cmp__label"><b>B안</b> 둘 다 같은 링크 스타일</p><header class="post-head"><p class="post-head__meta"><span class="cats"><a class="cat" href="index.html?category=infra">infra</a><span aria-hidden="true">,</span> <a class="cat" href="index.html?category=oss">oss</a></span><time datetime="2025-08-13">2025-08-13</time></p><p class="post-head__title" style="font-size:var(--text-h2)">Bitnami helm chart open source contribute</p></header><p class="cmp__note">accent는 "링크" 한 가지 뜻으로만 쓰인다. 한 묶음이라 강조가 둘로 갈리지 않는다.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="q3">
+    <h2 class="sec-head" id="q3"><span class="sec-head__label">OG 하단 줄</span></h2>
+    <div class="cmp">
+      <div class="cmp__col"><p class="cmp__label"><b>A안</b> 대표 1개</p><img class="og-img" src="og/bitnami-helm-chart-contribute--a.png" alt="A안 OG: 하단에 oss와 날짜" width="1200" height="630"></div>
+      <div class="cmp__col"><p class="cmp__label"><b>B안</b> 전부</p><img class="og-img" src="og/bitnami-helm-chart-contribute.png" alt="B안 OG: 하단에 infra, oss와 날짜" width="1200" height="630"></div>
+      <div class="cmp__col"><p class="cmp__label"><b>B안 최악 조합</b> 카테고리 2개 + 긴 시리즈</p><img class="og-img" src="og/worst-case.png" alt="카테고리 2개와 긴 시리즈 이름이 하단 한 줄에 들어간 OG" width="1200" height="630"><p class="cmp__note">하단 줄 1040px 중 약 780px 사용.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="q4">
+    <h2 class="sec-head" id="q4"><span class="sec-head__label">목록 썸네일 · 1280px</span></h2>
+    <div class="cmp">
+      <div class="cmp__col"><p class="cmp__label"><b>지금</b> 글마다 수동 로고</p>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-13">2025-08-13</time><span class="cat">infra, oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">Bitnami helm chart open source contribute</a></h3>
+    <p class="post-item__desc">두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+  <img class="post-item__thumb" src="../../../public/images/posts/thumbnails/confluent.png" alt="" width="128" height="67" loading="lazy">
+</article>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-31">2025-08-31</time><span class="cat">infra</span><span>series cilium 1/3</span></p>
+    <h3 class="post-item__title"><a href="post.html">Cilium CNI 알아보기</a></h3>
+    <p class="post-item__desc">VPC CNI와 다른 Cilium CNI에 대해서 알아보자</p>
+    <div class="tags"><a class="tag" href="tag.html">cilium</a></div>
+  </div>
+  <img class="post-item__thumb" src="../../../public/images/posts/thumbnails/cilium.png" alt="" width="128" height="67" loading="lazy">
+</article></div>
+      <div class="cmp__col"><p class="cmp__label"><b>09 A안</b> OG 축소본</p>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-13">2025-08-13</time><span class="cat">infra, oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">Bitnami helm chart open source contribute</a></h3>
+    <p class="post-item__desc">두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/bitnami-helm-chart-contribute.png" alt="" width="128" height="67" loading="lazy">
+</article>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-31">2025-08-31</time><span class="cat">infra</span><span>series cilium 1/3</span></p>
+    <h3 class="post-item__title"><a href="post.html">Cilium CNI 알아보기</a></h3>
+    <p class="post-item__desc">VPC CNI와 다른 Cilium CNI에 대해서 알아보자</p>
+    <div class="tags"><a class="tag" href="tag.html">cilium</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/introduce-cilium-cni.png" alt="" width="128" height="67" loading="lazy">
+</article><p class="cmp__note">128px에서 OG 제목은 약 7px. 옆 제목을 읽을 수 없는 크기로 한 번 더 쓴 것이 된다.</p></div>
+      <div class="cmp__col no-thumb"><p class="cmp__label"><b>추천</b> 목록 썸네일 없음</p>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-13">2025-08-13</time><span class="cat">infra, oss</span></p>
+    <h3 class="post-item__title"><a href="post.html">Bitnami helm chart open source contribute</a></h3>
+    <p class="post-item__desc">두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!</p>
+    <div class="tags"><a class="tag" href="tag.html">kafka</a><a class="tag" href="tag.html">helm</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/bitnami-helm-chart-contribute.png" alt="" width="128" height="67" loading="lazy">
+</article>
+        <article class="post-item" data-category="">
+  <div>
+    <p class="post-item__meta"><time datetime="2025-08-31">2025-08-31</time><span class="cat">infra</span><span>series cilium 1/3</span></p>
+    <h3 class="post-item__title"><a href="post.html">Cilium CNI 알아보기</a></h3>
+    <p class="post-item__desc">VPC CNI와 다른 Cilium CNI에 대해서 알아보자</p>
+    <div class="tags"><a class="tag" href="tag.html">cilium</a></div>
+  </div>
+  <img class="post-item__thumb" src="og/introduce-cilium-cni.png" alt="" width="128" height="67" loading="lazy">
+</article><p class="cmp__note">모바일(640px 미만)은 지금도 썸네일을 숨긴다. 데스크톱도 같게 하면 홈 이미지 요청 14개가 0개가 된다.</p></div>
+    </div>
+  </section>
+</div>
+<script>
+(function(){document.querySelectorAll('[data-measure] .post-item__meta').forEach(function(m){var lh=parseFloat(getComputedStyle(m).lineHeight)||18;m.dataset.lines=Math.round(m.getBoundingClientRect().height/lh);});})();
+</script>
+</main>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>© 2026 comstering</p>
+    <p class="ph-note">점선 밑줄과 점선 테두리는 시안용 예시 값</p>
+    <nav class="site-footer__links" aria-label="외부 링크">
+      <a href="https://github.com/comstering" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (새 창에서 열림)</span></a>
+      <a href="mailto:comstering@gmail.com">email</a>
+      <a href="#rss">rss</a>
+    </nav>
+  </div>
+</footer>
+<div class="palette-backdrop" aria-hidden="true"></div>
+<div class="palette" role="dialog" aria-modal="true" aria-label="사이트 검색">
+  <div class="palette__input-wrap">
+    <span class="palette__prompt" aria-hidden="true">&gt;</span>
+    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="글, 프로젝트, 태그 검색" autocomplete="off" spellcheck="false">
+    <span class="kbd">esc</span>
+  </div>
+  <div class="palette__results" id="palette-results" role="listbox" aria-label="검색 결과"></div>
+  <div class="palette__foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> 이동</span><span><span class="kbd">↵</span> 열기</span><span><span class="kbd">esc</span> 닫기</span></div>
+</div>
+<script src="../system/app.js" defer></script>
+</body>
+</html>
