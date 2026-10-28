@@ -39,10 +39,13 @@ const parsePosts = (): PostSource[] => {
     if (!parsed.success) {
       for (const issue of parsed.error.issues) {
         const hint =
-          issue.code === "unrecognized_keys" &&
-          issue.keys.includes("categories")
-            ? " (categories는 단일 category로 바뀌었습니다)"
-            : "";
+          issue.code !== "unrecognized_keys"
+            ? ""
+            : issue.keys.includes("category")
+              ? " (category는 categories 배열로 바뀌었습니다. 예: categories: [infra])"
+              : issue.keys.includes("updated")
+                ? " (updated 필드는 삭제되었습니다. date만 사용합니다)"
+                : "";
         const field = issue.path.length ? `${issue.path.join(".")}: ` : "";
         issues.push(`${file}: ${field}${issue.message}${hint}`);
       }

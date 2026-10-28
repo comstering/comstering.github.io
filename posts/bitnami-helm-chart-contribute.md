@@ -2,7 +2,7 @@
 title: "Bitnami helm chart open source contribute"
 description: "두번째 오픈소스 기여, 이번엔 크리티컬한 이슈를 수정했다!"
 date: "2025-08-13"
-category: oss
+categories: [infra, oss]
 tags: [kafka, open-source, contribution, helm, schema-registry, kubernetes]
 thumbnail: "confluent.png"
 ---

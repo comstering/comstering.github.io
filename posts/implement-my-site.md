@@ -2,7 +2,7 @@
 title: "개발 블로그 이전하기"
 description: "나만의 블로그 + 포트폴리오 사이트 만들기"
 date: "2025-06-30"
-category: frontend
+categories: [frontend]
 tags: [blog, nextjs, react]
 thumbnail: "next-js.webp"
 ---

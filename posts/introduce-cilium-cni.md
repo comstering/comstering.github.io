@@ -2,7 +2,7 @@
 title: "Cilium CNI 알아보기"
 description: "VPC CNI와 다른 Cilium CNI에 대해서 알아보자"
 date: "2025-08-31"
-category: infra
+categories: [infra]
 tags: [kubernetes, eks, cilium, cni, vpc]
 series: cilium-on-eks
 seriesOrder: 1
