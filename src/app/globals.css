@@ -263,44 +263,161 @@ body {
 .prose .heading-anchor:focus-visible {
   opacity: 1;
 }
-.prose pre {
-  position: relative;
-}
-.code-copy {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  padding: 0.15rem 0.5rem;
+/* 코드 블록: 상단 바(파일명·언어·복사) + 줄 하이라이트 */
+.prose .code {
+  margin-block: 1.5em;
+  overflow: hidden;
   border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--code-bg);
+  color: var(--code-fg);
+}
+.code__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  height: 40px;
+  padding-inline: 14px 4px;
+  border-bottom: 1px solid var(--code-line);
+  background: var(--code-bar);
+  color: color-mix(in srgb, var(--code-fg) 62%, transparent);
+  font: 400 0.75rem var(--font-mono);
+}
+.code__file {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.code__tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.code__lang {
+  padding-inline: 8px;
+  text-transform: lowercase;
+}
+.code__copy {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding-inline: 10px;
   border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--syntax-comment);
-  font: 500 0.7rem var(--font-mono);
+  color: inherit;
+  font: inherit;
   cursor: pointer;
-  opacity: 0;
   transition:
-    opacity 150ms,
     color 150ms,
-    border-color 150ms;
+    background-color 150ms;
 }
-.prose pre:hover .code-copy,
-.code-copy:focus-visible {
-  opacity: 1;
+.code__copy::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
 }
-.code-copy:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+.code__copy svg {
+  width: 14px;
+  height: 14px;
 }
-@media (hover: none) {
-  .code-copy {
-    opacity: 1;
+.code__copy:hover,
+.code__copy:focus-visible {
+  color: var(--code-fg);
+  background: rgb(255 255 255 / 0.06);
+}
+.code__copy[data-copied="true"] {
+  color: var(--syntax-keyword);
+}
+.prose .code pre {
+  margin: 0;
+  padding: 14px 0;
+  overflow-x: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1.7;
+  tab-size: 2;
+}
+.prose .code pre code {
+  display: block;
+  min-width: max-content;
+  padding: 0;
+  background: transparent;
+}
+.code .ln {
+  display: block;
+  padding-inline: 16px;
+  border-left: 1px solid transparent;
+  white-space: pre;
+}
+.code .p {
+  color: var(--syntax-keyword);
+  user-select: none;
+}
+.code .ln--hl {
+  background: var(--code-hl);
+  border-left-color: var(--syntax-keyword);
+}
+@media (max-width: 639px) {
+  .prose .code {
+    margin-inline: calc(var(--gutter, 1rem) * -1);
+    border-radius: 0;
+    border-inline: 0;
   }
 }
+
+/* 콜아웃: 1px 틴트 테두리 + 라벨 (굵은 측면선 금지) */
+.prose .callout {
+  margin-block: 1.5em;
+  padding: 1rem 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+.prose .callout--warn {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
+  background: color-mix(in srgb, var(--warn) 6%, var(--surface));
+}
+.callout__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font: 600 0.75rem var(--font-mono);
+}
+.callout__label svg {
+  width: 14px;
+  height: 14px;
+}
+.callout--warn .callout__label {
+  color: var(--warn);
+}
+.prose .callout > :where(p, ul, ol):not(.callout__label) {
+  margin-block: 0.5em;
+}
+.prose .callout > :last-child {
+  margin-bottom: 0;
+}
+
 .prose :where(img):not(:where([class~="not-prose"] *)) {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
 }
-.prose :where(table):not(:where([class~="not-prose"] *)) {
-  display: block;
+/* 가로 스크롤 표: 더 있는 오른쪽 가장자리만 흐리게 (시안 L2, background local, 그림자 없음) */
+.table-scroll {
   overflow-x: auto;
+  background:
+    linear-gradient(to left, var(--canvas) 40%, transparent) right center / 48px 100%
+      no-repeat local,
+    linear-gradient(to left, color-mix(in srgb, var(--fg) 14%, transparent), transparent)
+      right center / 16px 100% no-repeat scroll;
+}
+.table-scroll > table {
+  margin-block: 0;
 }

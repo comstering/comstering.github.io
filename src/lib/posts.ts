@@ -8,6 +8,8 @@ import rehypeStringify from "rehype-stringify";
 import rehypeHighlight from "rehype-highlight";
 import { common } from "lowlight";
 import { hcl } from "./hljs-hcl";
+import { rehypeCodeMeta } from "./content/rehype-code-meta";
+import { rehypeArticleBlocks } from "./content/rehype-article-blocks";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -129,6 +131,8 @@ export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
       content: { type: "text", value: "#" },
     })
     .use(rehypeHighlight, { detect: true, languages: { ...common, hcl } })
+    .use(rehypeCodeMeta)
+    .use(rehypeArticleBlocks)
     .use(rehypeStringify)
     .use(rehypeExternalLinks, {
       target: "_blank",

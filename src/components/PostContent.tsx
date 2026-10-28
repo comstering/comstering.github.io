@@ -6,7 +6,21 @@ interface PostContentProps {
   html: string;
 }
 
-// 본문 HTML을 렌더링하고 코드 블록마다 복사 버튼을 붙인다.
+const SHELL_LANGS = new Set(["bash", "sh", "shell", "console", "zsh"]);
+
+// 줄 래퍼(.ln)를 합쳐 원문을 복원한다. 셸 블록은 줄 맨 앞 "$ "를 뺀다.
+const rawCode = (block: HTMLElement): string => {
+  const lines = Array.from(block.querySelectorAll("pre .ln")).map(
+    (line) => line.textContent ?? "",
+  );
+  const shell = SHELL_LANGS.has(block.dataset.lang ?? "");
+  return lines
+    .map((line) => (line === " " ? "" : line))
+    .map((line) => (shell ? line.replace(/^\$ /, "") : line))
+    .join("\n");
+};
+
+// 본문 HTML을 렌더링하고 코드 블록의 복사 버튼 클릭을 처리한다.
 export const PostContent = ({ html }: PostContentProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -14,36 +28,38 @@ export const PostContent = ({ html }: PostContentProps) => {
     const root = ref.current;
     if (!root) return;
 
-    const timers = new Set<number>();
-    const buttons: HTMLButtonElement[] = [];
+    const timers = new Map<HTMLElement, number>();
 
-    root.querySelectorAll("pre").forEach((pre) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "code-copy";
-      button.textContent = "copy";
-      button.setAttribute("aria-label", "코드 복사");
-      button.addEventListener("click", async () => {
-        const code = pre.querySelector("code")?.textContent ?? "";
-        try {
-          await navigator.clipboard.writeText(code);
-          button.textContent = "copied";
-        } catch {
-          button.textContent = "failed";
-        }
-        const timer = window.setTimeout(() => {
-          button.textContent = "copy";
-          timers.delete(timer);
-        }, 1600);
-        timers.add(timer);
-      });
-      pre.appendChild(button);
-      buttons.push(button);
-    });
+    const onClick = async (event: MouseEvent) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+        ".code__copy",
+      );
+      const block = button?.closest<HTMLElement>(".code");
+      if (!button || !block) return;
 
+      const label = button.querySelector(".code__copy-label") ?? button;
+      try {
+        await navigator.clipboard.writeText(rawCode(block));
+        label.textContent = "copied";
+        button.dataset.copied = "true";
+      } catch {
+        label.textContent = "failed";
+      }
+      window.clearTimeout(timers.get(button));
+      timers.set(
+        button,
+        window.setTimeout(() => {
+          label.textContent = "copy";
+          delete button.dataset.copied;
+          timers.delete(button);
+        }, 2000),
+      );
+    };
+
+    root.addEventListener("click", onClick);
     return () => {
+      root.removeEventListener("click", onClick);
       timers.forEach((timer) => window.clearTimeout(timer));
-      buttons.forEach((button) => button.remove());
     };
   }, [html]);
 
