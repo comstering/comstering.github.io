@@ -36,6 +36,7 @@
 - UI는 `DESIGN.md` 토큰만 쓴다. hex, `dark:` 색, Tailwind 기본 팔레트(`gray-*` 등)는 `yarn check:tokens`가 실패시킨다. 글 목록은 세로 리스트(카드 그리드 금지)
 - 글: `posts/*.md`(파일명=URL), frontmatter는 `src/lib/content/schema.ts`의 zod가 빌드 때 검증. 태그는 `content/tags.yaml`, 시리즈는 `content/series.yaml`(label 8자 이하)
 - 본문 파이프라인: `src/lib/posts.ts`(remark → rehype). 코드 블록은 `src/lib/content/rehype-code-meta.ts`, 콜아웃·표는 `rehype-article-blocks.ts`, 아이콘은 `hast-icons.ts`. 코드 복사 클릭은 `PostContent.tsx`에서 이벤트 위임
+- **이미지**: 원본은 `public/images`(git), `yarn build`/`yarn dev` 전에 `scripts/optimize-images.mjs`가 sharp로 `public/_img/*.webp`(git 제외)와 `manifest.json`을 만든다. 본문 `<img>`는 `rehype-images.ts`가 변환본·`width`/`height`·lazy·확대 표시를 채우고, `postbuild`(`prune-output.mjs`)가 배포물에서 본문 원본을 뺀다. 새 이미지는 `public/images/posts/contents/<slug>/`에 PNG/JPG로 두면 된다. 변환 방식을 바꾸면 `PIPELINE_VERSION`을 올린다. `thumbnails/`는 변환하지 않는다(PR-15 전까지 og:image)
 - 홈 필터는 `PostsBlock.tsx`(Suspense 폴백이 전체 목록이라 정적 HTML에 14편이 모두 들어간다)
 - 정적 export 제약: 서버 기능·런타임 searchParams 없음. `useSearchParams`는 `<Suspense>` 안에서만
 - 커밋·PR 문체: `feat:/fix:/refactor:/chore:` + 영어 제목, 본문은 한국어. 커밋 끝에 `Co-Authored-By`·`Claude-Session` 줄, PR 본문 끝에 `🤖 Generated with [Claude Code]` + 세션 링크(세션이 알려 주는 값을 쓴다)
@@ -100,6 +101,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 
 - **CSS `font:` 단축 속성에 `var()`를 여러 개 쓰지 않는다.** 빌드 CSS 압축이 `font:400 var(--a),var(--b)`로 쉼표를 끼워 넣어 선언이 통째로 무효가 된다(dev 서버에서는 정상으로 보여 PR 스크린샷으로는 안 잡힌다, PR-12). `font-family`·`font-size`·`font-weight`로 나눠 쓴다. `check:output`이 빌드 CSS에서 이 패턴을 잡는다
 - **화면 확인은 `yarn build` 결과(`out/`)로 한다.** dev 서버와 빌드 CSS가 다를 수 있다
+- **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 
 - macOS `sed -i`는 `sed -i '' 's/…/…/'` 형식이어야 한다. 실패하면 `&&` 뒤 명령이 안 돈다

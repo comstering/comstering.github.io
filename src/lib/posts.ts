@@ -10,6 +10,7 @@ import { common } from "lowlight";
 import { hcl } from "./hljs-hcl";
 import { rehypeCodeMeta } from "./content/rehype-code-meta";
 import { rehypeArticleBlocks } from "./content/rehype-article-blocks";
+import { rehypeImages } from "./content/rehype-images";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -137,6 +138,7 @@ export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
   const processedContent = await remark()
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypeImages)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: "append",
@@ -154,7 +156,7 @@ export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
       target: "_blank",
       rel: "nofollow",
     })
-    .process(source.content);
+    .process({ value: source.content, path: `posts/${id}.md` });
   const contentHtml = processedContent.toString();
 
   return toMetadata(source, contentHtml, extractHeadings(contentHtml));

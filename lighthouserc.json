@@ -7,7 +7,7 @@
         "/posts/bitnami-helm-chart-contribute.html",
         "/about.html"
       ],
-      "numberOfRuns": 1
+      "numberOfRuns": 3
     },
     "assert": {
       "assertions": {
@@ -24,7 +24,7 @@
           }
         ],
         "categories:seo": [
-          "warn",
+          "error",
           {
             "minScore": 1
           }
@@ -36,7 +36,7 @@
           }
         ],
         "cumulative-layout-shift": [
-          "warn",
+          "error",
           {
             "maxNumericValue": 0.05
           }
