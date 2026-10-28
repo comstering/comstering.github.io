@@ -39,6 +39,7 @@
 | [14-thumbnail-decision-request.md](./14-thumbnail-decision-request.md) | **목록 썸네일 최종 결정 요청**: 로고 썸네일로 재확인, 통일안 시험 결과, A·B·C 선택지, 제거 근거 수정 |
 | [15-planning-final-phase1.md](./15-planning-final-phase1.md) | 기획 답변: 목록 썸네일 C안(제거) 확정, PRD-003 approved. 디자인 요청은 R1만 남음 → **완료** |
 | [16-design-answer-filter-flash.md](./16-design-answer-filter-flash.md) | 디자인 답변(개발 Q5): `?category=` 직접 진입 시 전체 목록이 잠깐 보이는 동작 허용, 측정값과 재검토 조건 |
+| [17-design-review-pr9-pr12.md](./17-design-review-pr9-pr12.md) | **머지된 PR-9·PR-12 구현 검토 + Q7 답변.** PR-12 도구 줄의 `font:` 단축 속성이 빌드에서 무효(F1), PR-9는 시안과 일치, 시리즈 박스 "다음 편 링크"는 두지 않음 |
 
 ### 보는 방법
 
@@ -50,4 +51,4 @@
 - PRD 기능 ID(F-PO-03 등)와 문제 ID(P1 등)를 그대로 인용해 추적 가능하게 한다.
 - DESIGN.md에 반영된 항목은 해당 문서에 `✅ 반영됨 (날짜)` 표시.
 
-_최종 갱신: 2026-10-28 (v1.4 확정. R1 반영: 목록 썸네일 제거, PRD-003 approved. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-10-28 (v1.4 확정. PR-9·PR-12 구현 검토는 17번. 현재 상태는 STATUS.md)_
