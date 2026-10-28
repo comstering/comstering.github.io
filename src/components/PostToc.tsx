@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import type { PostHeading } from "@/lib/posts";
-import { cn } from "@/lib/cn";
+import { hasToc } from "@/lib/toc";
 
 interface PostTocProps {
   headings: PostHeading[];
+  /** sticky: 1280px 이상 오른쪽 목차 / inline: 1280px 미만 접이식 목차 */
+  variant: "sticky" | "inline";
 }
 
-export const PostToc = ({ headings }: PostTocProps) => {
+const useActiveHeading = (headings: PostHeading[]) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,30 +33,62 @@ export const PostToc = ({ headings }: PostTocProps) => {
     return () => observer.disconnect();
   }, [headings]);
 
-  if (headings.length < 2) return null;
+  return activeId;
+};
+
+export const PostToc = ({ headings, variant }: PostTocProps) => {
+  const activeId = useActiveHeading(headings);
+  const [open, setOpen] = useState(false);
+
+  if (!hasToc(headings)) return null;
+
+  const list = (
+    <ol className="toc__list">
+      {headings.map(({ id, text, depth }) => (
+        <li key={id} className={depth === 3 ? "lvl-3" : "lvl-2"}>
+          <a
+            href={`#${id}`}
+            aria-current={activeId === id ? "true" : undefined}
+            onClick={() => setOpen(false)}
+          >
+            {text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+
+  if (variant === "inline") {
+    return (
+      <details
+        className="toc-inline"
+        open={open}
+        onToggle={(event) => setOpen(event.currentTarget.open)}
+      >
+        <summary>
+          <span>
+            <span className="toc-inline__long">on this page</span>
+            <span className="toc-inline__short">contents</span>{" "}
+            <span className="num text-mute">{headings.length}</span>
+          </span>
+          <ChevronDown aria-hidden />
+        </summary>
+        <nav className="toc" aria-label="목차">
+          {list}
+        </nav>
+      </details>
+    );
+  }
 
   return (
-    <nav
-      aria-label="목차"
-      className="max-h-[calc(100vh-8rem)] overflow-y-auto border-l border-line pl-4 text-sm"
-    >
-      <p className="mb-3 font-mono text-xs text-mute">on this page</p>
-      <ul className="space-y-2">
-        {headings.map(({ id, text, depth }) => (
-          <li key={id} className={cn(depth === 3 && "pl-3")}>
-            <a
-              href={`#${id}`}
-              aria-current={activeId === id ? "location" : undefined}
-              className={cn(
-                "block break-keep leading-snug transition-colors hover:text-fg",
-                activeId === id ? "text-accent" : "text-mute",
-              )}
-            >
-              {text}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <nav aria-label="목차" className="toc">
+      <p className="toc__label">on this page</p>
+      {list}
+      <p className="toc__top">
+        <a href="#top" className="font-mono text-cap text-mute hover:text-fg">
+          ↑ 맨 위로
+        </a>
+      </p>
     </nav>
   );
 };
