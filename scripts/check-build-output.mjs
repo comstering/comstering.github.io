@@ -2,6 +2,7 @@
 //   1) 모든 글 HTML의 og:image 경로가 out/ 안에 실제로 존재
 //   2) rss.xml / sitemap.xml 이 올바른 XML이고, 항목 수가 발행된 글 수와 일치
 //   3) 산출물에 adsbygoogle 문자열이 없음 (AdSense 제거 유지)
+//   4) 빌드 CSS에 무효가 된 font 단축 속성이 없음 (`font:400 var(--x),var(--y)`)
 import fs from "node:fs";
 import path from "node:path";
 import { XMLValidator } from "fast-xml-parser";
@@ -87,6 +88,19 @@ for (const file of walk(OUT)) {
   }
 }
 
+// 4) CSS 압축이 `font: 400 var(--size) var(--family)`의 var 사이에 쉼표를 끼워 넣으면
+//    선언이 통째로 무효가 된다(PR-12에서 발생). font 단축 대신 font-family/size/weight를 쓴다.
+const BROKEN_FONT = /font:[^;}]*\),\s*var\(/;
+for (const file of walk(OUT)) {
+  if (!file.endsWith(".css")) continue;
+  const match = fs.readFileSync(file, "utf8").match(BROKEN_FONT);
+  if (match) {
+    fail(
+      `${path.relative(OUT, file)}: 무효가 된 font 단축 속성이 있습니다 (${match[0]}). font-family·font-size·font-weight로 나눠 쓰세요`,
+    );
+  }
+}
+
 if (errors.length > 0) {
   console.error(`산출물 검사 실패 (${errors.length}건):`);
   for (const message of errors) console.error(`  - ${message}`);
@@ -96,5 +110,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건`,
+  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상`,
 );
