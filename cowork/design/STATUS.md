@@ -10,7 +10,7 @@ _최종 갱신: 2026-10-28 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 | 디자인 → 기획·개발 열린 요청 | 없음. 기획·개발에서 온 미답변 질문도 없음(Q5는 16번으로 답함) |
 | 지금 막힌 것 | 없음 |
 | 다음 디자인 작업 | 개발 PR이 열리면 구현을 시안과 대조해 검토(아래 "다음 작업") |
-| 저장소 상태 | `cowork/prd`·`cowork/design`을 PR `docs/cowork-prd-design`으로 커밋(머지 대기). `cowork/develop`은 로컬 전용 |
+| 저장소 상태 | `cowork/prd`·`cowork/design`을 PR [#32](https://github.com/comstering/comstering.github.io/pull/32)(`docs/cowork-prd-design`)로 커밋, 머지 대기. `cowork/develop`은 로컬 전용 |
 
 ## 개발 진행 (참고, 원본은 `cowork/develop/STATUS.md`)
 
@@ -52,4 +52,4 @@ _최종 갱신: 2026-10-28 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 | 날짜 | 내용 |
 |---|---|
 | 2026-10-28 | 디자인 검토 시작(PRD 001~003, 디자인 01~13 읽음). 14번 썸네일 최종 결정 요청 작성, 기획이 15번으로 C안 확정. R1 반영: `index/tag/404/project/post/design-system.html`의 썸네일 삭제, `components.css`의 썸네일 규칙·2열 grid 정리, `phase1-compare.html`은 기록용이라 규칙을 파일 안으로 이동. 16번(Q5 답변) 작성. `CONTEXT.md`·`STATUS.md`·`tools/check-site.mjs` 신설. 개발 `REQUESTS.md` Q5를 16번 링크와 함께 closed. "시작 시 읽고, 끝날 때 기록" 규칙을 저장소 `CLAUDE.md`의 "세션별 기록 (cowork)"에 명시(메모리가 아니라 파일에 기록) |
-| 2026-10-28 | `cowork/prd`·`cowork/design`을 `main` 기준 별도 worktree에서 브랜치 `docs/cowork-prd-design`으로 커밋하고 PR. 작업 폴더에서 개발 세션이 PR-12를 진행 중이라 브랜치를 바꾸지 않음. `CLAUDE.md`에 "세션별 기록 (cowork)" 절 추가, 커밋 결정 반영 |
+| 2026-10-28 | `cowork/prd`·`cowork/design`을 `main` 기준 별도 worktree에서 브랜치 `docs/cowork-prd-design`으로 커밋하고 PR #32. 작업 폴더에서 개발 세션이 PR-12를 진행 중이라 브랜치를 바꾸지 않음. `CLAUDE.md`에 "세션별 기록 (cowork)" 절 추가, 커밋 결정 반영 |
