@@ -23,7 +23,17 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37·#38 · 기
    - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
    - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
 4. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
-5. 열린 질문: Q9(남은 건 글꼴 서브셋), **Q10(디자인 20번, 낮은 우선순위 2건: 목록 링크 범위·`SectionHead` 굵기)**, Q11(성능 게이트 문구, 기획)
+5. 열린 질문: Q9(남은 건 글꼴 서브셋), Q11(성능 게이트 문구, 기획)
+
+## Q10 디자인 20번 반영 (#43)
+
+| # | 요청 | 처리 |
+| --- | --- | --- |
+| F1 | 목록·관련 글 링크 이름을 제목만으로(136~176자 → 제목), 클릭은 행 전체 | `PostListItem`: 링크를 `h3` 안으로, `::before`로 행 전체를 덮음, 행 `article`에 `has-[a:focus-visible]` 포커스 링(시안 `.post-item:has(a:focus-visible)`). 홈·404·관련 글 모두 공용이라 한 번에 바뀜 |
+| F2 | `SectionHead` 라벨 굵기 700 | `font-normal` → `font-bold`(`//`는 400 유지) |
+| 부수 | 전역 `:focus-visible`이 레이어 밖이라 Tailwind `outline-none`이 안 먹음 | `.post-link:focus-visible { outline: none }`을 `globals.css`에 추가(행에만 링을 그린다) |
+
+설명 `<p>`는 링크의 `::before`에 덮여서 Playwright `click()`이 "가로챈다"며 기다린다. E2E는 좌표(`mouse.click`)로 누른다.
 
 ## Q9 디자인 답변 반영 (design/19번, #41)
 

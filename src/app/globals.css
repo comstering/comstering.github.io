@@ -143,6 +143,11 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+/* 목록 항목은 링크가 아니라 행 전체(article)에 포커스 링을 그린다(시안 .post-item:has(a:focus-visible)).
+   전역 :focus-visible은 레이어 밖이라 Tailwind 유틸리티(outline-none)보다 우선하므로 여기서 끈다 */
+.post-link:focus-visible {
+  outline: none;
+}
 
 ::selection {
   background: var(--accent);
