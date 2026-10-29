@@ -3,6 +3,7 @@
 //   2) rss.xml / sitemap.xml 이 올바른 XML이고, 항목 수가 발행된 글 수와 일치
 //   3) 산출물에 adsbygoogle 문자열이 없음 (AdSense 제거 유지)
 //   4) 빌드 CSS에 무효가 된 font 단축 속성이 없음 (`font:400 var(--x),var(--y)`)
+//   5) 글 본문 이미지가 모두 변환본(/_img)이고 파일이 있으며 200KB 이하, width·height 지정 (G1-5)
 import fs from "node:fs";
 import path from "node:path";
 import { XMLValidator } from "fast-xml-parser";
@@ -101,6 +102,36 @@ for (const file of walk(OUT)) {
   }
 }
 
+// 5) 본문 이미지(G1-5): 원본(/images/posts/contents) 대신 변환본, 용량·크기 속성 확인
+const MAX_IMAGE_BYTES = 200 * 1024;
+let imageCount = 0;
+for (const file of postFiles) {
+  const html = read("posts", file);
+  const start = html.indexOf('class="prose');
+  const article = html.slice(start, html.indexOf("<footer", start));
+  for (const [tag] of article.matchAll(/<img\b[^>]*>/g)) {
+    const src = tag.match(/\ssrc="([^"]+)"/)?.[1];
+    if (!src || !src.startsWith("/")) continue;
+    imageCount += 1;
+    const where = `posts/${file}: ${src}`;
+    if (src.startsWith("/images/posts/contents/")) {
+      fail(`${where}: 변환본(/_img)이 아니라 원본을 쓰고 있습니다`);
+      continue;
+    }
+    const imagePath = path.join(OUT, decodeURIComponent(src));
+    if (!fs.existsSync(imagePath)) {
+      fail(`${where}: 이미지 파일이 없습니다`);
+      continue;
+    }
+    if (src.startsWith("/_img/") && fs.statSync(imagePath).size > MAX_IMAGE_BYTES) {
+      fail(`${where}: ${Math.round(fs.statSync(imagePath).size / 1024)}KB로 200KB를 넘습니다`);
+    }
+    if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag)) {
+      fail(`${where}: width·height 속성이 없습니다 (레이아웃 이동 방지)`);
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(`산출물 검사 실패 (${errors.length}건):`);
   for (const message of errors) console.error(`  - ${message}`);
@@ -110,5 +141,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상`,
+  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하`,
 );

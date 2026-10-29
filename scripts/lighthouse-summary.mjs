@@ -31,14 +31,28 @@ if (reports.length === 0) {
 }
 
 const mark = (ok) => (ok ? "✅" : "⚠️");
-const score = (report, key) => {
-  const value = report.categories[key]?.score;
+const median = (values) => {
+  const sorted = values.filter((v) => v != null).sort((a, b) => a - b);
+  if (sorted.length === 0) return null;
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
+// 같은 페이지를 여러 번 잰 결과는 중앙값으로 합친다(CI 서버에서 한 번 재면 점수가 크게 흔들린다)
+const byPage = new Map();
+for (const report of reports) {
+  const page = new URL(report.finalDisplayedUrl ?? report.requestedUrl).pathname;
+  byPage.set(page, [...(byPage.get(page) ?? []), report]);
+}
+
+const score = (runs, key) => {
+  const value = median(runs.map((report) => report.categories[key]?.score));
   if (value == null) return "-";
   const min = minScore(key);
   return `${Math.round(value * 100)} ${min == null ? "" : mark(value >= min)}`.trim();
 };
-const metric = (report, id, format) => {
-  const value = report.audits[id]?.numericValue;
+const metric = (runs, id, format) => {
+  const value = median(runs.map((report) => report.audits[id]?.numericValue));
   if (value == null) return "-";
   const max = maxValue(id);
   return `${format(value)} ${max == null ? "" : mark(value <= max)}`.trim();
@@ -46,16 +60,13 @@ const metric = (report, id, format) => {
 const seconds = (ms) => `${(ms / 1000).toFixed(1)}s`;
 const shift = (value) => value.toFixed(3);
 
-const rows = reports
-  .map((report) => ({
-    page: new URL(report.finalDisplayedUrl ?? report.requestedUrl).pathname,
-    report,
-  }))
-  .sort((a, b) => a.page.localeCompare(b.page))
+const rows = [...byPage.entries()]
+  .sort(([a], [b]) => a.localeCompare(b))
   .map(
-    ({ page, report }) =>
-      `| \`${page}\` | ${score(report, "performance")} | ${score(report, "accessibility")} | ${score(report, "best-practices")} | ${score(report, "seo")} | ${metric(report, "largest-contentful-paint", seconds)} | ${metric(report, "cumulative-layout-shift", shift)} |`,
+    ([page, runs]) =>
+      `| \`${page}\` | ${score(runs, "performance")} | ${score(runs, "accessibility")} | ${score(runs, "best-practices")} | ${score(runs, "seo")} | ${metric(runs, "largest-contentful-paint", seconds)} | ${metric(runs, "cumulative-layout-shift", shift)} |`,
   );
+const runCount = Math.max(...[...byPage.values()].map((runs) => runs.length));
 
 const goal = [
   minScore("performance") != null &&
@@ -80,8 +91,8 @@ fs.writeFileSync(
 | --- | --- | --- | --- | --- | --- | --- |
 ${rows.join("\n")}
 
-목표: ${goal}. ⚠️는 목표 미달이고 지금은 경고만 해요(이미지 작업 PR-14 이후 실패로 전환).
-CI 서버 한 번 측정값이라 점수가 조금씩 흔들려요. 상세 리포트는 이 실행의 아티팩트 \`e2e-lighthouse-reports\`에 있어요.
+목표: ${goal}. ⚠️는 목표 미달이에요. SEO는 목표를 못 지키면 CI가 실패하고, 나머지는 아직 경고만 해요(글꼴 로딩 문제, REQUESTS Q9).
+페이지마다 ${runCount}번 잰 중앙값이에요(CI 서버라 그래도 조금씩 흔들려요). 상세 리포트는 이 실행의 아티팩트 \`e2e-lighthouse-reports\`에 있어요.
 `,
 );
 console.log(`요약을 ${outFile}에 썼습니다 (${reports.length}개 리포트)`);

@@ -649,3 +649,102 @@ body {
 .post-tools > :only-child {
   grid-column: 1 / -1;
 }
+
+/* 이미지 확대: 변환본이 본문 폭보다 넓은 이미지에만 .zoomable (디자인 12번 E3, 시안 dialog.lightbox) */
+.prose img.zoomable {
+  cursor: zoom-in;
+}
+.prose img.zoomable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.prose figure {
+  margin-inline: 0;
+}
+.prose figcaption {
+  color: var(--mute);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+}
+dialog.lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 1.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  cursor: zoom-out;
+}
+dialog.lightbox[open] {
+  display: grid;
+  place-items: center;
+}
+dialog.lightbox::backdrop {
+  background: var(--overlay);
+}
+.lightbox__fig {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  cursor: default;
+}
+.lightbox__fig img {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1440px);
+  max-height: calc(100vh - 120px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.lightbox__fig figcaption {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+}
+.lightbox__fig figcaption:empty {
+  display: none;
+}
+.lightbox__close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: var(--tap);
+  height: var(--tap);
+  border: 1px solid var(--line-strong);
+  border-radius: 9999px;
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+}
+.lightbox__close svg {
+  width: 18px;
+  height: 18px;
+}
+.lightbox__close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.lightbox[open] .lightbox__fig {
+    animation: lb-in var(--dur) var(--ease);
+  }
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+}

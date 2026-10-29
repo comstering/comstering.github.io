@@ -25,6 +25,12 @@ jobs:
       - name: Package Install
         run: yarn install
 
+      - name: Cache optimized images
+        uses: actions/cache@v4
+        with:
+          path: public/_img
+          key: img-${{ hashFiles('public/images/**', 'scripts/optimize-images.mjs') }}
+
       - name: Build
         run: yarn build
 
