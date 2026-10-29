@@ -7,19 +7,33 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37·#38 · 기
 | 단계 | 상태 |
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
-| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 머지, PR-13 머지, PR-14 리뷰 대기, 나머지 대기 |
+| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9·10·11 완료, PR-12 머지, PR-13 머지, PR-14 머지, 접근성 수정 리뷰 대기, 나머지 대기 |
 | 지금 막힌 것 | 없음. 기획(PRD-003 approved)·디자인(v1.4, 썸네일 C안)이 확정돼 PR-9 바로 시작 가능 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
-1. `gh pr list`로 #37(font 수정)·#38(PR-14) 머지 여부 확인. **#38은 #37 위에 쌓여 있어 #37을 먼저 머지한다.** 머지됐으면 `git checkout main && git pull`(`would be overwritten`으로 막히면 미추적 파일이 머지본과 같은지 비교하고 백업으로 옮긴 뒤 pull, 삭제는 하지 않는다)
-2. **PR-15 OG 이미지 자동 생성** (`cowork/prd/003_blog_reading-experience.md` PR-15 절, 디자인 12번 E4~E6, 시안 `site/og.html`·`og-render.html`)
+1. `gh pr list`로 #41(Q9 접근성 수정) 머지 여부 확인. 머지됐으면 `git checkout main && git pull`(tracked 변경이 있으면 `git stash` 후 pull, `stash pop` 충돌은 두 쪽을 모두 남긴다. `git stash -u` 금지)
+2. **글꼴 서브셋 PR (Q9 ①, 디자인 19번 1.3)** — 디자인이 요청했고 설치할 도구를 정해야 해서 사용자 확인이 필요하다
+   - 빌드 때 `posts/`·`content/`·`src/`의 글자를 모아 Pretendard Variable(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`, 2.06MB)을 `wght 400–700` 단일 woff2(약 102KB)로 서브셋, 자체 호스팅, `font-display: swap`, **preload 없음**
+   - 도구 후보: `fonttools`(`pyftsubset`, 디자인이 시험함) vs Node 패키지(`subset-font` 등, PR-15 OG 글꼴 서브셋과 로직 공유 가능). 새 의존성이라 설치 전에 사용자에게 알린다
+   - 효과: 글꼴 요청 12~17개 → 2개, 272~370KB → 141KB. **FCP·LCP는 그대로**(디자인 측정). CLS는 미검증이라 적용 PR에서 CI Lighthouse About CLS 3회 중앙값을 확인해 STATUS에 적는다(0.05 이하면 CLS를 error로)
+   - 한계: 사용자가 검색창에 입력하는 글자처럼 서브셋에 없는 글자는 시스템 글꼴로 보인다
+3. **PR-15 OG 이미지 자동 생성** (PRD-003 PR-15 절, 디자인 12번 E4~E6, 시안 `site/og.html`·`og-render.html`)
    - **첫 단계는 PoC**: Next.js `opengraph-image.tsx` + `generateStaticParams`가 정적 export에서 동작하는지 확인. 안 되면 satori + resvg 빌드 스크립트로 `public/_og/<slug>.png`
-   - 디자인: 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음). PNG(E5), 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(E6, woff2 불가, 한글은 제목 글자만 서브셋)
-   - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다(`public/images/posts/thumbnails/`는 본문에서 안 쓰는 것만 삭제). 홈·About용 사이트 OG도 같은 방식
-   - 새 의존성(satori, @resvg/resvg-js 등)이 필요하다. 설치 전 사용자에게 알린다
-3. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
-4. 기획 답변 반영 완료(Q4·Q6, 2026-10-29): 기존 글에 콜아웃·셸 프롬프트 소급 적용 없음, G1-4는 "첫 본문 블록이 첫 화면 안에서 시작"으로 기준 변경(E2E 반영, 별도 PR). 열린 질문: Q9(성능 게이트 G1-1·G1-2가 이미지 작업 뒤에도 미달 — 기획·디자인 판단 필요)
+   - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
+   - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
+4. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
+5. 열린 질문: Q9(남은 건 글꼴 서브셋), Q10(성능 게이트 문구, 기획)
+
+## Q9 디자인 답변 반영 (design/19번, #41)
+
+| # | 요청 | 처리 |
+| --- | --- | --- |
+| ② | 칩 숫자 `opacity-60` 제거(대비 3.05:1 → 6.53:1) | 완료. `PostsBlock.tsx` |
+| ③ | 복사 버튼 `aria-label` 제거(보이는 글자 `copy`와 이름 일치, WCAG 2.5.3) | 완료. `rehype-code-meta.ts`, E2E 이름 검사를 `copy`로 |
+| ④ | About 항목 제목 `h4` → `h3`(h2 바로 아래 h4 건너뜀) | 완료. `ActivityCard`(활동·기타 경력에 쓰임)와 자격증 카드. 시각 변화 없음. 전 페이지 제목 단계 E2E 추가(홈·About·글 2편) |
+| 결과 | 접근성 | 로컬 Lighthouse 3페이지 모두 **100**(About 98→100, 홈 96→100). 그래서 `lighthouserc.json`의 접근성을 `error`로 올렸다. 리눅스 CI 결과는 PR의 CI에서 확인 |
+| ① | 글꼴 서브셋 | **미착수**(다음 작업 2번) |
 
 ## 기획 답변 반영 (2026-10-29)
 

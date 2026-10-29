@@ -14,7 +14,7 @@ test("코드 블록: 파일명·줄 하이라이트를 보여 주고 복사본�
   await expect(block.locator(".ln--hl")).toContainText("reservedENIs");
 
   const expected = (await block.locator(".ln").allTextContents()).join("\n");
-  await block.getByRole("button", { name: "코드 복사" }).click();
+  await block.getByRole("button", { name: /^copy/ }).click();
   await expect(block.locator(".code__copy")).toHaveText("copied");
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
     expected,
@@ -23,9 +23,11 @@ test("코드 블록: 파일명·줄 하이라이트를 보여 주고 복사본�
 
 test("코드 복사 버튼은 키보드로 누를 수 있다", async ({ page }) => {
   await page.goto(POST);
+  // 이름이 보이는 글자(copy → copied)를 따라 바뀌므로 클래스로 잡는다
   const button = page
     .locator(".code", { hasText: "reservedENIs" })
-    .getByRole("button", { name: "코드 복사" });
+    .locator(".code__copy");
+  await expect(button).toHaveAccessibleName("copy");
   await button.focus();
   await page.keyboard.press("Enter");
   await expect(button).toHaveText("copied");
@@ -46,7 +48,7 @@ test("셸 블록은 복사할 때 줄 맨 앞 '$ '를 뺀다", async ({ page }) 
   });
   await page
     .locator('.code[data-lang="bash"]')
-    .getByRole("button", { name: "코드 복사" })
+    .getByRole("button", { name: /^copy/ })
     .click();
   const copied = await page.evaluate(() => navigator.clipboard.readText());
   expect(copied.split("\n").slice(0, 2)).toEqual([

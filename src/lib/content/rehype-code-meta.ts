@@ -126,7 +126,6 @@ export const rehypeCodeMeta = () => (tree: Root) => {
           {
             type: "button",
             className: ["code__copy"],
-            ariaLabel: "코드 복사",
           },
           [
             copyIcon(),
