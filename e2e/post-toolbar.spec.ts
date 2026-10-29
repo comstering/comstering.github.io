@@ -15,24 +15,17 @@ const slugs = fs
 
 const isMobile = (width?: number) => (width ?? 1280) < 640;
 
-// 글 도입부(첫 h2 앞 본문)가 길어서 첫 h2가 640px 밖에 있는 글. 도구 줄 때문이 아니라 글 내용 때문이다.
-// 기획에 확인 요청 중이다(cowork/develop/REQUESTS.md Q6). 줄이거나 도입부를 고치면 이 목록에서 뺀다.
-const LONG_INTRO = ["2025-retrospective-2026-resolutions", "implement-my-site"];
-
-test("G1-4: 360×640에서 첫 h2가 첫 화면(640px) 안에 있다 (긴 도입부 글 제외)", async ({
+// G1-4 (2026-10-29 기획 Q6): 모든 글의 첫 본문 블록(첫 문단 또는 첫 h2)이 360×640 첫 화면 안에서 시작한다.
+// 첫 h2 앞에 서문이 있는 글은 서문이 곧 본문이므로 서문의 시작을 잰다.
+test("G1-4: 360×640에서 모든 글의 첫 본문 블록이 첫 화면(640px) 안에서 시작한다", async ({
   page,
 }) => {
   test.skip(!isMobile(page.viewportSize()?.width), "모바일 뷰포트에서만 측정");
   for (const slug of slugs) {
     await page.goto(`/posts/${slug}`);
-    const box = await page.locator(".prose h2").first().boundingBox();
+    const box = await page.locator(".prose > *").first().boundingBox();
     expect(box, slug).not.toBeNull();
-    if (LONG_INTRO.includes(slug)) {
-      // 예외 목록이 낡지 않게: 예외 글이 기준을 만족하게 되면 목록에서 빼라고 알린다.
-      expect(box!.y, `${slug}: 이제 640px 안이면 LONG_INTRO에서 빼세요`).toBeGreaterThan(640);
-    } else {
-      expect(box!.y, `${slug} 첫 h2 위치`).toBeLessThanOrEqual(640);
-    }
+    expect(box!.y, `${slug} 첫 본문 블록 위치`).toBeLessThanOrEqual(640);
   }
 });
 
