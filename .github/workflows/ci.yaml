@@ -58,7 +58,7 @@ jobs:
       - name: E2E
         run: yarn test:e2e
 
-      # PRD-003 PR-10·14: SEO만 error(통과 중). 성능·접근성·LCP·CLS는 글꼴 로딩 문제(Q9)로 목표 미달이라 warn. lighthouserc.json 참고
+      # PRD-003 PR-10·14: SEO·접근성은 error(통과 중). 성능·LCP·CLS는 아직 목표 미달이라 warn(Q9). lighthouserc.json 참고
       - name: Lighthouse CI
         run: yarn lhci
 

@@ -18,7 +18,7 @@
           }
         ],
         "categories:accessibility": [
-          "warn",
+          "error",
           {
             "minScore": 1
           }

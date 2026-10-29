@@ -37,10 +37,10 @@ export const ActivityCard = ({
           {type}
         </span>
       </div>
-      <h4 className="mt-5 text-item font-semibold leading-snug text-fg transition-colors group-hover:text-accent">
+      <h3 className="mt-5 text-item font-semibold leading-snug text-fg transition-colors group-hover:text-accent">
         {title}
         {link && <span className="sr-only"> (새 창에서 열림)</span>}
-      </h4>
+      </h3>
       <p className="mt-1 font-mono text-cap text-mute tabular-nums">{period}</p>
       <p className="mt-3 text-small leading-relaxed text-mute">{description}</p>
       {tags.length > 0 && (

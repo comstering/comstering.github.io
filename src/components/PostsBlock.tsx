@@ -137,7 +137,7 @@ const PostsView: React.FC<PostsViewProps> = ({ posts, selected, onSelect }) => {
             selected={selected === name}
             onClick={() => onSelect(name)}
           >
-            {name} <span className="opacity-60">{count}</span>
+            {name} <span>{count}</span>
           </Chip>
         ))}
       </div>

@@ -56,6 +56,13 @@
 
 기록 위치는 이 폴더(`cowork/develop`)다. 기획·디자인 문서(`cowork/prd`, `cowork/design`)는 그쪽 세션이 쓴다. 개발은 거기서 읽기만 하고 필요한 요청은 REQUESTS.md에 적는다.
 
+## 4.6 접근성 규칙 (디자인 19번 Q9)
+
+- 글자색을 `opacity`로 낮추지 않는다. 토큰(`text-mute` 등)을 쓴다(대비 4.5:1). 장식(`aria-hidden`)은 예외
+- 버튼의 접근 가능한 이름은 **보이는 글자를 포함**한다. 보이는 글자와 다른 `aria-label`을 붙이지 않는다(WCAG 2.5.3)
+- 제목 단계를 건너뛰지 않는다(h2 다음 h4 금지). 시각 크기는 클래스로 정하고 태그는 구조대로 쓴다
+- `e2e/accessibility.spec.ts`가 위 규칙을 검사한다. Lighthouse 접근성 100은 CI에서 `error`
+
 ## 5. PR 작업 흐름 (반드시 이 순서)
 
 1. `git checkout main && git pull`, 새 브랜치 `feat/<주제>`. 이전 PR이 머지되기 전에는 그 브랜치 위에서 이어 가지 않는다(파일이 겹침)

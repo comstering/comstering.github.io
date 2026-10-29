@@ -475,9 +475,9 @@ const About = () => {
             >
               <Award aria-hidden className="mt-0.5 h-6 w-6 shrink-0 text-mute" />
               <div>
-                <h4 className="font-semibold leading-snug text-fg">
+                <h3 className="font-semibold leading-snug text-fg">
                   {cert.title}
-                </h4>
+                </h3>
                 <p className="mt-1 text-small text-mute">{cert.issuer}</p>
                 <p className="mt-1 font-mono text-cap text-mute">{cert.date}</p>
               </div>
