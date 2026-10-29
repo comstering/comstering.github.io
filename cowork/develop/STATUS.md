@@ -23,7 +23,7 @@ _최종 갱신: 2026-10-28 · 기준 커밋 `3db7a98`(main) + PR #37·#38 · 기
    - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
    - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
 4. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
-5. 열린 질문: Q9(남은 건 글꼴 서브셋), Q11(성능 게이트 문구, 기획)
+5. 열린 질문: Q9(남은 건 글꼴 서브셋), **Q11(성능 게이트, 기획 결정 대기. 근거·선택지·결정 요청 6건은 [briefs/Q11-performance-gate.md](./briefs/Q11-performance-gate.md))**. 기획이 O2(관측 측정)를 고르면 `lighthouserc.json`에 `throttlingMethod: devtools`를 넣고 CI 3회 중앙값으로 안정성 확인 후 성능·LCP를 `error`로
 
 ## Q10 디자인 20번 반영 (#43)
 
