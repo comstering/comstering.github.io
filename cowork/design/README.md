@@ -40,6 +40,7 @@
 | [15-planning-final-phase1.md](./15-planning-final-phase1.md) | 기획 답변: 목록 썸네일 C안(제거) 확정, PRD-003 approved. 디자인 요청은 R1만 남음 → **완료** |
 | [16-design-answer-filter-flash.md](./16-design-answer-filter-flash.md) | 디자인 답변(개발 Q5): `?category=` 직접 진입 시 전체 목록이 잠깐 보이는 동작 허용, 측정값과 재검토 조건 |
 | [17-design-review-pr9-pr12.md](./17-design-review-pr9-pr12.md) | **머지된 PR-9·PR-12 구현 검토 + Q7 답변.** PR-12 도구 줄의 `font:` 단축 속성이 빌드에서 무효(F1), PR-9는 시안과 일치, 시리즈 박스 "다음 편 링크"는 두지 않음 |
+| [19-design-answer-q9-font-a11y.md](./19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
 
 ### 보는 방법
 
@@ -51,4 +52,4 @@
 - PRD 기능 ID(F-PO-03 등)와 문제 ID(P1 등)를 그대로 인용해 추적 가능하게 한다.
 - DESIGN.md에 반영된 항목은 해당 문서에 `✅ 반영됨 (날짜)` 표시.
 
-_최종 갱신: 2026-10-28 (v1.4 확정. PR-9·PR-12 구현 검토는 17번. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-10-29 (v1.4 확정. Q9 답변은 19번. 현재 상태는 STATUS.md)_
