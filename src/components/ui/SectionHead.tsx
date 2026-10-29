@@ -12,12 +12,12 @@ export const SectionHead = ({ id, children, className }: SectionHeadProps) => (
   <h2
     id={id}
     className={cn(
-      "flex items-center gap-3 font-mono text-meta font-normal text-mute after:h-px after:flex-1 after:bg-line",
+      "flex items-center gap-3 font-mono text-meta font-bold text-mute after:h-px after:flex-1 after:bg-line",
       className,
     )}
   >
     <span className="text-fg">
-      <span aria-hidden className="text-mute">
+      <span aria-hidden className="font-normal text-mute">
         {"// "}
       </span>
       {children}

@@ -112,6 +112,9 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **화면 확인은 `yarn build` 결과(`out/`)로 한다.** dev 서버와 빌드 CSS가 다를 수 있다
 - **`sharp`는 0.33.5로 고정한다(`--exact`).** Next.js가 자체로 `sharp@^0.33.5`를 선택 의존성으로 가져와서, 새 버전(0.35.x)을 같이 설치하면 libvips 버전 두 개가 한 `node_modules/@img` 아래 섞여 **리눅스 CI에서만** `libvips-cpp.so: cannot open shared object file`로 빌드가 실패한다(맥에서는 통과해서 PR #38 첫 CI가 실패함). 올리려면 Next가 쓰는 버전과 함께 올릴 때 리눅스 CI로 확인한다
 - **CI에서만 나오는 문제가 있다.** 리눅스 CI Lighthouse는 맥 로컬과 글꼴·CPU가 달라 CLS가 다르게 나온다(About 로컬 0 vs CI 0.125). Lighthouse 단계를 `error`로 올리기 전에 CI 결과를 본다. 리포트는 아티팩트 `e2e-lighthouse-reports`(`.lighthouseci`)에서 받는다(`gh run download <run> -n e2e-lighthouse-reports`)
+- **전역 `:focus-visible`(globals.css)은 Tailwind 레이어 밖이라 `outline-none` 유틸리티가 안 먹는다.** 포커스 링을 끄려면 `globals.css`에 일반 CSS 규칙(예: `.post-link:focus-visible`)을 추가한다
+- **링크가 `::before`로 행 전체를 덮으면** Playwright `locator.click()`이 대상이 가로채였다며 30초를 기다린다. 좌표(`page.mouse.click`)로 누른다
+- **여러 세션이 같은 문서(REQUESTS.md)에 질문 번호를 붙이면 충돌한다.** 새 번호를 쓰기 전에 `git fetch` 후 `origin/main`의 마지막 번호를 확인한다
 - **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 
