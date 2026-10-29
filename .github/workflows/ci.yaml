@@ -91,6 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: e2e-lighthouse-reports
+          include-hidden-files: true # .lighthouseci는 점으로 시작해서 기본으로는 올라가지 않는다
           path: |
             playwright-report
             .lighthouseci
