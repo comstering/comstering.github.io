@@ -58,7 +58,7 @@ jobs:
       - name: E2E
         run: yarn test:e2e
 
-      # PRD-003 PR-10·14: SEO·접근성은 error(통과 중). 성능·LCP·CLS는 아직 목표 미달이라 warn(Q9). lighthouserc.json 참고
+      # PRD-003 "성능 측정 기준"(Q12, 2026-10-30): 실제 Chrome 관측(devtools throttling), 3회 중앙값. 접근성·SEO는 error, 성능·LCP·CLS·TBT 차단선은 PR-17부터 error(지금은 warn). lighthouserc.json의 assertMatrix 참고
       - name: Lighthouse CI
         run: yarn lhci
 
