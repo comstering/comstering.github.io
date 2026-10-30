@@ -17,7 +17,7 @@ jobs:
   quality:
     name: Quality
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15 # 관측 Lighthouse(약 4분)와 Playwright 의존성 설치(최대 4분)가 겹치면 10분에 근접한다
 
     steps:
       - name: Checkout
