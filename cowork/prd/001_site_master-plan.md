@@ -12,6 +12,9 @@ changelog:
   - 2026-10-27 v1.2 사용자 결정 반영: 카테고리 infra/backend/frontend/oss/note, AdSense 제거(추후 재논의), 공개 범위 기준, 회사 성과와 개인 실습 글 구분
   - 2026-10-27 v1.3 작성자 직무 명시, F-PO-06 관련 글 규칙 보완, F-SE-02 OG 자동 생성을 Phase 1로 당김(목록 썸네일 겸용), 우선순위(P0~P2)와 Phase 관계 명시
   - 2026-10-27 v1.4 Phase 1 결정 반영: categories 배열(최대 2개), `updated` 필드 삭제(작성 날짜 `date`만 사용)
+  - 2026-10-30 v1.8 Phase 2를 About 강화로 축소: /projects 목록·상세(F-PJ-02·03) 보류, 헤더 projects 메뉴 없음 (PRD-004)
+  - 2026-10-30 v1.7 성능 기준을 실제 Chrome 관측 기준으로 변경 (개발 Q12)
+  - 2026-10-29 v1.6 성능 품질 기준을 PRD-003 "성능 측정 기준"(차단/목표/데스크톱)으로 교체 (개발 Q11)
   - 2026-10-28 v1.5 categories 대표 없음(고정 순서 표시), 목록 썸네일 제거, `thumbnail` 필드는 Phase 1 PR-15에서 삭제
 ---
 
@@ -41,7 +44,7 @@ changelog:
 | G1 | 채용 담당자가 핵심 역량을 빠르게 파악 | About/Projects 페이지 평균 체류 60초 이상, 이력서 PDF 다운로드 수 |
 | G2 | 검색 유입으로 기술 독자 확보 | 월 오가닉 유입 세션(GoatCounter·Search Console), 색인된 글 비율 100% |
 | G3 | 꾸준한 발행 습관 | 월 2편 이상 발행, 초안→발행 소요 시간 단축 |
-| G4 | 품질 기준 유지 | 모든 페이지 Lighthouse 성능·접근성·SEO 95점 이상 |
+| G4 | 품질 기준 유지 | 모든 측정 페이지가 PRD-003 "성능 측정 기준" 차단선 통과, 접근성·SEO 100 |
 
 ### 1.3 타깃 사용자
 
@@ -196,8 +199,8 @@ flowchart TD
 | ID | 기능 | 요구사항 | 우선 |
 | --- | --- | --- | --- |
 | F-PJ-01 | 데이터 분리 | About의 하드코딩된 프로젝트를 `content/projects/*.md`(또는 `.yaml`)로 이전. 필드: title, slug, period, company, role, stack[], summary, impact[], featured, relatedPosts[] | P0 |
-| F-PJ-02 | 목록 | 최신순 세로 리스트. 항목 = 기간·회사(모노) / 제목 / 한 줄 성과(숫자 1개 강조) / 스택 칩. 스택 필터(Kubernetes, Kafka, Terraform 등) | P0 |
-| F-PJ-03 | 상세 `/projects/[slug]` | 문제 → 접근 → 아키텍처(다이어그램) → 결과(수치) → 배운 점 구조(STAR). 관련 블로그 글 링크. **회사 성과와 개인 실습 글을 구분한다:** 블로그 EKS 글은 개인 EKS에서 재현·정리한 것이라 회사 프로젝트 수치(예: Pod IP 500 → 16,000)와 다르다. 회사 프로젝트 페이지의 다이어그램과 수치는 회사 기준(About)으로만 쓰고, 블로그 글은 "같은 기술을 개인 환경에서 다룬 글"로 표기해 연결한다. 프로젝트 데이터에 `relatedPosts[].context: personal \| work` 필드를 둔다 | P1 |
+| F-PJ-02 | 목록 | 최신순 세로 리스트. 항목 = 기간·회사(모노) / 제목 / 한 줄 성과(숫자 1개 강조) / 스택 칩. 스택 필터(Kubernetes, Kafka, Terraform 등) | 보류 (2026-10-30, PRD-004 C안) |
+| F-PJ-03 | 상세 `/projects/[slug]` | 문제 → 접근 → 아키텍처(다이어그램) → 결과(수치) → 배운 점 구조(STAR). 관련 블로그 글 링크. **회사 성과와 개인 실습 글을 구분한다:** 블로그 EKS 글은 개인 EKS에서 재현·정리한 것이라 회사 프로젝트 수치(예: Pod IP 500 → 16,000)와 다르다. 회사 프로젝트 페이지의 다이어그램과 수치는 회사 기준(About)으로만 쓰고, 블로그 글은 "같은 기술을 개인 환경에서 다룬 글"로 표기해 연결한다. 프로젝트 데이터에 `relatedPosts[].context: personal \| work` 필드를 둔다 | 보류 (2026-10-30, PRD-004 C안) |
 | F-PJ-04 | 오픈소스 기여 | Kafbat UI, Bitnami Helm Chart 등 PR 링크·상태(merged) 목록 | P1 |
 | F-PJ-05 | 사내 정보 검토 | **결정(2026-10-27): 현재 블로그와 About에 공개된 내용은 공개 문제 없음.** 그 범위 안의 수치·구성은 그대로 써도 된다. 블로그·About에 없던 새 사내 정보(내부 수치, 회사 환경의 CIDR·계정·도메인, 사내 아키텍처 그림)를 추가할 때만 작성자 확인을 거친다 | P0 |
 
@@ -261,10 +264,10 @@ flowchart TD
 
 | 항목 | 목표 | 측정 |
 | --- | --- | --- |
-| Lighthouse 성능 (모바일) | ≥ 95 | Lighthouse CI, 홈·글 상세·About 3페이지 |
-| Lighthouse 접근성 / 모범사례 / SEO | 100 / ≥ 95 / 100 | Lighthouse CI |
-| LCP | ≤ 2.0s (모바일 4G) | Lighthouse, CrUX |
-| CLS | ≤ 0.05 | Lighthouse |
+| Lighthouse 성능 (모바일, 실제 Chrome 관측) | 차단 ≥ 90, 목표 ≥ 95 | Lighthouse CI devtools throttling 3회 중앙값. 조건과 단계는 PRD-003 "성능 측정 기준" |
+| Lighthouse 접근성 / 모범사례 / SEO | 100 / ≥ 95 (`is-on-https` 제외, 목표) / 100 | Lighthouse CI |
+| LCP | 차단 ≤ 2.5s, 목표 ≤ 2.0s (모바일 관측), 실사용 p75 ≤ 2.5s(참고) | Lighthouse, Search Console |
+| CLS | 차단 ≤ 0.1, 목표 ≤ 0.05 | Lighthouse |
 | INP | ≤ 200ms | CrUX(트래픽 충분할 때) |
 | 초기 JS (글 상세) | ≤ 120KB gzip | `next build` 출력 |
 | 페이지당 이미지 | 썸네일 ≤ 80KB, 본문 이미지 ≤ 200KB(WebP/AVIF) | 빌드 스크립트 경고 |
@@ -357,7 +360,7 @@ flowchart LR
     end
     subgraph P2["Phase 2 · 포트폴리오 · 2027.02 – 2027.03"]
         direction TB
-        p2a[프로젝트 데이터 분리] --- p2b["/projects 목록·상세"] --- p2c[About 요약 우선 재구성] --- p2d[이력서 PDF] --- p2e[오픈소스 기여 목록] --- p2f[홈 대표 프로젝트]
+        p2a[경력 데이터 분리] --- p2c[About 강화·관련 글 연결] --- p2d[이력서 웹·PDF] --- p2f[홈 히어로·대표 프로젝트]
     end
     subgraph P3["Phase 3 · 탐색·확장 · 2027.04 이후"]
         direction TB

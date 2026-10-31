@@ -40,6 +40,7 @@
 | [15-planning-final-phase1.md](./15-planning-final-phase1.md) | 기획 답변: 목록 썸네일 C안(제거) 확정, PRD-003 approved. 디자인 요청은 R1만 남음 → **완료** |
 | [16-design-answer-filter-flash.md](./16-design-answer-filter-flash.md) | 디자인 답변(개발 Q5): `?category=` 직접 진입 시 전체 목록이 잠깐 보이는 동작 허용, 측정값과 재검토 조건 |
 | [17-design-review-pr9-pr12.md](./17-design-review-pr9-pr12.md) | **머지된 PR-9·PR-12 구현 검토 + Q7 답변.** PR-12 도구 줄의 `font:` 단축 속성이 빌드에서 무효(F1), PR-9는 시안과 일치, 시리즈 박스 "다음 편 링크"는 두지 않음 |
+| [18-planning-request-phase2.md](./18-planning-request-phase2.md) | **기획 요청: Phase 2 디자인 D-1~D-4 (2026-10-30 개정, About 강화).** About 경력 시안(관련 글·앵커·펼침), 이력서 시안, About 갱신, 홈 히어로·대표 프로젝트. `/projects`·상세·Mermaid는 취소. 기준 PRD-004 |
 | [19-design-answer-q9-font-a11y.md](./19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
 | [20-design-review-pr13-pr14.md](./20-design-review-pr13-pr14.md) | **머지된 PR-13(관련 글)·PR-14(이미지 확대) 구현 검토.** 관련 글은 PRD 규칙과 14편 모두 일치(독립 계산), 확대 보기는 시안·PRD 동작과 일치. 낮은 요청 2건(링크 이름 길이, 섹션 제목 굵기) → 개발 Q10 |
 

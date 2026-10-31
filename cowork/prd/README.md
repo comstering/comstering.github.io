@@ -50,13 +50,13 @@ related: [PRD-001]          # 상위·관련 기획서
 
 | ID | 파일 | 영역 | 제목 | 상태 |
 | --- | --- | --- | --- | --- |
-| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v1.5 | review |
+| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v1.8 | review |
 | PRD-002 | [002_platform_phase0-stabilization.md](./002_platform_phase0-stabilization.md) | platform | Phase 0 안정화 (배포 재개 전 정리) | done |
 | PRD-003 | [003_blog_reading-experience.md](./003_blog_reading-experience.md) | blog | Phase 1 읽기 경험 (글 상세·홈 탐색·이미지) | approved |
+| PRD-004 | [004_portfolio_projects-and-about.md](./004_portfolio_projects-and-about.md) | portfolio | Phase 2 포트폴리오 (About 강화·이력서·홈 소개) | approved |
 
 ### 작성 예정 (마스터 PRD 로드맵 기준)
 
 | 예정 파일명 | 로드맵 단계 |
 | --- | --- |
-| `004_portfolio_projects-and-about.md` | Phase 2 포트폴리오 |
-| `005_discovery_search-and-tags.md` | Phase 3 탐색 |
+| `005_discovery_search-and-tags.md` | Phase 3 탐색. **작성 전에 작성자에게 먼저 물을 것: ① 커스텀 도메인 사용 여부 ② 영문 About 필요 여부** (2026-10-31 약속) |
