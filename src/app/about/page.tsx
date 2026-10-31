@@ -2,7 +2,6 @@ import React from "react";
 import { GraduationCap, Award } from "lucide-react";
 import {
   SiGithub,
-  SiAmazon,
   SiApachekafka,
   SiDocker,
   SiKotlin,
@@ -10,6 +9,7 @@ import {
   SiSpringboot,
   SiTerraform,
 } from "react-icons/si";
+import { FaAws } from "react-icons/fa";
 import Bio from "@/components/Bio";
 import { Experience, ExperienceItem } from "@/components/ExperienceItem";
 import { Activity, ActivityCard } from "@/components/ActivityCard";
@@ -25,7 +25,7 @@ const TECH_GROUPS: { title: string; icon: React.ElementType; items: Tech[] }[] =
       title: "Cloud & Infrastructure",
       icon: SiKubernetes,
       items: [
-        { name: "AWS", href: "https://aws.amazon.com", icon: SiAmazon },
+        { name: "AWS", href: "https://aws.amazon.com", icon: FaAws },
         { name: "Terraform", href: "https://www.terraform.io", icon: SiTerraform },
         { name: "Kubernetes", href: "https://kubernetes.io", icon: SiKubernetes },
         { name: "Docker", href: "https://www.docker.com", icon: SiDocker },
