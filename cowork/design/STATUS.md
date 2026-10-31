@@ -32,7 +32,7 @@ _최종 갱신: 2026-10-29 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 |---|---|---|---|
 | O-1 | `.ph`(시안 표시) 잔존 | `site/post.html` 4개, `projects.html` 5개, `project.html` 1개. 확정값인지 자리표시인지 정해야 함. **정정:** `post.html`의 `1,204 views`는 오류가 아니다. 조회수(GoatCounter)는 실제 기능이고(PRD-001 F-PO-01) 숫자는 샘플이다. 구현에도 `views`가 있다. 나머지 `.ph`는 Phase 2(포트폴리오) 값이라 그때 정한다 | Phase 2 기획 |
 | O-2 | 모바일 `#` 앵커 높이 | 360px에서 23px, 터치 권장 44px 미달. 호버에서만 보이는 보조 링크라 심각하지 않음. 터치에서 항상 보이게 할 계획이면 히트 영역 확대 | 디자인(판단 보류) |
-| O-3 | 실제 Chrome 확인 | 지금까지 Playwright Chromium으로만 확인. 규칙은 Claude in Chrome 확인 | 도구가 있는 세션 |
+| O-3 | 실제 Chrome 확인 | 지금까지 Playwright Chromium으로만 확인. **2026-10-31: 이 세션이 Remote Control이라 `/chrome`을 쓸 수 없다**("isn't available over Remote Control"). Claude in Chrome 확인은 로컬 터미널에서 직접 연 세션에서 가능할 것으로 보인다(미확인). 대안으로 Firefox·WebKit(Safari 엔진)은 Playwright 브라우저 설치가 필요해 사용자 확인 대기 | 로컬 세션 / 사용자 |
 | O-4 | 확대 `<dialog>` 동작 | **확인함(20번).** Enter·Esc·바깥 클릭·닫기 버튼, 포커스 복귀, 배경 잠김, 44px, reduced-motion 모두 정상. **남은 것:** 캡션 표시(현재 글에 `figcaption` 이미지 없음), 모바일 360px 확대 | 캡션 있는 글이 생기면 |
 | O-5 | 필터 깜빡임 재검토 조건 | 실기기·느린 네트워크에서 약 1초 이상 보이거나 필터 URL 유입이 늘면 16번의 (a)안(data 속성 + 인라인 스크립트) 검토 | 데이터가 생기면 |
 | O-6 | `cowork/` 커밋 | **완료.** prd·design은 #32, develop은 #33에서 커밋됨(2026-10-28 머지). public 저장소라 시안·PRD의 회사 성과 수치(`$16,000 절감`, `-50%` 등)가 이미 공개 상태. 공개를 원치 않는 수치가 있으면 시안·PRD를 고쳐 새 PR로 올려야 하고, 이미 기록된 Git 이력에는 남는다 | 사용자 |
@@ -73,3 +73,4 @@ _최종 갱신: 2026-10-29 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(
 | 2026-10-28 | 머지된 PR-9·PR-12를 `main` `594a289` 빌드 산출물로 시안과 대조해 17번으로 정리. F1(빌드 CSS에서 `font:` 단축 속성 6개 무효) 발견 → 개발 Q8. Q7 답변·closed. O-1 정정(조회수는 실제 기능). 개발 `REQUESTS.md`에 Q8 추가 |
 | 2026-10-29 | 개발 Q9(글꼴 로딩·접근성 98→100·게이트)에 19번으로 답변. 글꼴 방식 3종을 측정해 단일 서브셋+`swap`을 권장. 접근성 3건을 시안과 대조해 시안 결함 2건(`.chip__count` opacity, 복사 버튼 `aria-label`)을 수정. Q8 수정(#37) 재확인. `CONTEXT.md`에 글꼴·접근성 결정 추가. 임시 stash 1개를 만들었다가 정리 |
 | 2026-10-29 | 머지된 PR-13(#35)·PR-14(#38)를 `main` `626fd74` 빌드 산출물로 시안과 대조해 20번으로 정리. 관련 글은 PRD 규칙을 독립 계산해 14편 일치 확인. 낮은 요청 2건을 개발 Q10으로. 개발 `REQUESTS.md` Q9 답 칸에 19번 연결. O-4(확대 `<dialog>`) 확인 반영 |
+| 2026-10-31 | `/chrome`이 Remote Control에서 불가함을 확인(O-3). 디자인에 유용한 skill 3개(web-design-guidelines, tailwind-design-system, web-perf)를 프로젝트에 설치하고 `SKILLS.md`에 검토 결과·보안 평가·주의를 기록. 사용자 목록 13개 중 8개는 이미 설치돼 있었고, 디자인 외 3개(seo-audit, webapp-testing, playwright-best-practices)는 미설치 목록으로 남김 |
