@@ -24,7 +24,7 @@ npx skills update    # 업데이트
 | find-skills | 필요한 skill 검색·추천 | `npx skills add vercel-labs/skills --skill find-skills --agent claude-code -y` | 프로젝트 `.claude/skills/` — 설치됨 |
 | design-taste-frontend (taste-skill) | 웹 디자인 품질/반AI슬롭 | `npx skills add Leonxlnx/taste-skill --skill design-taste-frontend --agent claude-code -y` | 전역 설치됨(anthropic-skills) |
 | ui-ux-pro-max | UI/UX 가이드 DB | `npx skills add nextlevelbuilder/ui-ux-pro-max-skill --agent claude-code -y` 또는 `/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill` → `/plugin install ui-ux-pro-max@ui-ux-pro-max-skill` | 전역 설치됨(anthropic-skills) |
-| impeccable | 디자인 critique/polish/audit | `npx skills add pbakaus/impeccable --agent claude-code -y` 후 `/impeccable init` | 전역 설치됨(anthropic-skills) |
+| impeccable | 디자인 critique/polish/audit | `npx skills add pbakaus/impeccable --agent claude-code -y` 후 `/impeccable init` | 전역 설치됨(anthropic-skills). **2026-10-31 확인: 전역 사본에는 `SKILL.md`만 있고 `scripts/`·`reference/`가 없어 `audit` 등 하위 명령을 지침대로 실행할 수 없다.** 완전한 사본(63개 파일, v0.1.18)은 위 명령으로 받을 수 있으나 `scripts/impeccable` 런처가 실행할 때 GitHub release에서 **네이티브 바이너리를 내려받아 실행**한다(체크섬은 skill에 포함). 쓰기 전에 사용자 확인 필요 |
 | agent-browser | 브라우저 테스트·자동화 | `npx skills add vercel-labs/agent-browser --agent claude-code -y` (CLI 본체 `agent-browser`도 별도 필요) | 프로젝트 `.claude/skills/` — 설치됨 |
 | vercel-react-best-practices, vercel-composition-patterns | React/Next 모범사례 (GSD 웹 팩) | `npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices --skill vercel-composition-patterns --agent claude-code -y` | 프로젝트 `.claude/skills/` — 설치됨 |
 | frontend-design | 프론트엔드 디자인 (GSD 웹 팩) | `npx skills add anthropics/skills --skill frontend-design --agent claude-code -y` | 프로젝트 `.claude/skills/` — 설치됨 |

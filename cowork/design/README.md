@@ -43,6 +43,7 @@
 | [18-planning-request-phase2.md](./18-planning-request-phase2.md) | **기획 요청: Phase 2 디자인 D-1~D-4 (2026-10-30 개정, About 강화).** About 경력 시안(관련 글·앵커·펼침), 이력서 시안, About 갱신, 홈 히어로·대표 프로젝트. `/projects`·상세·Mermaid는 취소. 기준 PRD-004 |
 | [19-design-answer-q9-font-a11y.md](./19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
 | [20-design-review-pr13-pr14.md](./20-design-review-pr13-pr14.md) | **머지된 PR-13(관련 글)·PR-14(이미지 확대) 구현 검토.** 관련 글은 PRD 규칙과 14편 모두 일치(독립 계산), 확대 보기는 시안·PRD 동작과 일치. 낮은 요청 2건(링크 이름 길이, 섹션 제목 굵기) → 개발 Q10 |
+| [21-impeccable-audit.md](./21-impeccable-audit.md) | **impeccable audit(컴포넌트~페이지).** 합계 16/20 Good: 접근성 3·성능 3·테마 4·반응형 3·구현 3. P1 1건(코드 블록 키보드 접근), P2 2건(글자 200% 넘침, 터치 대상) → 개발 Q14. 번들 감지기는 실행하지 못함 |
 
 ### 보는 방법
 
@@ -54,4 +55,4 @@
 - PRD 기능 ID(F-PO-03 등)와 문제 ID(P1 등)를 그대로 인용해 추적 가능하게 한다.
 - DESIGN.md에 반영된 항목은 해당 문서에 `✅ 반영됨 (날짜)` 표시.
 
-_최종 갱신: 2026-10-29 (v1.4 확정. PR-13·PR-14 구현 검토는 20번. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-10-31 (v1.4 확정. impeccable audit는 21번. 현재 상태는 STATUS.md)_
