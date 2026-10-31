@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
+_최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
 
 ## 한눈에 보기
 
@@ -9,17 +9,21 @@ _최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기�
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
 | Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9~PR-14 완료, 성능 게이트(관측 측정) 반영 완료. **남은 것: PR-15(OG), 글꼴 서브셋, PR-16, PR-17** |
 | Phase 2 포트폴리오 (PRD-004) | 기획 review 단계. 개발은 Phase 1 게이트(PR-17) 통과 후 시작 |
-| 지금 막힌 것 | 없음. PR-15는 새 의존성(satori, @resvg/resvg-js)과 글꼴 서브셋 도구 선택(fonttools 또는 Node 패키지)이 정해지면 바로 시작 가능 |
+| 지금 막힌 것 | 없음. **도구 확정(사용자 승인 2026-11-01): OG는 `next/og`(새 의존성 없음), 글꼴 서브셋은 Node `subset-font`(새 devDependency 1개, 설치 전 알림).** 의존성 갱신 #50·Next 16 #51 머지 완료 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
-1. `gh pr list`로 #41(Q9 접근성 수정) 머지 여부 확인. 머지됐으면 `git checkout main && git pull`(tracked 변경이 있으면 `git stash` 후 pull, `stash pop` 충돌은 두 쪽을 모두 남긴다. `git stash -u` 금지)
+1. `git checkout main && git pull`로 `56afea2` 이후인지 확인하고 `gh pr list`로 열린 PR을 본다(tracked 변경이 있으면 `git stash` 후 pull, `git stash -u` 금지). 미추적 `resume.md`·`.claude/launch.json`은 내 것이 아니니 커밋하지 않는다
+   - **지금 환경 상태(2026-11-01 세션 종료 시):** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config(`eslint.config.mjs`). `next lint` 없음. `sharp`는 0.33.5 고정 유지. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
+   - Next 16 이후 Lighthouse(CI, #51): About 91·LCP 2.1s·TBT 277ms(차단선 통과), 홈 97·1.9s·CLS 0.058, 글 97·2.0s·CLS 0.029. Next 15→16 퇴보 없음
+   - 로컬 Chrome 확장(claude chrome)이 이 세션에서 안 돼 Playwright Chromium으로 화면을 확인했다(PR에 매번 밝힌다). 다음 세션에서 되면 실제 Chrome으로도 본다
 2. **글꼴 서브셋 PR (Q9 ①, 디자인 19번 1.3)** — 디자인이 요청했고 설치할 도구를 정해야 해서 사용자 확인이 필요하다
    - 빌드 때 `posts/`·`content/`·`src/`의 글자를 모아 Pretendard Variable(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`, 2.06MB)을 `wght 400–700` 단일 woff2(약 102KB)로 서브셋, 자체 호스팅, `font-display: swap`, **preload 없음**
-   - 도구 후보: `fonttools`(`pyftsubset`, 디자인이 시험함) vs Node 패키지(`subset-font` 등, PR-15 OG 글꼴 서브셋과 로직 공유 가능). 새 의존성이라 설치 전에 사용자에게 알린다
+   - **도구 확정: Node `subset-font`**(2.9.0, BSD-3, WASM, 의존성 p-limit·fontverter·harfbuzzjs). 저장소 밖 시험에서 `variationAxes: { wght: { min: 400, max: 700 } }`와 `targetFormat: "woff2"`가 동작함을 확인(시험 문장 15.7KB→12.0KB). 설치(`yarn add -D subset-font`) 직전에 사용자에게 한 번 더 알린다. 글자 수집 로직은 PR-15 OG와 공유
    - 효과: 글꼴 요청 12~17개 → 2개, 272~370KB → 141KB. **FCP·LCP는 그대로**(디자인 측정). CLS는 미검증이라 적용 PR에서 CI Lighthouse About CLS 3회 중앙값을 확인해 STATUS에 적는다(0.05 이하면 CLS를 error로)
    - 한계: 사용자가 검색창에 입력하는 글자처럼 서브셋에 없는 글자는 시스템 글꼴로 보인다
 3. **PR-15 OG 이미지 자동 생성** (PRD-003 PR-15 절, 디자인 12번 E4~E6, 시안 `site/og.html`·`og-render.html`)
+   - **접근 확정: `next/og` + `posts/[id]/og.png/route.tsx`**(새 의존성 없음). Next 16에서 같은 방식이 되는지 첫 단계에서 다시 확인한다. (아래는 원래 PoC 계획)
    - **첫 단계는 PoC**: Next.js `opengraph-image.tsx` + `generateStaticParams`가 정적 export에서 동작하는지 확인. 안 되면 satori + resvg 빌드 스크립트로 `public/_og/<slug>.png`
    - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
    - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
@@ -28,7 +32,8 @@ _최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기�
 5. **PR-17(게이트 측정·문서)에서 할 성능 게이트 작업**(기획 Q12·Q13 결정, PRD-003 "성능 측정 기준"):
    - `lighthouserc.json` `assertMatrix[0]`(차단선)의 성능·LCP·CLS·TBT를 `warn` → `error`로 올린다(접근성·SEO는 이미 `error`)
    - **About 예외(사용자·기획 결정, 2026-10-31):** About은 이번 Phase에서 개선하지 않는다(Phase 2 PR-19에서 재작성). About 페이지만 성능·TBT를 `warn`으로 둔다: 차단선 항목을 `matchingUrlPattern`으로 About 제외, About 전용 항목을 `warn`으로 추가. 숫자(성능 ≥ 90, TBT ≤ 300ms)는 낮추지 않는다. PR-19 수용 기준에 "About 차단선 통과, 통과 시 예외 해제"가 있다(PRD-004)
-   - 현재 리눅스 CI 값(2026-10-30, 관측): 홈 성능 98·LCP 1.9s, 글 97·2.0s는 차단선 통과. About 성능 88~90·TBT 344~376ms는 예외 대상
+   - 2026-11-01 Next 16 CI에서는 About도 성능 91·TBT 277ms로 차단선을 넘었다(편차 범위일 수 있으니 PR-17에서 여러 번 측정해 예외가 아직 필요한지 판단한다)
+   - 이전 리눅스 CI 값(2026-10-30, 관측): 홈 성능 98·LCP 1.9s, 글 97·2.0s는 차단선 통과. About 성능 88~90·TBT 344~376ms는 예외 대상
    - 홈 CLS는 0.035~0.058(차단 0.1 이하, 목표 0.05는 경계). 글꼴 서브셋 PR 뒤 재측정
 6. 열린 질문: Q9(남은 건 글꼴 서브셋). Q10~Q13은 모두 결정됨
 
@@ -161,6 +166,7 @@ _최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기�
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
 | 2026-11-01 | PR-A(#50) 머지 확인. Next 16 PR-B 오픈(브랜치 `chore/next-16`): next·eslint-config-next 16.4.3(Turbopack 빌드). 수정 3건: ① `src/app/favicon.ico` 안의 PNG가 팔레트(RGBA 아님)라 Turbopack이 디코딩 실패 → RGBA로 재인코딩(5.3KB) ② `next lint` 제거 → `eslint .` + `eslint.config.mjs`를 `eslint-config-next/core-web-vitals`·`typescript` flat config로 교체(ignores: out, .next, public/_img, cowork 등) ③ 새 react-hooks 규칙(`set-state-in-effect`) 때문에 `ThemeToggle`의 mounted를 `useSyncExternalStore`로 변경. `tsconfig.json`은 Next가 자동 수정(`jsx: react-jsx`). lint·tokens·build·check:output·E2E 89건 통과 | CI(Lighthouse 포함) 확인, 머지 후 PR-15(OG) |
+| 2026-11-01 | 사용자 승인: OG `next/og`, 서브셋 `subset-font`(A1+B1). #50(의존성 마이너 갱신, `SiAmazon`·`SiLinkedin` 제거 대응으로 `FaAws`·`FaLinkedin`)·#51(Next 16.4.3: favicon RGBA 재인코딩, `eslint .` 전환, ThemeToggle `useSyncExternalStore`) 머지. 세션을 Chrome 확장 문제로 종료하며 기록 정리 | 다음 첫 명령: main pull 후 **글꼴 서브셋 PR**(설치 전 알림) → **PR-15 OG** → PR-16 → PR-17 |
 | 2026-11-01 | 의존성 갱신 PR-A 오픈(브랜치 `chore/deps-update-a`): react 19.3.1, next 15.5.28, tailwind 4.3.3, typography, react-icons 5.7 등. react-icons 5.7에서 브랜드 아이콘 `SiAmazon`·`SiLinkedin`이 제거돼 `FaAws`·`FaLinkedin`(react-icons/fa)으로 교체. lint·tokens·build·check:output·E2E 89건 통과 | 머지 후 Next 16 PR-B. 메이저(typescript 7, eslint 10, lucide 1.x, @types/node 26, sharp 0.35)는 보류 |
 | 2026-11-01 | 도구 선택: OG는 `next/og`(A1), 글꼴 서브셋은 Node `subset-font`(B1) 확정(사용자 승인). `subset-font@2.9.0`이 `wght 400–700` 축 제한을 지원함을 저장소 밖에서 확인(설치 전 시험). Next 15.2.4→16.4.3 업그레이드와 의존성 갱신은 사용자 검토 후 진행 | 사용자 검토 대기: 의존성 갱신 범위 |
 | 2026-10-29 | 기획 답변(Q4·Q6) 확인: G1-4 기준 변경을 E2E에 반영(PR #39). #38·#39 CI 실패(리눅스에서 sharp libvips 못 찾음) → sharp 0.33.5 고정으로 수정. PR-14 오픈(#38, #37 위): sharp 이미지 파이프라인, 확대 `<dialog>`, favicon 1.7MB→4.7KB, Lighthouse SEO·CLS error. 디자인 17번(Q8) 반영: PR-12의 `font:` 단축 속성 6개가 CSS 압축에서 무효가 되던 것을 longhand로 수정, `check:output`에 검사 추가, PR #37. PR-14는 그다음 | #37 머지 확인 → PR-14 시작 |
