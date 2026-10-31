@@ -117,6 +117,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **링크가 `::before`로 행 전체를 덮으면** Playwright `locator.click()`이 대상이 가로채였다며 30초를 기다린다. 좌표(`page.mouse.click`)로 누른다
 - **여러 세션이 같은 문서(REQUESTS.md)에 질문 번호를 붙이면 충돌한다.** 새 번호를 쓰기 전에 `git fetch` 후 `origin/main`의 마지막 번호를 확인한다
 - **실험 결과를 저장소 안 폴더에 남기지 않는다.** `.lighthouseci`처럼 다른 세션이 읽는 폴더에 실험(글꼴 2MB 등) 측정을 남겼다가 기획이 그 값(성능 56)을 근거로 삼았다(Q11). 실험은 scratchpad 경로로 출력하고, 끝나면 정상 빌드로 다시 측정해 둔다
+- **STATUS.md를 구간(`s.index(a)`~`s.index(b)`)으로 통째로 바꾸면 그 사이 절이 지워진다.** PR-13 때 "다음 작업"~"PR-13 동작" 사이의 PR 표·현재 상태·측정값 절이 사라졌고 PR #47 전까지 모르고 있었다. 치환 전에 구간 안에 있는 `## ` 제목을 출력해 보고, 바꾼 뒤에는 `grep -n "^## " STATUS.md`로 절 목록을 확인한다
 - **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 
