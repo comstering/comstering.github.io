@@ -1,17 +1,20 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 import { IconButton } from "@/components/ui/IconButton";
 
-const ThemeToggle = () => {
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
+const subscribe = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+const ThemeToggle = () => {
+  // 서버·하이드레이션 중에는 false, 클라이언트 렌더에서 true
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+  const { resolvedTheme, setTheme } = useTheme();
 
   if (!mounted) {
     return <div className="h-9 w-9" aria-hidden />;
