@@ -23,6 +23,7 @@ _최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기�
    - **첫 단계는 PoC**: Next.js `opengraph-image.tsx` + `generateStaticParams`가 정적 export에서 동작하는지 확인. 안 되면 satori + resvg 빌드 스크립트로 `public/_og/<slug>.png`
    - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
    - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
+   - **PoC 결과(2026-11-01, 임시 브랜치에서 시험 후 폐기):** `next/og`의 `ImageResponse`가 **정적 export에서 동작한다. 새 의존성이 필요 없다**(satori·resvg가 Next에 내장). 파일 규칙 `posts/[id]/opengraph-image.tsx`는 되지만 출력 파일 이름에 **확장자가 없어**(`out/posts/<id>/opengraph-image`) GitHub Pages가 이미지로 인식하지 못할 위험이 있다. **`posts/[id]/og.png/route.tsx`(`export const dynamic = "force-static"` + `generateStaticParams`)는 `out/posts/<id>/og.png`로 `.png` 확장자 파일이 나온다**(14편, 1200×630, 약 29KB, 한글 정상). 이 경로를 쓰고 `generateMetadata`의 `og:image`를 `https://comstering.github.io/posts/<id>/og.png`로 바꾼다. 글꼴은 `node_modules/pretendard/dist/public/static/Pretendard-Bold.otf`(700)를 읽어 `fonts`에 넣는다(woff2 불가). JetBrains Mono(로고)는 ttf/otf/woff가 필요한데 저장소에 없다(`next/font`가 받는 건 woff2). 아직 못 본 것: 빌드 시간 증가, 긴 제목 3줄 잘림, 시안(`og.html`)과 픽셀 대조, 카카오·LinkedIn 실제 미리보기
 4. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
 5. **PR-17(게이트 측정·문서)에서 할 성능 게이트 작업**(기획 Q12·Q13 결정, PRD-003 "성능 측정 기준"):
    - `lighthouserc.json` `assertMatrix[0]`(차단선)의 성능·LCP·CLS·TBT를 `warn` → `error`로 올린다(접근성·SEO는 이미 `error`)
@@ -159,6 +160,8 @@ _최종 갱신: 2026-10-31 · 기준 커밋 `d69ecab`(main, #45 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | 의존성 갱신 PR-A 오픈(브랜치 `chore/deps-update-a`): react 19.3.1, next 15.5.28, tailwind 4.3.3, typography, react-icons 5.7 등. react-icons 5.7에서 브랜드 아이콘 `SiAmazon`·`SiLinkedin`이 제거돼 `FaAws`·`FaLinkedin`(react-icons/fa)으로 교체. lint·tokens·build·check:output·E2E 89건 통과 | 머지 후 Next 16 PR-B. 메이저(typescript 7, eslint 10, lucide 1.x, @types/node 26, sharp 0.35)는 보류 |
+| 2026-11-01 | 도구 선택: OG는 `next/og`(A1), 글꼴 서브셋은 Node `subset-font`(B1) 확정(사용자 승인). `subset-font@2.9.0`이 `wght 400–700` 축 제한을 지원함을 저장소 밖에서 확인(설치 전 시험). Next 15.2.4→16.4.3 업그레이드와 의존성 갱신은 사용자 검토 후 진행 | 사용자 검토 대기: 의존성 갱신 범위 |
 | 2026-10-29 | 기획 답변(Q4·Q6) 확인: G1-4 기준 변경을 E2E에 반영(PR #39). #38·#39 CI 실패(리눅스에서 sharp libvips 못 찾음) → sharp 0.33.5 고정으로 수정. PR-14 오픈(#38, #37 위): sharp 이미지 파이프라인, 확대 `<dialog>`, favicon 1.7MB→4.7KB, Lighthouse SEO·CLS error. 디자인 17번(Q8) 반영: PR-12의 `font:` 단축 속성 6개가 CSS 압축에서 무효가 되던 것을 longhand로 수정, `check:output`에 검사 추가, PR #37. PR-14는 그다음 | #37 머지 확인 → PR-14 시작 |
 | 2026-10-28 | PR-13 오픈(#35): 관련 글(점수·시리즈/이전·다음 제외), compact 목록 시안 맞춤(404도 같이 바뀜), E2E 7건. #33·#32 머지 확인, main pull(`691c01b`). 로컬 미추적 `cowork` 58개가 머지본과 동일함을 확인하고 scratchpad 백업으로 옮긴 뒤 pull(삭제는 하지 않음) | PR-13 시작: `git checkout -b feat/related-posts` |
 | 2026-10-28 | PR-10(#27), PR-11(#28), Lighthouse 댓글(#29) 머지. PR-9(#30) 오픈, CI 통과. CLAUDE.md 지침 PR(#31) 오픈, 기록 규칙을 CONTEXT 4.5장·메모리에 명시. `cowork/develop` 문서·도구 신설(CONTEXT, STATUS, REQUESTS, tools/) | #30 머지 확인 → PR-12 시작. `gh pr view 30 --json state` |

@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 import Image from "next/image";
-import { SiGithub, SiLinkedin } from "react-icons/si";
+import { SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 import { AUTHOR } from "@/lib/site";
 
 const contactClass =
@@ -68,7 +69,7 @@ const Bio = () => (
           aria-label="LinkedIn (새 창에서 열림)"
           className={contactClass}
         >
-          <SiLinkedin aria-hidden className="h-5 w-5" />
+          <FaLinkedin aria-hidden className="h-5 w-5" />
         </a>
       </li>
       <li>
