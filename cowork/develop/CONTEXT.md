@@ -7,7 +7,7 @@
 
 ## 1. 프로젝트와 역할
 
-- 저장소: `comstering.github.io` (public). Next.js 15 정적 export, GitHub Pages. 한국어 블로그 + 포트폴리오.
+- 저장소: `comstering.github.io` (public). Next.js 16(Turbopack) 정적 export, GitHub Pages. 한국어 블로그 + 포트폴리오.
 - 세 세션이 나눠서 일한다. **기획**(`cowork/prd`), **디자인**(`cowork/design`), **개발**(이 폴더, Claude Code). 개발은 기획·디자인이 확정한 것만 구현한다. 확정 전 내용은 구현 기준이 아니다.
 - 작성자(사용자)가 PR을 직접 머지한다. 머지하고 "pull하고 다음 작업"이라고 말하면 아래 5장 흐름대로 다음 PR로 간다.
 - **`cowork/develop/`는 저장소에 커밋해서 관리한다**(2026-10-28 작성자 결정). 작업 PR에 같이 넣는다: STATUS·REQUESTS 갱신분이 코드와 한 PR에 들어가야 이력이 맞는다. `cowork/prd`·`cowork/design`은 기획·디자인 세션 몫이라 작성자가 별도 PR(#32)로 올린다. 개발 세션은 이 둘을 읽기만 하고 커밋하지 않는다.
@@ -146,3 +146,6 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - 한국어로, 간결하게 보고한다. 결과를 숨기지 않는다: 실패·못 한 것·확인 안 된 것은 그대로 쓴다
 - 작업은 PRD 순서대로 PR 하나씩. 머지 전에 다음 PR로 가지 않는다
 - 새 skill·전역 도구는 설치 전에 확인받는다(`SKILLS.md`). 외부 서비스로 내보내는 작업도 먼저 묻는다
+- **Next 16 이후(2026-11-01)**: `next lint`가 없다. `yarn lint`는 `eslint .`이고 설정은 `eslint.config.mjs`(flat, `eslint-config-next/core-web-vitals`·`typescript`)다. 린트 제외는 그 파일의 `ignores`에 쓴다. 빌드는 Turbopack이 기본이라 `src/app/favicon.ico`처럼 앱 폴더의 이미지는 **RGBA PNG**여야 한다(팔레트 PNG는 "The PNG is not in RGBA format"으로 실패). `useEffect` 안에서 바로 `setState`하면 `react-hooks/set-state-in-effect`로 린트 실패한다(mounted 플래그는 `useSyncExternalStore`). `tsconfig.json`은 Next가 `yarn build` 때 자동으로 고친다
+- **react-icons 5.7**에서 `SiAmazon`·`SiLinkedin` 같은 브랜드 아이콘이 `react-icons/si`에서 제거됐다. 쓰기 전에 `grep -o "SiXxx" node_modules/react-icons/si/index.d.ts`로 있는지 본다(대체: `react-icons/fa`의 `FaAws`·`FaLinkedin`)
+- **claude chrome 확장이 안 될 때**: 이 프로젝트의 화면 확인은 `cowork/develop/tools/shoot.mjs`(Playwright Chromium)로 하고 PR 본문에 실제 Chrome이 아니라고 밝힌다
