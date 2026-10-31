@@ -19,8 +19,8 @@ yarn check:output # 빌드 산출물 검사 (yarn build 이후, out/)
 
 ## Tech Stack
 
-- **Framework**: Next.js 15.2.4 with App Router
-- **React**: 19.0.0
+- **Framework**: Next.js 16 with App Router (Turbopack 빌드)
+- **React**: 19.3
 - **TypeScript**: 5.x
 - **Styling**: Tailwind CSS v4 (@tailwindcss/postcss, @tailwindcss/typography)
 - **Theme**: next-themes (dark/light mode support)
