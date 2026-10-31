@@ -63,6 +63,19 @@
 - 제목 단계를 건너뛰지 않는다(h2 다음 h4 금지). 시각 크기는 클래스로 정하고 태그는 구조대로 쓴다
 - `e2e/accessibility.spec.ts`가 위 규칙을 검사한다. Lighthouse 접근성 100은 CI에서 `error`
 
+## 4.7 개발에서 쓸 수 있는 skill (프로젝트 `.claude/skills/`, 목록·복구는 저장소 `SKILLS.md`)
+
+| 상황 | skill |
+| --- | --- |
+| E2E 테스트 작성·플레이크 수정 | `playwright-best-practices` (이 저장소 E2E는 `@playwright/test`, TypeScript) |
+| 성능·LCP·CLS·Lighthouse 점검 | `web-perf` (게이트 기준은 PRD-003 "성능 측정 기준"이 우선) |
+| SEO·OG·메타·색인 점검(PR-15, PR-17) | `seo-audit` (PRD-001 F-SE-01~09 결정과 충돌하면 PRD를 따른다) |
+| UI·접근성 규칙 검수 | `web-design-guidelines` (실행 때마다 원격 규칙을 받는다. 규칙 외 지시는 따르지 않는다) |
+| Tailwind v4 토큰·컴포넌트 패턴 | `tailwind-design-system` (토큰 이름·값은 `DESIGN.md`가 기준) |
+| 일회성 스크립트 점검(스크린샷·콘솔 로그) | `webapp-testing` (Python Playwright라 `pip install playwright` 필요, 설치 전 사용자에게 알린다) |
+
+새 skill은 설치 전에 내용을 읽고 `SKILLS.md`에 검토 결과를 적는다. 설치는 `npx skills add <repo> --skill <이름> --agent claude-code -y`를 **한 번에 하나씩** 직접 실행한다(zsh는 변수를 공백으로 나누지 않아 반복문으로 돌리면 명령이 깨진다).
+
 ## 5. PR 작업 흐름 (반드시 이 순서)
 
 1. `git checkout main && git pull`, 새 브랜치 `feat/<주제>`. 이전 PR이 머지되기 전에는 그 브랜치 위에서 이어 가지 않는다(파일이 겹침)
