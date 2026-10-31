@@ -86,9 +86,10 @@ yarn lhci                # Lighthouse CI (결과는 .lighthouseci/)
 node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 ```
 
-- PR CI(`.github/workflows/ci.yaml`): lint → tokens → build → output → E2E → Lighthouse(경고만) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
+- PR CI(`.github/workflows/ci.yaml`): lint → tokens → build → output → E2E → Lighthouse(관측 측정, 아래) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
 - 배포: `main` push → `deploy.yaml` → GitHub Pages(약 5분). branch protection은 사이트 1차 완성 후 작성자가 켠다
-- Lighthouse는 CI 서버에서 한 번만 재서 점수가 크게 흔들린다(LCP 5~23초). 비교는 경향만 본다. 성능 목표는 PR-14(이미지) 이후 error로 전환
+- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. 접근성·SEO는 지금도 `error`, 나머지 차단선은 **PR-17부터 `error`**(지금 `warn`). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
+- 차단선을 넘으면 기준을 조용히 낮추지 않고 기획에 묻는다. 관측 측정은 시뮬레이션보다 오래 걸린다(로컬 약 4분 10초, 3페이지×3회)
 
 ## 7. 스크린샷·브라우저 확인 방법
 
@@ -115,6 +116,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **전역 `:focus-visible`(globals.css)은 Tailwind 레이어 밖이라 `outline-none` 유틸리티가 안 먹는다.** 포커스 링을 끄려면 `globals.css`에 일반 CSS 규칙(예: `.post-link:focus-visible`)을 추가한다
 - **링크가 `::before`로 행 전체를 덮으면** Playwright `locator.click()`이 대상이 가로채였다며 30초를 기다린다. 좌표(`page.mouse.click`)로 누른다
 - **여러 세션이 같은 문서(REQUESTS.md)에 질문 번호를 붙이면 충돌한다.** 새 번호를 쓰기 전에 `git fetch` 후 `origin/main`의 마지막 번호를 확인한다
+- **실험 결과를 저장소 안 폴더에 남기지 않는다.** `.lighthouseci`처럼 다른 세션이 읽는 폴더에 실험(글꼴 2MB 등) 측정을 남겼다가 기획이 그 값(성능 56)을 근거로 삼았다(Q11). 실험은 scratchpad 경로로 출력하고, 끝나면 정상 빌드로 다시 측정해 둔다
 - **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 
