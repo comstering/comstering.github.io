@@ -1,0 +1,76 @@
+name: Links
+
+# 글의 외부 링크 검사(lychee). 깨진 링크는 CI 실패가 아니라 이슈로 남긴다(PRD-003 PR-16).
+#   - 매주 월요일 09:00 KST(UTC 00:00): 모든 글 검사, 깨진 링크가 있으면 이슈를 만들거나 갱신
+#   - PR(posts/** 변경): 바뀐 글만 검사, 결과는 Actions 요약에만 남기고 실패시키지 않는다
+#   - 수동 실행(workflow_dispatch): 모든 글 검사
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "posts/**"
+      - "lychee.toml"
+      - ".github/workflows/links.yaml"
+
+concurrency:
+  group: links-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write # 주간 실행이 깨진 링크 이슈를 만든다
+
+jobs:
+  links:
+    name: Check links
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # PR이면 base와 다른 글만, 그 외에는 모든 글
+      - name: Select files
+        id: files
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- 'posts/*.md' > files.txt
+          else
+            ls posts/*.md > files.txt
+          fi
+          echo "count=$(wc -l < files.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          cat files.txt
+
+      - name: Check links
+        id: lychee
+        if: steps.files.outputs.count != '0'
+        # v2.9.0(2026-07-09)을 커밋 SHA로 고정한다. 올릴 때는 릴리스를 확인하고 SHA와 주석을 함께 바꾼다
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --config lychee.toml --no-progress --format markdown --output lychee-report.md --files-from files.txt
+          fail: false
+          jobSummary: true
+
+      # 주간·수동 실행에서 깨진 링크가 있으면 이슈 하나를 계속 갱신한다(없으면 만든다)
+      - name: Open or update issue
+        if: github.event_name != 'pull_request' && steps.lychee.outputs.exit_code != '0' && steps.lychee.outputs.exit_code != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="깨진 외부 링크 발견 (lychee)"
+          body="$(printf '주간 링크 검사(%s)에서 깨진 링크가 발견됐습니다. 글에서 링크를 고치거나 `lychee.toml`의 `exclude`에 사유와 함께 추가하세요.\n\n%s\n\n실행: %s/%s/actions/runs/%s' "$(date -u +%F)" "$(cat lychee-report.md)" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          number=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi

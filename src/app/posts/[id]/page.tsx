@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { AuthorBox } from "@/components/post/AuthorBox";
 import { PostHeader } from "@/components/post/PostHeader";
 import { PostPager } from "@/components/post/PostPager";
+import { PostProgress } from "@/components/post/PostProgress";
 import { PostPath } from "@/components/post/PostPath";
 import { RelatedPosts } from "@/components/post/RelatedPosts";
 import { PostToolbar } from "@/components/post/PostToolbar";
@@ -93,6 +94,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           },
         }}
       />
+      <PostProgress />
       <PostPath slug={post.id} />
       <PostHeader post={post} />
 
