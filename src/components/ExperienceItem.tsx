@@ -16,7 +16,7 @@ export const ExperienceItem = ({
   period,
   projects,
 }: Experience) => (
-  <div className="space-y-6 border-l border-line pb-12 pl-6 last:pb-0 sm:pl-8">
+  <div className="min-w-0 space-y-6 border-l border-line pb-12 pl-6 last:pb-0 sm:pl-8">
     <div>
       <h3 className="text-h3 font-bold tracking-tight text-fg">{company}</h3>
       {role && <p className="mt-1 text-small text-fg">{role}</p>}
@@ -26,7 +26,7 @@ export const ExperienceItem = ({
       {projects.map((project, idx) => (
         <div
           key={idx}
-          className="rounded-lg border border-line bg-surface p-5 sm:p-6"
+          className="min-w-0 rounded-lg border border-line bg-surface p-5 sm:p-6"
         >
           <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <h4 className="font-semibold leading-snug text-fg">

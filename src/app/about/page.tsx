@@ -370,7 +370,7 @@ const About = () => {
           {TECH_GROUPS.map(({ title, icon: GroupIcon, items }) => (
             <div
               key={title}
-              className="space-y-5 rounded-lg border border-line bg-surface p-6"
+              className="min-w-0 space-y-5 rounded-lg border border-line bg-surface p-6"
             >
               <div className="flex items-center gap-3">
                 <GroupIcon aria-hidden className="h-5 w-5 text-mute" />
@@ -471,10 +471,10 @@ const About = () => {
           {CERTIFICATIONS.map((cert) => (
             <li
               key={cert.title}
-              className="flex items-start gap-4 rounded-lg border border-line bg-surface p-5"
+              className="flex min-w-0 items-start gap-4 rounded-lg border border-line bg-surface p-5"
             >
               <Award aria-hidden className="mt-0.5 h-6 w-6 shrink-0 text-mute" />
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold leading-snug text-fg">
                   {cert.title}
                 </h3>

@@ -23,6 +23,7 @@ test("홈 목록: 링크 이름은 제목뿐이고 행 어디를 눌러도 글�
   const first = rows.first();
   const href = await first.locator("h3 a").getAttribute("href");
   // 설명 <p>는 링크의 ::before에 덮여 있어 click()은 "다른 요소가 가로챈다"며 기다린다. 좌표로 누른다.
+  await first.locator("p").last().scrollIntoViewIfNeeded();
   const box = await first.locator("p").last().boundingBox();
   await page.mouse.click(box!.x + 5, box!.y + 5);
   await expect(page).toHaveURL(new RegExp(`${href}$`));

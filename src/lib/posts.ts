@@ -152,7 +152,7 @@ export const getPostData = cache(async (id: string): Promise<PostMetadata> => {
     .use(rehypeStringify)
     .use(rehypeExternalLinks, {
       target: "_blank",
-      rel: "nofollow",
+      rel: ["nofollow", "noopener", "noreferrer"],
     })
     .process({ value: source.content, path: `posts/${id}.md` });
   const contentHtml = processedContent.toString();

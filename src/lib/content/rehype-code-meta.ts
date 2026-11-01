@@ -137,6 +137,14 @@ export const rehypeCodeMeta = () => (tree: Root) => {
       ]),
     ]);
 
+    // 가로 스크롤되는 <pre>가 키보드로 닿도록 포커스 가능한 region으로 만든다(WCAG 2.1.1, 디자인 21번 P1)
+    node.properties = {
+      ...node.properties,
+      tabIndex: 0,
+      role: "region",
+      ariaLabel: `${meta.title ?? lang} 코드`,
+    };
+
     parent.children[index] = el("div", { className: ["code"], dataLang: lang }, [
       bar,
       node,

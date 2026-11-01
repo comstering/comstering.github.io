@@ -39,3 +39,69 @@ test("칩 숫자는 opacity로 흐리게 하지 않는다", async ({ page }) => 
     expect(await counts.nth(i).evaluate((el) => getComputedStyle(el).opacity)).toBe("1");
   }
 });
+
+// 디자인 21번(impeccable audit, Q14)
+const CODE_POST = "/posts/install-cilium-eks";
+
+test("코드 블록 <pre>는 키보드로 닿고 이름이 있다 (WCAG 2.1.1)", async ({ page }) => {
+  await page.goto(CODE_POST);
+  const pres = page.locator(".code pre");
+  const count = await pres.count();
+  expect(count).toBeGreaterThan(0);
+  for (let i = 0; i < count; i += 1) {
+    await expect(pres.nth(i)).toHaveAttribute("tabindex", "0");
+    await expect(pres.nth(i)).toHaveAttribute("role", "region");
+    await expect(pres.nth(i)).toHaveAttribute("aria-label", /\S+ 코드$/);
+  }
+  // 복사 버튼 다음 Tab이 코드 블록으로 간다
+  await page.locator(".code__copy").first().focus();
+  await page.keyboard.press("Tab");
+  await expect(pres.first()).toBeFocused();
+});
+
+for (const route of ["/", "/about", CODE_POST]) {
+  test(`글자 200%에서 가로로 넘치지 않는다: ${route}`, async ({ page }) => {
+    await page.goto(route);
+    await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+}
+
+test("히트 영역: 헤더 링크·로고·칩은 위아래로 넓혀 44px가 된다", async ({ page }) => {
+  await page.goto("/");
+  const targets = [
+    page.getByRole("link", { name: /comstering/ }).first(),
+    page.getByRole("navigation", { name: "주요 메뉴" }).getByRole("link", { name: "posts" }),
+    page.getByRole("group", { name: "카테고리 필터" }).getByRole("button").first(),
+  ];
+  for (const target of targets) {
+    const box = await target.boundingBox();
+    expect(box).not.toBeNull();
+    // 요소 위쪽 5px 지점을 눌러도 같은 요소가 잡힌다
+    const hit = await target.evaluate((el, [x, y]) => {
+      const found = document.elementFromPoint(x, y);
+      return found === el || el.contains(found);
+    }, [box!.x + box!.width / 2, box!.y - 5]);
+    expect(hit).toBe(true);
+  }
+});
+
+test("PC 목차는 aside 랜드마크가 아니다(landmark-complementary-is-top-level)", async ({ page }) => {
+  await page.goto(CODE_POST);
+  await expect(page.locator("aside")).toHaveCount(0);
+});
+
+test("본문 외부 링크는 noopener noreferrer를 명시한다", async ({ page }) => {
+  await page.goto("/posts/bitnami-helm-chart-contribute");
+  const rels = await page
+    .locator(".prose a[target='_blank']")
+    .evaluateAll((links) => links.map((a) => a.getAttribute("rel") ?? ""));
+  expect(rels.length).toBeGreaterThan(0);
+  for (const rel of rels) {
+    expect(rel).toContain("noopener");
+    expect(rel).toContain("noreferrer");
+  }
+});
