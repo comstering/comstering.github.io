@@ -19,31 +19,18 @@
 |---|---|
 | [CONTEXT.md](./CONTEXT.md) | **새 세션이 가장 먼저 읽는 문서.** 역할, 문서 지도, 확정된 디자인 결정, 코드 규칙, 검증 방법, 작업 규칙 |
 | [STATUS.md](./STATUS.md) | **지금 상태와 다음 작업.** 열린 항목, 확인된 것, 변경 이력. 작업이 끝날 때마다 갱신 |
+| [archive/phase0-summary.md](./archive/phase0-summary.md) | **Phase 0 디자인 요약 보관본.** 01~11번(진단·방향·명세·시안·기획 검토·v1.3·사용자 결정)의 핵심 |
+| [archive/phase1-summary.md](./archive/phase1-summary.md) | **Phase 1 디자인 요약 보관본.** 결과, 확정 결정, 구현 검토 결과, 함정, 못 한 것, Phase 2로 넘기는 것. |
+| [archive/README.md](./archive/README.md) | **보관 폴더 안내.** 요약본 2개, 원문이 남은 12·19·21번, 삭제한 번호(01~03, 05~11, 13~17, 20)의 위치와 Git 복구 방법 |
 | `tools/check-site.mjs` | 시안 8개 화면 × PC·모바일 검사 스크립트 |
 | [design-system.html](./design-system.html) | **디자인 시스템 문서**: 브랜드, 색, 타이포, 간격, 컴포넌트, 패턴, 화면 목록. 브라우저로 열어서 본다 |
 | `site/*.html` | **최종 화면 시안 9종**: home, post, projects, project, about, tags, tag, 404, og. 그 밖에 `phase1-compare.html`(Phase 1 비교), `og-render.html`(OG 렌더용 단독 페이지)과 생성 결과 `og/*.png` |
 | `system/` | 시안이 공유하는 `tokens.css` · `base.css` · `components.css` · `app.js` · `giscus-{dark,light}.css` |
-| [01-baseline-audit.md](./01-baseline-audit.md) | 현재 DESIGN.md와 실제 코드 상태, 토큰 대비 측정 |
-| [02-direction.md](./02-direction.md) | 개선 방향성 |
-| [03-references.md](./03-references.md) | 참고 사이트 |
 | [04-design-system.md](./04-design-system.md) | 디자인 시스템 명세 (v1.3 + v1.4 D5) (DESIGN.md 반영 후보) |
-| [05-planning-review.md](./05-planning-review.md) | 기획 세션의 검토 (R1~R10) |
-| [06-review-response.md](./06-review-response.md) | 기획 리뷰 반영 + 디자인 스킬 점검 결과 (v1.1 → v1.2) |
-| [07-planning-rereview.md](./07-planning-rereview.md) | 기획 재검토: v1.1 승인, N1~N3 |
-| [08-ux-review.md](./08-ux-review.md) | 사용자 관점 시안 검토 H1~L2 + v1.3 반영 결과 |
-| [09-final-review.md](./09-final-review.md) | 최종 검토: 시각(frontend-design)·QA·구현 전환(vercel) |
-| [10-planning-decisions.md](./10-planning-decisions.md) | 기획: 사용자 결정 반영, v1.4 요청 D1~D6 |
-| [11-planning-request-categories.md](./11-planning-request-categories.md) | 기획: categories 대표 유무 의견 요청 |
-| [12-phase1-design-response.md](./12-phase1-design-response.md) | **Phase 1 답변**: categories B안 추천, 목록 썸네일 제거 추천(09 A안 철회), PRD-003 의견 E1~E9, v1.4 반영 |
-| [13-planning-response-phase1.md](./13-planning-response-phase1.md) | 기획 답변: 12번 전부 채택, 디자인 요청 R1~R2 |
-| [14-thumbnail-decision-request.md](./14-thumbnail-decision-request.md) | **목록 썸네일 최종 결정 요청**: 로고 썸네일로 재확인, 통일안 시험 결과, A·B·C 선택지, 제거 근거 수정 |
-| [15-planning-final-phase1.md](./15-planning-final-phase1.md) | 기획 답변: 목록 썸네일 C안(제거) 확정, PRD-003 approved. 디자인 요청은 R1만 남음 → **완료** |
-| [16-design-answer-filter-flash.md](./16-design-answer-filter-flash.md) | 디자인 답변(개발 Q5): `?category=` 직접 진입 시 전체 목록이 잠깐 보이는 동작 허용, 측정값과 재검토 조건 |
-| [17-design-review-pr9-pr12.md](./17-design-review-pr9-pr12.md) | **머지된 PR-9·PR-12 구현 검토 + Q7 답변.** PR-12 도구 줄의 `font:` 단축 속성이 빌드에서 무효(F1), PR-9는 시안과 일치, 시리즈 박스 "다음 편 링크"는 두지 않음 |
+| [12-phase1-design-response.md](./archive/12-phase1-design-response.md) | **Phase 1 답변**: categories B안 추천, 목록 썸네일 제거 추천(09 A안 철회), PRD-003 의견 E1~E9, v1.4 반영 |
 | [18-planning-request-phase2.md](./18-planning-request-phase2.md) | **기획 요청: Phase 2 디자인 D-1~D-4 (2026-10-30 개정, About 강화).** About 경력 시안(관련 글·앵커·펼침), 이력서 시안, About 갱신, 홈 히어로·대표 프로젝트. `/projects`·상세·Mermaid는 취소. 기준 PRD-004 |
-| [19-design-answer-q9-font-a11y.md](./19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
-| [20-design-review-pr13-pr14.md](./20-design-review-pr13-pr14.md) | **머지된 PR-13(관련 글)·PR-14(이미지 확대) 구현 검토.** 관련 글은 PRD 규칙과 14편 모두 일치(독립 계산), 확대 보기는 시안·PRD 동작과 일치. 낮은 요청 2건(링크 이름 길이, 섹션 제목 굵기) → 개발 Q10 |
-| [21-impeccable-audit.md](./21-impeccable-audit.md) | **impeccable audit(컴포넌트~페이지).** 합계 16/20 Good: 접근성 3·성능 3·테마 4·반응형 3·구현 3. P1 1건(코드 블록 키보드 접근), P2 2건(글자 200% 넘침, 터치 대상) → 개발 Q14. 번들 감지기는 실행하지 못함 |
+| [19-design-answer-q9-font-a11y.md](./archive/19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
+| [21-impeccable-audit.md](./archive/21-impeccable-audit.md) | **impeccable audit(컴포넌트~페이지).** 합계 16/20 Good: 접근성 3·성능 3·테마 4·반응형 3·구현 3. P1 1건(코드 블록 키보드 접근), P2 2건(글자 200% 넘침, 터치 대상) → 개발 Q14. 번들 감지기는 실행하지 못함 |
 
 ### 보는 방법
 

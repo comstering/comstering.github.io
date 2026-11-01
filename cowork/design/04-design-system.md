@@ -1,8 +1,8 @@
 # 04. comstering 디자인 시스템 v1.3
 
-> v1.1 (2026-10-27): 기획 리뷰 R1~R10과 디자인 스킬 점검 결과를 반영했다. 상세는 [06-review-response.md](./06-review-response.md).
-> v1.3 (2026-10-27): 사용자 관점 검토 [08-ux-review.md](./08-ux-review.md) H1~L2 반영. 아래 "v1.3 규칙 추가" 참고.
-> v1.2 (2026-10-27): 기획 재검토 [07-planning-rereview.md](./07-planning-rereview.md) 승인. N1 표시, 외부 링크 스크린리더 문구, 시리즈 표기 규칙을 반영했다.
+> v1.1 (2026-10-27): 기획 리뷰 R1~R10과 디자인 스킬 점검 결과를 반영했다. 상세는 [archive/phase0-summary.md](./archive/phase0-summary.md) 3장(원문 06번).
+> v1.3 (2026-10-27): 사용자 관점 검토 [archive/phase0-summary.md](./archive/phase0-summary.md) 3장(원문 08번) H1~L2 반영. 아래 "v1.3 규칙 추가" 참고.
+> v1.2 (2026-10-27): 기획 재검토 [archive/phase0-summary.md](./archive/phase0-summary.md) 2장(원문 07번) 승인. N1 표시, 외부 링크 스크린리더 문구, 시리즈 표기 규칙을 반영했다.
 
 `design-system.html`의 내용을 글로 정리한 명세. 합의되면 이 문서를 기준으로 `/DESIGN.md`를 갱신하고, `system/tokens.css`를 `src/app/globals.css`로 옮긴다.
 

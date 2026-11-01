@@ -1,78 +1,39 @@
 # 디자인 세션 STATUS
 
-_최종 갱신: 2026-10-31 · 디자인 v1.4 확정 · 기준 기획서 PRD-003(approved) · 배경과 규칙은 [CONTEXT.md](./CONTEXT.md)_
+_최종 갱신: 2026-11-01 · 디자인 v1.4 확정 · Phase 0·1 종료(보관) · 기준 기획서 PRD-004(Phase 2) · 배경과 규칙은 [CONTEXT.md](./CONTEXT.md)_
 
 ## 한눈에 보기
 
 | 항목 | 상태 |
 |---|---|
-| Phase 1 시안 v1.4 | **확정.** R1(목록 썸네일 제거)까지 반영 완료 |
-| 열린 질문 | 개발 **Q14**(디자인 → 개발: impeccable audit P1·P2, 21번). 기획 쪽 Q9의 게이트 문구는 Q11~Q13에서 "관측 측정"으로 결정돼 정리됨 |
+| Phase 0·1 | **종료·보관.** 요약 [archive/phase0-summary.md](./archive/phase0-summary.md), [archive/phase1-summary.md](./archive/phase1-summary.md). 삭제한 번호는 [archive/README.md](./archive/README.md)에서 찾는다 |
+| Phase 2 | PRD-004 approved, 개발 PR-18부터 시작 가능. 디자인 요청은 [18번](./18-planning-request-phase2.md) D-1~D-5 |
+| 열린 질문 | 없음(개발 Q14·Q15 closed) |
 | 지금 막힌 것 | 없음 |
-| 다음 디자인 작업 | 개발이 Q14를 반영하면 재확인(코드 블록 `tabindex`, 글자 200% 헤더, 터치 대상). PR-15(OG) 검토 |
-| 저장소 상태 | `main` `626fd74`. `cowork/` 전체가 커밋돼 있다. 20번 문서는 PR `docs/design-review-pr13-pr14`. 작업 폴더는 개발·기획과 같이 쓰므로 PR은 별도 worktree에서 만든다 |
-
-## 개발 진행 (참고, 원본은 `cowork/develop/STATUS.md`)
-
-| PR | 상태 |
-|---|---|
-| PR-10 E2E·Lighthouse CI(#27), PR-11 본문(#28), PR-9 categories·`updated`·필터 URL·썸네일 제거(#30), PR-12 목차·시리즈 바(#33), PR-13 관련 글(#35), Q8 글꼴 단축 속성 수정(#37), PR-14 이미지 파이프라인·확대(#38), G1-4 측정 기준 변경(#39) | 머지 |
-| PR-15 OG → PR-16 진행률 → PR-17 게이트 | 대기. 한 번에 PR 하나 |
+| 저장소 상태 | 개발 쪽 기준 `main` `ccb7361`(#57 머지). 이 폴더의 정리(archive, README·CONTEXT·STATUS 개정)는 **미커밋**. 작업 폴더를 개발·기획과 같이 쓰므로 PR은 별도 worktree에서 만든다 |
 
 ## 다음 작업 (위에서부터)
 
-1. **Q9 반영 재확인.** 개발이 올리면 ① 글꼴: 요청 수·용량, FCP·LCP가 현재와 같은지, 새 글자 누락 시 폴백이 한 글자만 바뀌는지 ② 접근성 3건(칩 숫자 6.53:1, 복사 버튼 이름, About `h3`) ③ CI의 About CLS(3회 중앙값). 19번 6장의 "확인하지 못한 것"을 채운다.
-2. **PR-15(OG 이미지) 검토.** 기준은 12번 E4~E6(accent 선 없음, PNG, Pretendard 700 + JetBrains Mono 400)과 시안 `og.html`·`og/*.png`. 제목 3줄, 하단 `categories · 날짜 · 시리즈`, 1200×630. PR-15가 끝나면 시안용 `site/og/*.png`(16개, 약 0.7MB)를 대표 2~3장만 남기고 정리(13번 R2).
-3. 기획 쪽: PRD-003 PR-12의 "다음 편 링크" 문구 정정 요청(17번 2장)이 반영됐는지 확인. Q6(G1-4)은 기획이 closed로 답했다(기준을 "첫 본문 블록이 첫 화면 안에서 시작"으로 변경, 개발 #39에서 E2E 반영). 게이트 문구(Q9)는 기획 대기.
-4. 개발이 Q4(기존 글에 콜아웃·셸 블록 소급 적용)에 대한 의견을 구하면 답한다. 현재는 기획 대기.
+1. **Phase 2 시안(18번).** D-1 About 경력 시안(관련 글·앵커·펼침), D-2 이력서 `resume.html`(웹 + A4 인쇄), D-3 About 갱신(기술 스택 7그룹, Credly `verify ↗`), D-4 홈 히어로·대표 프로젝트, D-5 About CLS 해법(폴백 글꼴 크기 보정 `size-adjust` 등). 기준은 PRD-004 4~5장, 새 시안도 `system/`의 토큰·컴포넌트만 쓴다.
+2. **Q14(#57) 반영 재확인.** 코드 블록 `tabindex`(Safari 등), 글자 200% 헤더·PC 목차 넘침, 터치 대상 44px. 빌드한 `out/`으로 하고 도구(Playwright, 실제 Chrome)를 같이 적는다.
+3. O-8을 개발에 보낼지 결정(아래).
+4. 시안용 `site/og/*.png`(16개, 약 0.7MB)를 대표 2~3장만 남기고 정리. PR-15(OG)가 머지됐으므로 가능하다.
 
 ## 열린 항목 (디자인이 판단하거나 사용자 확인이 필요한 것)
 
 | # | 항목 | 내용 | 담당 |
 |---|---|---|---|
-| O-1 | `.ph`(시안 표시) 잔존 | `site/post.html` 4개, `projects.html` 5개, `project.html` 1개. 확정값인지 자리표시인지 정해야 함. **정정:** `post.html`의 `1,204 views`는 오류가 아니다. 조회수(GoatCounter)는 실제 기능이고(PRD-001 F-PO-01) 숫자는 샘플이다. 구현에도 `views`가 있다. 나머지 `.ph`는 Phase 2(포트폴리오) 값이라 그때 정한다 | Phase 2 기획 |
-| O-2 | 모바일 `#` 앵커 높이 | 360px에서 23px, 터치 권장 44px 미달. 호버에서만 보이는 보조 링크라 심각하지 않음. 터치에서 항상 보이게 할 계획이면 히트 영역 확대 | 디자인(판단 보류) |
-| O-3 | 실제 Chrome 확인 | 지금까지 Playwright Chromium으로만 확인. **2026-10-31: 이 세션이 Remote Control이라 `/chrome`을 쓸 수 없다**("isn't available over Remote Control"). Claude in Chrome 확인은 로컬 터미널에서 직접 연 세션에서 가능할 것으로 보인다(미확인). 대안으로 Firefox·WebKit(Safari 엔진)은 Playwright 브라우저 설치가 필요해 사용자 확인 대기 | 로컬 세션 / 사용자 |
-| O-7 | impeccable 완전 사본·감지기 | 전역 사본이 `SKILL.md`뿐이라 audit를 지침대로 못 돌렸다(21번). 완전 사본을 프로젝트에 설치하면 `scripts/impeccable` 런처가 실행 시 **GitHub release의 네이티브 바이너리를 내려받아 실행**한다. 감지기 결과가 필요하면 설치와 바이너리 실행을 사용자가 승인해야 한다 | 사용자 |
-| O-4 | 확대 `<dialog>` 동작 | **확인함(20번).** Enter·Esc·바깥 클릭·닫기 버튼, 포커스 복귀, 배경 잠김, 44px, reduced-motion 모두 정상. **남은 것:** 캡션 표시(현재 글에 `figcaption` 이미지 없음), 모바일 360px 확대 | 캡션 있는 글이 생기면 |
-| O-5 | 필터 깜빡임 재검토 조건 | 실기기·느린 네트워크에서 약 1초 이상 보이거나 필터 URL 유입이 늘면 16번의 (a)안(data 속성 + 인라인 스크립트) 검토 | 데이터가 생기면 |
-| O-6 | `cowork/` 커밋 | **완료.** prd·design은 #32, develop은 #33에서 커밋됨(2026-10-28 머지). public 저장소라 시안·PRD의 회사 성과 수치(`$16,000 절감`, `-50%` 등)가 이미 공개 상태. 공개를 원치 않는 수치가 있으면 시안·PRD를 고쳐 새 PR로 올려야 하고, 이미 기록된 Git 이력에는 남는다 | 사용자 |
-
-## 이번 세션에서 확인된 것 (재확인 불필요)
-
-- 시안 8개 화면 × PC·모바일: 가로 넘침 0, h1 1개, alt 없는 이미지 0, 깨진 이미지 0, 목록·관련 글 썸네일 0, `updated` 표시 0.
-- 360×640에서 `post.html` 첫 h2 542px(G1-4 통과).
-- 홈 목록 페이지 높이 3379px → 3325px(썸네일 제거).
-- 로고 썸네일을 "어두운 타일 + contain"으로 통일해 보았으나 로고가 작아지고 `cilium.png`(어두운 글자의 투명 로고)가 안 보여 개선되지 않았음 → 14번. 썸네일을 되살리려면 원본 이미지를 새로 만들어야 한다.
-- PR-9 브랜치 `out/` 측정: `/?category=infra` 직접 진입 시 전체 14편이 PC 약 80ms, 모바일(CPU 4배) 약 420ms 보인 뒤 필터됨, CLS 0 → 16번.
-
-## 17번 검토에서 확인된 것 (PR-9·PR-12, `main` `594a289` 빌드 산출물)
-
-- PR-9: 칩 숫자 = 결과 수(`infra 11`, `frontend 2`, `oss 2`, `note 1`), `?category=backend`·`xyz`는 `all`, 목록 이미지 0, 메타 줄 360px 한 줄(14편), 헤더 카테고리 링크·쉼표 `aria-hidden`, `updated` 0 → 수정 요청 없음.
-- PR-12: G1-4 14편 중 12편 통과(초과 2편은 개발 Q6. 이후 기획이 기준을 바꿔 closed), 모바일 터치 대상 44px, 목차 숨김·본문 위치 유지(E7), `aria-expanded`·`aria-current` 동작. **F1(글꼴 단축 속성 무효)만 수정 요청.**
-- 시리즈 글 8편에서 날짜상 다음 글 = 시리즈 다음 편. 시리즈 박스에 "다음 편 링크"를 따로 두지 않는다(Q7).
-
-## 19번에서 확인된 것 (2026-10-29)
-
-- **F1 해결 확인(#37):** `main` `6fb7f7d` 빌드 CSS에서 쉼표로 깨진 `font:` 단축 속성 0개. 360px 계산된 스타일이 시안과 모두 일치(`contents` 13px, `series` 12px 모노, 현재 글 제목 15px/600).
-- 글꼴(360px, 느린 모바일 에뮬레이션): 현재 요청 12~17개 272~370KB. 단일 서브셋(706자, 102KB)+`swap`은 2개 141KB에 FCP·LCP가 같다. preload+`optional`은 홈·About에서 +330ms. 서브셋의 CLS 효과는 이 환경에서 CLS가 0이라 검증하지 못했다.
-- 접근성: 홈 0.96(칩 숫자 대비 3.05), 글 복사 버튼 이름 불일치, About 제목 단계 건너뜀. 시안 결함 2건(칩 숫자 `opacity .7`=3.73:1, 복사 버튼 `aria-label`)은 이번 PR에서 수정.
-
-## 20번에서 확인된 것 (PR-13·PR-14, `main` `626fd74` 빌드 산출물)
-
-- PR-13 관련 글: 14편 모두 PRD 규칙의 독립 계산과 같고, 0편 3편은 섹션이 숨겨지며, 중복 0건, 위치는 이전/다음 아래·댓글 위. 형식(18px/600, 15px/400 1줄, 태그·이미지 없음, 포커스 링)은 시안과 같음.
-- PR-14 확대: 본문 이미지 60장 중 59장이 확대 대상(규칙과 불일치 0). 열기·닫기·포커스·배경 잠김·44px·reduced-motion 정상.
-- 요청 2건(낮음, 개발 Q10): 목록·관련 글 링크 이름이 136~176자(시안은 제목만), `SectionHead` 라벨 굵기 400(시안 700). 링크 이름은 PR-9 검토(17번)에서 놓친 항목이다.
+| O-1 | `.ph`(시안 표시) 잔존 | `site/post.html` 4개, `projects.html` 5개, `project.html` 1개. 조회수(`1,204 views`)는 실제 기능의 샘플 숫자라 오류가 아니다. 나머지는 Phase 2 값이라 그때 정한다 | Phase 2 기획 |
+| O-2 | 모바일 `#` 앵커 높이 | 360px에서 23px(권장 44px 미달). 호버에서만 보이는 보조 링크라 심각하지 않음. 터치에서 항상 보이게 할 계획이면 히트 영역 확대 | 디자인(판단 보류) |
+| O-3 | 실제 Chrome 확인 잔여 | Chrome 156으로 홈·글·확대·라이트는 확인함(archive/phase1-summary 4장). **못 한 것:** 정확한 360px(Chrome 창 최소폭 406px), 핀치 확대, Safari·Firefox, 실기기, 스크린리더 낭독, 확대 창 캡션(`figcaption` 있는 글이 아직 없음) | 사용자(실기기·Safari) |
+| O-5 | 필터 깜빡임 재검토 조건 | 실기기·느린 네트워크에서 약 1초 이상 보이거나 필터 URL 유입이 늘면 (a)안(data 속성 + 인라인 스크립트) 검토. 측정값은 `archive/phase1-summary.md` 3장 | 데이터가 생기면 |
+| O-7 | impeccable 완전 사본·감지기 | 번들 감지기는 `scripts/impeccable` 런처가 **GitHub release 바이너리를 내려받아 실행**한다. 결과가 필요하면 설치와 실행을 사용자가 승인해야 한다 | 사용자 |
+| O-8 | 확대 `<dialog>` 배경 스크롤 잠김 없음 | 실제 Chrome에서 확대 창을 연 채 휠을 돌리면 뒤 페이지가 스크롤된다(500px 이동, `html`·`body` overflow `visible`). 이전 Playwright 확인은 이를 못 잡았다. 영향은 낮음(닫으면 뒤 페이지 위치만 바뀜) | 디자인 → 개발 (미발송) |
 
 ## 변경 이력
 
 | 날짜 | 내용 |
 |---|---|
-| 2026-10-28 | 디자인 검토 시작(PRD 001~003, 디자인 01~13 읽음). 14번 썸네일 최종 결정 요청 작성, 기획이 15번으로 C안 확정. R1 반영: `index/tag/404/project/post/design-system.html`의 썸네일 삭제, `components.css`의 썸네일 규칙·2열 grid 정리, `phase1-compare.html`은 기록용이라 규칙을 파일 안으로 이동. 16번(Q5 답변) 작성. `CONTEXT.md`·`STATUS.md`·`tools/check-site.mjs` 신설. 개발 `REQUESTS.md` Q5를 16번 링크와 함께 closed. "시작 시 읽고, 끝날 때 기록" 규칙을 저장소 `CLAUDE.md`의 "세션별 기록 (cowork)"에 명시(메모리가 아니라 파일에 기록) |
-| 2026-10-28 | `cowork/prd`·`cowork/design`을 `main` 기준 별도 worktree에서 브랜치 `docs/cowork-prd-design`으로 커밋하고 PR #32. 작업 폴더에서 개발 세션이 PR-12를 진행 중이라 브랜치를 바꾸지 않음. `CLAUDE.md`에 "세션별 기록 (cowork)" 절 추가, 커밋 결정 반영 |
-| 2026-10-28 | PR #32(prd·design)와 #33(PR-12, develop 포함) 머지 후 정리. stash(`CLAUDE.md`)를 `main`과 비교해 빠진 내용이 없음을 확인. `CLAUDE.md`·`CONTEXT.md`·`STATUS.md`의 "develop은 로컬 전용"을 현재 상태(커밋됨)로 수정. 개발 `REQUESTS.md`의 Q7(디자인에 열림)을 다음 작업 1번으로 추가. 개발 진행 표를 PR-9·10·11·12 머지로 갱신 |
-| 2026-10-28 | 머지된 PR-9·PR-12를 `main` `594a289` 빌드 산출물로 시안과 대조해 17번으로 정리. F1(빌드 CSS에서 `font:` 단축 속성 6개 무효) 발견 → 개발 Q8. Q7 답변·closed. O-1 정정(조회수는 실제 기능). 개발 `REQUESTS.md`에 Q8 추가 |
-| 2026-10-29 | 개발 Q9(글꼴 로딩·접근성 98→100·게이트)에 19번으로 답변. 글꼴 방식 3종을 측정해 단일 서브셋+`swap`을 권장. 접근성 3건을 시안과 대조해 시안 결함 2건(`.chip__count` opacity, 복사 버튼 `aria-label`)을 수정. Q8 수정(#37) 재확인. `CONTEXT.md`에 글꼴·접근성 결정 추가. 임시 stash 1개를 만들었다가 정리 |
-| 2026-10-29 | 머지된 PR-13(#35)·PR-14(#38)를 `main` `626fd74` 빌드 산출물로 시안과 대조해 20번으로 정리. 관련 글은 PRD 규칙을 독립 계산해 14편 일치 확인. 낮은 요청 2건을 개발 Q10으로. 개발 `REQUESTS.md` Q9 답 칸에 19번 연결. O-4(확대 `<dialog>`) 확인 반영 |
-| 2026-10-31 | `/chrome`이 Remote Control에서 불가함을 확인(O-3). 디자인에 유용한 skill 3개(web-design-guidelines, tailwind-design-system, web-perf)를 프로젝트에 설치하고 `SKILLS.md`에 검토 결과·보안 평가·주의를 기록. 사용자 목록 13개 중 8개는 이미 설치돼 있었고, 디자인 외 3개(seo-audit, webapp-testing, playwright-best-practices)는 미설치 목록으로 남김 |
-| 2026-10-31 | impeccable `audit` 진행(21번). 합계 16/20 Good. P1 코드 블록 키보드 접근, P2 글자 200% 넘침·터치 대상. 개발 Q14로 요청. 라이트 테마·전환·깜빡임 방지 확인, 두 테마 axe 대비 위반 0. 처음 성능을 시뮬레이션 수치로 2점 줬다가 기획의 관측 측정 결정(Q12~Q13)을 확인하고 3점으로 정정. 포커스 "없음 14건"은 내 검사의 거짓 양성. 완전 사본을 임시 폴더에 설치, 바이너리는 실행하지 않음 |
+| 2026-10-27 ~ 10-31 | 디자인 검토·답변 이력(시안 v1.0→v1.4, 개발 Q5·Q7~Q10·Q14 답변, PR-9~PR-14 구현 검토, impeccable audit 16/20). 상세는 `archive/phase0-summary.md`, `archive/phase1-summary.md` |
+| 2026-11-01 | 로컬 세션에서 `/chrome` 연결, 빌드 산출물을 Chrome 156으로 확인. 새 항목 O-8, Q14 P1은 Chrome에서 증상 없음으로 보정 |
+| 2026-11-01 | **Phase 0·1 종료·보관.** 요약 2개를 `archive/`에 작성. 원문 01~21번 중 12·19·21번만 `archive/`로 이동, 04·18번은 유지, 나머지 16개는 삭제(Git `0012ede`에서 복구). 이 폴더의 README·CONTEXT·STATUS와 `/DESIGN.md`·PRD의 경로 링크를 정리. STATUS를 Phase 2 중심으로 재작성 |

@@ -2,9 +2,9 @@
 
 comstering.github.io 디자인 시스템 (v1.3 기준). UI를 만들거나 고칠 때 이 문서의 토큰과 규칙만 사용한다.
 
-- 원본 명세: `cowork/design/04-design-system.md` (+ `10-planning-decisions.md`), 시안은 `cowork/design/site/`
+- 원본 명세: `cowork/design/04-design-system.md` (+ `cowork/design/archive/phase0-summary.md`의 사용자 결정 D1~D6), 시안은 `cowork/design/site/`
 - 구현 위치: 토큰 `src/app/globals.css`, 폰트 `src/app/layout.tsx`
-- 작업 계획: `cowork/prd/002_platform_phase0-stabilization.md`
+- 작업 계획: 진행 중인 Phase의 PRD(`cowork/prd/`), 끝난 Phase는 `cowork/prd/archive/phase-0-1_summary.md`
 
 ## 1. 브랜드
 

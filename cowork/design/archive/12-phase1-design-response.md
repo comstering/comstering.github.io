@@ -1,8 +1,8 @@
 # 12. Phase 1 디자인 답변 + 시안 v1.4
 
 작성: 디자인 세션 · 2026-10-27
-근거: [`prd/003_blog_reading-experience.md`](../prd/003_blog_reading-experience.md), [11-planning-request-categories.md](./11-planning-request-categories.md), [10-planning-decisions.md](./10-planning-decisions.md) D1~D6
-비교 시안: [`site/phase1-compare.html`](./site/phase1-compare.html) (같은 데이터로 A안·B안, 썸네일 3안을 나란히 놓음)
+근거: [`prd/003_blog_reading-experience.md`](../../prd/003_blog_reading-experience.md), 11번(categories 의견 요청, 삭제됨), 10번(사용자 결정, 삭제됨) D1~D6
+비교 시안: [`../site/phase1-compare.html`](../site/phase1-compare.html) (같은 데이터로 A안·B안, 썸네일 3안을 나란히 놓음)
 
 ## 결론
 
@@ -16,7 +16,7 @@
 |---|---|---|---|
 | 1 | 360px 목록 메타 줄에 `날짜 · category 2개 · series`가 한 줄에 들어가나 | **들어간다.** 360px 화면의 본문 폭 320px 기준으로 실측 | `infra, oss` 행 156px, `frontend, oss` 행 178px. 가상의 최악 조합 `2025-09-01 frontend, oss series cilium 3/3`이 312px |
 | 2 | 글 상세 헤더: A안(대표 accent + 두 번째 mute) vs B안(동등) | **B안.** 둘 다 accent 링크로, 쉼표로 묶는다 | 아래 설명 |
-| 3 | OG 하단 줄에 category 2개가 들어가나 | **넉넉하다.** 하단 줄 1040px 중 최악 조합(`frontend, oss · 날짜 · series cilium-on-eks 2/3`)이 약 780px | `site/og/worst-case.png` |
+| 3 | OG 하단 줄에 category 2개가 들어가나 | **넉넉하다.** 하단 줄 1040px 중 최악 조합(`frontend, oss · 날짜 · series cilium-on-eks 2/3`)이 약 780px | `../site/og/worst-case.png` |
 | 4 | 추천 | **B안** | 공간 문제가 없으므로 A안의 장점(줄 길이 유지)이 사라지고, 단점(필터와 메타 불일치, 순서 규칙)만 남는다 |
 
 ### 2번 상세: 원칙 2 "포인트 색 하나"와 맞는 쪽
@@ -53,7 +53,7 @@
 | categories B안 | 홈: Bitnami `infra, oss`, Kafbat `frontend, oss`, 필터는 두 값 모두로 걸림. 글 상세 헤더에 `.cats` 묶음 | `index.html`, `post.html`, `components.css` v1.4 |
 | `updated` 삭제 (4.1) | 글 상세 헤더에서 `updated 2025-07-12` 삭제 | `post.html` |
 | OG 하단 줄 | `category · 날짜 · 시리즈`(PRD 기준. 기존 시안의 `6 min read`는 뺌). 카테고리 2개 예시 추가 | `og.html` |
-| OG 렌더 PoC | 시안 템플릿으로 14편 OG를 헤드리스 Chrome으로 생성(1200×630 PNG, 24~55KB) | `site/og-render.html`, `site/og/*.png` |
+| OG 렌더 PoC | 시안 템플릿으로 14편 OG를 헤드리스 Chrome으로 생성(1200×630 PNG, 24~55KB) | `../site/og-render.html`, `../site/og/*.png` |
 | 목록 썸네일 | 10번 결정(A안)대로 홈 시안 썸네일을 OG로 교체해 둠. 3장의 반대 의견이 받아들여지면 되돌린다 | `index.html` |
 | 확대 보기 (PR-14) | 네이티브 `<dialog>`(`showModal`)로 교체. Esc·바깥 클릭·닫기 버튼(44px)으로 닫힘, 닫으면 원래 이미지로 포커스 복귀, 원래 캡션을 이미지 아래에 표시(화면 낭독기용 "새 창에서 열림" 문구는 제외), `prefers-reduced-motion`이면 애니메이션 없음 | `app.js`, `components.css` v1.4 |
 | 목차 없는 글 (PR-12) | h2 3개 미만이라 목차 버튼이 빠지면 시리즈 버튼이 한 줄 전체를 쓴다. 둘 다 없으면 도구 줄 자체를 렌더하지 않는다 | `components.css` `.post-tools > :only-child` |
@@ -124,13 +124,13 @@
 
 ## 6. 이번에 바꾼 파일
 
-- 신규: `site/phase1-compare.html`, `site/og-render.html`, `site/og/*.png`(16개, 시안용 생성물), 이 문서
-- `site/index.html`: 칩(D1), 다중 카테고리, OG 썸네일
-- `site/post.html`: `updated` 삭제, `.cats` 묶음
-- `site/og.html`: 하단 줄, 카테고리 2개 예시
-- `site/project.html`, `site/projects.html`, `site/about.html`: D2~D4
-- `system/app.js`: 확대 보기 `<dialog>`
-- `system/components.css`: v1.4 블록
+- 신규: `../site/phase1-compare.html`, `../site/og-render.html`, `../site/og/*.png`(16개, 시안용 생성물), 이 문서
+- `../site/index.html`: 칩(D1), 다중 카테고리, OG 썸네일
+- `../site/post.html`: `updated` 삭제, `.cats` 묶음
+- `../site/og.html`: 하단 줄, 카테고리 2개 예시
+- `../site/project.html`, `../site/projects.html`, `../site/about.html`: D2~D4
+- `../system/app.js`: 확대 보기 `<dialog>`
+- `../system/components.css`: v1.4 블록
 - `design-system.html`, `04-design-system.md`: D5, `관련 글` 용어
 
 `/DESIGN.md`와 `src/`는 건드리지 않았다(구현 세션 작업, PRD-003 PR-17).

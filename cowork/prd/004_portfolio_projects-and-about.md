@@ -6,8 +6,9 @@ status: approved
 owner: comstering
 created: 2026-10-29
 updated: 2026-10-31
-related: [PRD-001, PRD-003]
+related: [PRD-001]
 changelog:
+  - 2026-11-01 PR-19 수용 기준에 About CLS ≤ 0.1 추가(개발 Q15), 디자인 요청 D-5 추가
   - 2026-10-31 PR-19 수용 기준에 About 성능 예외(Q13) 해제 추가
   - 2026-10-30 범위를 C안(About 강화)으로 축소. /projects 목록·상세, Mermaid 구조도, 헤더 projects 메뉴 제외. 기획 승인
   - 2026-10-29 이력서(자동 PDF, 사진 없음)·자격증 URL·기술 스택 확정
@@ -47,7 +48,7 @@ changelog:
 | G2-2 | `src/`에 경력·프로젝트 문자열 하드코딩 0건. About·홈·이력서가 같은 데이터에서 렌더 | grep + 데이터 하나를 고치면 세 곳이 같이 바뀌는지 확인 |
 | G2-3 | 존재하지 않는 글·프로젝트를 가리키는 링크가 있으면 빌드 실패 | 깨진 fixture |
 | G2-4 | E2E J1 시나리오: 홈 대표 프로젝트 → About 해당 항목(강조) → 관련 글, 이력서 PDF 다운로드 | Playwright |
-| G2-5 | `/about`, `/resume`이 PRD-003 "성능 측정 기준"의 차단선 통과, 접근성 100, SEO 100 | Lighthouse CI(`/resume` 추가) |
+| G2-5 | `/about`, `/resume`이 PRD-001 5.1 "성능 측정 기준"의 차단선 통과, 접근성 100, SEO 100 | Lighthouse CI(`/resume` 추가) |
 | G2-6 | `/resume.pdf`가 빌드마다 데이터와 같은 내용으로 생성되고, 한글이 깨지지 않으며 텍스트 검색 가능, ≤ 1MB | 산출물 검사 |
 
 ## 2. 현재 상태 (2026-10-30)
@@ -252,7 +253,7 @@ sideProjects:                                     # Lomeone
 
 ## 6. 작업 목록 (PR 단위)
 
-**시작 조건:** Phase 1 게이트(PRD-003 PR-17) 통과 후. 디자인 요청(8장)은 지금 시작한다.
+**시작 조건:** Phase 1 완료(2026-11-01) 후 바로 시작 가능. 디자인 요청(8장)은 지금 시작한다.
 
 순서: PR-18 → PR-19 → PR-20 → PR-21 → PR-22 → PR-23
 
@@ -269,7 +270,7 @@ flowchart LR
 | PR | 내용 | 수용 기준 |
 | --- | --- | --- |
 | PR-18 데이터 분리·검증 | `content/profile.yaml`, `content/experience.yaml`, 스키마(zod), 4.5 검증. `about/page.tsx`·`Bio.tsx` 문장을 바꾸지 않고 옮긴다(바뀌는 것은 기술 스택 7그룹뿐). 글 `relatedProject` 추가(5.4 초안) | 4.5 규칙별 깨진 fixture에서 빌드 실패. 이전 전후 텍스트 비교를 PR 설명에 첨부. 화면은 아직 그대로 |
-| PR-19 About 강화 | 5.1. `Bio`·`ExperienceItem`·`ActivityCard` 정리 또는 교체. 연차 빌드 때 계산 | 360×640 첫 화면에 이름·직함·연차·회사·email·resume. `about/page.tsx`에 경력 문자열 0건. 앵커 진입 시 강조·펼침. **About이 성능 차단선(성능 ≥ 90, TBT ≤ 300ms) 통과 → `lighthouserc.json`의 About 예외(Q13) 해제** |
+| PR-19 About 강화 | 5.1. `Bio`·`ExperienceItem`·`ActivityCard` 정리 또는 교체. 연차 빌드 때 계산 | 360×640 첫 화면에 이름·직함·연차·회사·email·resume. `about/page.tsx`에 경력 문자열 0건. 앵커 진입 시 강조·펼침. **About이 성능 차단선(성능 ≥ 90, TBT ≤ 300ms, CLS ≤ 0.1, 관측 3회 중앙값) 통과 → `lighthouserc.json`의 About 예외(Q13·Q15) 해제.** CLS 0.125(한글 소개 문단이 웹 글꼴 도착 뒤 줄 수가 바뀜)의 해법은 디자인과 정한다: 폴백 글꼴 크기 보정(`size-adjust`·`ascent-override`), 소개 문단 구성 변경 등(디자인 19번 1.4) |
 | PR-20 홈 히어로·대표 프로젝트 | 5.2 | 1280×720 첫 글 제목 보임, 1024 미만 대표 1건, 커서 깜빡임은 히어로 1곳 |
 | PR-21 이력서 | 5.3. 신규 `src/app/resume/page.tsx`, 인쇄 CSS, `scripts/build-resume-pdf.mjs`, deploy·CI 워크플로에 PDF 단계 | G2-6. PDF 텍스트에 직함·회사·연락처 포함 |
 | PR-22 SEO | 5.5, `lighthouserc.json`에 `/resume` 추가 | G2-5, Rich Results Test 오류 0 |
@@ -293,6 +294,7 @@ flowchart LR
 | D-2 | 필수 | **이력서 시안 `resume.html`:** 웹 + A4 인쇄(라이트 고정, 헤더·푸터·버튼 숨김, 링크 URL 표시, 사진 없음) |
 | D-3 | 필수 | **About 나머지 갱신:** 기술 스택 7그룹, Credly `verify ↗`, `.ph` 잔존 정리 |
 | D-4 | 필수 | **홈 히어로·대표 프로젝트:** `projects` 버튼 → `resume`, 대표 3건이 About 항목으로 연결, `all tags →` 제거 |
+| D-5 | 필수 | **About CLS 해법:** 한글 소개 문단(7줄)이 Pretendard 도착 뒤 줄 수가 바뀌어 CLS 0.125. 폴백 글꼴 크기 보정 등 방법을 정해 PR-19 시안에 반영(디자인 19번 1.4 다음 단계) |
 
 ## 9. 리스크
 
