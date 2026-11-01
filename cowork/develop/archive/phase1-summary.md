@@ -84,5 +84,5 @@ _기간 2026-10-28 ~ 2026-11-01 · PR #27 ~ #57 · 기획 PRD-003 `done` · 최�
 | --- | --- |
 | 일하는 방식·함정 | `../CONTEXT.md` |
 | PR별 동작·측정·세션 기록·질문(Q1~Q15)·성능 브리프(`briefs/Q11-performance-gate.md`)의 원문 | git 기록: `git log -p -- cowork/develop/STATUS.md cowork/develop/REQUESTS.md cowork/develop/briefs`(마지막 전체본은 `ccb7361` 시점), 각 PR 본문 |
-| 기획서 | `cowork/prd/003_blog_reading-experience.md` |
-| 디자인 답변·감사 | `cowork/design/12~21번` |
+| 기획 정리 | `cowork/prd/archive/phase-0-1_summary.md`(PRD-003 원문은 git 기록) |
+| 디자인 답변·감사 | `cowork/design/archive/`(요약 2개와 12·19·21번, 삭제한 번호 위치는 그 안의 README) |

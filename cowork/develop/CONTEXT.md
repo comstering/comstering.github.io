@@ -133,7 +133,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - `output: "export"`라 `generateStaticParams`에 없는 경로는 404. `dynamicParams = false`
 - E2E는 `out/`을 쓰므로 코드를 고치고 `yarn build` 없이 테스트하면 이전 결과로 돈다
 - 시안에 있는 클래스·마크업을 먼저 대조하지 않으면 PR 후에 시안과 어긋난 곳이 나온다(PR-11에서 겪음: 아이콘·`warning` 라벨·`$ ` 프롬프트 분리·표 흐림 방향)
-- `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 PRD-003과 최신 번호 문서(15번 등)를 기준으로 본다
+- `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 현재 PRD(004)와 `cowork/design/`의 최신 번호 문서를 기준으로 본다
 
 ## 9. 작성자 선호
 

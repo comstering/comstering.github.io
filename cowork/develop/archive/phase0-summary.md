@@ -2,7 +2,7 @@
 
 _기간 2026-10-26 ~ 2026-10-28 · PR #10 ~ #26 · 최종 게이트 G0-1~G0-6 통과 · 자동 배포 재개_
 
-이 문서는 Phase 0 개발의 **핵심만** 모은 보관본이다. 계획 원문은 `cowork/prd/002_platform_phase0-stabilization.md`, 이후 규칙·함정은 `../CONTEXT.md`(PR 세부는 PR 본문·git 기록), 다음 단계 요약은 [phase1-summary.md](./phase1-summary.md)에 있다.
+이 문서는 Phase 0 개발의 **핵심만** 모은 보관본이다. 기획 정리는 `cowork/prd/archive/phase-0-1_summary.md`(PRD-002 원문은 git 기록), 이후 규칙·함정은 `../CONTEXT.md`(PR 세부는 PR 본문·git 기록), 다음 단계 요약은 [phase1-summary.md](./phase1-summary.md)에 있다.
 
 ## 1. 목표와 결과
 
