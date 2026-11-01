@@ -46,7 +46,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `ccb7361`(main, #57 머지) · 기�
 | PR-16 | 읽기 진행률·링크 체커 | ✅ 머지 | #55 |
 | PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ✅ 머지 | #56 |
 | (수정) | Q14 접근성·반응형(디자인 21번 impeccable audit) | ✅ 머지 | #57 |
-| (문서) | Phase 1 개발 요약 보관(`archive/phase1-summary.md`) | 🔍 PR 오픈(브랜치 `docs/archive-phase1`) | |
+| (문서) | Phase 0·1 개발 요약 보관(`archive/phase0-summary.md`, `phase1-summary.md`, `README.md`) | 🔍 PR #58 오픈(브랜치 `docs/archive-phase1`) | #58 |
 
 개발 순서(PRD-003): …→ PR-14 → PR-15 → PR-16 → PR-17. 한 번에 PR 하나, 사용자가 머지하면 다음으로 간다.
 
@@ -153,6 +153,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `ccb7361`(main, #57 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | Phase 2 시작 전 지난 작업 보관: Phase 0(#10~#26) 개발 요약을 `archive/phase0-summary.md`로, 보관 목록을 `archive/README.md`로 추가(PR #58 같은 브랜치에 커밋). PRD-002·PR 이력·배포 후 점검(#26)에서 핵심만 정리. 계획서에만 있고 확인하지 못한 세부(PRD-002 7장 남은 결정의 최종값)는 적지 않음 | #58 머지 후 Phase 2 PR-18 시작 |
 | 2026-11-01 | **Phase 1 종료.** #57 머지 확인(`ccb7361`). Phase 1 개발 내용을 핵심만 요약해 `cowork/develop/archive/phase1-summary.md`로 보관(결과·PR 표·핵심 결정·성능 게이트 이력·함정·Phase 2 이월). README에 `archive/` 안내. 원본 STATUS·CONTEXT·REQUESTS는 그대로 둠 | Phase 2 PR-18 시작 |
 | 2026-11-01 | #56 머지 확인(`cc88433`). 기획이 Q15 답함: About 예외를 성능·CLS·TBT로 확대 승인, PRD-003 `done`·PRD-001 체크 완료, PR-19 수용 기준에 About CLS ≤ 0.1 추가. **Q14(디자인 21번) 처리(브랜치 `fix/a11y-audit-q14`, PR #57):** P1 코드 `<pre>` `tabindex=0`·`role=region`·`aria-label`(`rehype-code-meta`) ② 헤더 `flex-wrap`·`min-h-16`, 링크·로고·칩 히트 영역 44px(`after:`), 칩 줄에 `py-1.5 -my-1.5`(`overflow-x-auto`가 `::after`를 잘라서), 테마 토글 36→44px ③ PC 목차 `aside`→`div[data-toc-aside]`, 폭·간격을 px로(글자 확대 때 넘침 방지) ④ 외부 링크 `rel`에 `noopener noreferrer` 추가(`nofollow` 정책은 그대로) ⑤ **추가 발견:** About이 글자 200%·360px에서 185px 넘침(디자인 감사는 헤더만 봄) → 카드·그리드 자식에 `min-w-0`, `Button`의 `whitespace-nowrap` 제거(`min-h-(--tap)`+줄바꿈 허용). 보류: P3-3 번들·렌더링 차단 CSS(`optimize`, 게이트 통과 중이라 별도), 헤딩 앵커 `#`·코드 복사 버튼 터치 크기(보조 요소, 간격 예외). E2E 14건 추가(109건 통과), 실제 Chrome에서 `<pre>` Tab 포커스·360px·200% 넘침 0 확인. **Phase 1 종료 기록** | Phase 2 PR-18 시작 |
 | 2026-11-01 | #55 머지 확인(`e01c7a8`, `Links` 워크플로가 PR에서 실행돼 성공). PR-17 작업(브랜치 `feat/gate-docs`): 차단선 `error` 승격 + About 성능·CLS·TBT `warn` 예외, README·DESIGN·CONTEXT(6.1 게이트 측정 결과) 문서, REQUESTS Q15 신설. **#55 CI 관측: About CLS 0.125 그대로**. 원인을 CI 리포트로 확인: About 둘째 소개 문단이 글꼴 도착 뒤 줄 수가 바뀜. 서브셋 글꼴 preload를 시험으로 넣음(결과는 CI에서). **Q14(디자인 21번 감사)가 REQUESTS에 open으로 남아 이 목록에서 빠져 있던 것을 발견**해 "다음 작업"에 추가. 로컬: lint·tokens·build·check:output·E2E 통과 | (후속) PR #56 CI 결과: preload로도 About CLS 0.125 그대로(이동 원인 `Web font loaded` 동일, 글꼴 도착 약 3.0s > FCP 1.8s) → preload 되돌림, About CLS 예외 확정, 문서·Q15 갱신 | #56 머지 후 Q14 별도 PR |

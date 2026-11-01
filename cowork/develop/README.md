@@ -21,7 +21,7 @@
 
 | 경로 | 내용 |
 | --- | --- |
-| `archive/` | 끝난 Phase의 개발 요약 보관본(핵심만). Phase 1: `archive/phase1-summary.md` |
+| `archive/` | 끝난 Phase의 개발 요약 보관본(핵심만). Phase 0·1 요약과 목록은 `archive/README.md` |
 | `briefs/` | 기획·디자인과 맞춰야 할 질문을 근거(측정·선택지·결정 요청)와 함께 정리한 문서. 번호는 REQUESTS.md 질문 번호(`Q11-….md`) |
 | `tools/shoot.mjs` | PC·Mobile 스크린샷 촬영 (정적 빌드 기준) |
 | `tools/publish-shots.sh` | 스크린샷을 `pr-screenshots` 브랜치에 올리고 PR용 URL 출력 |
