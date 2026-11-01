@@ -17,7 +17,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기�
    - **지금 환경 상태(2026-11-01 세션 종료 시):** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config(`eslint.config.mjs`). `next lint` 없음. `sharp`는 0.33.5 고정 유지. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
    - Next 16 이후 Lighthouse(CI, #51): About 91·LCP 2.1s·TBT 277ms(차단선 통과), 홈 97·1.9s·CLS 0.058, 글 97·2.0s·CLS 0.029. Next 15→16 퇴보 없음
    - 로컬 Chrome 확장(claude chrome)이 이 세션에서 안 돼 Playwright Chromium으로 화면을 확인했다(PR에 매번 밝힌다). 다음 세션에서 되면 실제 Chrome으로도 본다
-2. **글꼴 서브셋 PR (Q9 ①, 디자인 19번 1.3)** — 디자인이 요청했고 설치할 도구를 정해야 해서 사용자 확인이 필요하다
+2. **글꼴 서브셋 PR (Q9 ①, 디자인 19번 1.3)** — **구현 완료(2026-11-01, 브랜치 `feat/font-subset`, 커밋 전).** `scripts/subset-font.mjs`(738자 → 106.6KB, 해시 캐시), `public/_font/`(git 제외), `globals.css`의 `@font-face`(preload 없음, swap), `predev`·`prebuild` 연결, `check:output`에 단일 woff2·150KB·CSS 참조 검사 추가. 로컬: lint·tokens·build·check:output·E2E 89건 통과, 페이지당 글꼴 요청 2개(Pretendard 109KB + JetBrains Mono 40KB). **남은 것: 커밋·PR, CI Lighthouse About CLS 3회 중앙값 확인(0.05 이하면 CLS를 error로), 실제 Chrome 확인은 완료(아래 세션 기록). 아래는 원래 계획**
    - 빌드 때 `posts/`·`content/`·`src/`의 글자를 모아 Pretendard Variable(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`, 2.06MB)을 `wght 400–700` 단일 woff2(약 102KB)로 서브셋, 자체 호스팅, `font-display: swap`, **preload 없음**
    - **도구 확정: Node `subset-font`**(2.9.0, BSD-3, WASM, 의존성 p-limit·fontverter·harfbuzzjs). 저장소 밖 시험에서 `variationAxes: { wght: { min: 400, max: 700 } }`와 `targetFormat: "woff2"`가 동작함을 확인(시험 문장 15.7KB→12.0KB). 설치(`yarn add -D subset-font`) 직전에 사용자에게 한 번 더 알린다. 글자 수집 로직은 PR-15 OG와 공유
    - 효과: 글꼴 요청 12~17개 → 2개, 272~370KB → 141KB. **FCP·LCP는 그대로**(디자인 측정). CLS는 미검증이라 적용 PR에서 CI Lighthouse About CLS 3회 중앙값을 확인해 STATUS에 적는다(0.05 이하면 CLS를 error로)
@@ -56,7 +56,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기�
 | (문서) | Q11 성능 게이트 정리 문서 | ✅ 머지 | #44 |
 | (설정) | Lighthouse 관측 측정 + 차단/목표선(Q12) | ✅ 머지 | #45 |
 | (문서) | cowork 전체(기획 PRD-004·디자인 18번 포함) 커밋, Q13 결정 반영 | 🔍 리뷰 대기 | #47 |
-| (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | ⏳ 도구 선택 대기 | |
+| (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | 🛠 구현·로컬 검증 완료, 커밋·PR 대기(브랜치 `feat/font-subset`) | |
 | PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ⏳ 첫 단계는 정적 export PoC. 새 의존성 알림 필요 | |
 | PR-16 | 읽기 진행률·링크 체커 | ⏳ 대기 | |
 | PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ⏳ 대기(위 "다음 작업" 5번) | |
@@ -165,6 +165,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | 글꼴 서브셋 구현(브랜치 `feat/font-subset`): `subset-font@2.9.0` devDependency 추가, 서브셋 스크립트·`@font-face`·`check:output` 검사. 기존 `pretendardvariable-dynamic-subset.css` import 제거. 로컬 검증 통과(E2E 89건). 커밋·PR은 사용자 요청 대기(루트 CLAUDE.md: 커밋은 요청 시에만). 실제 Chrome(Claude in Chrome, 빌드 `out/`) 확인 완료: 홈·글 2편·About 모두 글꼴 요청 2개(Pretendard 서브셋 + JetBrains Mono), `Pretendard Variable` loaded, 콘솔 에러 0, 4개 페이지 본문 글자 중 서브셋 밖(폴백 의심) 글자 0, h1 700·본문 400 적용. **못 한 것:** 라이트 테마 육안(토글 셀렉터 불일치로 다크만 확인), 창 폭이 406px·1403px 두 가지뿐이라 정밀한 모바일 360 확인, CI CLS 미확인 | 사용자 OK 후 커밋·push·PR → CI CLS 확인 → PR-15 OG |
 | 2026-11-01 | PR-A(#50) 머지 확인. Next 16 PR-B 오픈(브랜치 `chore/next-16`): next·eslint-config-next 16.4.3(Turbopack 빌드). 수정 3건: ① `src/app/favicon.ico` 안의 PNG가 팔레트(RGBA 아님)라 Turbopack이 디코딩 실패 → RGBA로 재인코딩(5.3KB) ② `next lint` 제거 → `eslint .` + `eslint.config.mjs`를 `eslint-config-next/core-web-vitals`·`typescript` flat config로 교체(ignores: out, .next, public/_img, cowork 등) ③ 새 react-hooks 규칙(`set-state-in-effect`) 때문에 `ThemeToggle`의 mounted를 `useSyncExternalStore`로 변경. `tsconfig.json`은 Next가 자동 수정(`jsx: react-jsx`). lint·tokens·build·check:output·E2E 89건 통과 | CI(Lighthouse 포함) 확인, 머지 후 PR-15(OG) |
 | 2026-11-01 | 사용자 승인: OG `next/og`, 서브셋 `subset-font`(A1+B1). #50(의존성 마이너 갱신, `SiAmazon`·`SiLinkedin` 제거 대응으로 `FaAws`·`FaLinkedin`)·#51(Next 16.4.3: favicon RGBA 재인코딩, `eslint .` 전환, ThemeToggle `useSyncExternalStore`) 머지. 세션을 Chrome 확장 문제로 종료하며 기록 정리 | 다음 첫 명령: main pull 후 **글꼴 서브셋 PR**(설치 전 알림) → **PR-15 OG** → PR-16 → PR-17 |
 | 2026-11-01 | 의존성 갱신 PR-A 오픈(브랜치 `chore/deps-update-a`): react 19.3.1, next 15.5.28, tailwind 4.3.3, typography, react-icons 5.7 등. react-icons 5.7에서 브랜드 아이콘 `SiAmazon`·`SiLinkedin`이 제거돼 `FaAws`·`FaLinkedin`(react-icons/fa)으로 교체. lint·tokens·build·check:output·E2E 89건 통과 | 머지 후 Next 16 PR-B. 메이저(typescript 7, eslint 10, lucide 1.x, @types/node 26, sharp 0.35)는 보류 |

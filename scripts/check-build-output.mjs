@@ -132,6 +132,23 @@ for (const file of postFiles) {
   }
 }
 
+// 글꼴 서브셋: 단일 woff2가 있고 150KB 이하, 빌드 CSS가 그것을 가리킨다(조각 CSS로 되돌아가지 않았는지)
+const FONT_PATH = path.join(OUT, "_font", "pretendard-subset.woff2");
+if (!fs.existsSync(FONT_PATH)) {
+  fail("_font/pretendard-subset.woff2 가 없습니다 (scripts/subset-font.mjs)");
+} else if (fs.statSync(FONT_PATH).size > 150 * 1024) {
+  fail(`글꼴 서브셋이 ${Math.round(fs.statSync(FONT_PATH).size / 1024)}KB로 150KB를 넘습니다`);
+}
+const cssDir = path.join(OUT, "_next", "static", "chunks");
+const cssText = fs
+  .readdirSync(cssDir)
+  .filter((f) => f.endsWith(".css"))
+  .map((f) => fs.readFileSync(path.join(cssDir, f), "utf8"))
+  .join("\n");
+if (!cssText.includes("/_font/pretendard-subset.woff2")) {
+  fail("빌드 CSS가 글꼴 서브셋(/_font/pretendard-subset.woff2)을 참조하지 않습니다");
+}
+
 if (errors.length > 0) {
   console.error(`산출물 검사 실패 (${errors.length}건):`);
   for (const message of errors) console.error(`  - ${message}`);
@@ -141,5 +158,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하`,
+  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하, 글꼴 서브셋 단일 woff2`,
 );
