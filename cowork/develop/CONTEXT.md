@@ -101,8 +101,21 @@ node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 
 - PR CI(`.github/workflows/ci.yaml`): lint → tokens → build → output → E2E → Lighthouse(관측 측정, 아래) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
 - 배포: `main` push → `deploy.yaml` → GitHub Pages(약 5분). branch protection은 사이트 1차 완성 후 작성자가 켠다
-- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. 접근성·SEO는 지금도 `error`, 나머지 차단선은 **PR-17부터 `error`**(지금 `warn`). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
+- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. **PR-17(2026-11-01)부터 차단선 전부 `error`**(접근성·SEO·LCP는 모든 페이지, 성능·CLS·TBT는 About 제외). **About 예외**: 성능·CLS·TBT만 `warn`(기획 Q13 2026-10-31, 숫자는 그대로, Phase 2 PR-19 About 재작성 때 해제). `lighthouserc.json`의 `assertMatrix`는 [0] 전 페이지(LCP·접근성·SEO), [1] About 제외(성능·CLS·TBT, error), [2] About(성능·CLS·TBT, warn), [3] 목표선(warn). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
 - 차단선을 넘으면 기준을 조용히 낮추지 않고 기획에 묻는다. 관측 측정은 시뮬레이션보다 오래 걸린다(로컬 약 4분 10초, 3페이지×3회)
+
+### 6.1 Phase 1 게이트 측정 결과 (2026-11-01, PR #55 CI·로컬 기준 `e01c7a8`)
+
+| 게이트 | 기준 | 결과 |
+| --- | --- | --- |
+| G1-1 성능 차단선 | 성능 ≥ 90, LCP ≤ 2.5s, CLS ≤ 0.1, TBT ≤ 300ms (관측, 3회 중앙값) | 홈 97·1.7s·CLS 0.058·TBT 140ms 통과, 글 97·1.8s·0.030·150ms 통과. **About 92·1.8s·TBT 178ms는 통과, CLS 0.125는 미달**(아래 CLS 원인). About 성능·CLS·TBT는 예외로 `warn` |
+| G1-2 접근성·SEO 100, 목표선 기록 | 접근성 100, SEO 100 | 세 페이지 모두 100·100·모범사례 96. 목표선(성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms)은 홈·글 통과, 홈 CLS 0.058(경계)·About 성능 91·CLS 미달 |
+| G1-3 E2E | 목차·코드 복사·시리즈·필터 URL·이미지 확대 | E2E 95건 통과(3 skip) |
+| G1-4 첫 화면 | 360×640에서 모든 글의 첫 본문 블록 ≤ 640px | 14편 통과, 가장 아래 `install-cilium-eks` 620px |
+| G1-5 이미지 | 변환본 제공, 본문 이미지 ≤ 200KB | 60개 변환(원본 26.5MB → 3.3MB), 최대 191KB |
+| G1-6 OG | 모든 글 고유 PNG, 목록 썸네일 없음 | 글 14 + 홈 + About = 16개 PNG(1200×630), `check:output`이 PNG·크기·고유성 검사. `thumbnail` 필드 0건 |
+
+**About CLS 0.125의 원인**(CI 리포트 `layout-shifts`, 3회 모두 같은 값): About 둘째 소개 문단(한글 7줄)이 한글 글꼴(`pretendard-subset.woff2`) 도착 뒤 줄 수가 바뀌어 아래 요소를 민다(Lighthouse cause "Web font loaded", 이동은 1건). 글꼴 서브셋(#53)으로 글꼴이 12~17개 → 2개로 줄었지만 도착 시점이 폴백 글꼴과 다르다는 점은 같아서 CLS는 그대로다. 맥 로컬에서는 폴백(Apple SD Gothic Neo)이 비슷해 0이라 재현되지 않고 **리눅스 CI에서만 보인다**(로컬 Lighthouse로 판단하지 말 것). **서브셋 글꼴 preload는 효과가 없었다**(PR #56 CI 3회 모두 0.125, 이동 원인 그대로). 느린 4G 관측에서 서브셋 woff2(107KB)는 preload해도 600ms에 요청돼 약 3.0s에 끝나고 FCP는 약 1.8s라, 글꼴이 첫 페인트 뒤에 도착하는 것 자체는 못 막는다. 그래서 preload는 되돌렸고(디자인 19번 "preload 없음" 유지) About의 CLS도 예외(warn)에 뒀다. 근본 해결은 About 재작성(PR-19)에서 소개 문단이 글꼴 크기에 흔들리지 않게 하거나, 한글 폴백과 글자폭이 맞는 `size-adjust` 폴백을 두는 것이다(후자는 OS마다 폴백이 달라 CI 값으로만 맞출 수 있다)
 
 ## 7. 스크린샷·브라우저 확인 방법
 
