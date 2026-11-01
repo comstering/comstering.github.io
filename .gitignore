@@ -47,3 +47,4 @@ next-env.d.ts
 /.lighthouseci/
 /lighthouse-summary.md
 /public/_img/
+/public/_font/

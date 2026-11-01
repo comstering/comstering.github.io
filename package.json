@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/optimize-images.mjs",
+    "predev": "node scripts/optimize-images.mjs && node scripts/subset-font.mjs",
     "dev": "next dev --turbopack",
-    "prebuild": "node scripts/optimize-images.mjs",
+    "prebuild": "node scripts/optimize-images.mjs && node scripts/subset-font.mjs",
     "build": "next build",
     "postbuild": "node scripts/prune-output.mjs",
     "start": "next start",
@@ -55,6 +55,7 @@
     "fast-xml-parser": "^5.11.2",
     "serve": "^14.2.6",
     "sharp": "0.33.5",
+    "subset-font": "^2.9.0",
     "tailwindcss": "4.3.3",
     "typescript": "^5"
   }
