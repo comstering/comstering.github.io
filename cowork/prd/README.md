@@ -6,7 +6,7 @@ comstering.github.io를 발전시키기 위한 기획서를 모아 두는 곳이
 
 ```
 <번호>_<영역>_<주제>.md
-예) 003_blog_reading-experience.md
+예) 004_portfolio_projects-and-about.md
 ```
 
 | 부분 | 규칙 | 예 |
@@ -33,7 +33,7 @@ comstering.github.io를 발전시키기 위한 기획서를 모아 두는 곳이
 
 ```yaml
 ---
-id: PRD-003                 # 파일 번호와 같게
+id: PRD-005                 # 파일 번호와 같게
 area: blog                  # 영역 코드
 title: 글 상세 읽기 경험 개선
 status: draft               # draft | review | approved | in-progress | done | dropped
@@ -50,10 +50,16 @@ related: [PRD-001]          # 상위·관련 기획서
 
 | ID | 파일 | 영역 | 제목 | 상태 |
 | --- | --- | --- | --- | --- |
-| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v1.8 | review |
-| PRD-002 | [002_platform_phase0-stabilization.md](./002_platform_phase0-stabilization.md) | platform | Phase 0 안정화 (배포 재개 전 정리) | done |
-| PRD-003 | [003_blog_reading-experience.md](./003_blog_reading-experience.md) | blog | Phase 1 읽기 경험 (글 상세·홈 탐색·이미지) | approved |
+| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v2.0 | active |
 | PRD-004 | [004_portfolio_projects-and-about.md](./004_portfolio_projects-and-about.md) | portfolio | Phase 2 포트폴리오 (About 강화·이력서·홈 소개) | approved |
+
+### 보관 (archive)
+
+끝난 Phase의 기획서는 요약본만 archive에 남기고 원문은 삭제한다(원문은 git 기록).
+
+| 파일 | 내용 |
+| --- | --- |
+| [archive/phase-0-1_summary.md](./archive/phase-0-1_summary.md) | Phase 0~1 요약: 유효한 결정, 콘텐츠 규칙, 품질 기준, 게이트 결과, 철회한 결정, 협업 방식, Phase 2로 넘어간 것 |
 
 ### 작성 예정 (마스터 PRD 로드맵 기준)
 

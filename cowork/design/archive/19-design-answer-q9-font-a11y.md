@@ -81,8 +81,8 @@
 
 ## 4. 이번 PR의 시안 변경
 
-- `system/components.css`: `.chip__count`의 `opacity` 삭제(이유 주석 포함)
-- `site/post.html`, `design-system.html`: `.code__copy`의 `aria-label="코드 복사"` 5곳 삭제
+- `../system/components.css`: `.chip__count`의 `opacity` 삭제(이유 주석 포함)
+- `../site/post.html`, `design-system.html`: `.code__copy`의 `aria-label="코드 복사"` 5곳 삭제
 - 검증: 칩 숫자 대비 6.53:1(선택된 칩 16.19:1), 복사 버튼 3개의 이름이 보이는 글자 `copy`와 같음
 
 ## 5. 요청 정리

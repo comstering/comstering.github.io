@@ -58,7 +58,7 @@ posts/                # Markdown blog posts (*.md files)
 content/              # tags.yaml(정규 태그), series.yaml(시리즈 레지스트리)
 public/               # Static assets
 scripts/              # CI 검사 스크립트 (check-design-tokens, check-build-output)
-cowork/prd/           # 기획서 (PRD-001 마스터, PRD-002 Phase 0 ...)
+cowork/prd/           # 기획서 (PRD-001 마스터, 진행 중인 Phase의 PRD, 끝난 Phase는 archive/)
 cowork/design/        # 디자인 시스템 명세와 시안
 ```
 
@@ -83,7 +83,7 @@ cowork/design/        # 디자인 시스템 명세와 시안
 ## 문서 읽는 순서
 
 - **UI 작업 전**: [DESIGN.md](./DESIGN.md)의 토큰과 규칙을 확인한다. 명세 원본과 시안은 `cowork/design/`.
-- **기능 작업 전**: 해당 영역의 PRD를 확인한다. `cowork/prd/README.md`의 목록에서 찾는다 (마스터 PRD-001, Phase 0 PRD-002).
+- **기능 작업 전**: 해당 영역의 PRD를 확인한다. `cowork/prd/README.md`의 목록에서 찾는다 (마스터 PRD-001, 진행 중인 Phase의 PRD. 끝난 Phase 요약은 `cowork/prd/archive/`).
 - **현재 상태와 알려진 이슈**: [CONTEXT.md](./CONTEXT.md)
 - **개발 세션 시작 시 (항상 먼저)**: `cowork/develop/CONTEXT.md` → `cowork/develop/STATUS.md`를 읽고 STATUS.md의 "다음 작업"부터 이어 간다. 작업(PR 오픈, 머지 확인, 결정, 세션 종료)이 끝날 때마다 사용자가 시키지 않아도 `cowork/develop/STATUS.md`와 `REQUESTS.md`를 갱신한다. `cowork/`는 저장소에 커밋한다(public 저장소라 비밀·연락처·내부 수치는 쓰지 않는다)
 

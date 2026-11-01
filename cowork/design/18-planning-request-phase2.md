@@ -1,4 +1,4 @@
-# 18. 기획 요청: Phase 2 포트폴리오 디자인 (D-1 ~ D-4)
+# 18. 기획 요청: Phase 2 포트폴리오 디자인 (D-1 ~ D-5)
 
 > 2026-10-30 개정: 범위를 **C안(About 강화)**으로 줄였다. `/projects` 목록·상세, Mermaid 구조도는 만들지 않는다. 이전 요청(목록 구성, 상세 시안, Mermaid 테마)은 취소한다.
 
@@ -20,6 +20,7 @@ Phase 2 개발은 Phase 1 게이트(PRD-003 PR-17) 뒤에 시작한다. 디자�
 | D-2 | 필수 | **이력서 시안 `resume.html`:** 웹 + A4 인쇄(라이트 고정, 헤더·푸터·버튼 숨김, 링크 URL 표시, **사진 없음**). 구성은 PRD-004 5.3 |
 | D-3 | 필수 | **About 나머지 갱신:** 기술 스택 7그룹(PRD-004 4.4), Terraform Associate에 Credly `verify ↗`, `.ph` 잔존 정리. "주요 성과" 같은 새 문구 섹션은 두지 않는다 |
 | D-4 | 필수 | **홈 히어로·대표 프로젝트:** 히어로 버튼 `projects` → `resume`, 대표 3건(EKS 네트워킹 `Pod IP 500 → 16,000`, Okta SSO `IAM User 250+ 폐기`, Argo Workflows `MWAA 제거 연 $16,000 절감`)은 `/about#<id>`로 연결, `all tags →` 제거, 헤더는 `posts · about` 유지 |
+| D-5 | 필수 | **About CLS 해법 (2026-11-01 추가, 개발 Q15):** 지금 About 둘째 소개 문단(한글 7줄)이 Pretendard 도착 뒤 줄 수가 바뀌어 CLS 0.125(차단 ≤ 0.1). 글꼴 서브셋·preload로는 안 풀렸다(글꼴이 느린 4G에서 약 3.0s 도착). Phase 2 About 시안에서 해법을 정해 달라: 폴백 글꼴 크기 보정(`size-adjust`·`ascent-override`), 소개 문단 구성 변경 등(19번 1.4 다음 단계). PR-19 수용 기준이 About CLS ≤ 0.1 |
 
 ## 확정된 것 (PRD-004 7장)
 

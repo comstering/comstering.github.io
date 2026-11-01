@@ -10,28 +10,20 @@
 - 저장소: `comstering.github.io` (public). Next.js 16(Turbopack) 정적 export, GitHub Pages. 한국어 블로그 + 포트폴리오.
 - 세 세션이 나눠서 일한다. **기획**(`cowork/prd`), **디자인**(`cowork/design`), **개발**(이 폴더, Claude Code). 개발은 기획·디자인이 확정한 것만 구현한다. 확정 전 내용은 구현 기준이 아니다.
 - 작성자(사용자)가 PR을 직접 머지한다. 머지하고 "pull하고 다음 작업"이라고 말하면 아래 5장 흐름대로 다음 PR로 간다.
-- **`cowork/develop/`는 저장소에 커밋해서 관리한다**(2026-10-28 작성자 결정). 작업 PR에 같이 넣는다: STATUS·REQUESTS 갱신분이 코드와 한 PR에 들어가야 이력이 맞는다. `cowork/prd`·`cowork/design`은 기획·디자인 세션 몫이라 작성자가 별도 PR(#32)로 올린다. 개발 세션은 이 둘을 읽기만 하고 커밋하지 않는다.
+- **`cowork/develop/`는 저장소에 커밋해서 관리한다**(2026-10-28 작성자 결정). 작업 PR에 같이 넣는다: STATUS·REQUESTS 갱신분이 코드와 한 PR에 들어가야 이력이 맞는다. `cowork/prd`·`cowork/design`은 기획·디자인 세션 몫이라 작성자가 별도 PR로 올린다. 개발 세션은 이 둘을 읽기만 하고 커밋하지 않는다.
 - `.claude/launch.json`, `resume.md`, 다른 세션이 남긴 미커밋 변경(예: `CLAUDE.md` 일부)은 작성자 파일이므로 건드리지 않고 `git add`에 포함하지 않는다. 커밋할 때는 항상 파일을 지정해서 `git add`한다(`git add -A` 금지).
 
 ## 2. 읽는 순서 (새 세션)
 
 1. 이 문서, [STATUS.md](./STATUS.md), [REQUESTS.md](./REQUESTS.md)
 2. 저장소 `CLAUDE.md`, `DESIGN.md`(토큰 규칙), `README.md`(글 작성 규칙)
-3. 다음 작업의 PRD: `cowork/prd/003_blog_reading-experience.md`의 해당 PR 절. 0장 "확정 요약"과 7장 "결정 상태"를 먼저 본다
-4. 구현 전에 **최종 시안의 마크업·CSS와 대조**한다: `cowork/design/site/*.html`, `cowork/design/system/components.css`. 해당 영역의 디자인 답변(`cowork/design/12-…`~`15-…`)과 `E1~E9` 의견도 읽는다
+3. 다음 작업의 PRD: 지금은 `cowork/prd/004_portfolio_projects-and-about.md`의 해당 PR 절(0장 확정 요약·결정 상태를 먼저)
+4. 구현 전에 **최종 시안의 마크업·CSS와 대조**한다: `cowork/design/site/*.html`, `cowork/design/system/components.css`. 해당 영역의 디자인 답변(`cowork/design/`의 최신 번호 문서)도 읽는다
 5. 메모리(`~/.claude/projects/.../memory/`)의 feedback 항목
 
-## 3. 확정된 결정 (PRD-003, 2026-10-28 approved)
+## 3. 이전 Phase 결정
 
-- categories: 배열 최대 2개, 대표 없음(B안), 고정 순서 `infra · backend · frontend · oss · note`
-- `updated` 필드 삭제, 글 날짜는 `date`만
-- 목록 썸네일: 홈·태그 목록에서 제거(C안). `thumbnail` 필드는 PR-15에서 og:image가 자동 생성으로 바뀐 뒤 삭제
-- 필터: `/?category=` + `router.push`, 직접 진입은 전체 목록 → JS 후 필터(정적 export 한계). **디자인 16번이 허용**. 실기기에서 1초 이상 깜빡이면 `data-categories` + 인라인 스크립트로 숨기는 방법을 다시 검토
-- OG 이미지: 글마다 빌드 시 자동 생성, PNG, accent 선 없음
-- MDX는 Phase 1에서 도입하지 않음
-- G1-4(2026-10-29 기획 Q6): 360×640에서 모든 글의 **첫 본문 블록(첫 문단 또는 첫 h2)**이 ≤640px에서 시작. 서문이 긴 글도 서문이 본문이라 통과로 본다
-- 기존 글에는 콜아웃·셸 프롬프트·파일명을 소급 적용하지 않는다(새 글, 작성자가 고치는 글에만, Q4)
-- PR 순서: PR-10 → PR-9 → PR-11·12·13 → PR-14 → PR-15 → PR-16 → PR-17 (STATUS.md에 진행 표)
+Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 측정 방식, About 예외 등)과 근거는 [archive/phase1-summary.md](./archive/phase1-summary.md) 3·4장, [archive/phase0-summary.md](./archive/phase0-summary.md) 3장에 있다. 글 작성 규칙은 저장소 `README.md`가 기준이다. **새 결정은 해당 Phase의 PRD와 REQUESTS.md에 두고, 이 문서에는 규칙만 적는다.**
 
 ## 4. 코드 규칙과 알아 둘 구조
 
@@ -101,21 +93,8 @@ node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 
 - PR CI(`.github/workflows/ci.yaml`): lint → tokens → build → output → E2E → Lighthouse(관측 측정, 아래) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
 - 배포: `main` push → `deploy.yaml` → GitHub Pages(약 5분). branch protection은 사이트 1차 완성 후 작성자가 켠다
-- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. **PR-17(2026-11-01)부터 차단선 전부 `error`**(접근성·SEO·LCP는 모든 페이지, 성능·CLS·TBT는 About 제외). **About 예외**: 성능·CLS·TBT만 `warn`(기획 Q13 2026-10-31, 숫자는 그대로, Phase 2 PR-19 About 재작성 때 해제). `lighthouserc.json`의 `assertMatrix`는 [0] 전 페이지(LCP·접근성·SEO), [1] About 제외(성능·CLS·TBT, error), [2] About(성능·CLS·TBT, warn), [3] 목표선(warn). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
+- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. **차단선은 전부 `error`**(접근성·SEO·LCP는 모든 페이지, 성능·CLS·TBT는 About 제외). **About 예외**: 성능·CLS·TBT만 `warn`(기획 Q13 2026-10-31, 숫자는 그대로, Phase 2 PR-19 About 재작성 때 해제). `lighthouserc.json`의 `assertMatrix`는 [0] 전 페이지(LCP·접근성·SEO), [1] About 제외(성능·CLS·TBT, error), [2] About(성능·CLS·TBT, warn), [3] 목표선(warn). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
 - 차단선을 넘으면 기준을 조용히 낮추지 않고 기획에 묻는다. 관측 측정은 시뮬레이션보다 오래 걸린다(로컬 약 4분 10초, 3페이지×3회)
-
-### 6.1 Phase 1 게이트 측정 결과 (2026-11-01, PR #55 CI·로컬 기준 `e01c7a8`)
-
-| 게이트 | 기준 | 결과 |
-| --- | --- | --- |
-| G1-1 성능 차단선 | 성능 ≥ 90, LCP ≤ 2.5s, CLS ≤ 0.1, TBT ≤ 300ms (관측, 3회 중앙값) | 홈 97·1.7s·CLS 0.058·TBT 140ms 통과, 글 97·1.8s·0.030·150ms 통과. **About 92·1.8s·TBT 178ms는 통과, CLS 0.125는 미달**(아래 CLS 원인). About 성능·CLS·TBT는 예외로 `warn` |
-| G1-2 접근성·SEO 100, 목표선 기록 | 접근성 100, SEO 100 | 세 페이지 모두 100·100·모범사례 96. 목표선(성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms)은 홈·글 통과, 홈 CLS 0.058(경계)·About 성능 91·CLS 미달 |
-| G1-3 E2E | 목차·코드 복사·시리즈·필터 URL·이미지 확대 | E2E 95건 통과(3 skip) |
-| G1-4 첫 화면 | 360×640에서 모든 글의 첫 본문 블록 ≤ 640px | 14편 통과, 가장 아래 `install-cilium-eks` 620px |
-| G1-5 이미지 | 변환본 제공, 본문 이미지 ≤ 200KB | 60개 변환(원본 26.5MB → 3.3MB), 최대 191KB |
-| G1-6 OG | 모든 글 고유 PNG, 목록 썸네일 없음 | 글 14 + 홈 + About = 16개 PNG(1200×630), `check:output`이 PNG·크기·고유성 검사. `thumbnail` 필드 0건 |
-
-**About CLS 0.125의 원인**(CI 리포트 `layout-shifts`, 3회 모두 같은 값): About 둘째 소개 문단(한글 7줄)이 한글 글꼴(`pretendard-subset.woff2`) 도착 뒤 줄 수가 바뀌어 아래 요소를 민다(Lighthouse cause "Web font loaded", 이동은 1건). 글꼴 서브셋(#53)으로 글꼴이 12~17개 → 2개로 줄었지만 도착 시점이 폴백 글꼴과 다르다는 점은 같아서 CLS는 그대로다. 맥 로컬에서는 폴백(Apple SD Gothic Neo)이 비슷해 0이라 재현되지 않고 **리눅스 CI에서만 보인다**(로컬 Lighthouse로 판단하지 말 것). **서브셋 글꼴 preload는 효과가 없었다**(PR #56 CI 3회 모두 0.125, 이동 원인 그대로). 느린 4G 관측에서 서브셋 woff2(107KB)는 preload해도 600ms에 요청돼 약 3.0s에 끝나고 FCP는 약 1.8s라, 글꼴이 첫 페인트 뒤에 도착하는 것 자체는 못 막는다. 그래서 preload는 되돌렸고(디자인 19번 "preload 없음" 유지) About의 CLS도 예외(warn)에 뒀다. 근본 해결은 About 재작성(PR-19)에서 소개 문단이 글꼴 크기에 흔들리지 않게 하거나, 한글 폴백과 글자폭이 맞는 `size-adjust` 폴백을 두는 것이다(후자는 OS마다 폴백이 달라 CI 값으로만 맞출 수 있다)
 
 ## 7. 스크린샷·브라우저 확인 방법
 
@@ -154,7 +133,7 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - `output: "export"`라 `generateStaticParams`에 없는 경로는 404. `dynamicParams = false`
 - E2E는 `out/`을 쓰므로 코드를 고치고 `yarn build` 없이 테스트하면 이전 결과로 돈다
 - 시안에 있는 클래스·마크업을 먼저 대조하지 않으면 PR 후에 시안과 어긋난 곳이 나온다(PR-11에서 겪음: 아이콘·`warning` 라벨·`$ ` 프롬프트 분리·표 흐림 방향)
-- `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 PRD-003과 최신 번호 문서(15번 등)를 기준으로 본다
+- `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 현재 PRD(004)와 `cowork/design/`의 최신 번호 문서를 기준으로 본다
 
 ## 9. 작성자 선호
 
