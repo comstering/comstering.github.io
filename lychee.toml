@@ -1,0 +1,18 @@
+# 링크 체커(lychee) 설정. 워크플로: .github/workflows/links.yaml (PRD-003 PR-16)
+# 글(posts/*.md)의 외부 링크만 검사한다.
+scheme = ["https", "http"]
+max_concurrency = 8
+max_retries = 2
+timeout = 20
+user_agent = "Mozilla/5.0 (compatible; lychee link check for comstering.github.io)"
+
+# 429는 요청 제한이라 깨진 링크가 아니다(첫 실행에서 faqs.org, hashicorp.com이 해당).
+accept = ["200..=299", "429"]
+
+exclude = [
+  # 글 속 예시 주소(클러스터 안에서만 열림)
+  '\.svc\.cluster\.local',
+  '^https?://localhost',
+  '^https?://127\.0\.0\.1',
+  '^https?://example\.(com|org)',
+]

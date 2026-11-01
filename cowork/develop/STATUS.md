@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-01 · 기준 커밋 `ee3759d`(main, #53 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
+_최종 갱신: 2026-11-01 · 기준 커밋 `37b3b45`(main, #54 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
 
 ## 한눈에 보기
 
@@ -57,8 +57,8 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `ee3759d`(main, #53 머지) · 기�
 | (설정) | Lighthouse 관측 측정 + 차단/목표선(Q12) | ✅ 머지 | #45 |
 | (문서) | cowork 전체(기획 PRD-004·디자인 18번 포함) 커밋, Q13 결정 반영 | 🔍 리뷰 대기 | #47 |
 | (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | ✅ 머지 | #53 |
-| PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | 🛠 구현·로컬 검증 완료, 커밋·PR 대기(브랜치 `feat/og-images`) | |
-| PR-16 | 읽기 진행률·링크 체커 | ⏳ 대기 | |
+| PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ✅ 머지 | #54 |
+| PR-16 | 읽기 진행률·링크 체커 | 🔍 PR 오픈(브랜치 `feat/reading-progress`) | PR 번호는 아래 세션 기록 |
 | PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ⏳ 대기(위 "다음 작업" 5번) | |
 
 개발 순서(PRD-003): …→ PR-14 → PR-15 → PR-16 → PR-17. 한 번에 PR 하나, 사용자가 머지하면 다음으로 간다.
@@ -165,6 +165,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `ee3759d`(main, #53 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | #54 머지 확인(`37b3b45`). PR-16 구현(브랜치 `feat/reading-progress`): ① 진행률 `PostProgress`(글 상세에만, `globals.css` `.reading-progress`: `@supports (animation-timeline: scroll())` + `prefers-reduced-motion: no-preference`일 때만 보임, scroll 리스너 없음, 미지원 브라우저는 PRD대로 숨김 — 시안 app.js의 IntersectionObserver 대체는 넣지 않음) ② 링크 체커 `.github/workflows/links.yaml`(주 1회 월 09:00 KST·수동은 전체 글, PR은 바뀐 글만·요약만, 깨지면 이슈 1개를 만들거나 갱신) + `lychee.toml`(429 허용, 예시 주소 제외), `lycheeverse/lychee-action`을 v2.9.0 커밋 SHA(`e747777`)로 고정해 사용(새 CI 의존성, 사용자가 1번 안으로 확정·SHA 고정 지시). 첫 실행 대신 로컬 curl로 글의 외부 링크 40개를 조사: 실제 깨진 것 0, `my-app.default.svc.cluster.local`(예시)은 exclude, faqs.org·hashicorp.com/ko는 429라 accept. E2E 6건 추가(95건 통과), 실제 Chrome에서 스크롤 25/50/75/100%에 scaleX가 0.25/0.5/0.75/1.0. 못 한 것: lychee 실제 실행(CI에서 처음 돈다), 모바일 360px 육안 | PR 오픈 → PR-17(About CLS 조사 포함)
 | 2026-11-01 | #53 머지 확인(`ee3759d`). **#53 CI 관측값: About 성능 90·CLS 0.125(차단선 0.1 초과)·TBT 210ms, 홈 96·CLS 0.058, 글 96·0.030. 서브셋을 적용해도 About CLS가 개선되지 않았다**(원인은 글꼴이 아닌 다른 레이아웃 이동으로 보임, 미조사). PR-17에서 CLS를 error로 올리기 전에 About 원인 조사나 About 예외가 필요하다. PR-15 구현(브랜치 `feat/og-images`): `src/lib/og.tsx`(`next/og` ImageResponse, 색은 globals.css `.dark` 토큰을 빌드 때 읽음, Pretendard-Bold.otf + `@fontsource/jetbrains-mono` woff), 라우트 `posts/[id]/og.png`·`og.png`·`about/og.png`(16개 PNG 1200×630, 약 40~47KB, 시안과 시각 대조 일치), og:image·JSON-LD 교체, `thumbnail` 필드·검증·README·frontmatter 14편·`public/images/posts/thumbnails/`(10개) 삭제, `check:output`에 PNG 서명·1200×630·글별 고유(해시) 검사. 새 devDependency `@fontsource/jetbrains-mono`(사용자 승인). lint·tokens·build·check:output·E2E 89건 통과. 실제 Chrome(빌드 `out/`) 확인 완료: og:image·twitter:image·JSON-LD가 글별 PNG를 가리키고, 글·홈·About PNG 모두 200·image/png·1200×630, 육안 시안 일치, 콘솔 에러 0. 못 한 것: 카카오·LinkedIn 실제 미리보기(사용자 작업), `public/blog-logo.png`는 더는 안 쓰지만 남겨 둠 | 사용자 OK 후 커밋·PR → PR-16 |
 | 2026-11-01 | 글꼴 서브셋 구현(브랜치 `feat/font-subset`): `subset-font@2.9.0` devDependency 추가, 서브셋 스크립트·`@font-face`·`check:output` 검사. 기존 `pretendardvariable-dynamic-subset.css` import 제거. 로컬 검증 통과(E2E 89건). 커밋·PR은 사용자 요청 대기(루트 CLAUDE.md: 커밋은 요청 시에만). 실제 Chrome(Claude in Chrome, 빌드 `out/`) 확인 완료: 홈·글 2편·About 모두 글꼴 요청 2개(Pretendard 서브셋 + JetBrains Mono), `Pretendard Variable` loaded, 콘솔 에러 0, 4개 페이지 본문 글자 중 서브셋 밖(폴백 의심) 글자 0, h1 700·본문 400 적용. **못 한 것:** 라이트 테마 육안(토글 셀렉터 불일치로 다크만 확인), 창 폭이 406px·1403px 두 가지뿐이라 정밀한 모바일 360 확인, CI CLS 미확인 | 사용자 OK 후 커밋·push·PR → CI CLS 확인 → PR-15 OG |
 | 2026-11-01 | PR-A(#50) 머지 확인. Next 16 PR-B 오픈(브랜치 `chore/next-16`): next·eslint-config-next 16.4.3(Turbopack 빌드). 수정 3건: ① `src/app/favicon.ico` 안의 PNG가 팔레트(RGBA 아님)라 Turbopack이 디코딩 실패 → RGBA로 재인코딩(5.3KB) ② `next lint` 제거 → `eslint .` + `eslint.config.mjs`를 `eslint-config-next/core-web-vitals`·`typescript` flat config로 교체(ignores: out, .next, public/_img, cowork 등) ③ 새 react-hooks 규칙(`set-state-in-effect`) 때문에 `ThemeToggle`의 mounted를 `useSyncExternalStore`로 변경. `tsconfig.json`은 Next가 자동 수정(`jsx: react-jsx`). lint·tokens·build·check:output·E2E 89건 통과 | CI(Lighthouse 포함) 확인, 머지 후 PR-15(OG) |
