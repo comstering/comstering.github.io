@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
+_최종 갱신: 2026-11-01 · 기준 커밋 `ee3759d`(main, #53 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
 
 ## 한눈에 보기
 
@@ -56,8 +56,8 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기�
 | (문서) | Q11 성능 게이트 정리 문서 | ✅ 머지 | #44 |
 | (설정) | Lighthouse 관측 측정 + 차단/목표선(Q12) | ✅ 머지 | #45 |
 | (문서) | cowork 전체(기획 PRD-004·디자인 18번 포함) 커밋, Q13 결정 반영 | 🔍 리뷰 대기 | #47 |
-| (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | 🛠 구현·로컬 검증 완료, 커밋·PR 대기(브랜치 `feat/font-subset`) | |
-| PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ⏳ 첫 단계는 정적 export PoC. 새 의존성 알림 필요 | |
+| (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | ✅ 머지 | #53 |
+| PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | 🛠 구현·로컬 검증 완료, 커밋·PR 대기(브랜치 `feat/og-images`) | |
 | PR-16 | 읽기 진행률·링크 체커 | ⏳ 대기 | |
 | PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ⏳ 대기(위 "다음 작업" 5번) | |
 
@@ -165,6 +165,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `56afea2`(main, #51 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | #53 머지 확인(`ee3759d`). **#53 CI 관측값: About 성능 90·CLS 0.125(차단선 0.1 초과)·TBT 210ms, 홈 96·CLS 0.058, 글 96·0.030. 서브셋을 적용해도 About CLS가 개선되지 않았다**(원인은 글꼴이 아닌 다른 레이아웃 이동으로 보임, 미조사). PR-17에서 CLS를 error로 올리기 전에 About 원인 조사나 About 예외가 필요하다. PR-15 구현(브랜치 `feat/og-images`): `src/lib/og.tsx`(`next/og` ImageResponse, 색은 globals.css `.dark` 토큰을 빌드 때 읽음, Pretendard-Bold.otf + `@fontsource/jetbrains-mono` woff), 라우트 `posts/[id]/og.png`·`og.png`·`about/og.png`(16개 PNG 1200×630, 약 40~47KB, 시안과 시각 대조 일치), og:image·JSON-LD 교체, `thumbnail` 필드·검증·README·frontmatter 14편·`public/images/posts/thumbnails/`(10개) 삭제, `check:output`에 PNG 서명·1200×630·글별 고유(해시) 검사. 새 devDependency `@fontsource/jetbrains-mono`(사용자 승인). lint·tokens·build·check:output·E2E 89건 통과. 실제 Chrome(빌드 `out/`) 확인 완료: og:image·twitter:image·JSON-LD가 글별 PNG를 가리키고, 글·홈·About PNG 모두 200·image/png·1200×630, 육안 시안 일치, 콘솔 에러 0. 못 한 것: 카카오·LinkedIn 실제 미리보기(사용자 작업), `public/blog-logo.png`는 더는 안 쓰지만 남겨 둠 | 사용자 OK 후 커밋·PR → PR-16 |
 | 2026-11-01 | 글꼴 서브셋 구현(브랜치 `feat/font-subset`): `subset-font@2.9.0` devDependency 추가, 서브셋 스크립트·`@font-face`·`check:output` 검사. 기존 `pretendardvariable-dynamic-subset.css` import 제거. 로컬 검증 통과(E2E 89건). 커밋·PR은 사용자 요청 대기(루트 CLAUDE.md: 커밋은 요청 시에만). 실제 Chrome(Claude in Chrome, 빌드 `out/`) 확인 완료: 홈·글 2편·About 모두 글꼴 요청 2개(Pretendard 서브셋 + JetBrains Mono), `Pretendard Variable` loaded, 콘솔 에러 0, 4개 페이지 본문 글자 중 서브셋 밖(폴백 의심) 글자 0, h1 700·본문 400 적용. **못 한 것:** 라이트 테마 육안(토글 셀렉터 불일치로 다크만 확인), 창 폭이 406px·1403px 두 가지뿐이라 정밀한 모바일 360 확인, CI CLS 미확인 | 사용자 OK 후 커밋·push·PR → CI CLS 확인 → PR-15 OG |
 | 2026-11-01 | PR-A(#50) 머지 확인. Next 16 PR-B 오픈(브랜치 `chore/next-16`): next·eslint-config-next 16.4.3(Turbopack 빌드). 수정 3건: ① `src/app/favicon.ico` 안의 PNG가 팔레트(RGBA 아님)라 Turbopack이 디코딩 실패 → RGBA로 재인코딩(5.3KB) ② `next lint` 제거 → `eslint .` + `eslint.config.mjs`를 `eslint-config-next/core-web-vitals`·`typescript` flat config로 교체(ignores: out, .next, public/_img, cowork 등) ③ 새 react-hooks 규칙(`set-state-in-effect`) 때문에 `ThemeToggle`의 mounted를 `useSyncExternalStore`로 변경. `tsconfig.json`은 Next가 자동 수정(`jsx: react-jsx`). lint·tokens·build·check:output·E2E 89건 통과 | CI(Lighthouse 포함) 확인, 머지 후 PR-15(OG) |
 | 2026-11-01 | 사용자 승인: OG `next/og`, 서브셋 `subset-font`(A1+B1). #50(의존성 마이너 갱신, `SiAmazon`·`SiLinkedin` 제거 대응으로 `FaAws`·`FaLinkedin`)·#51(Next 16.4.3: favicon RGBA 재인코딩, `eslint .` 전환, ThemeToggle `useSyncExternalStore`) 머지. 세션을 Chrome 확장 문제로 종료하며 기록 정리 | 다음 첫 명령: main pull 후 **글꼴 서브셋 PR**(설치 전 알림) → **PR-15 OG** → PR-16 → PR-17 |

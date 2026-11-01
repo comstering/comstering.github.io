@@ -6,7 +6,6 @@ categories: [infra]
 tags: [aws, eks, custom-networking]
 series: eks-from-scratch
 seriesOrder: 4
-thumbnail: "eks.png"
 ---
 
 ## VPC CNI

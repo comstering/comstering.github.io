@@ -6,7 +6,6 @@ categories: [infra]
 tags: [kubernetes, eks, cilium, cni, vpc]
 series: cilium-on-eks
 seriesOrder: 1
-thumbnail: "cilium.png"
 ---
 
 ## What is Cilium CNI?

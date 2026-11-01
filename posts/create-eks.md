@@ -6,7 +6,6 @@ categories: [infra]
 tags: [aws, eks, kubernetes, terraform]
 series: eks-from-scratch
 seriesOrder: 1
-thumbnail: "eks.png"
 ---
 
 ## What is EKS?

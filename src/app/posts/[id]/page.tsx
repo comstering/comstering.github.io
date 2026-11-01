@@ -21,7 +21,6 @@ import {
 } from "@/lib/posts";
 import {
   AUTHOR,
-  DEFAULT_OG_IMAGE,
   SITE_URL,
   pageAlternates,
   pageOpenGraph,
@@ -32,10 +31,8 @@ export const dynamicParams = false;
 export const generateStaticParams = () =>
   getSortedPostsData().map((post) => ({ id: post.id }));
 
-const thumbnailUrl = (post: PostMetadata): string =>
-  post.thumbnail
-    ? `${SITE_URL}/images/posts/thumbnails/${post.thumbnail}`
-    : `${SITE_URL}${DEFAULT_OG_IMAGE}`;
+const ogImageUrl = (post: PostMetadata): string =>
+  `${SITE_URL}/posts/${post.id}/og.png`;
 
 export const generateMetadata = async ({
   params,
@@ -61,7 +58,7 @@ export const generateMetadata = async ({
       modifiedTime: `${post.date}T00:00:00+09:00`,
       authors: [AUTHOR.name],
       tags: post.tags,
-      images: [{ url: thumbnailUrl(post) }],
+      images: [{ url: ogImageUrl(post), width: 1200, height: 630 }],
     }),
   };
 };
@@ -84,7 +81,7 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           datePublished: `${post.date}T00:00:00+09:00`,
           dateModified: `${post.date}T00:00:00+09:00`,
           articleSection: post.categories,
-          image: thumbnailUrl(post),
+          image: ogImageUrl(post),
           url: `${SITE_URL}/posts/${post.id}`,
           mainEntityOfPage: `${SITE_URL}/posts/${post.id}`,
           inLanguage: "ko",

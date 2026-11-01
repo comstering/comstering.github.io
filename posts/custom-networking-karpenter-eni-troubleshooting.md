@@ -6,7 +6,6 @@ categories: [infra]
 tags: [aws, eks, custom-networking, karpenter, troubleshooting]
 series: eks-from-scratch
 seriesOrder: 5
-thumbnail: "eks.png"
 ---
 
 ## Karpenter Node에 할당가능한 Pod보다 더 많은 Node가 Scheduling 되고 있어요

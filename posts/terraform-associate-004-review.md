@@ -4,7 +4,6 @@ description: "Terraform을 사용하고 있으니 terraform 지식 점검을 진
 date: "2026-04-28"
 categories: [infra]
 tags: [terraform, iac, associate, certification]
-thumbnail: "hashicorp-certified-terraform-associate-004.png"
 ---
 
 ## Terraform 사용 기간

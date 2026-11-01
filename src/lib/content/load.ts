@@ -5,13 +5,6 @@ import { frontmatterSchema, type Frontmatter } from "./schema";
 import { loadSeriesRegistry, loadTagRegistry } from "./registry";
 
 const postsDirectory = path.join(process.cwd(), "posts");
-const thumbnailDirectory = path.join(
-  process.cwd(),
-  "public",
-  "images",
-  "posts",
-  "thumbnails",
-);
 
 export interface PostSource {
   id: string;
@@ -68,15 +61,6 @@ const parsePosts = (): PostSource[] => {
             : `${file}: tags: "${tag}"는 content/tags.yaml에 등록되지 않았습니다`,
         );
       }
-    }
-
-    if (
-      data.thumbnail &&
-      !fs.existsSync(path.join(thumbnailDirectory, data.thumbnail))
-    ) {
-      issues.push(
-        `${file}: thumbnail: public/images/posts/thumbnails/${data.thumbnail} 파일이 없습니다`,
-      );
     }
 
     if (data.series && !seriesRegistry[data.series]) {

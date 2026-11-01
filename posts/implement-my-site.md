@@ -4,7 +4,6 @@ description: "나만의 블로그 + 포트폴리오 사이트 만들기"
 date: "2025-06-30"
 categories: [frontend]
 tags: [blog, nextjs, react]
-thumbnail: "next-js.webp"
 ---
 
 거의 3년만인 것 같다.

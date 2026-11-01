@@ -16,7 +16,7 @@ export const AUTHOR = {
 // About 데이터(src/app/about)를 수정하면 이 날짜도 함께 갱신한다. (sitemap lastModified)
 export const ABOUT_LAST_MODIFIED = "2026-04-28";
 
-export const DEFAULT_OG_IMAGE = "/blog-logo.png";
+export const DEFAULT_OG_IMAGE = "/og.png";
 
 export const RSS_PATH = "/rss.xml";
 
