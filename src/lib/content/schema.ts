@@ -30,7 +30,6 @@ export const frontmatterSchema = z
     tags: z.array(z.string().min(1)).min(1, "태그를 1개 이상 지정해야 합니다"),
     series: z.string().min(1).optional(),
     seriesOrder: z.number().int().positive().optional(),
-    thumbnail: z.string().min(1).optional(),
     draft: z.boolean().default(false),
     relatedProject: z.string().min(1).optional(),
   })

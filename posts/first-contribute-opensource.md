@@ -4,7 +4,6 @@ description: "처음으로 Contribution 해본 경험"
 date: "2025-07-21"
 categories: [frontend, oss]
 tags: [kafka, open-source, contribution]
-thumbnail: "kafbat.png"
 ---
 
 ## 사용하다 보인 이상한 오타....

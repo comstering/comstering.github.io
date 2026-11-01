@@ -6,7 +6,6 @@ categories: [infra]
 tags: [aws, eks, karpenter, kubernetes, node, autoscaling]
 series: eks-from-scratch
 seriesOrder: 2
-thumbnail: "karpenter.png"
 ---
 
 ## What is Node Autoscale?

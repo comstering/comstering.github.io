@@ -6,7 +6,6 @@ categories: [infra]
 tags: [aws, eks, karpenter, kubernetes]
 series: eks-from-scratch
 seriesOrder: 3
-thumbnail: "karpenter.png"
 ---
 
 ## Prerequisite

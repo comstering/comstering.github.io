@@ -1,7 +1,6 @@
 // public/images 의 png·jpg 를 WebP 로 변환해 public/_img 에 둔다 (PRD-003 PR-14). `yarn build`/`yarn dev` 전에 자동 실행된다.
 //   - 원본은 저장소에 그대로 두고, 변환본(public/_img, git 제외)을 사이트에 쓴다
 //   - 본문 이미지 최대 폭 1440px, 용량 200KB 이하(G1-5)가 되도록 품질 → 폭 순서로 낮춘다
-//   - public/images/posts/thumbnails/ 는 변환하지 않는다(PR-15 전까지 og:image로 쓰이고 일부 메신저가 WebP 미리보기를 못 읽음)
 //   - 입력 파일 해시로 캐시해 바뀐 파일만 다시 변환한다. 결과 목록은 public/_img/manifest.json
 //     (rehype-images.ts 가 src·width·height를 채우는 데 쓴다)
 import crypto from "node:crypto";
@@ -12,7 +11,7 @@ import sharp from "sharp";
 const SOURCE_DIR = path.resolve("public/images");
 const OUTPUT_DIR = path.resolve("public/_img");
 const MANIFEST = path.join(OUTPUT_DIR, "manifest.json");
-const SKIP_DIRS = [path.join(SOURCE_DIR, "posts", "thumbnails")];
+const SKIP_DIRS = [];
 
 const MAX_WIDTH = 1440;
 const MAX_BYTES = 200 * 1024;

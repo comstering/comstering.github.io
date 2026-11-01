@@ -4,6 +4,7 @@
 //   3) 산출물에 adsbygoogle 문자열이 없음 (AdSense 제거 유지)
 //   4) 빌드 CSS에 무효가 된 font 단축 속성이 없음 (`font:400 var(--x),var(--y)`)
 //   5) 글 본문 이미지가 모두 변환본(/_img)이고 파일이 있으며 200KB 이하, width·height 지정 (G1-5)
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { XMLValidator } from "fast-xml-parser";
@@ -25,6 +26,20 @@ const postsDir = path.join(OUT, "posts");
 const postFiles = fs.readdirSync(postsDir).filter((file) => file.endsWith(".html"));
 if (postFiles.length === 0) fail("out/posts 에 글 HTML이 없습니다");
 
+// og:image는 글마다 고유한 PNG(1200×630)여야 한다 (G1-6)
+const ogHashes = new Map();
+const checkPng = (where, target) => {
+  const bytes = fs.readFileSync(target);
+  const isPng = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  if (!isPng) return fail(`${where}: og:image가 PNG가 아닙니다`);
+  const width = bytes.readUInt32BE(16);
+  const height = bytes.readUInt32BE(20);
+  if (width !== 1200 || height !== 630) fail(`${where}: og:image가 ${width}×${height}입니다 (1200×630)`);
+  const hash = crypto.createHash("sha256").update(bytes).digest("hex");
+  if (ogHashes.has(hash)) fail(`${where}: og:image가 ${ogHashes.get(hash)}와 같습니다 (글마다 고유해야 함)`);
+  else ogHashes.set(hash, where);
+};
+
 for (const file of postFiles) {
   const html = read("posts", file);
   const match = html.match(/<meta property="og:image" content="([^"]+)"/);
@@ -40,7 +55,16 @@ for (const file of postFiles) {
   const target = path.join(OUT, decodeURIComponent(url.slice(SITE_URL.length)));
   if (!fs.existsSync(target)) {
     fail(`posts/${file}: og:image 파일이 없습니다 (${url})`);
+    continue;
   }
+  checkPng(`posts/${file}`, target);
+}
+for (const [file, expected] of [["index.html", "/og.png"], ["about.html", "/about/og.png"]]) {
+  const html = fs.existsSync(path.join(OUT, file)) ? read(file) : "";
+  const url = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+  if (url !== `${SITE_URL}${expected}`) fail(`${file}: og:image가 ${SITE_URL}${expected}여야 합니다 (${url ?? "없음"})`);
+  else if (fs.existsSync(path.join(OUT, expected))) checkPng(file, path.join(OUT, expected));
+  else fail(`${file}: og:image 파일이 없습니다 (${url})`);
 }
 
 // 2) XML
@@ -158,5 +182,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 존재, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하, 글꼴 서브셋 단일 woff2`,
+  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 고유 PNG 1200×630, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하, 글꼴 서브셋 단일 woff2`,
 );

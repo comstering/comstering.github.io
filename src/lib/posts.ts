@@ -31,7 +31,6 @@ export interface PostMetadata {
   /** 글 목록 메타용: `series eks 3/5` */
   seriesLabel?: string;
   seriesTotal?: number;
-  thumbnail?: string;
   draft: boolean;
   relatedProject?: string;
   contentHtml: string;
@@ -113,7 +112,6 @@ const toMetadata = (
     ? loadSeriesRegistry()[data.series]?.label
     : undefined,
   seriesTotal: data.series ? seriesCounts().get(data.series) : undefined,
-  thumbnail: data.thumbnail,
   draft: data.draft,
   relatedProject: data.relatedProject,
   contentHtml,

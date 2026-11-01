@@ -4,7 +4,6 @@ description: "지난 한 해의 성장을 되짚어보고, 더 나은 개발자�
 date: "2026-01-06"
 categories: [note]
 tags: [retrospective, resolution, new-year]
-thumbnail: "2025-retrospective-2026-resolutions.png"
 ---
 
 오랜만에 글을 쓴다.

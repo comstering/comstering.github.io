@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: "/about",
     type: "profile",
+    images: [{ url: "/about/og.png", width: 1200, height: 630 }],
   }),
 };
 

@@ -6,7 +6,6 @@ categories: [infra]
 tags: [kubernetes, eks, cilium, cni, vpc, troubleshooting, taint, toleration, unmanaged-pod-watcher]
 series: cilium-on-eks
 seriesOrder: 3
-thumbnail: "eks-cilium.png"
 ---
 
 ## Cilium CNI 설치 이후 발생한 Networking Error

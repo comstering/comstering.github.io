@@ -4,7 +4,6 @@ description: "Terraform 코드로 간편하게 AWS Cloud Infra를 구축하자."
 date: "2025-07-01"
 categories: [infra]
 tags: [aws, terraform, iac]
-thumbnail: "terraform.webp"
 ---
 
 ## What is AWS?

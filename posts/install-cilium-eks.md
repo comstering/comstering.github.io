@@ -6,7 +6,6 @@ categories: [infra]
 tags: [kubernetes, eks, cilium, cni, vpc, taint, helm]
 series: cilium-on-eks
 seriesOrder: 2
-thumbnail: "eks-cilium.png"
 ---
 
 ## Cilium CNI
