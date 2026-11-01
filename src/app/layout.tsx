@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Script from "next/script";
 import { JetBrains_Mono } from "next/font/google";
+import { preload } from "react-dom";
 import {
   AUTHOR,
   SITE_DESCRIPTION,
@@ -34,7 +35,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
+// 실험(PR-17): About CLS 0.125는 한글 글꼴이 늦게 도착해 문단 줄 수가 바뀌어서 생긴다(Lighthouse "Web font loaded").
+// 서브셋 글꼴(약 107KB)을 미리 받아 첫 페인트 전에 도착시킨다. 디자인 19번 1.3은 "preload 없음"이라 효과가 있으면 디자인 확인을 받는다
+const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+  preload("/_font/pretendard-subset.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+  return (
   <html lang="ko" className={jetbrainsMono.variable} suppressHydrationWarning>
     <body className="flex min-h-screen flex-col">
       <ThemeProvider>
@@ -57,6 +66,7 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
       />
     </body>
   </html>
-);
+  );
+};
 
 export default RootLayout;

@@ -1,13 +1,13 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-01 · 기준 커밋 `37b3b45`(main, #54 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
+_최종 갱신: 2026-11-01 · 기준 커밋 `e01c7a8`(main, #55 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
 
 ## 한눈에 보기
 
 | 단계 | 상태 |
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
-| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9~PR-14 완료, 성능 게이트(관측 측정) 반영 완료. **남은 것: PR-15(OG), 글꼴 서브셋, PR-16, PR-17** |
+| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9~PR-14 완료, 성능 게이트(관측 측정) 반영 완료. **남은 것: PR-17(진행 중), Q14 접근성 PR** |
 | Phase 2 포트폴리오 (PRD-004) | 기획 review 단계. 개발은 Phase 1 게이트(PR-17) 통과 후 시작 |
 | 지금 막힌 것 | 없음. **도구 확정(사용자 승인 2026-11-01): OG는 `next/og`(새 의존성 없음), 글꼴 서브셋은 Node `subset-font`(새 devDependency 1개, 설치 전 알림).** 의존성 갱신 #50·Next 16 #51 머지 완료 |
 
@@ -17,25 +17,13 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `37b3b45`(main, #54 머지) · 기�
    - **지금 환경 상태(2026-11-01 세션 종료 시):** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config(`eslint.config.mjs`). `next lint` 없음. `sharp`는 0.33.5 고정 유지. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
    - Next 16 이후 Lighthouse(CI, #51): About 91·LCP 2.1s·TBT 277ms(차단선 통과), 홈 97·1.9s·CLS 0.058, 글 97·2.0s·CLS 0.029. Next 15→16 퇴보 없음
    - 로컬 Chrome 확장(claude chrome)이 이 세션에서 안 돼 Playwright Chromium으로 화면을 확인했다(PR에 매번 밝힌다). 다음 세션에서 되면 실제 Chrome으로도 본다
-2. **글꼴 서브셋 PR (Q9 ①, 디자인 19번 1.3)** — **구현 완료(2026-11-01, 브랜치 `feat/font-subset`, 커밋 전).** `scripts/subset-font.mjs`(738자 → 106.6KB, 해시 캐시), `public/_font/`(git 제외), `globals.css`의 `@font-face`(preload 없음, swap), `predev`·`prebuild` 연결, `check:output`에 단일 woff2·150KB·CSS 참조 검사 추가. 로컬: lint·tokens·build·check:output·E2E 89건 통과, 페이지당 글꼴 요청 2개(Pretendard 109KB + JetBrains Mono 40KB). **남은 것: 커밋·PR, CI Lighthouse About CLS 3회 중앙값 확인(0.05 이하면 CLS를 error로), 실제 Chrome 확인은 완료(아래 세션 기록). 아래는 원래 계획**
-   - 빌드 때 `posts/`·`content/`·`src/`의 글자를 모아 Pretendard Variable(`node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2`, 2.06MB)을 `wght 400–700` 단일 woff2(약 102KB)로 서브셋, 자체 호스팅, `font-display: swap`, **preload 없음**
-   - **도구 확정: Node `subset-font`**(2.9.0, BSD-3, WASM, 의존성 p-limit·fontverter·harfbuzzjs). 저장소 밖 시험에서 `variationAxes: { wght: { min: 400, max: 700 } }`와 `targetFormat: "woff2"`가 동작함을 확인(시험 문장 15.7KB→12.0KB). 설치(`yarn add -D subset-font`) 직전에 사용자에게 한 번 더 알린다. 글자 수집 로직은 PR-15 OG와 공유
-   - 효과: 글꼴 요청 12~17개 → 2개, 272~370KB → 141KB. **FCP·LCP는 그대로**(디자인 측정). CLS는 미검증이라 적용 PR에서 CI Lighthouse About CLS 3회 중앙값을 확인해 STATUS에 적는다(0.05 이하면 CLS를 error로)
-   - 한계: 사용자가 검색창에 입력하는 글자처럼 서브셋에 없는 글자는 시스템 글꼴로 보인다
-3. **PR-15 OG 이미지 자동 생성** (PRD-003 PR-15 절, 디자인 12번 E4~E6, 시안 `site/og.html`·`og-render.html`)
-   - **접근 확정: `next/og` + `posts/[id]/og.png/route.tsx`**(새 의존성 없음). Next 16에서 같은 방식이 되는지 첫 단계에서 다시 확인한다. (아래는 원래 PoC 계획)
-   - **첫 단계는 PoC**: Next.js `opengraph-image.tsx` + `generateStaticParams`가 정적 export에서 동작하는지 확인. 안 되면 satori + resvg 빌드 스크립트로 `public/_og/<slug>.png`
-   - 1200×630 다크 고정, 로고 `~/comstering_`, 제목 최대 3줄, 하단 `categories · 날짜 · 시리즈`(accent 선 없음), PNG. 글꼴은 Pretendard 700 + JetBrains Mono 400의 otf/ttf만(satori는 woff2 불가), 한글은 제목 글자만 서브셋(글꼴 서브셋 PR과 글자 수집 로직 공유)
-   - 끝나면 `thumbnail` 필드를 스키마에서 삭제하고 15편 frontmatter에서 지운다. 새 의존성(satori, @resvg/resvg-js)은 설치 전에 사용자에게 알린다
-   - **PoC 결과(2026-11-01, 임시 브랜치에서 시험 후 폐기):** `next/og`의 `ImageResponse`가 **정적 export에서 동작한다. 새 의존성이 필요 없다**(satori·resvg가 Next에 내장). 파일 규칙 `posts/[id]/opengraph-image.tsx`는 되지만 출력 파일 이름에 **확장자가 없어**(`out/posts/<id>/opengraph-image`) GitHub Pages가 이미지로 인식하지 못할 위험이 있다. **`posts/[id]/og.png/route.tsx`(`export const dynamic = "force-static"` + `generateStaticParams`)는 `out/posts/<id>/og.png`로 `.png` 확장자 파일이 나온다**(14편, 1200×630, 약 29KB, 한글 정상). 이 경로를 쓰고 `generateMetadata`의 `og:image`를 `https://comstering.github.io/posts/<id>/og.png`로 바꾼다. 글꼴은 `node_modules/pretendard/dist/public/static/Pretendard-Bold.otf`(700)를 읽어 `fonts`에 넣는다(woff2 불가). JetBrains Mono(로고)는 ttf/otf/woff가 필요한데 저장소에 없다(`next/font`가 받는 건 woff2). 아직 못 본 것: 빌드 시간 증가, 긴 제목 3줄 잘림, 시안(`og.html`)과 픽셀 대조, 카카오·LinkedIn 실제 미리보기
-4. 이후 PR-16(진행률·링크 체커) → PR-17(게이트 측정·문서)
-5. **PR-17(게이트 측정·문서)에서 할 성능 게이트 작업**(기획 Q12·Q13 결정, PRD-003 "성능 측정 기준"):
-   - `lighthouserc.json` `assertMatrix[0]`(차단선)의 성능·LCP·CLS·TBT를 `warn` → `error`로 올린다(접근성·SEO는 이미 `error`)
-   - **About 예외(사용자·기획 결정, 2026-10-31):** About은 이번 Phase에서 개선하지 않는다(Phase 2 PR-19에서 재작성). About 페이지만 성능·TBT를 `warn`으로 둔다: 차단선 항목을 `matchingUrlPattern`으로 About 제외, About 전용 항목을 `warn`으로 추가. 숫자(성능 ≥ 90, TBT ≤ 300ms)는 낮추지 않는다. PR-19 수용 기준에 "About 차단선 통과, 통과 시 예외 해제"가 있다(PRD-004)
-   - 2026-11-01 Next 16 CI에서는 About도 성능 91·TBT 277ms로 차단선을 넘었다(편차 범위일 수 있으니 PR-17에서 여러 번 측정해 예외가 아직 필요한지 판단한다)
-   - 이전 리눅스 CI 값(2026-10-30, 관측): 홈 성능 98·LCP 1.9s, 글 97·2.0s는 차단선 통과. About 성능 88~90·TBT 344~376ms는 예외 대상
-   - 홈 CLS는 0.035~0.058(차단 0.1 이하, 목표 0.05는 경계). 글꼴 서브셋 PR 뒤 재측정
-6. 열린 질문: Q9(남은 건 글꼴 서브셋). Q10~Q13은 모두 결정됨
+2. **PR-17 게이트 측정·문서 (진행 중, 브랜치 `feat/gate-docs`)**
+   - 한 일: `lighthouserc.json` 차단선 `error` 승격(+ About 성능·CLS·TBT `warn` 예외), CI·요약 문구, README 본문 문법·시리즈·자동 생성 안내, DESIGN.md 컴포넌트·진행표, CONTEXT 6.1에 G1-1~G1-6 측정 결과·About CLS 원인
+   - **About CLS 0.125 실험**: 서브셋 글꼴 preload(`layout.tsx`, `react-dom` `preload`). CI에서 About CLS가 0.1 이하로 내려가면 preload를 유지하고 About CLS 예외를 뺀다(디자인 19번 "preload 없음"과 충돌하므로 REQUESTS Q15로 디자인 확인), 안 내려가면 preload를 되돌리고 About CLS를 예외(warn)에 둔다. 판단은 CI 결과로만 한다(맥 로컬 CLS는 0이라 의미 없음)
+   - 못 한 것: PRD-001 7장 체크(기획 문서라 Q15로 요청)
+3. **Q14 (디자인 21번 impeccable audit, open)**: 지금까지 이 목록에서 빠져 있었다. P1 코드 블록 `<pre>` 키보드 접근(`tabindex="0"`·`role="region"`·`aria-label`), P2 글자 200%에서 헤더 `nav`·PC 목차 넘침, 터치 대상(칩·헤더 링크 히트 영역), P3 4건(`aside` 랜드마크, 외부 링크 `noopener`, 번들·렌더링 차단 CSS). **PR-17 다음 별도 PR로 처리**
+4. Phase 2(PRD-004)는 기획이 review → approved가 된 뒤 시작한다. Phase 1이 끝나면 About 재작성(PR-19)에서 About 예외를 해제한다
+5. 열린 질문: Q14(개발 작업), Q15(기획·디자인 확인). Q9~Q13은 결정됨
 
 ## Phase 1 PR별 상태
 
@@ -58,8 +46,8 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `37b3b45`(main, #54 머지) · 기�
 | (문서) | cowork 전체(기획 PRD-004·디자인 18번 포함) 커밋, Q13 결정 반영 | 🔍 리뷰 대기 | #47 |
 | (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | ✅ 머지 | #53 |
 | PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ✅ 머지 | #54 |
-| PR-16 | 읽기 진행률·링크 체커 | 🔍 PR 오픈(브랜치 `feat/reading-progress`) | PR 번호는 아래 세션 기록 |
-| PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ⏳ 대기(위 "다음 작업" 5번) | |
+| PR-16 | 읽기 진행률·링크 체커 | ✅ 머지 | #55 |
+| PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | 🔍 PR 오픈(브랜치 `feat/gate-docs`), About CLS preload 실험 중 | |
 
 개발 순서(PRD-003): …→ PR-14 → PR-15 → PR-16 → PR-17. 한 번에 PR 하나, 사용자가 머지하면 다음으로 간다.
 
@@ -165,6 +153,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `37b3b45`(main, #54 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | #55 머지 확인(`e01c7a8`, `Links` 워크플로가 PR에서 실행돼 성공). PR-17 작업(브랜치 `feat/gate-docs`): 차단선 `error` 승격 + About 성능·CLS·TBT `warn` 예외, README·DESIGN·CONTEXT(6.1 게이트 측정 결과) 문서, REQUESTS Q15 신설. **#55 CI 관측: About CLS 0.125 그대로**. 원인을 CI 리포트로 확인: About 둘째 소개 문단이 글꼴 도착 뒤 줄 수가 바뀜. 서브셋 글꼴 preload를 시험으로 넣음(결과는 CI에서). **Q14(디자인 21번 감사)가 REQUESTS에 open으로 남아 이 목록에서 빠져 있던 것을 발견**해 "다음 작업"에 추가. 로컬: lint·tokens·build·check:output·E2E 통과 | PR CI에서 About CLS 확인 → 결과에 따라 preload 유지/되돌림 → Q14 별도 PR |
 | 2026-11-01 | #54 머지 확인(`37b3b45`). PR-16 구현(브랜치 `feat/reading-progress`): ① 진행률 `PostProgress`(글 상세에만, `globals.css` `.reading-progress`: `@supports (animation-timeline: scroll())` + `prefers-reduced-motion: no-preference`일 때만 보임, scroll 리스너 없음, 미지원 브라우저는 PRD대로 숨김 — 시안 app.js의 IntersectionObserver 대체는 넣지 않음) ② 링크 체커 `.github/workflows/links.yaml`(주 1회 월 09:00 KST·수동은 전체 글, PR은 바뀐 글만·요약만, 깨지면 이슈 1개를 만들거나 갱신) + `lychee.toml`(429 허용, 예시 주소 제외), `lycheeverse/lychee-action`을 v2.9.0 커밋 SHA(`e747777`)로 고정해 사용(새 CI 의존성, 사용자가 1번 안으로 확정·SHA 고정 지시). 첫 실행 대신 로컬 curl로 글의 외부 링크 40개를 조사: 실제 깨진 것 0, `my-app.default.svc.cluster.local`(예시)은 exclude, faqs.org·hashicorp.com/ko는 429라 accept. E2E 6건 추가(95건 통과), 실제 Chrome에서 스크롤 25/50/75/100%에 scaleX가 0.25/0.5/0.75/1.0. 못 한 것: lychee 실제 실행(CI에서 처음 돈다), 모바일 360px 육안 | PR 오픈 → PR-17(About CLS 조사 포함)
 | 2026-11-01 | #53 머지 확인(`ee3759d`). **#53 CI 관측값: About 성능 90·CLS 0.125(차단선 0.1 초과)·TBT 210ms, 홈 96·CLS 0.058, 글 96·0.030. 서브셋을 적용해도 About CLS가 개선되지 않았다**(원인은 글꼴이 아닌 다른 레이아웃 이동으로 보임, 미조사). PR-17에서 CLS를 error로 올리기 전에 About 원인 조사나 About 예외가 필요하다. PR-15 구현(브랜치 `feat/og-images`): `src/lib/og.tsx`(`next/og` ImageResponse, 색은 globals.css `.dark` 토큰을 빌드 때 읽음, Pretendard-Bold.otf + `@fontsource/jetbrains-mono` woff), 라우트 `posts/[id]/og.png`·`og.png`·`about/og.png`(16개 PNG 1200×630, 약 40~47KB, 시안과 시각 대조 일치), og:image·JSON-LD 교체, `thumbnail` 필드·검증·README·frontmatter 14편·`public/images/posts/thumbnails/`(10개) 삭제, `check:output`에 PNG 서명·1200×630·글별 고유(해시) 검사. 새 devDependency `@fontsource/jetbrains-mono`(사용자 승인). lint·tokens·build·check:output·E2E 89건 통과. 실제 Chrome(빌드 `out/`) 확인 완료: og:image·twitter:image·JSON-LD가 글별 PNG를 가리키고, 글·홈·About PNG 모두 200·image/png·1200×630, 육안 시안 일치, 콘솔 에러 0. 못 한 것: 카카오·LinkedIn 실제 미리보기(사용자 작업), `public/blog-logo.png`는 더는 안 쓰지만 남겨 둠 | 사용자 OK 후 커밋·PR → PR-16 |
 | 2026-11-01 | 글꼴 서브셋 구현(브랜치 `feat/font-subset`): `subset-font@2.9.0` devDependency 추가, 서브셋 스크립트·`@font-face`·`check:output` 검사. 기존 `pretendardvariable-dynamic-subset.css` import 제거. 로컬 검증 통과(E2E 89건). 커밋·PR은 사용자 요청 대기(루트 CLAUDE.md: 커밋은 요청 시에만). 실제 Chrome(Claude in Chrome, 빌드 `out/`) 확인 완료: 홈·글 2편·About 모두 글꼴 요청 2개(Pretendard 서브셋 + JetBrains Mono), `Pretendard Variable` loaded, 콘솔 에러 0, 4개 페이지 본문 글자 중 서브셋 밖(폴백 의심) 글자 0, h1 700·본문 400 적용. **못 한 것:** 라이트 테마 육안(토글 셀렉터 불일치로 다크만 확인), 창 폭이 406px·1403px 두 가지뿐이라 정밀한 모바일 360 확인, CI CLS 미확인 | 사용자 OK 후 커밋·push·PR → CI CLS 확인 → PR-15 OG |
