@@ -99,11 +99,14 @@ const PostPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <PostHeader post={post} />
 
       {hasToc(post.headings) && (
-        <aside className="absolute left-full top-0 ml-10 hidden h-full w-52 xl:block">
+        <div
+          data-toc-aside
+          className="absolute left-full top-0 ml-[40px] hidden h-full w-[200px] break-words xl:block"
+        >
           <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pt-10">
             <PostToc headings={post.headings} variant="sticky" />
           </div>
-        </aside>
+        </div>
       )}
 
       <div className="mt-10">

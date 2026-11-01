@@ -52,7 +52,7 @@ test("목차: 항목을 누르면 URL 해시가 바뀌고 제목이 헤더에 �
   }
   const nav = mobile
     ? page.locator(".toc-inline nav")
-    : page.locator("aside nav[aria-label='목차']");
+    : page.locator("[data-toc-aside] nav[aria-label='목차']");
   const link = nav.locator("a").nth(2);
   const href = await link.getAttribute("href");
   await link.click();
@@ -71,7 +71,7 @@ test("1280 이상: 오른쪽 sticky 목차만, 현재 항목은 굵게", async (
   test.skip(isMobile(page.viewportSize()?.width), "데스크톱에서만");
   await page.goto(SERIES_POST);
   await expect(page.locator(".toc-inline")).toBeHidden();
-  const nav = page.locator("aside nav[aria-label='목차']");
+  const nav = page.locator("[data-toc-aside] nav[aria-label='목차']");
   await expect(nav).toBeVisible();
   await nav.locator("a").nth(2).click();
   const current = nav.locator("a[aria-current='true']");
@@ -106,7 +106,7 @@ test("h2가 3개 미만인 글: 목차는 없고 시리즈 박스가 한 줄 전
 }) => {
   await page.goto(SHORT_POST);
   await expect(page.locator(".toc-inline")).toHaveCount(0);
-  await expect(page.locator("aside nav[aria-label='목차']")).toHaveCount(0);
+  await expect(page.locator("[data-toc-aside] nav[aria-label='목차']")).toHaveCount(0);
   await expect(page.locator(".post-tools > *")).toHaveCount(1);
   await expect(page.locator(".series__toggle")).toContainText("2/3");
 });
@@ -114,7 +114,7 @@ test("h2가 3개 미만인 글: 목차는 없고 시리즈 박스가 한 줄 전
 test("시리즈가 아닌 글: 시리즈 박스가 없다", async ({ page }) => {
   await page.goto(PLAIN_POST);
   await expect(page.locator(".series")).toHaveCount(0);
-  await expect(page.locator(".toc-inline, aside nav").first()).toBeAttached();
+  await expect(page.locator(".toc-inline, [data-toc-aside] nav").first()).toBeAttached();
 });
 
 test("홈 목록 메타에 시리즈 위치가 나온다", async ({ page }) => {

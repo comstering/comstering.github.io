@@ -16,11 +16,14 @@ export const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
-      <Container className="flex h-16 items-center justify-between font-mono text-sm">
-        <Link href="/" className="font-bold tracking-tight text-fg">
+      <Container className="flex min-h-16 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2 font-mono text-sm">
+        <Link
+          href="/"
+          className="relative font-bold tracking-tight text-fg after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
+        >
           ~/comstering<span className="text-accent">_</span>
         </Link>
-        <nav aria-label="주요 메뉴" className="flex items-center gap-5">
+        <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-x-5 gap-y-1">
           {NAV_ITEMS.map(({ href, label, match }) => {
             const active = match(pathname);
             return (
@@ -29,7 +32,7 @@ export const Header: React.FC = () => {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "transition-colors hover:text-fg",
+                  "relative transition-colors after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] hover:text-fg",
                   active ? "text-fg" : "text-mute",
                 )}
               >

@@ -17,7 +17,7 @@ const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme();
 
   if (!mounted) {
-    return <div className="h-9 w-9" aria-hidden />;
+    return <div className="h-11 w-11" aria-hidden />;
   }
 
   const isDark = resolvedTheme === "dark";

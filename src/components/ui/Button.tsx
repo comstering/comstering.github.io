@@ -9,7 +9,7 @@ export const buttonClass = (
   className?: string,
 ): string =>
   cn(
-    "inline-flex h-(--tap) items-center justify-center gap-2 whitespace-nowrap rounded-md border px-4 font-mono text-meta font-medium transition-colors active:translate-y-px",
+    "inline-flex min-h-(--tap) max-w-full items-center justify-center gap-2 rounded-md border px-4 py-1 font-mono text-meta font-medium transition-colors active:translate-y-px",
     variant === "primary" &&
       "border-transparent bg-accent text-accent-on hover:bg-accent/90",
     variant === "secondary" &&

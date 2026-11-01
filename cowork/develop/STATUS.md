@@ -1,29 +1,26 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-01 · 기준 커밋 `e01c7a8`(main, #55 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
+_최종 갱신: 2026-11-01 · 기준 커밋 `cc88433`(main, #56 머지) · 기준 기획서 PRD-003(approved)·PRD-004(review) · 디자인 v1.4_
 
 ## 한눈에 보기
 
 | 단계 | 상태 |
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | **완료.** PR-0~PR-8, 배포 재개, 배포 후 점검까지 |
-| Phase 1 읽기 경험 (PRD-003) | **진행 중.** PR-9~PR-14 완료, 성능 게이트(관측 측정) 반영 완료. **남은 것: PR-17(진행 중), Q14 접근성 PR** |
-| Phase 2 포트폴리오 (PRD-004) | 기획 review 단계. 개발은 Phase 1 게이트(PR-17) 통과 후 시작 |
+| Phase 1 읽기 경험 (PRD-003) | **완료(2026-11-01, 기획이 PRD-003 `done` 처리).** PR-9~PR-17, Q14 접근성 PR까지. G1-1~G1-6 결과는 CONTEXT 6.1. About 성능·CLS·TBT `warn` 예외는 Phase 2 PR-19까지 |
+| Phase 2 포트폴리오 (PRD-004) | **approved. 개발 시작 가능.** 순서 PR-18(데이터 분리·검증) → PR-19(About 강화, About CLS ≤ 0.1·예외 해제 포함) → PR-20 → PR-21 → PR-22 → PR-23 |
 | 지금 막힌 것 | 없음. **도구 확정(사용자 승인 2026-11-01): OG는 `next/og`(새 의존성 없음), 글꼴 서브셋은 Node `subset-font`(새 devDependency 1개, 설치 전 알림).** 의존성 갱신 #50·Next 16 #51 머지 완료 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
-1. `git checkout main && git pull`로 `56afea2` 이후인지 확인하고 `gh pr list`로 열린 PR을 본다(tracked 변경이 있으면 `git stash` 후 pull, `git stash -u` 금지). 미추적 `resume.md`·`.claude/launch.json`은 내 것이 아니니 커밋하지 않는다
-   - **지금 환경 상태(2026-11-01 세션 종료 시):** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config(`eslint.config.mjs`). `next lint` 없음. `sharp`는 0.33.5 고정 유지. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
-   - Next 16 이후 Lighthouse(CI, #51): About 91·LCP 2.1s·TBT 277ms(차단선 통과), 홈 97·1.9s·CLS 0.058, 글 97·2.0s·CLS 0.029. Next 15→16 퇴보 없음
-   - 로컬 Chrome 확장(claude chrome)이 이 세션에서 안 돼 Playwright Chromium으로 화면을 확인했다(PR에 매번 밝힌다). 다음 세션에서 되면 실제 Chrome으로도 본다
-2. **PR-17 게이트 측정·문서 (진행 중, 브랜치 `feat/gate-docs`)**
-   - 한 일: `lighthouserc.json` 차단선 `error` 승격(+ About 성능·CLS·TBT `warn` 예외), CI·요약 문구, README 본문 문법·시리즈·자동 생성 안내, DESIGN.md 컴포넌트·진행표, CONTEXT 6.1에 G1-1~G1-6 측정 결과·About CLS 원인
-   - **About CLS 0.125 결과**: 서브셋 글꼴 preload를 시험했으나 **효과 없음**(CI 3회 모두 0.125, 글꼴이 느린 4G 관측에서 약 3.0s에 도착해 FCP 1.8s 뒤). preload는 되돌렸고 About의 성능·CLS·TBT를 `warn` 예외로 둔다(Q15 확인 요청, PR-19에서 해제)
-   - 못 한 것: PRD-001 7장 체크(기획 문서라 Q15로 요청)
-3. **Q14 (디자인 21번 impeccable audit, open)**: 지금까지 이 목록에서 빠져 있었다. P1 코드 블록 `<pre>` 키보드 접근(`tabindex="0"`·`role="region"`·`aria-label`), P2 글자 200%에서 헤더 `nav`·PC 목차 넘침, 터치 대상(칩·헤더 링크 히트 영역), P3 4건(`aside` 랜드마크, 외부 링크 `noopener`, 번들·렌더링 차단 CSS). **PR-17 다음 별도 PR로 처리**
-4. Phase 2(PRD-004)는 기획이 review → approved가 된 뒤 시작한다. Phase 1이 끝나면 About 재작성(PR-19)에서 About 예외를 해제한다
-5. 열린 질문: Q14(개발 작업), Q15(기획·디자인 확인). Q9~Q13은 결정됨
+1. `git checkout main && git pull`, `gh pr list`로 열린 PR을 본다(tracked 변경이 있으면 `git stash` 후 pull, `git stash -u` 금지). 미추적 `resume.md`·`.claude/launch.json`은 내 것이 아니니 커밋하지 않는다. 기획·디자인 세션이 `cowork/prd`·`cowork/design`을 로컬에서 고쳐 두었을 수 있다(작성자가 별도 PR로 올린다, 개발은 커밋하지 않는다)
+   - **환경(2026-11-01):** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config. `sharp`는 0.33.5 고정. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
+   - 현재 CI 관측(PR #56): 홈 97·LCP 1.7s·CLS 0.058·TBT 128ms, 글 97·1.8s·0.030·131ms, About 92·1.8s·CLS 0.125·178ms(About 예외)
+   - **Claude in Chrome이 켜져 있으면 화면 확인은 실제 Chrome으로 매번 한다**(시키지 않아도, 메모리 `feedback-verify-in-chrome`). **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(메모리 `feedback-pr-screenshots`). 작업이 끝나면 커밋·push·PR까지 바로 올린다(`feedback-always-commit-and-pr`)
+2. **Phase 2 PR-18(데이터 분리·검증)부터**: `cowork/prd/004_portfolio_projects-and-about.md` 0장·7장·PR-18 절과 디자인 D-1~D-5 요청을 먼저 읽는다. 첫 단계에서 `content/profile.yaml`·`content/experience.yaml`·zod 스키마를 만든다. 문장은 바꾸지 않고 옮긴다(바뀌는 것은 기술 스택 7그룹뿐)
+3. PR-19에서 **About CLS ≤ 0.1(관측 3회 중앙값)을 해결하고 `lighthouserc.json`의 About 예외(`assertMatrix[2]`)를 지운다.** 원인과 해법 후보는 CONTEXT 6.1(소개 둘째 문단이 글꼴 도착 뒤 줄 수가 바뀜, preload는 효과 없었음)
+4. 이월(작성자 작업): 카카오·LinkedIn OG 미리보기(LinkedIn Post Inspector는 로그인 필요), Search Console·네이버 sitemap 재제출, 사이트 1차 완성 후 branch protection
+5. 열린 질문: 없음(Q9·Q14·Q15 closed)
 
 ## Phase 1 PR별 상태
 
@@ -47,7 +44,8 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `e01c7a8`(main, #55 머지) · 기�
 | (작업) | 글꼴 서브셋(디자인 19번 ①, Q9 남은 건) | ✅ 머지 | #53 |
 | PR-15 | OG 이미지 자동 생성, `thumbnail` 필드 삭제 | ✅ 머지 | #54 |
 | PR-16 | 읽기 진행률·링크 체커 | ✅ 머지 | #55 |
-| PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | 🔍 PR #56 오픈(브랜치 `feat/gate-docs`), preload 실험 실패로 되돌림, 리뷰 대기 | |
+| PR-17 | 게이트 측정·문서 + 성능 차단선 `error` + About 예외 | ✅ 머지 | #56 |
+| (수정) | Q14 접근성·반응형(디자인 21번 impeccable audit) | 🔍 PR 오픈(브랜치 `fix/a11y-audit-q14`) | #57 |
 
 개발 순서(PRD-003): …→ PR-14 → PR-15 → PR-16 → PR-17. 한 번에 PR 하나, 사용자가 머지하면 다음으로 간다.
 
@@ -153,6 +151,7 @@ _최종 갱신: 2026-11-01 · 기준 커밋 `e01c7a8`(main, #55 머지) · 기�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-01 | #56 머지 확인(`cc88433`). 기획이 Q15 답함: About 예외를 성능·CLS·TBT로 확대 승인, PRD-003 `done`·PRD-001 체크 완료, PR-19 수용 기준에 About CLS ≤ 0.1 추가. **Q14(디자인 21번) 처리(브랜치 `fix/a11y-audit-q14`, PR #57):** P1 코드 `<pre>` `tabindex=0`·`role=region`·`aria-label`(`rehype-code-meta`) ② 헤더 `flex-wrap`·`min-h-16`, 링크·로고·칩 히트 영역 44px(`after:`), 칩 줄에 `py-1.5 -my-1.5`(`overflow-x-auto`가 `::after`를 잘라서), 테마 토글 36→44px ③ PC 목차 `aside`→`div[data-toc-aside]`, 폭·간격을 px로(글자 확대 때 넘침 방지) ④ 외부 링크 `rel`에 `noopener noreferrer` 추가(`nofollow` 정책은 그대로) ⑤ **추가 발견:** About이 글자 200%·360px에서 185px 넘침(디자인 감사는 헤더만 봄) → 카드·그리드 자식에 `min-w-0`, `Button`의 `whitespace-nowrap` 제거(`min-h-(--tap)`+줄바꿈 허용). 보류: P3-3 번들·렌더링 차단 CSS(`optimize`, 게이트 통과 중이라 별도), 헤딩 앵커 `#`·코드 복사 버튼 터치 크기(보조 요소, 간격 예외). E2E 14건 추가(109건 통과), 실제 Chrome에서 `<pre>` Tab 포커스·360px·200% 넘침 0 확인. **Phase 1 종료 기록** | Phase 2 PR-18 시작 |
 | 2026-11-01 | #55 머지 확인(`e01c7a8`, `Links` 워크플로가 PR에서 실행돼 성공). PR-17 작업(브랜치 `feat/gate-docs`): 차단선 `error` 승격 + About 성능·CLS·TBT `warn` 예외, README·DESIGN·CONTEXT(6.1 게이트 측정 결과) 문서, REQUESTS Q15 신설. **#55 CI 관측: About CLS 0.125 그대로**. 원인을 CI 리포트로 확인: About 둘째 소개 문단이 글꼴 도착 뒤 줄 수가 바뀜. 서브셋 글꼴 preload를 시험으로 넣음(결과는 CI에서). **Q14(디자인 21번 감사)가 REQUESTS에 open으로 남아 이 목록에서 빠져 있던 것을 발견**해 "다음 작업"에 추가. 로컬: lint·tokens·build·check:output·E2E 통과 | (후속) PR #56 CI 결과: preload로도 About CLS 0.125 그대로(이동 원인 `Web font loaded` 동일, 글꼴 도착 약 3.0s > FCP 1.8s) → preload 되돌림, About CLS 예외 확정, 문서·Q15 갱신 | #56 머지 후 Q14 별도 PR |
 | 2026-11-01 | #54 머지 확인(`37b3b45`). PR-16 구현(브랜치 `feat/reading-progress`): ① 진행률 `PostProgress`(글 상세에만, `globals.css` `.reading-progress`: `@supports (animation-timeline: scroll())` + `prefers-reduced-motion: no-preference`일 때만 보임, scroll 리스너 없음, 미지원 브라우저는 PRD대로 숨김 — 시안 app.js의 IntersectionObserver 대체는 넣지 않음) ② 링크 체커 `.github/workflows/links.yaml`(주 1회 월 09:00 KST·수동은 전체 글, PR은 바뀐 글만·요약만, 깨지면 이슈 1개를 만들거나 갱신) + `lychee.toml`(429 허용, 예시 주소 제외), `lycheeverse/lychee-action`을 v2.9.0 커밋 SHA(`e747777`)로 고정해 사용(새 CI 의존성, 사용자가 1번 안으로 확정·SHA 고정 지시). 첫 실행 대신 로컬 curl로 글의 외부 링크 40개를 조사: 실제 깨진 것 0, `my-app.default.svc.cluster.local`(예시)은 exclude, faqs.org·hashicorp.com/ko는 429라 accept. E2E 6건 추가(95건 통과), 실제 Chrome에서 스크롤 25/50/75/100%에 scaleX가 0.25/0.5/0.75/1.0. 못 한 것: lychee 실제 실행(CI에서 처음 돈다), 모바일 360px 육안 | PR 오픈 → PR-17(About CLS 조사 포함)
 | 2026-11-01 | #53 머지 확인(`ee3759d`). **#53 CI 관측값: About 성능 90·CLS 0.125(차단선 0.1 초과)·TBT 210ms, 홈 96·CLS 0.058, 글 96·0.030. 서브셋을 적용해도 About CLS가 개선되지 않았다**(원인은 글꼴이 아닌 다른 레이아웃 이동으로 보임, 미조사). PR-17에서 CLS를 error로 올리기 전에 About 원인 조사나 About 예외가 필요하다. PR-15 구현(브랜치 `feat/og-images`): `src/lib/og.tsx`(`next/og` ImageResponse, 색은 globals.css `.dark` 토큰을 빌드 때 읽음, Pretendard-Bold.otf + `@fontsource/jetbrains-mono` woff), 라우트 `posts/[id]/og.png`·`og.png`·`about/og.png`(16개 PNG 1200×630, 약 40~47KB, 시안과 시각 대조 일치), og:image·JSON-LD 교체, `thumbnail` 필드·검증·README·frontmatter 14편·`public/images/posts/thumbnails/`(10개) 삭제, `check:output`에 PNG 서명·1200×630·글별 고유(해시) 검사. 새 devDependency `@fontsource/jetbrains-mono`(사용자 승인). lint·tokens·build·check:output·E2E 89건 통과. 실제 Chrome(빌드 `out/`) 확인 완료: og:image·twitter:image·JSON-LD가 글별 PNG를 가리키고, 글·홈·About PNG 모두 200·image/png·1200×630, 육안 시안 일치, 콘솔 에러 0. 못 한 것: 카카오·LinkedIn 실제 미리보기(사용자 작업), `public/blog-logo.png`는 더는 안 쓰지만 남겨 둠 | 사용자 OK 후 커밋·PR → PR-16 |

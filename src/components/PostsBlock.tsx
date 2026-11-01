@@ -129,7 +129,7 @@ const PostsView: React.FC<PostsViewProps> = ({ posts, selected, onSelect }) => {
       <div
         role="group"
         aria-label="카테고리 필터"
-        className="no-scrollbar mt-4 flex gap-2 overflow-x-auto"
+        className="no-scrollbar -my-1.5 mt-4 flex gap-2 overflow-x-auto py-1.5"
       >
         {categories.map(({ name, count }) => (
           <Chip

@@ -16,7 +16,7 @@ const TYPE_ICON = {
   Other: Folder,
 } as const;
 
-const cardClass = "block h-full rounded-lg border border-line bg-surface p-6";
+const cardClass = "block h-full min-w-0 rounded-lg border border-line bg-surface p-6";
 const linkClass = "group transition-colors hover:border-accent";
 
 export const ActivityCard = ({

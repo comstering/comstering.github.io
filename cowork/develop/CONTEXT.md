@@ -147,6 +147,8 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
 - 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
 
+- **`overflow-x-auto` 컨테이너는 안쪽 요소의 `::after` 히트 영역 확장을 위아래로 잘라 낸다**(overflow-y도 auto가 됨). 칩 줄에 `py-1.5 -my-1.5`로 여유를 줘서 해결(Q14). **그리드·플렉스 자식에는 `min-w-0`**을 붙인다. 안 붙이면 글자를 키울 때 내용 폭만큼 늘어나 가로 넘침이 난다(About 카드 185px). 확인은 E2E `글자 200%에서 가로로 넘치지 않는다`와 Chrome에서 `html{font-size:200%}` 주입
+- 헤더는 `flex-wrap`이라 360px·글자 200%에서 세 줄(약 217px)로 접힌다. 진행률 바는 `top: var(--header-h)`(64px) 고정이라 이때는 헤더 안쪽에 겹친다(가장자리 경우라 두었다)
 - macOS `sed -i`는 `sed -i '' 's/…/…/'` 형식이어야 한다. 실패하면 `&&` 뒤 명령이 안 돈다
 - hast 속성 값은 문자열이어야 한다(`strokeWidth: "2"`). 숫자를 넣으면 `next build`가 타입 오류
 - `output: "export"`라 `generateStaticParams`에 없는 경로는 404. `dynamicParams = false`

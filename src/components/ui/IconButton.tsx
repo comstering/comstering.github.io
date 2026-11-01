@@ -13,7 +13,7 @@ export const IconButton = ({
   <button
     type={type}
     className={cn(
-      "inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-line text-fg transition-colors hover:border-accent hover:text-accent",
+      "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-line text-fg transition-colors hover:border-accent hover:text-accent",
       className,
     )}
     {...props}
