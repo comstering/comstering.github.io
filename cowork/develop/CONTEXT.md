@@ -108,14 +108,14 @@ node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 
 | 게이트 | 기준 | 결과 |
 | --- | --- | --- |
-| G1-1 성능 차단선 | 성능 ≥ 90, LCP ≤ 2.5s, CLS ≤ 0.1, TBT ≤ 300ms (관측, 3회 중앙값) | 홈 97·1.7s·CLS 0.058·TBT 140ms 통과, 글 97·1.8s·0.030·150ms 통과. **About 91·1.8s·TBT 197ms는 통과, CLS 0.125는 미달**(아래 CLS 원인). About 성능·CLS·TBT는 예외로 `warn` |
+| G1-1 성능 차단선 | 성능 ≥ 90, LCP ≤ 2.5s, CLS ≤ 0.1, TBT ≤ 300ms (관측, 3회 중앙값) | 홈 97·1.7s·CLS 0.058·TBT 140ms 통과, 글 97·1.8s·0.030·150ms 통과. **About 92·1.8s·TBT 178ms는 통과, CLS 0.125는 미달**(아래 CLS 원인). About 성능·CLS·TBT는 예외로 `warn` |
 | G1-2 접근성·SEO 100, 목표선 기록 | 접근성 100, SEO 100 | 세 페이지 모두 100·100·모범사례 96. 목표선(성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms)은 홈·글 통과, 홈 CLS 0.058(경계)·About 성능 91·CLS 미달 |
 | G1-3 E2E | 목차·코드 복사·시리즈·필터 URL·이미지 확대 | E2E 95건 통과(3 skip) |
 | G1-4 첫 화면 | 360×640에서 모든 글의 첫 본문 블록 ≤ 640px | 14편 통과, 가장 아래 `install-cilium-eks` 620px |
 | G1-5 이미지 | 변환본 제공, 본문 이미지 ≤ 200KB | 60개 변환(원본 26.5MB → 3.3MB), 최대 191KB |
 | G1-6 OG | 모든 글 고유 PNG, 목록 썸네일 없음 | 글 14 + 홈 + About = 16개 PNG(1200×630), `check:output`이 PNG·크기·고유성 검사. `thumbnail` 필드 0건 |
 
-**About CLS 0.125의 원인**(CI 리포트 `layout-shifts`, 3회 모두 같은 값): About 둘째 소개 문단(한글 7줄)이 한글 글꼴(`pretendard-subset.woff2`) 도착 뒤 줄 수가 바뀌어 아래 요소를 민다(Lighthouse cause "Web font loaded", 이동은 1건). 글꼴 서브셋(#53)으로 글꼴이 12~17개 → 2개로 줄었지만 도착 시점이 폴백 글꼴과 다르다는 점은 같아서 CLS는 그대로다. 맥 로컬에서는 폴백(Apple SD Gothic Neo)이 비슷해 0이라 재현되지 않고 **리눅스 CI에서만 보인다**(로컬 Lighthouse로 판단하지 말 것). 시험 중인 해법: 서브셋 글꼴 preload(결과는 STATUS·REQUESTS Q15)
+**About CLS 0.125의 원인**(CI 리포트 `layout-shifts`, 3회 모두 같은 값): About 둘째 소개 문단(한글 7줄)이 한글 글꼴(`pretendard-subset.woff2`) 도착 뒤 줄 수가 바뀌어 아래 요소를 민다(Lighthouse cause "Web font loaded", 이동은 1건). 글꼴 서브셋(#53)으로 글꼴이 12~17개 → 2개로 줄었지만 도착 시점이 폴백 글꼴과 다르다는 점은 같아서 CLS는 그대로다. 맥 로컬에서는 폴백(Apple SD Gothic Neo)이 비슷해 0이라 재현되지 않고 **리눅스 CI에서만 보인다**(로컬 Lighthouse로 판단하지 말 것). **서브셋 글꼴 preload는 효과가 없었다**(PR #56 CI 3회 모두 0.125, 이동 원인 그대로). 느린 4G 관측에서 서브셋 woff2(107KB)는 preload해도 600ms에 요청돼 약 3.0s에 끝나고 FCP는 약 1.8s라, 글꼴이 첫 페인트 뒤에 도착하는 것 자체는 못 막는다. 그래서 preload는 되돌렸고(디자인 19번 "preload 없음" 유지) About의 CLS도 예외(warn)에 뒀다. 근본 해결은 About 재작성(PR-19)에서 소개 문단이 글꼴 크기에 흔들리지 않게 하거나, 한글 폴백과 글자폭이 맞는 `size-adjust` 폴백을 두는 것이다(후자는 OS마다 폴백이 달라 CI 값으로만 맞출 수 있다)
 
 ## 7. 스크린샷·브라우저 확인 방법
 
