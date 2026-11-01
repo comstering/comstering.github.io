@@ -1,6 +1,6 @@
 # archive
 
-끝난 Phase의 개발 내용을 **핵심만** 요약해 보관한다. 세부는 PR 본문과 `../STATUS.md`·`../REQUESTS.md`에 있다. 새 세션은 이 폴더를 읽지 않아도 되고, 이력이 궁금할 때만 본다. (기획·디자인 세션의 보관본은 `cowork/prd/archive`, `cowork/design/archive`)
+끝난 Phase의 개발 내용을 **핵심만** 요약해 보관한다. 세부는 PR 본문과 git 기록에 있다(각 요약의 마지막 장 참고). 새 세션은 이 폴더를 읽지 않아도 되고, 이력이 궁금할 때만 본다. (기획·디자인 세션의 보관본은 `cowork/prd/archive`, `cowork/design/archive`)
 
 | Phase | 문서 | 기간 | PR |
 | --- | --- | --- | --- |

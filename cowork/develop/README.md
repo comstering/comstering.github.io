@@ -7,7 +7,7 @@
 | 파일 | 내용 | 갱신 시점 |
 | --- | --- | --- |
 | [CONTEXT.md](./CONTEXT.md) | **새 세션이 먼저 읽는 인수인계 문서.** 역할, 확정 결정, 읽는 순서, PR 작업 흐름, 명령, 스크린샷 방법, 함정 | 규칙이 바뀔 때 |
-| [STATUS.md](./STATUS.md) | PR별 진행 상태, 시안 대비 구현 차이, 기획·디자인에 묻는 것, 측정값 | PR을 열거나 머지할 때마다 |
+| [STATUS.md](./STATUS.md) | 진행 중인 Phase의 PR 상태, 다음 작업, 현재 측정 기준값, 세션 기록 | PR을 열거나 머지할 때마다 |
 | [REQUESTS.md](./REQUESTS.md) | 개발 → 기획·디자인 질문과 요청 (번호 `Q1`~). 답이 오면 답을 적고 닫는다 | 질문이 생기거나 답이 올 때 |
 
 ## 규칙
@@ -22,7 +22,6 @@
 | 경로 | 내용 |
 | --- | --- |
 | `archive/` | 끝난 Phase의 개발 요약 보관본(핵심만). Phase 0·1 요약과 목록은 `archive/README.md` |
-| `briefs/` | 기획·디자인과 맞춰야 할 질문을 근거(측정·선택지·결정 요청)와 함께 정리한 문서. 번호는 REQUESTS.md 질문 번호(`Q11-….md`) |
 | `tools/shoot.mjs` | PC·Mobile 스크린샷 촬영 (정적 빌드 기준) |
 | `tools/publish-shots.sh` | 스크린샷을 `pr-screenshots` 브랜치에 올리고 PR용 URL 출력 |
 

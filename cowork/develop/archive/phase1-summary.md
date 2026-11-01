@@ -2,7 +2,7 @@
 
 _기간 2026-10-28 ~ 2026-11-01 · PR #27 ~ #57 · 기획 PRD-003 `done` · 최종 기준 커밋 `ccb7361`_
 
-이 문서는 Phase 1 개발 기록의 **핵심만** 모은 보관본이다. 세부(PR별 동작 표, 세션 기록, 질문 원문)는 `../STATUS.md`·`../REQUESTS.md`·`../CONTEXT.md`와 각 PR 본문에 있다. 새 세션은 이 문서를 읽지 않아도 된다(규칙은 `../CONTEXT.md`).
+이 문서는 Phase 1 개발 기록의 **핵심만** 모은 보관본이다. 세부(PR별 동작 표, 세션 기록, 질문 원문)는 각 PR 본문과 git 기록(8장)에 있다. 규칙·함정은 `../CONTEXT.md`. 새 세션은 이 문서를 읽지 않아도 된다(규칙은 `../CONTEXT.md`).
 
 ## 1. 결과
 
@@ -83,8 +83,6 @@ _기간 2026-10-28 ~ 2026-11-01 · PR #27 ~ #57 · 기획 PRD-003 `done` · 최�
 | 무엇 | 어디 |
 | --- | --- |
 | 일하는 방식·함정 | `../CONTEXT.md` |
-| PR별 동작·측정·세션 기록 | `../STATUS.md` |
-| 질문·답 (Q1~Q15) | `../REQUESTS.md` |
-| 성능 게이트 근거(시뮬 vs 관측) | `../briefs/Q11-performance-gate.md` |
+| PR별 동작·측정·세션 기록·질문(Q1~Q15)·성능 브리프(`briefs/Q11-performance-gate.md`)의 원문 | git 기록: `git log -p -- cowork/develop/STATUS.md cowork/develop/REQUESTS.md cowork/develop/briefs`(마지막 전체본은 `ccb7361` 시점), 각 PR 본문 |
 | 기획서 | `cowork/prd/003_blog_reading-experience.md` |
 | 디자인 답변·감사 | `cowork/design/12~21번` |
