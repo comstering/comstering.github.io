@@ -24,6 +24,7 @@
 | `archive/` | 끝난 Phase의 개발 요약 보관본(핵심만). Phase 0·1 요약과 목록은 `archive/README.md` |
 | `tools/shoot.mjs` | PC·Mobile 스크린샷 촬영 (정적 빌드 기준) |
 | `tools/publish-shots.sh` | 스크린샷을 `pr-screenshots` 브랜치에 올리고 PR용 URL 출력 |
+| `tools/resume-pdf-prototype.mjs` | About → 인쇄 CSS → A4 `resume.pdf` 시험 제작(PR-22 `build-resume-pdf.mjs`의 기초) |
 
 ## 세션 규칙
 
