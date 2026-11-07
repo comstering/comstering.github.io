@@ -145,44 +145,52 @@
     $$("[data-filter-reset]").forEach(function (b) { b.addEventListener("click", function () { apply("all", true); }); });
   });
 
-  /* ---------- command palette (F-SR-01) ---------- */
+  /* ---------- command palette (F-SR-01·02): 글 검색 ----------
+     검색 대상은 글(제목·설명·태그·카테고리·소제목). 인덱스는 처음 열 때 불러온다(실제 구현: dynamic import + /search-index.json) */
   var base = document.body.getAttribute("data-base") || "";
-  var INDEX = [
-    { g: "posts", t: "Custom network Karpenter ENI troubleshooting", m: "2025-07-10 · infra", h: "post.html", k: "karpenter eni custom networking eks 카펜터 트러블슈팅" },
-    { g: "posts", t: "EKS에 Cilium CNI 설치하기 (with CNI Chaining)", m: "2025-09-01 · infra", h: "post.html", k: "cilium cni eks chaining 실리움" },
-    { g: "posts", t: "Cilium CNI 설치 후 일부 Pod들이 정상동작하지 않는 문제 해결", m: "2025-09-02 · infra", h: "post.html", k: "cilium troubleshoot pod" },
-    { g: "posts", t: "Karpenter로 유연한 Node Autoscaling 하기", m: "2025-07-06 · infra", h: "post.html", k: "karpenter autoscaling node 카펜터" },
-    { g: "posts", t: "EKS Custom Networking", m: "2025-07-08 · infra", h: "post.html", k: "eks custom networking ip subnet" },
-    { g: "posts", t: "Bitnami helm chart open source contribute", m: "2025-08-13 · oss", h: "post.html", k: "bitnami helm kafka schema registry 오픈소스" },
-    { g: "posts", t: "Terraform Associate 004 자격증 취득 후기", m: "2026-04-28 · infra", h: "post.html", k: "terraform 자격증 certification" },
-    { g: "projects", t: "Airflow MWAA → Argo Workflows 전환", m: "2025.12 – 2026.02", h: "project.html", k: "argo workflow mwaa airflow cicd" },
-    { g: "projects", t: "EKS 네트워킹 아키텍처 고도화", m: "2025.06", h: "project.html", k: "eks cilium custom networking pod ip" },
-    { g: "projects", t: "Okta SSO 통합 인증 · Keycloak IdP Broker", m: "2025.11 – 2026.01", h: "project.html", k: "okta keycloak sso 인증" },
-    { g: "projects", t: "VPC Peering 전환으로 네트워크 비용 50% 절감", m: "2025.09 – 2025.10", h: "project.html", k: "vpc peering transit gateway terraform" },
-    { g: "tags", t: "#kubernetes", m: "8 posts", h: "tags.html", k: "kubernetes k8s 쿠버네티스" },
-    { g: "tags", t: "#karpenter", m: "4 posts", h: "tags.html", k: "karpenter 카펜터" },
-    { g: "tags", t: "#cilium", m: "3 posts", h: "tags.html", k: "cilium" },
-    { g: "tags", t: "#terraform", m: "3 posts", h: "tags.html", k: "terraform iac" },
-    { g: "pages", t: "about", m: "경력 · 연락처 · resume.pdf", h: "about.html", k: "about 소개 이력서 resume 연락처" }
-  ];
+  var appSrc = document.currentScript && document.currentScript.src;
+  var INDEX = null;
+  var loadIndex = function (cb) {
+    if (INDEX) return cb();
+    var done = function () { INDEX = window.SEARCH_INDEX || []; cb(); };
+    if (window.SEARCH_INDEX) return done();
+    var el = document.createElement("script"); el.src = new URL("search-index.js", appSrc).href; el.onload = done; el.onerror = done; document.head.appendChild(el);
+  };
   var backdrop = $(".palette-backdrop"), palette = $(".palette");
   if (palette) {
     var input = $(".palette__input", palette), results = $(".palette__results", palette);
     var lastFocus = null, sel = 0, items = [];
-    var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var status = document.createElement("div"); status.className = "sr-only"; status.setAttribute("role", "status"); status.setAttribute("aria-live", "polite"); palette.appendChild(status);
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
     var hl = function (t, q) { if (!q) return esc(t); var i = t.toLowerCase().indexOf(q); return i < 0 ? esc(t) : esc(t.slice(0, i)) + "<mark>" + esc(t.slice(i, i + q.length)) + "</mark>" + esc(t.slice(i + q.length)); };
+    /* 가중: 제목 일치 > 설명·태그·카테고리 > 소제목. 같으면 최신 글 먼저 */
+    var rank = function (x, q) {
+      var t = x.t.toLowerCase(), i = t.indexOf(q);
+      if (i > -1) return { s: 300 - Math.min(i, 99), hit: null };
+      if ((x.desc + " " + x.tags.join(" ") + " " + x.c.join(" ")).toLowerCase().indexOf(q) > -1) return { s: 200, hit: null };
+      for (var k = 0; k < x.h.length; k++) if (x.h[k].toLowerCase().indexOf(q) > -1) return { s: 100, hit: x.h[k] };
+      return null;
+    };
     var render = function () {
       var q = input.value.trim().toLowerCase();
-      items = INDEX.filter(function (x) { return !q || (x.t + " " + x.k).toLowerCase().indexOf(q) > -1; });
-      if (!q) items = items.filter(function (x, i) { return x.g !== "tags" || i < 13; }).slice(0, 9);
+      var list = INDEX || [];
+      if (!q) { items = list.slice().sort(function (a, b) { return a.d < b.d ? 1 : -1; }).slice(0, 5).map(function (x) { return { x: x, hit: null }; }); }
+      else {
+        items = list.map(function (x) { var r = rank(x, q); return r && { x: x, hit: r.hit, s: r.s }; }).filter(Boolean)
+          .sort(function (a, b) { return b.s - a.s || (a.x.d < b.x.d ? 1 : -1); });
+      }
       sel = 0;
-      if (!items.length) { results.innerHTML = "<div class='palette__empty'>‘" + esc(input.value) + "’에 대한 결과가 없습니다.<br><span class='mono' style='font-size:12px'>다른 키워드나 영문 표기로 검색해 보세요.</span></div>"; input.setAttribute("aria-activedescendant", ""); return; }
-      var html = "", g = "";
-      items.forEach(function (x, i) {
-        if (x.g !== g) { g = x.g; html += "<div class='palette__group' role='presentation'>" + g + "</div>"; }
-        html += "<a class='palette__item' role='option' id='pi-" + i + "' href='" + base + x.h + "' aria-selected='" + (i === 0) + "'><span class='palette__item-title'>" + hl(x.t, q) + "</span><span class='palette__item-meta'>" + esc(x.m) + "</span></a>";
+      if (!items.length) {
+        results.innerHTML = "<div class='palette__empty'>‘" + esc(input.value) + "’에 대한 글이 없습니다.<br><span class='mono' style='font-size:12px'>제목, 태그, 소제목으로 찾습니다. 다른 키워드나 영문 표기로 검색해 보세요.</span></div>";
+        input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); status.textContent = "검색 결과 없음"; return;
+      }
+      var html = "<div class='palette__group' role='presentation'>" + (q ? "posts " + items.length : "recent") + "</div>";
+      items.forEach(function (it, i) {
+        var x = it.x;
+        html += "<a class='palette__item' role='option' id='pi-" + i + "' href='" + base + x.u + "' aria-selected='" + (i === 0) + "'><span class='palette__item-main'><span class='palette__item-title'>" + hl(x.t, q) + "</span>" + (it.hit ? "<span class='palette__item-sub'># " + hl(it.hit, q) + "</span>" : "") + "</span><span class='palette__item-meta'>" + esc(x.d) + " · " + esc(x.c.join(", ")) + "</span></a>";
       });
-      results.innerHTML = html; input.setAttribute("aria-activedescendant", "pi-0");
+      results.innerHTML = html; input.setAttribute("aria-expanded", "true"); input.setAttribute("aria-activedescendant", "pi-0");
+      status.textContent = q ? "글 " + items.length + "개" : "최근 글 " + items.length + "편";
     };
     var move = function (d) {
       if (!items.length) return;
@@ -190,7 +198,7 @@
       $$(".palette__item", results).forEach(function (el, i) { el.setAttribute("aria-selected", String(i === sel)); if (i === sel) el.scrollIntoView({ block: "nearest" }); });
       input.setAttribute("aria-activedescendant", "pi-" + sel);
     };
-    var open = function () { lastFocus = document.activeElement; root.classList.add("palette-open"); palette.removeAttribute("inert"); input.value = ""; render(); setTimeout(function () { input.focus(); }, 10); };
+    var open = function () { lastFocus = document.activeElement; root.classList.add("palette-open"); palette.removeAttribute("inert"); input.value = ""; loadIndex(render); setTimeout(function () { input.focus(); }, 10); };
     var close = function () { root.classList.remove("palette-open"); palette.setAttribute("inert", ""); if (lastFocus) lastFocus.focus(); };
     palette.setAttribute("inert", "");
     $$("[data-palette-open]").forEach(function (b) { b.addEventListener("click", open); });

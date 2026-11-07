@@ -50,8 +50,8 @@ related: [PRD-001]          # 상위·관련 기획서
 
 | ID | 파일 | 영역 | 제목 | 상태 |
 | --- | --- | --- | --- | --- |
-| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v2.0 | active |
-| PRD-004 | [004_portfolio_projects-and-about.md](./004_portfolio_projects-and-about.md) | portfolio | Phase 2 포트폴리오 (About 강화·이력서·홈 소개) | approved |
+| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v2.1 | active |
+| PRD-004 | [004_portfolio_projects-and-about.md](./004_portfolio_projects-and-about.md) | portfolio | Phase 2 포트폴리오 (About 강화·이력서 PDF·홈 블로그 정비·검색) | approved (11-02 최종) |
 
 ### 보관 (archive)
 
@@ -65,4 +65,4 @@ related: [PRD-001]          # 상위·관련 기획서
 
 | 예정 파일명 | 로드맵 단계 |
 | --- | --- |
-| `005_discovery_search-and-tags.md` | Phase 3 탐색. **작성 전에 작성자에게 먼저 물을 것: ① 커스텀 도메인 사용 여부 ② 영문 About 필요 여부** (2026-10-31 약속) |
+| `005_discovery_search-and-tags.md` | Phase 3 탐색(태그 페이지, 검색 초성·별칭. 검색 팔레트 본체는 Phase 2로 이동). **작성 전에 작성자에게 먼저 물을 것: ① 커스텀 도메인 사용 여부 ② 영문 About 필요 여부** (2026-10-31 약속) |

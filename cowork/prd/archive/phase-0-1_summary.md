@@ -23,12 +23,12 @@ sources: prd/001(v1.9), 002(done), 003(done), design/archive(원문 05~21 중 �
 | 항목 | 결정 |
 | --- | --- |
 | 정체성 | 혼합형: 글 목록이 메인, 홈 히어로는 짧은 포트폴리오 소개 |
-| 작성자 | 주 직무 **DevOps · Cloud Native Engineer**(CJ 올리브영 2024.06~). Class101은 **Web Developer (backend 중심)**. 웹 영역 안에서 backend가 강점일 뿐 backend 개발자로 소개하지 않는다 |
+| 작성자 | 주 직무 **DevOps · Cloud Native Engineer**(CJ 올리브영 2024.06~). Class101은 **Web Developer (backend 중심)**(2026-11-05 **Software Engineer**로 변경, PRD-001 1.0). 웹 영역 안에서 backend가 강점일 뿐 backend 개발자로 소개하지 않는다 |
 | 디자인 | Terminal Graphite(다크 기본, 그린 포인트 하나, 세로 리스트, 그림자 없음). 기준 문서는 저장소 `DESIGN.md` |
 | 운영 | 정적 export + GitHub Pages, 운영비 0원. main 머지 시 자동 배포, PR마다 CI 품질 게이트 |
 | 광고 | AdSense 제거, 추후 재논의(재도입 조건: 글 상세 하단 1곳, 성능 기준 유지). `ads.txt`·계정은 유지 |
 | 공개 범위 | 블로그·About에 이미 공개된 내용은 사용 가능. 새 사내 정보만 작성자 확인 |
-| 회사 vs 개인 | 회사 성과 수치(About)와 개인 EKS 실습 글(블로그)은 다른 환경이라 수치가 다르다. 섞어 보이지 않고 개인 글은 `personal`로 표시 |
+| 회사 vs 개인 | 회사 성과 수치(About)와 개인 EKS 실습 글(블로그)은 다른 환경이라 수치가 다르다. 섞어 보이지 않고 개인 글은 `personal`로 표시. **2026-11-02 대체:** About과 블로그는 서로 링크하지 않음(PRD-001 6.2) |
 | 합산 수치 | 성과를 합쳐 하나의 큰 숫자로 만들지 않는다(실제 절감과 회피 비용이 섞임) |
 
 ## 3. 콘텐츠 규칙 (Phase 1 종료 시점)
@@ -42,7 +42,7 @@ tags: [kubernetes, eks]      # 필수, content/tags.yaml에 등록된 값만
 series: eks-from-scratch     # 선택, content/series.yaml에 등록
 seriesOrder: 3               # series가 있으면 필수
 draft: false                 # 선택, true면 프로덕션에서 제외
-relatedProject: ...          # 선택 (Phase 2에서 사용)
+relatedProject: ...          # 2026-11-02 폐기 (PRD-001 6.2)
 ```
 
 | 항목 | 결정과 이유 |

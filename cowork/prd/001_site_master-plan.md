@@ -5,9 +5,12 @@ title: comstering.github.io 전체 기획서 (마스터 PRD)
 status: active
 owner: comstering
 created: 2026-10-27
-updated: 2026-11-01
+updated: 2026-11-05
 related: [PRD-004]
 changelog:
+  - 2026-11-05 Class101 직함을 Software Engineer로, About 첫 화면에서 현재 회사 제외
+  - 2026-11-05 6.2에 작성 원칙 "실행해 본 것만" 추가(홈 히어로 문구 확정)
+  - 2026-11-02 v2.1 사이트 역할 분리(홈 = 블로그, About = 경력·이력서·기술), About ↔ 블로그 글 링크 폐기, /resume 페이지 폐기(About 인쇄본 PDF), 홈 대표 프로젝트 폐기, 인기글(F-HM-06) 추가, 스키마에서 relatedProject 삭제. 헤더 검색 팔레트(F-SR-01·02)를 Phase 2로 당기고 홈 검색창 제거, 검색 인덱스는 빌드 타임 JSON으로 결정
   - 2026-11-01 v2.0 Phase 0~1 내용을 archive/phase-0-1_summary.md로 요약 보관하고 본문에서 정리. 성능 측정 기준을 PRD-003에서 이 문서 5.1로 옮김. 남은 기능(Phase 2·3)과 계속 유효한 규칙만 남김
   - v1.0~v1.9 (2026-10-27~11-01) 이력은 archive 요약본 참고
 ---
@@ -18,17 +21,17 @@ changelog:
 
 ## 1. 개요
 
-**한 줄 정의:** comstering.github.io는 DevOps·Cloud Native Engineer Comstering이 실무 경험을 글로 증명하고, 그 글이 곧 포트폴리오가 되는 "글 중심 포트폴리오" 사이트다.
+**한 줄 정의:** comstering.github.io는 Comstering의 개발 블로그다. 홈은 블로그이고, 경력·이력서·기술은 About 한 페이지에서 끝난다.
 
 ### 1.0 작성자 프로필 (콘텐츠·카피 기준)
 
-- 주 직무: **DevOps · Cloud Native Engineer** (CJ Olive Young, 2024.06~). 사이트의 직함·히어로·OG는 이 표현을 기준으로 한다.
-- 이전 경력: Class101, **Web Developer (backend 중심)** (2022.05~2024.03).
+- 주 직무: **DevOps · Cloud Native Engineer** (CJ Olive Young, 2024.06~). About·이력서·About OG의 직함은 이 표현을 기준으로 한다. 홈에서 보이는 정체성은 `comstering`(블로그)이다.
+- 이전 경력: Class101, **Software Engineer** (2022.05~2024.03). 직함 표기는 Software Engineer로 통일한다(2026-11-05, 이전 표기 Web Developer (backend 중심)).
 - 웹 개발 영역(backend·frontend) 안에서는 backend가 강점이다. backend 개발자로 소개하지 않는다.
 
 ### 1.1 비전
 
-- 블로그 글(문제 해결 기록)과 커리어(About의 경력·성과)를 서로 연결해, 방문자가 "이 사람은 무엇을 해봤고, 어떻게 생각하는가"를 5분 안에 파악하게 한다.
+- **역할 분리:** 블로그(홈·글)는 개인 학습·프로젝트 기록, About은 회사 경력·이력서·기술이다. 두 영역은 서로 링크하지 않는다(6.2). 블로그 독자는 홈에서 글을 찾고, 채용 담당자는 상단바 `about`에서 경력과 `resume.pdf`를 확인한다.
 - 디자인 방향은 **Terminal Graphite**(다크 중심, 단일 그린 포인트, 세로 리스트)를 유지한다. 기준 문서는 저장소 `DESIGN.md`.
 
 ### 1.2 목표 (2027년 상반기까지)
@@ -44,14 +47,14 @@ changelog:
 
 | 페르소나 | 상황 | 원하는 것 | 핵심 페이지 |
 | --- | --- | --- | --- |
-| 채용 담당자·리크루터 | 지원서·링크드인에서 링크 클릭 | 경력, 대표 성과, 연락처를 빠르게 확인 | 홈 소개, About, 이력서 |
-| 기술 면접관·현업 엔지니어 | 면접 전 검증 | 깊이 있는 글, 문제 해결 과정, 코드 | 글 상세, About의 관련 글 |
+| 채용 담당자·리크루터 | 지원서·링크드인에서 링크 클릭 | 경력, 대표 성과, 연락처를 빠르게 확인 | About, `resume.pdf` |
+| 기술 면접관·현업 엔지니어 | 면접 전 검증 | 경력, 그리고 깊이 있는 글·코드 | About, 글 상세 |
 | 검색으로 온 개발자 | EKS·Karpenter·Cilium 에러 검색 | 바로 따라할 수 있는 해결책 | 글 상세(목차, 코드 복사) |
 | 본인(작성자) | 글 작성·사이트 운영 | 쉬운 발행, 깨지지 않는 배포 | Markdown, CI/CD |
 
 ### 1.4 핵심 가치
 
-1. **증명:** 성과 수치(About)에서 관련 글로 이어진다.
+1. **기록:** 직접 해 보고 배운 것을 글로 남기고, 읽는 사람이 다음 글을 쉽게 찾는다(시리즈·인기글·태그).
 2. **읽기 경험:** 긴 기술 글을 편하게 읽고, 원하는 부분으로 바로 이동한다.
 3. **발견성:** 검색엔진과 사이트 내부 검색 모두에서 글이 잘 찾아진다.
 4. **낮은 운영 비용:** 정적 사이트 + GitHub Pages, 서버 비용 0원.
@@ -61,38 +64,38 @@ changelog:
 | 항목 | 상태 |
 | --- | --- |
 | 완료 | Phase 0 안정화, Phase 1 읽기 경험. 상세는 archive 요약본 |
-| 진행 중 | Phase 2 포트폴리오 ([PRD-004](./004_portfolio_projects-and-about.md), approved). 디자인 시안 대기 |
+| 진행 중 | Phase 2 포트폴리오 ([PRD-004](./004_portfolio_projects-and-about.md), approved, 11-02 재검토). 디자인 24번 시안 대기 |
 | 스택 | Next.js 16 App Router 정적 export, React 19, Tailwind v4, GitHub Pages, GitHub Actions(CI 품질 게이트 + 자동 배포) |
 | 페이지 | 홈(`/`), 글 상세(`/posts/[id]`), About(`/about`), 404, `/rss.xml`, `/sitemap.xml` |
 | 알려진 예외 | About의 성능·CLS·TBT가 품질 차단선 예외(`warn`). Phase 2 PR-19에서 해제 (5.1) |
 
 ## 3. 정보 구조(IA)·사용자 여정
 
-헤더 내비는 `posts · about`. 별도 Projects 페이지는 두지 않고(2026-10-30 결정), 경력의 깊이는 About의 관련 글 링크와 블로그가 맡는다.
+헤더 내비는 `posts · about`. 별도 Projects·이력서 페이지는 두지 않는다. 홈은 블로그, 경력은 About에서 끝나며 About과 글은 서로 링크하지 않는다(2026-11-02).
 
 ```mermaid
 flowchart TD
-    home["홈 /<br/>히어로 · 대표 프로젝트 3 · 글 목록 · 필터"]
+    home["홈 /<br/>히어로 · 필터 · 글 목록<br/>사이드바: 인기글 · 시리즈 · 태그"]
     post["글 상세<br/>/posts/[id]"]
     about["About<br/>/about"]
-    resume["이력서 (Phase 2)<br/>/resume · /resume.pdf"]
+    resume["resume.pdf (Phase 2)<br/>About 인쇄본"]
     tags["태그 (Phase 3)<br/>/tags · /tags/[tag]"]
-    home --> post & about & tags
+    home --> post & tags
+    header(("헤더 about")) --> about
     about --> resume
-    about -. 관련 글 .-> post
-    post -. 관련 경력 .-> about
     classDef next fill:#e6f4ec,stroke:#087A41,stroke-width:2px;
     class resume,tags next;
 ```
 
-모든 페이지 공통: 헤더 · 테마 토글 · 푸터(GitHub, LinkedIn, email, RSS) · ⌘K 검색(Phase 3).
+모든 페이지 공통: 헤더(`posts · about` · 검색 `⌘K` · 테마 토글) · 푸터(GitHub, LinkedIn, email, RSS). 검색은 Phase 2.
 
 | 여정 | 시작점 | 경로 | 성공 상태 |
 | --- | --- | --- | --- |
-| J1 채용 검토 | 이력서·LinkedIn 링크 | 홈 소개 → 대표 프로젝트 → About 해당 항목 → 관련 글 / 이력서 PDF | 3분 안에 경력·대표 성과·연락처 확인 |
+| J1 채용 검토 | 이력서·LinkedIn 링크 | (홈 →) 헤더 `about` → 회사 바로가기 → `resume.pdf` | 3분 안에 경력·대표 성과·연락처 확인 |
 | J2 검색 유입 | 구글·네이버 검색 결과 | 글 상세 → 목차 → 코드 복사 → 시리즈 다음 편 / 관련 글 | 문제 해결 + 두 번째 페이지 조회 |
+| J2b 블로그 둘러보기 | 홈 | 히어로 → 인기글·시리즈 또는 카테고리·헤더 검색 → 글 | 두 번째 글 조회 |
 | J3 구독·재방문 | RSS, 링크드인 공유 | 글 상세 → 댓글 / 저자 박스 → About | 댓글·반응, RSS 등록 |
-| J4 주제 탐색 | 홈 | 카테고리 칩 또는 ⌘K → 태그 페이지 → 글 | 원하는 주제 글 3편 이상 발견 |
+| J4 주제 탐색 | 홈·글 상세 | 카테고리 칩 또는 헤더 검색(⌘K) → 글 (태그 페이지는 Phase 3) | 원하는 주제 글 3편 이상 발견 |
 | J5 글 발행(작성자) | 로컬 마크다운 | `draft: true`로 작성 → PR(스키마 검증·빌드·품질 게이트) → 머지 → 자동 배포 | 머지 후 10분 안에 라이브 |
 
 ## 4. 남은 기능 명세
@@ -104,19 +107,21 @@ Phase 0~1에서 끝난 기능(F-GL-01~04, F-HM-03·04, F-PO-01~12, F-SE-01~08 �
 | ID | 기능 | 요약 |
 | --- | --- | --- |
 | F-PJ-01 | 경력 데이터 분리 | About 내용을 `content/profile.yaml`·`experience.yaml`로. About·홈·이력서가 같은 데이터 사용 |
-| F-AB-01 | About 요약 우선 | 첫 화면에 이름·직함·연차·회사·연락처 (5초 테스트) |
-| F-AB-02 | 경력 타임라인 | 회사별 프로젝트, 관련 글 링크(`personal`/`work`), 앵커 도착 강조 |
+| F-AB-01 | About 요약 우선 | 첫 화면에 이름·직함·연차·연락처 (5초 테스트). 현재 회사는 소개에 두지 않고 경력 섹션에서 보인다 |
+| F-AB-02 | 경력 타임라인 | 회사별 프로젝트 전부 펼침, 회사 바로가기. 블로그 글 링크 없음 |
 | F-AB-03 | 자격증·학력·활동 | Terraform Associate Credly 링크 |
-| F-AB-04 | 이력서 | `/resume` + 빌드 때 자동 생성 PDF, 사진 없음 |
-| F-HM-01·02 | 홈 히어로·대표 프로젝트 | 대표 3건은 About 항목으로 연결 |
-| F-PO-09 (보완) | 글 → 경력 연결 | 글 `relatedProject`가 있으면 저자 박스에 `관련 경력 →` |
+| F-AB-04 | 이력서 | About 인쇄본을 빌드 때 `resume.pdf`로(축약 없음, 사진 없음). `/resume` 페이지 없음 |
+| F-HM-01 | 홈 히어로 | 블로그 소개(3안 시안 비교 후 결정). 이름·직함·기술 태그·성과·버튼 없음 |
+| F-HM-02 | 홈 사이드바 | 시리즈 · 태그(상위 10). 대표 프로젝트는 폐기(2026-11-02) |
+| F-HM-06 | 인기글 | GoatCounter 통계 API를 하루 1번 받아 다시 빌드, 최근 30일 상위 5편 |
+| F-SR-01 | 검색 팔레트 | 헤더 버튼·`Cmd/Ctrl+K`·`/`로 열기. 글 검색(제목·설명·태그·카테고리·소제목). 홈 글 검색창은 제거. Phase 3에서 당겨옴(2026-11-02) |
+| F-SR-02 | 검색 인덱스 | 빌드 타임 `/search-index.json`, 팔레트를 처음 열 때 불러옴. Pagefind는 쓰지 않음 |
 
 ### 4.2 Phase 3 (PRD-005 작성 예정)
 
 | ID | 기능 | 요구사항 | 우선 |
 | --- | --- | --- | --- |
-| F-SR-01 | 명령 팔레트 | `Cmd/Ctrl+K`와 헤더 버튼으로 열기. 글·태그를 한 번에 검색. 방향키 이동, Enter 이동, Esc 닫기, 포커스 트랩 | P1 |
-| F-SR-02 | 검색 인덱스 | 빌드 타임 정적 인덱스(title, description, tags, 본문 앞부분, headings) 또는 Pagefind (8.2 결정) | P1 |
+| F-SR-01 (보완) | 검색 팔레트에 태그 결과 | 태그 페이지(F-SR-04)가 생기면 팔레트 결과에 태그 추가. 팔레트 본체는 Phase 2 | P1 |
 | F-SR-03 | 한글 검색 | 초성·부분 일치, 영문 대소문자 무시, 별칭 사전(예: "카펜터" → Karpenter) | P2 |
 | F-SR-04 | 태그 페이지 | `/tags`(글 수 포함), `/tags/[tag]`. `content/tags.yaml` 별칭 병합(k8s → kubernetes) | P1 |
 | F-AB-05 | 영문 About | `/en/about`. 블로그는 한국어 유지 (8.2 결정) | P2 |
@@ -127,14 +132,14 @@ Phase 0~1에서 끝난 기능(F-GL-01~04, F-HM-03·04, F-PO-01~12, F-SE-01~08 �
 | ID | 기능 | 보류 이유 / 다시 볼 조건 |
 | --- | --- | --- |
 | F-PJ-02 | `/projects` 목록 | About 경력과 내용이 겹침. 프로젝트가 About에서 읽기 어려울 만큼 늘면 |
-| F-PJ-03 | 프로젝트 상세 | About 설명·불릿과 대부분 같음. 길게 쓸 이야기는 블로그 글로 |
+| F-PJ-03 | 프로젝트 상세 | About 설명·불릿과 대부분 같음 |
+| F-PO-09 (보완) | 글 → 경력 연결(`relatedProject`) | 폐기(2026-11-02). About과 블로그는 서로 링크하지 않음 |
 | F-SE-09 | AdSense | 지금은 제거. 재도입 조건: 글 상세 본문 하단 1곳만, 광고 포함 상태에서 5.1 차단선 유지, 홈·About에는 노출 안 함. `ads.txt`·계정은 유지 |
 
 ### 4.4 Phase 3 수용 기준 (초안)
 
 | ID | 수용 기준 | 검증 |
 | --- | --- | --- |
-| F-SR-01 | 마우스 없이 `Cmd+K` → 검색어 → ↓ → Enter로 글에 도달. 첫 결과 표시 100ms 이내(글 100편 기준) | E2E |
 | F-SR-04 | `k8s`와 `kubernetes`가 한 페이지로 병합, 모든 태그 페이지가 sitemap에 존재 | 빌드 산출물 검사 |
 
 ## 5. 품질 기준 (모든 Phase 공통)
@@ -188,7 +193,6 @@ tags: [kubernetes, eks]            # 필수, content/tags.yaml에 등록된 값�
 series: eks-from-scratch           # 선택, content/series.yaml에 등록
 seriesOrder: 3                     # series가 있으면 필수
 draft: false                       # 선택, true면 프로덕션·sitemap·RSS에서 제외
-relatedProject: eks-networking     # 선택, About 경력 프로젝트 id (Phase 2)
 ```
 
 | 규칙 | 내용 |
@@ -197,15 +201,16 @@ relatedProject: eks-networking     # 선택, About 경력 프로젝트 id (Phase
 | 시리즈 | `content/series.yaml`(slug, title, label). `label`은 8자 이하 |
 | 썸네일 | 없음. 공유 이미지는 빌드 때 OG 자동 생성(PNG) |
 | 본문 문법 | 코드 펜스 `title="..."`·줄 하이라이트, `> [!NOTE]`·`> [!WARNING]` 콜아웃. 기존 글에는 소급하지 않음 |
-| 빌드 검증 | 규칙 위반(필수 필드, 미등록 태그·시리즈, 중복 description, `updated`·`thumbnail` 등 폐기 필드)이 있으면 빌드 실패 |
+| 빌드 검증 | 규칙 위반(필수 필드, 미등록 태그·시리즈, 중복 description, `updated`·`thumbnail`·`relatedProject` 등 폐기 필드)이 있으면 빌드 실패 |
 
 ### 6.2 콘텐츠·공개 원칙
 
 | 원칙 | 내용 |
 | --- | --- |
 | 공개 범위 | 블로그·About에 이미 공개된 내용은 사용 가능. 새 사내 정보(내부 수치, 회사 환경의 CIDR·계정·도메인, 사내 아키텍처 그림)는 작성자 확인 |
-| 회사 vs 개인 | 회사 성과 수치(About)와 개인 EKS 실습 글(블로그)은 환경이 달라 수치가 다르다. 섞어 보이지 않고 개인 글은 `personal`로 표시 |
+| About ↔ 블로그 | **서로 링크하지 않는다**(2026-11-02). About은 회사 경력, 블로그는 개인 학습·프로젝트 기록이다. 블로그에 회사에서 배운 내용이 들어갈 수 있지만 대부분 개인 환경에서 다시 적용한 글이므로, 회사 경력·성과와 연결하지 않는다. 글 저자 박스의 일반 `about` 링크(사람 소개)는 허용 |
 | 합산 수치 | 성과를 합쳐 하나의 큰 숫자로 만들지 않는다 |
+| 실행해 본 것만 | 블로그 글은 직접 실행해 본 것만 쓴다(홈 문구 "실행해 본 것만 씁니다"가 독자에게 하는 약속, 2026-11-05) |
 | URL | `/posts/[id]`는 파일명 기준으로 고정. 바꾸면 검색 순위·댓글(Giscus `pathname` 매핑)이 끊긴다 |
 
 ### 6.3 비기능 요구사항
@@ -220,6 +225,7 @@ relatedProject: eks-networking     # 선택, About 경력 프로젝트 id (Phase
 | NF-06 | 보안 | 외부 링크 `rel="noopener noreferrer"`. CSP로 허용 도메인 제한 검토 |
 | NF-07 | 보안·공개성 | 글·이미지 속 회사 민감 정보 마스킹 확인(6.2) |
 | NF-08 | 프라이버시 | GoatCounter(쿠키 없음) 유지. AdSense 재도입 시 개인정보처리방침 페이지 추가 |
+| NF-12 | 보안 | 외부 API 토큰(GoatCounter 등)은 GitHub Secrets에만 두고 빌드 단계에서만 쓴다. 브라우저 코드·산출물·로그에 넣지 않는다 |
 | NF-09 | 유지보수 | 콘텐츠 접근은 `src/lib/content/` 한 곳에서. 의존성은 정기 업데이트, 메이저 업그레이드는 품질 게이트 비교 후 머지 |
 | NF-10 | 문서 | README에 글 작성·경력 수정·배포 방법. 세션별 `CONTEXT.md`·`STATUS.md` 갱신 |
 | NF-11 | 비용 | 월 운영비 0원(GitHub Pages, GoatCounter, Giscus). 커스텀 도메인은 연 비용만 허용 |
@@ -231,11 +237,11 @@ flowchart LR
     done["Phase 0·1<br/>완료 2026-11-01<br/>(archive)"] --> P2
     subgraph P2["Phase 2 · 포트폴리오 · PRD-004"]
         direction TB
-        p2a[경력 데이터 분리] --- p2b[About 강화·관련 글 연결] --- p2c[이력서 웹·PDF] --- p2d[홈 히어로·대표 프로젝트]
+        p2a[경력 데이터 분리] --- p2b[About 다시 그리기] --- p2c[resume.pdf] --- p2d[홈 히어로·사이드바·인기글] --- p2e[헤더 검색 팔레트]
     end
     subgraph P3["Phase 3 · 탐색·확장 · PRD-005 예정"]
         direction TB
-        p3a[Cmd+K 검색 팔레트] --- p3b[태그 페이지·별칭 병합] --- p3c[영문 About 검토] --- p3d[커스텀 도메인 검토]
+        p3a[검색 한글 초성·별칭] --- p3b[태그 페이지·별칭 병합] --- p3c[영문 About 검토] --- p3d[커스텀 도메인 검토]
     end
     P2 -->|"◇ 채용 5초 테스트 3명 중 3명<br/>About 예외 해제"| P3
     P3 -->|"◇ 분기 KPI 점검"| KPI((운영))
@@ -269,5 +275,5 @@ flowchart LR
 
 - [ ] **커스텀 도메인:** comstering.github.io 유지 vs 개인 도메인(예: comstering.dev). canonical·댓글 매핑에 영향, 이를수록 좋음 (PRD-005 전에 확인)
 - [ ] **영문 About:** 필요 여부 (PRD-005 전에 확인)
-- [ ] **검색 엔진:** 직접 만든 JSON 인덱스(가벼움) vs Pagefind(본문 전체 검색, 수십 KB 추가)
+- [x] **검색 엔진:** 빌드 타임 JSON 인덱스로 결정(2026-11-02, PRD-004 5.7). 본문 전체 검색이 필요해지면 Pagefind 재검토
 - [ ] **MDX:** 지금은 도입하지 않음. 본문에 컴포넌트가 필요해지면 다시 판단

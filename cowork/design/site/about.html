@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>about · 최한수 · Comstering</title>
-<meta name="description" content="클라우드 네이티브 엔지니어 최한수의 경력, 프로젝트, 연락처">
+<meta name="description" content="클라우드 네이티브 엔지니어 최한수의 경력, 기술, 연락처">
 <meta name="color-scheme" content="dark light">
 <script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,10 +26,9 @@ html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-ico
     <a class="logo" href="index.html" aria-label="comstering 홈"><span>~/</span><span class="logo__name">comstering</span><span class="logo__cursor">_</span></a>
     <nav class="nav" aria-label="주요 메뉴">
       <a class="nav__link" href="index.html">posts</a>
-      <a class="nav__link" href="projects.html">projects</a>
       <a class="nav__link" href="about.html" aria-current="page">about</a>
       <div class="nav__tools">
-        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (⌘K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
+        <button class="search-trigger" type="button" data-palette-open aria-label="검색 (search)" aria-keyshortcuts="Meta+K Control+K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-trigger__label">search</span><span class="kbd">⌘K</span></button>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="테마 전환"><span class="theme-icon-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span class="theme-icon-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
       </div>
     </nav>
@@ -45,73 +44,163 @@ html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-ico
     <div>
       <h1 class="intro__name" id="me">최한수 <small>Choi Hansu</small></h1>
       <p class="intro__role"><span class="nowrap">DevOps · 클라우드 네이티브 엔지니어</span> <span aria-hidden="true">·</span> <span class="nowrap">경력 4년+</span></p>
-      <p class="intro__facts"><span>cloud native engineer</span><span>CJ Olive Young</span></p>
+      <p class="print-only about__contacts">comstering@gmail.com · github.com/comstering · linkedin.com/in/hansu-choi-05775a244</p>
     </div>
     <div class="intro__contact btn-row">
       <a class="btn btn--primary" href="mailto:comstering@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> email</a>
-      <a class="btn btn--secondary" href="#resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> resume.pdf</a>
+      <a class="btn btn--secondary" href="resume.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> resume.pdf</a>
       <a class="btn btn--ghost" href="https://github.com/comstering" target="_blank" rel="noopener noreferrer"><span class="icon-arrow link-arrow--ext" style="gap:6px">github</span><span class="sr-only"> (새 창에서 열림)</span></a>
       <a class="btn btn--ghost" href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer"><span class="icon-arrow link-arrow--ext" style="gap:6px">linkedin</span><span class="sr-only"> (새 창에서 열림)</span></a>
     </div>
     <p class="intro__headline">개발과 운영의 경계를 좁혀 비즈니스의 <strong>연속성</strong>을 만드는 엔지니어입니다.</p>
-  </section>
-
-  <section class="section" style="margin-top:var(--s-12)" aria-labelledby="caps-title">
-    <h2 class="sec-head" id="caps-title"><span class="sec-head__label">what i do</span></h2>
-    <ol class="caps">
-      <li><span class="caps__title">Kubernetes 플랫폼 설계·운영</span><span class="caps__desc">EKS, Karpenter, Cilium, Istio로 MSA 인프라를 처음부터 구축</span><a class="link-arrow" href="project.html">EKS 네트워킹</a></li>
-      <li><span class="caps__title">비용·성능 최적화</span><span class="caps__desc">MWAA 제거 연 $16,000, TGW → Peering 네트워크 비용 50% 절감</span><a class="link-arrow" href="projects.html">비용 절감 사례</a></li>
-      <li><span class="caps__title">인증·보안 인프라</span><span class="caps__desc">Okta SSO, Keycloak, Zero Trust 게이트웨이로 접근 통제 체계화</span><a class="link-arrow" href="projects.html#p-okta-sso">Okta SSO</a></li>
-    </ol>
+    <div class="intro__body"><p>단순히 시스템을 구축하는 것을 넘어, 동료들이 복잡한 인프라 구조에 구애받지 않고 비즈니스 로직에만 몰입할 수 있는 환경을 설계하는 데 가치를 둡니다.</p><p>안정적인 시스템 운영을 위한 아키텍처를 고민하며, 다양한 직군과의 원활하게 소통하기 위해 기술적 지식을 넘어 도메인 전반을 이해하려고 노력합니다. 최선의 해결책을 찾기 위해 기록하고 공유하며 팀과 함께 성장하는 문화를 지향합니다.</p></div>
   </section>
 
   <section class="section" aria-labelledby="exp-title">
     <h2 class="sec-head" id="exp-title"><span class="sec-head__label">experience</span></h2>
+    <nav class="jump" aria-label="경력 바로가기"><a href="#cj-oliveyoung">CJ 올리브영</a><a href="#class101">클래스101</a><a href="#open-source">오픈소스</a></nav>
     <div class="timeline">
-      <div class="tl-org">
+      <div class="tl-org" id="cj-oliveyoung">
         <p class="tl-org__period">2024.06 ~ now</p>
         <div>
           <h3 class="tl-org__name">CJ Olive Young <span class="badge badge--accent">now</span></h3>
-          <p class="tl-org__role">DevOps · Cloud Native Engineer, 클라우드 네이티브 인프라, 인증, 메시징</p>
-          <ul class="tl-projects"><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-oauth2-proxy">OAuth2 Proxy 기반 Zero Trust 인증 게이트웨이</a></span><span class="tl-proj__period">2026.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-mwaa-argo">Airflow MWAA → Argo Workflows 전환</a></span><span class="tl-proj__period">2025.12 ~ 2026.02</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-cloudflare">CloudFront → Cloudflare 전환</a></span><span class="tl-proj__period">2025.11 ~ 2026.02</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-okta-sso">Okta SSO 통합 인증, Keycloak IdP Broker</a></span><span class="tl-proj__period">2025.11 ~ 2026.01</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-tgw-peering">Transit Gateway → VPC Peering 전환</a></span><span class="tl-proj__period">2025.09 ~ 2025.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="project.html">EKS 네트워킹 아키텍처 고도화</a></span><span class="tl-proj__period">2025.06</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-temporal">Temporal 기반 분산 워크플로우 엔진</a></span><span class="tl-proj__period">2025.05 ~ 2026.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-kafka-stability">Kafka 에코시스템 안정성 강화</a></span><span class="tl-proj__period">2025.04 ~ 2025.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-event-driven-kafka">Event-Driven Kafka 메시징 플랫폼</a></span><span class="tl-proj__period">2024.07 ~ 2024.10</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-cloud-native">Cloud Native 인프라 구축 및 MSA 전환</a></span><span class="tl-proj__period">2024.07 ~ 2025.02</span></li></ul>
+          <p class="tl-org__role">DevOps · Cloud Native Engineer</p>
+          <div class="proj-list">
+            <article class="proj" id="oauth2-proxy-zero-trust">
+              <div class="proj__head"><h4 class="proj__title">OAuth2 Proxy 기반의 Zero Trust 인증 게이트웨이 구축 및 인프라 보안 강화</h4><span class="proj__period">2026.03</span></div>
+              <p class="proj__desc">인프라 레이어 통합 인증 프록시 구축을 통한 환경별(Dev/QA/Stg) 액세스 제어 최적화 및 보안 강화</p><ul class="proj__points"><li>OAuth2 Proxy를 활용한 인증 게이트웨이 구축으로 사내 시스템 접근 제어 체계 강화</li><li>Keycloak &amp; Okta SSO와 연동하여 통합 인증 체계 구축 및 사용자 편의성 개선</li><li>Istio AuthorizationPolicy와 연계하여 세밀한 리소스 기반 접근 제어 정책 구현</li></ul>
+            </article>
+            <article class="proj" id="argo-workflows">
+              <div class="proj__head"><h4 class="proj__title">Argo Workflow 기반 CI/CD 파이프라인 고도화</h4><span class="proj__period">2025.12 ~ 2026.02</span></div>
+              <p class="proj__desc">GitOps 기반의 선언적 워크플로우 관리 체계를 구축하여 배치 워크플로우의 안정성 및 확장성을 대폭 개선</p><ul class="proj__points"><li>Argo Workflows를 활용한 복잡한 배치 작업 및 데이터 파이프라인 오케스트레이션 구현</li><li>일평균 100+ 워크플로우 실행 처리 및 99.9% 이상 안정적 운영 달성</li><li>Kubernetes-native 워크플로우 엔진 도입으로 리소스 활용률 40% 개선</li><li>워크플로우 템플릿 표준화를 통한 재사용성 향상 및 개발 생산성 증대</li><li>GitOps 기반 배포 자동화로 배포 리드타임 단축</li><li>AWS MWAA 제거를 통한 연간 $16,000 비용 절감 및 완전한 Kubernetes 네이티브 CI/CD 환경 구축</li></ul>
+            </article>
+            <article class="proj" id="cloudflare">
+              <div class="proj__head"><h4 class="proj__title">Cloudflare 전환을 통한 CDN/보안 인프라 최적화</h4><span class="proj__period">2025.11 ~ 2026.02</span></div>
+              <p class="proj__desc">글로벌 CDN 성능 향상 및 DDoS/WAF 보안 강화를 위해 AWS CloudFront에서 Cloudflare로 완전 전환</p><ul class="proj__points"><li>Cloudflare CDN 도입으로 글로벌 콘텐츠 전송 속도 평균 35% 개선 (TTFB 기준)</li><li>Cloudflare WAF 규칙 최적화를 통한 월평균 200만 건 이상의 악성 요청 차단</li><li>Blue-Green 전환 전략 수립으로 다운타임 없이 CloudFront → Cloudflare 마이그레이션 완료</li><li>Root domain의 Cloudflare 적용을 위한 DNS 관리 체계 개선 및 최적화</li></ul>
+            </article>
+            <article class="proj" id="okta-sso">
+              <div class="proj__head"><h4 class="proj__title">Okta SSO 기반 통합 인증 체계 구축 및 Keycloak IdP Broker 아키텍처 설계 및 구현</h4><span class="proj__period">2025.11 ~ 2026.01</span></div>
+              <p class="proj__desc">제로 트러스트 보안 모델 구현을 위해 Okta SSO를 중심으로 한 사내 통합 인증 인프라를 구축하고 Keycloak과의 통합을 통해 기존 시스템과 원활히 연동</p><ul class="proj__points"><li>10+ SaaS 및 Self-Hosted 애플리케이션에 Okta SSO 연동 완료, 평균 로그인 시간 70% 단축</li><li>Keycloak과 Okta 간 OpenID Connect 기반 페더레이션 구성으로 레거시 시스템 통합 인증 달성</li><li>Keycloak IdP Broker 패턴 적용으로 Okta 장애 시에도 Keycloak 자체 인증을 통한 서비스 연속성 확보</li><li>AWS Identity Center 연동을 통한 AWS 계정 접근 통제 및 임시 자격 증명 기반 보안 강화</li><li>개인별 IAM User 250+ 계정을 Okta SSO 역할별 권한 관리 체계로 전환하여 IAM User 계정 완전 폐기 및 보안 강화</li><li>Terraform IaC로 Okta 리소스 관리 자동화, 신규 애플리케이션 연동 시간 단축</li></ul>
+            </article>
+            <article class="proj" id="k8s-operator">
+              <div class="proj__head"><h4 class="proj__title">Kubernetes Operator 활용 인프라 운영 자동화</h4><span class="proj__period">2025.06</span></div>
+              <p class="proj__desc">Operator Pattern을 활용하여 주요 인프라 컴포넌트의 라이프사이클 관리를 자동화하고 운영 효율성 향상</p><ul class="proj__points"><li>Keycloak Operator를 활용한 인증 시스템 HA 클러스터 자동 구성 및 관리</li><li>Strimzi Kafka Operator를 통한 Kafka Connect 클러스터 선언적 관리 및 운영 자동화</li><li>Datadog Operator 도입으로 모니터링 에이전트 배포 및 설정 관리 자동화</li><li>Kiali Operator를 통한 Istio Service Mesh 관찰성(Observability) 대시보드 구축</li><li>Operator Pattern 기반 선언적 리소스 관리로 수동 배포 작업 80% 감소 및 운영 일관성 확보</li></ul>
+            </article>
+            <article class="proj" id="keycloak">
+              <div class="proj__head"><h4 class="proj__title">Keycloak 기반 엔터프라이즈 인증/인가 시스템 구축</h4><span class="proj__period">2025.06</span></div>
+              <p class="proj__desc">마이크로서비스 아키텍처 환경에서 OAuth 2.0/OIDC 기반의 중앙 집중식 Identity &amp; Access Management 시스템 구축</p><ul class="proj__points"><li>Keycloak Operator를 활용한 HA(High Availability) 클러스터 구성으로 99.9% 가용성 달성</li><li>Terraform 기반 IaC(Infrastructure as Code)로 Realm, Client, Role 설정 자동화</li><li>JWT 토큰 기반 Stateless 인증 구조 설계로 초당 5,000+ TPS 인증 처리 성능 확보</li><li>Fine-grained Authorization 정책 구현으로 서비스별 세밀한 접근 제어 체계 구축</li></ul>
+            </article>
+            <article class="proj" id="vpc-peering">
+              <div class="proj__head"><h4 class="proj__title">VPC Peering 전환을 통한 네트워크 성능 최적화 및 비용 절감</h4><span class="proj__period">2025.09 ~ 2025.10</span></div>
+              <p class="proj__desc">Transit Gateway 기반 허브-스포크 아키텍처의 한계를 극복하기 위해 VPC Peering 기반 메시 네트워크로 전환</p><ul class="proj__points"><li>VPC Peering 직접 연결을 통한 네트워크 홉(hop) 수 감소로 패킷 손실률 0.1% 미만 유지</li><li>TGW 데이터 처리 비용 제거로 월간 네트워크 비용 약 50% 절감 (약 $3,000 → $1,500)</li><li>Terraform 모듈화를 통한 Peering 연결 자동화로 신규 VPC 추가 시간 90% 단축</li></ul>
+            </article>
+            <article class="proj" id="eks-networking">
+              <div class="proj__head"><h4 class="proj__title">AWS EKS 네트워킹 아키텍처 고도화</h4><span class="proj__period">2025.06</span></div>
+              <p class="proj__desc">Pod IP 고갈 문제 및 VPC CNI의 iptables 성능 한계를 극복하기 위해 Custom Networking과 Cilium CNI 도입</p><ul class="proj__points"><li>VPC Secondary CIDR(100.64.0.0/16)대역을 이용한 subnet 대역 할당 및 EKS Custom Networking 구성으로 Pod IP 풀 500개 → 16,000개로 32배 확장</li><li>Cilium의 eBPF 기반 커널 바이패스 네트워킹으로 Pod 간 통신 레이턴시 30% 개선 및 CPU 사용률 20% 절감</li><li>VPC CNI와 Cilium CNI Chaining 구성으로 AWS Native 네트워킹 기능과 Cilium의 고급 네트워크 정책 기능을 동시에 활용</li><li>Cilium Network Policy를 활용한 세밀한 트래픽 제어 및 보안 강화</li><li>Hubble UI 통합으로 네트워크 수준의 가시성 확보</li></ul>
+            </article>
+            <article class="proj" id="temporal">
+              <div class="proj__head"><h4 class="proj__title">Temporal 기반 분산 워크플로우 엔진 구축</h4><span class="proj__period">2025.05 ~ 2026.03, 2026.01 ~ 2026.02</span></div>
+              <p class="proj__desc">대규모 마이크로서비스 환경에서 복잡한 비즈니스 트랜잭션 및 Saga 패턴 구현을 위해 Temporal Workflow Engine 도입</p><ul class="proj__points"><li>Self-hosted Temporal Cluster 구축으로 SaaS 대비 연간 약 $50,000 비용 절감</li><li>PostgreSQL vs MySQL 벤치마킹 수행 (10,000 TPS 부하 테스트) 후 최적 데이터베이스 선정</li><li>Rainbow Deployment 패턴 설계로 워크플로우 코드 버전 간 호환성 보장 및 무중단 배포 구현</li><li>Workflow Versioning 및 Activity Retry 정책 최적화로 장기 실행 프로세스 안정성 확보</li></ul>
+            </article>
+            <article class="proj" id="istio-zero-trust">
+              <div class="proj__head"><h4 class="proj__title">Istio Service Mesh 기반 Zero Trust 보안 아키텍처 구현</h4><span class="proj__period">2025.05</span></div>
+              <p class="proj__desc">마이크로서비스 간 East-West 트래픽에 대한 mTLS 암호화 및 세밀한 인가 정책 적용</p><ul class="proj__points"><li>Istio Sidecar Proxy 기반 자동 mTLS 암호화로 서비스 간 통신 100% 암호화 달성</li><li>AuthorizationPolicy를 통한 JWT Claims 기반 서비스 간 접근 제어 구현</li><li>RBAC(Role-Based Access Control) 정책 적용으로 최소 권한 원칙(Principle of Least Privilege) 준수</li><li>Istio Ingress Gateway 최적화로 외부 트래픽 TLS Termination 성능 개선</li></ul>
+            </article>
+            <article class="proj" id="kafka-stability">
+              <div class="proj__head"><h4 class="proj__title">Kafka 에코시스템 안정성 및 운영 효율성 강화</h4><span class="proj__period">2025.04 ~ 2025.10</span></div>
+              <p class="proj__desc">Kafka 클러스터 및 Connect 시스템의 안정성을 높이고, 실시간 CDC 파이프라인 구축을 통한 데이터 동기화 자동화</p><ul class="proj__points"><li>Strimzi Kafka Operator 도입으로 Kafka Connect Cluster 재시작 시간 80% 단축 및 자동 복구 체계 구축</li><li>Kafbat UI(구 Kafka UI) 커스터마이징 및 오타 버그 수정 기여로 오픈소스 컨트리뷰션 완료</li><li>Bitnami Confluent Schema Registry Helm Chart 개선 PR 제출 및 머지 (커뮤니티 기여)</li><li>Debezium Kafka Connect를 활용한 CDC(Change Data Capture) 파이프라인 구축으로 실시간 데이터 동기화 지연 시간 3초 이내 달성</li><li>Kafka Consumer Lag 모니터링 및 알람 체계 구축으로 데이터 유실 사전 방지</li></ul>
+            </article>
+            <article class="proj" id="kafka-event-driven">
+              <div class="proj__head"><h4 class="proj__title">Event-Driven Architecture 기반 Kafka 메시징 시스템 구축</h4><span class="proj__period">2024.07 ~ 2024.10</span></div>
+              <p class="proj__desc">마이크로서비스 간 비동기 통신 및 이벤트 기반 아키텍처 구현을 위한 엔터프라이즈급 Kafka 플랫폼 구축, Transaction Outbox Pattern 적용</p><ul class="proj__points"><li>AWS MSK(Managed Streaming for Kafka) 3-broker 클러스터 구성으로 초당 50,000+ 메시지 처리 성능 확보</li><li>Kafka Connect 기반 CDC 환경 구축으로 데이터베이스 변경 이벤트 실시간 스트리밍</li><li>Transactional Outbox Pattern 아키텍처 설계 및 구현으로 분산 트랜잭션 일관성 보장</li><li>커스텀 SMT(Single Message Transform) 개발로 Outbox 메시지 자동 변환 및 라우팅 구현</li><li>CloudEvents 스펙 기반 Schema Registry 구축으로 이벤트 메시지 표준화 및 버전 관리 체계 확립</li><li>공통 Kafka Producer/Consumer 라이브러리 개발로 개발 생산성 향상 및 코드 중복 제거</li></ul>
+            </article>
+            <article class="proj" id="cloud-native-msa">
+              <div class="proj__head"><h4 class="proj__title">Cloud Native 인프라 구축 및 MSA 전환 프로젝트</h4><span class="proj__period">2024.07 ~ 2025.02</span></div>
+              <p class="proj__desc">신규 마이크로서비스 아키텍처 시스템을 위한 Kubernetes 기반 클라우드 네이티브 인프라 설계 및 구축</p><ul class="proj__points"><li>Multi-AZ VPC 네트워크 아키텍처 설계 (Public/Private/DataBase 서브넷 3-tier 구조)</li><li>EKS 클러스터 구축 및 Karpenter 기반 Auto Scaling 구성으로 노드 프로비저닝 시간 단축 및 비용 최적화</li><li>Istio Service Mesh 도입으로 서비스 간 통신 가시성 확보 및 트래픽 관리 체계 구축</li><li>GitHub Actions 기반 CI/CD 파이프라인 구축</li><li>ARC(Actions Runner Controller) Self-hosted Runner 운영으로 빌드 비용 월 99% 절감</li></ul>
+            </article>
+            <article class="proj" id="security-ops">
+              <div class="proj__head"><h4 class="proj__title">보안 및 운영 효율성 개선 프로젝트</h4><span class="proj__period">2024.07 ~ 2025.12</span></div>
+              <p class="proj__desc">보안 강화 및 인프라 운영 최적화를 위한 다양한 개선 작업 수행</p><ul class="proj__points"><li>AWS KMS Envelope Encryption 아키텍처 구현으로 민감 데이터 암호화 및 키 관리 자동화 (2025.12)</li><li>External Secrets Operator 도입으로 Kubernetes Secret과 AWS Secrets Manager 동기화 자동화, 시크릿 로테이션 프로세스 구축 (2025.08)</li><li>ECR Pull Through Cache 설정으로 Docker Hub Rate Limit 문제 해결 및 이미지 Pull 시간 단축, 네트워크 전송 비용 월 30% 절감 (2025.02)</li><li>Braze 이메일 발송 인프라 구축 및 Route53 SPF/DKIM 레코드 관리로 이메일 전송 성공률 98% 이상 유지 (2025.01)</li></ul>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="tl-org">
+      <div class="tl-org" id="class101">
         <p class="tl-org__period">2022.05 ~ 2024.03</p>
         <div>
-          <h3 class="tl-org__name">Class101</h3>
-          <p class="tl-org__role">Web Developer (backend 중심), 인증, 회원, 사내 시스템</p>
-          <ul class="tl-projects"><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-rebuild-auth">통합 인증 시스템 재구축 (Rebuild Auth)</a></span><span class="tl-proj__period">2023.10 ~ 2024.03</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-gdpr-withdrawal">회원 탈퇴 프로세스 개선, GDPR 대응</a></span><span class="tl-proj__period">2023.06 ~ 2024.01</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-adult-verification">글로벌 성인 인증 시스템 리뉴얼</a></span><span class="tl-proj__period">2023.04 ~ 2023.06</span></li><li class="tl-proj"><span class="tl-proj__title"><a class="tl-proj__link" href="projects.html#p-employee-service">HR 연동 직원 관리 시스템 구축</a></span><span class="tl-proj__period">2022.10 ~ 2023.01</span></li></ul>
+          <h3 class="tl-org__name">CLASS 101</h3>
+          <p class="tl-org__role">Software Engineer</p>
+          <div class="proj-list">
+            <article class="proj" id="rebuild-auth">
+              <div class="proj__head"><h4 class="proj__title">통합 인증 시스템 재구축 (Rebuild Auth)</h4><span class="proj__period">2023.10 ~ 2024.03</span></div>
+              <p class="proj__desc">레거시 모놀리식 인증 시스템을 MSA 환경에 적합한 중앙 집중식 인증 서비스로 전면 재설계</p><ul class="proj__points"><li>OAuth 2.0/OIDC 기반 소셜 로그인 통합 인터페이스 설계 및 구현 (Google, Apple, Facebook, Kakao, Naver, Line 6개 제공자 지원)</li><li>JWT 기반 Stateless 인증 아키텍처로 수평 확장성 확보</li><li>Kubernetes 배포 파이프라인 구축 (Helm Chart 작성 및 Drone CI 연동)으로 배포 자동화 달성</li></ul>
+            </article>
+            <article class="proj" id="promo-code">
+              <div class="proj__head"><h4 class="proj__title">프로모션 인증 코드 시스템 구축</h4><span class="proj__period">2023.09 ~ 2023.10</span></div>
+              <p class="proj__desc">난수 기반 일회성 프로모션 코드 발급 및 검증 시스템을 설계하여 마케팅 캠페인 지원</p><ul class="proj__points"><li>난수 기반 사전 프로모션 코드 생성</li><li>프로모션 코드 검증 API 개발 및 기존 시스템과 연동</li></ul>
+            </article>
+            <article class="proj" id="gdpr-withdrawal">
+              <div class="proj__head"><h4 class="proj__title">회원 탈퇴 프로세스 개선 및 GDPR 준수 체계 구축</h4><span class="proj__period">2023.06 ~ 2024.01</span></div>
+              <p class="proj__desc">개인정보 보호 규정 준수 및 사용자 경험 개선을 위한 탈퇴 프로세스 전면 재설계</p><ul class="proj__points"><li>탈퇴 요청 비동기 처리 파이프라인 설계로 탈퇴 처리 시 개인정보 삭제시간 단축</li><li>Kafka 이벤트 기반 데이터 삭제 워크플로우 구축으로 관련 시스템 자동 연동</li><li>탈퇴 사유 수집 및 분석 대시보드 구축으로 이탈률 개선 인사이트 제공</li></ul>
+            </article>
+            <article class="proj" id="adult-verification">
+              <div class="proj__head"><h4 class="proj__title">글로벌 성인 인증 시스템 리뉴얼</h4><span class="proj__period">2023.04 ~ 2023.06</span></div>
+              <p class="proj__desc">국내외 사용자 대상 연령 확인 프로세스를 재구축하여 법적 요구사항 충족 및 사용자 편의성 개선</p><ul class="proj__points"><li>국내 PG사 휴대폰 본인인증 API 연동으로 실시간 성인 인증 구현</li><li>해외 사용자 대상 연령 확인 시스템 구축</li></ul>
+            </article>
+            <article class="proj" id="employee-service">
+              <div class="proj__head"><h4 class="proj__title">HR 연동 직원 관리 시스템 (Employee Service) 구축</h4><span class="proj__period">2022.10 ~ 2023.01</span></div>
+              <p class="proj__desc">FLEX HR 시스템과 연동하여 사내 직원 및 조직 정보를 실시간 동기화하는 내부 서비스 개발</p><ul class="proj__points"><li>정규화된 직원/부서 데이터 모델 설계 및 MongoDB document 스키마 구축</li><li>FLEX API 연동 일배치 작업 개발로 직원 정보 자동 동기화 (오차율 0.1% 미만)</li><li>Helm Chart 작성 및 Drone CI 배포 자동화로 배포 시간 단축</li></ul>
+            </article>
+            <article class="proj" id="class101-plus-app">
+              <div class="proj__head"><h4 class="proj__title">CLASS101+ 구독 앱 런칭 프로젝트</h4><span class="proj__period">2022.07 ~ 2022.08</span></div>
+              <p class="proj__desc">구독 비즈니스 모델 전환에 맞춘 React Native 기반 모바일 앱 인증 프로세스 재구축</p><ul class="proj__points"><li>React Native 기반 OAuth 2.0 소셜 로그인 플로우 구현 (iOS/Android 동시 지원)</li></ul>
+            </article>
+            <article class="proj" id="platform-stability">
+              <div class="proj__head"><h4 class="proj__title">플랫폼 안정성 및 컴플라이언스 개선 작업</h4></div>
+              <p class="proj__desc">서비스 품질 향상 및 외부 정책 준수를 위한 인프라 개선 작업</p><ul class="proj__points"><li>Gmail Sender Guidelines 준수를 위한 SPF/DKIM/DMARC 레코드 설정 및 이메일 발송 도메인 평판 관리 (2024.01)</li><li>Spring Boot 2.3.3 → 3.2.0 메이저 업그레이드 및 JDK 11 → 17 마이그레이션 완료 (2023.11)</li><li>모노레포 내 OTP 인증 Web 프로젝트 추가 및 Drone CI 파이프라인 구축으로 빌드 자동화 달성 (2022.07)</li></ul>
+            </article>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="open-source" aria-labelledby="oss-title">
+    <h2 class="sec-head" id="oss-title"><span class="sec-head__label">open source · side</span></h2>
+    <div class="oss-list">
+      <div class="oss-row"><span class="oss-row__title">Schema Registry helm chart contribution</span><span class="oss-row__aside">2025.08</span><p class="oss-row__sub">SASL_SSL 인증 과정에서 mTLS 인증이 필수인 부분을 선택적으로 변경하는 데 기여했습니다.</p><div class="oss-row__act"><span class="badge badge--accent">merged</span><a class="link-arrow link-arrow--mute" href="https://github.com/bitnami/charts/pull/35772" target="_blank" rel="noopener noreferrer">pull request<span class="sr-only"> (새 창에서 열림)</span></a></div></div>
+      <div class="oss-row"><span class="oss-row__title">kafbat-ui contribution</span><span class="oss-row__aside">2025.07</span><p class="oss-row__sub">kafbat-ui의 일부 문구를 수정하여 UX를 개선하는 데 기여했습니다.</p><div class="oss-row__act"><span class="badge badge--accent">merged</span><a class="link-arrow link-arrow--mute" href="https://github.com/kafbat/kafka-ui/pull/1205" target="_blank" rel="noopener noreferrer">pull request<span class="sr-only"> (새 창에서 열림)</span></a></div></div>
+      <div class="oss-row"><span class="oss-row__title">Lomeone</span><span class="oss-row__aside">2024.01 ~ now</span><p class="oss-row__sub">개인 Side Project를 진행하는 organization. Infrastructure를 AWS로 구축하고 Terraform을 사용하여 IaC를 적용해서 Infrastructure를 관리하고 있습니다.</p><div class="oss-row__act"><a class="link-arrow link-arrow--mute" href="https://github.com/lomeone" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a></div></div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="skills-title">
     <h2 class="sec-head" id="skills-title"><span class="sec-head__label">skills</span></h2>
     <dl class="skills">
-      <div><dt>platform</dt><dd class="stack-list"><span class="stack-token">kubernetes</span><span class="stack-token">eks</span><span class="stack-token">karpenter</span><span class="stack-token">cilium</span><span class="stack-token">istio</span><span class="stack-token">argo</span></dd></div>
-      <div><dt>cloud · iac</dt><dd class="stack-list"><span class="stack-token">aws</span><span class="stack-token">terraform</span><span class="stack-token">cloudflare</span><span class="stack-token">helm</span></dd></div>
-      <div><dt>data · messaging</dt><dd class="stack-list"><span class="stack-token">kafka</span><span class="stack-token">strimzi</span><span class="stack-token">debezium</span><span class="stack-token">temporal</span></dd></div>
-      <div><dt>auth · security</dt><dd class="stack-list"><span class="stack-token">okta</span><span class="stack-token">keycloak</span><span class="stack-token">oauth2</span><span class="stack-token">kms</span></dd></div>
-      <div><dt>backend</dt><dd class="stack-list"><span class="stack-token">kotlin</span><span class="stack-token">spring boot</span><span class="stack-token">mongodb</span></dd></div>
+      <div><dt>platform</dt><dd class="stack-list"><span class=stack-token>Kubernetes</span><span class=stack-token>EKS</span><span class=stack-token>Karpenter</span><span class=stack-token>Helm</span><span class=stack-token>Docker</span><span class=stack-token>Kubernetes Operator</span><span class=stack-token>Istio</span><span class=stack-token>Cilium</span><span class=stack-token>Hubble</span><span class=stack-token>Kiali</span></dd></div>
+      <div><dt>cloud · iac</dt><dd class="stack-list"><span class=stack-token>AWS</span><span class=stack-token>Cloudflare</span><span class=stack-token>Terraform</span></dd></div>
+      <div><dt>ci/cd · workflow</dt><dd class="stack-list"><span class=stack-token>GitHub Actions (ARC)</span><span class=stack-token>Argo Workflows</span><span class=stack-token>Argo CD</span><span class=stack-token>GitOps</span><span class=stack-token>Temporal</span></dd></div>
+      <div><dt>data · messaging</dt><dd class="stack-list"><span class=stack-token>Kafka</span><span class=stack-token>Kafka Connect</span><span class=stack-token>Debezium</span><span class=stack-token>Schema Registry</span><span class=stack-token>MongoDB</span><span class=stack-token>PostgreSQL</span><span class=stack-token>MySQL</span></dd></div>
+      <div><dt>auth · security</dt><dd class="stack-list"><span class=stack-token>Keycloak</span><span class=stack-token>Okta</span><span class=stack-token>OAuth 2.0 / OIDC</span><span class=stack-token>JWT</span><span class=stack-token>OAuth2 Proxy</span><span class=stack-token>External Secrets Operator</span></dd></div>
+      <div><dt>backend</dt><dd class="stack-list"><span class=stack-token>Kotlin</span><span class=stack-token>Spring Boot</span></dd></div>
+      <div><dt>observability</dt><dd class="stack-list"><span class=stack-token>Datadog</span></dd></div>
     </dl>
   </section>
 
   <section class="section" aria-labelledby="cert-title">
     <h2 class="sec-head" id="cert-title"><span class="sec-head__label">certifications</span></h2>
     <ul class="def-list">
-      <li><span class="def-list__title">HashiCorp Certified: Terraform Associate (004)</span><span class="def-list__aside num">2026.04</span><span class="def-list__sub">HashiCorp</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="#credly" target="_blank" rel="noopener noreferrer">verify<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
-      <li><span class="def-list__title">정보보안산업기사</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">KISA</span></li>
-      <li><span class="def-list__title">정보처리기사</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">HRDK</span></li>
+      <li><span class="def-list__title">HashiCorp Certified: Terraform Associate (004)</span><span class="def-list__aside num">2026.04</span><span class="def-list__sub">HashiCorp</span><span class="def-list__action"><a class="link-arrow link-arrow--mute" href="https://www.credly.com/badges/476460b7-b5dc-4918-804e-ea3a169435d2/public_url" target="_blank" rel="noopener noreferrer">verify<span class="sr-only"> (새 창에서 열림)</span></a></span></li>
+      <li><span class="def-list__title">정보처리기사 (Engineer Information Processing)</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">HRDK</span></li>
+      <li><span class="def-list__title">정보보안산업기사 (Industrial Engineer Information Security)</span><span class="def-list__aside num">2021.06</span><span class="def-list__sub">KISA</span></li>
     </ul>
   </section>
 
   <section class="section" aria-labelledby="edu-title">
     <h2 class="sec-head" id="edu-title"><span class="sec-head__label">education · activity</span></h2>
     <ul class="def-list">
-      <li><span class="def-list__title">공주대학교 컴퓨터공학</span><span class="def-list__aside num">2016.03 ~ 2022.02</span><span class="def-list__sub">B.E. · 자료구조, 알고리즘, 네트워크, 보안</span></li>
-      <li><span class="def-list__title">BoB (Best of the Best) 10기</span><span class="def-list__aside num">2021</span><span class="def-list__sub">KITRI 차세대 보안 리더 양성 프로그램</span></li>
+      <li><span class="def-list__title">공주대학교 (Kongju National University)</span><span class="def-list__aside num">2016.03 ~ 2022.02</span><span class="def-list__sub">Computer Science, Bachelor of Engineering (B.E.). Data Structures, Algorithms, Database Design, Computer Networks, Software Engineering, Security</span></li>
+      <li><span class="def-list__title">BoB (Best of the Best) 10기</span><span class="def-list__aside num">2021.07 ~ 2022.03</span><span class="def-list__sub">보안제품개발트랙에 참여하여 Host 기반 네트워크 제어 솔루션(ARP Spoofing 기반 네트워크 관제도구)을 개발했습니다. (Top 30)</span></li>
     </ul>
   </section>
 </div>
@@ -119,7 +208,6 @@ html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-ico
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <p>© 2026 comstering</p>
-    <p class="ph-note">점선 밑줄과 점선 테두리는 시안용 예시 값</p>
     <nav class="site-footer__links" aria-label="외부 링크">
       <a href="https://github.com/comstering" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (새 창에서 열림)</span></a>
       <a href="https://www.linkedin.com/in/hansu-choi-05775a244" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (새 창에서 열림)</span></a>
@@ -128,11 +216,14 @@ html:not(.dark) .theme-icon-light{display:inline-flex}html:not(.dark) .theme-ico
     </nav>
   </div>
 </footer>
+
+
+
 <div class="palette-backdrop" aria-hidden="true"></div>
 <div class="palette" role="dialog" aria-modal="true" aria-label="사이트 검색">
   <div class="palette__input-wrap">
     <span class="palette__prompt" aria-hidden="true">&gt;</span>
-    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="글, 프로젝트, 태그 검색" autocomplete="off" spellcheck="false">
+    <input class="palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="palette-results" aria-autocomplete="list" placeholder="제목, 태그, 소제목으로 글 검색" autocomplete="off" spellcheck="false">
     <span class="kbd">esc</span>
   </div>
   <div class="palette__results" id="palette-results" role="listbox" aria-label="검색 결과"></div>
