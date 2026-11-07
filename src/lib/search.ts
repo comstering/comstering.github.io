@@ -1,5 +1,8 @@
 // 헤더 검색 팔레트의 인덱스 모양과 검색 규칙(PRD-004 5.7, 디자인 25번 4장). 서버·클라이언트가 같이 쓰는 순수 모듈이다.
 
+/** 다른 곳(홈 사이드바 태그)에서 팔레트를 검색어와 함께 여는 window 이벤트. detail: { query: string } */
+export const SEARCH_OPEN_EVENT = "search:open";
+
 /** /search-index.json의 한 항목. 글(draft 제외)만 들어간다. */
 export interface SearchEntry {
   /** 제목 */
