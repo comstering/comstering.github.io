@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-07 · 기준 커밋 `0f2f41e`(main, #66 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
+_최종 갱신: 2026-11-07 · 기준 커밋 `43148dc`(main, #67 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
 
 이 문서는 **지금 진행 중인 Phase의 상태와 다음 작업**만 담는다. 끝난 Phase는 [archive](./archive/README.md)에 요약돼 있다(Phase 0 안정화, Phase 1 읽기 경험).
 
@@ -10,8 +10,8 @@ _최종 갱신: 2026-11-07 · 기준 커밋 `0f2f41e`(main, #66 머지) · 기�
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | 완료. [요약](./archive/phase0-summary.md) |
 | Phase 1 읽기 경험 (PRD-003) | 완료. [요약](./archive/phase1-summary.md). About 성능·CLS·TBT `warn` 예외는 PR-19까지 |
-| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅. 디자인 36번 검토의 수정 요청 4건은 PR #67(브랜치 `fix/design-review-36`). 다음은 PR-23(인기글, 토큰 등록됨)과 파비콘 교체(디자인 34번, 작은 PR) |
-| 지금 막힌 것 | 없음. 열린 질문은 Q16, Q18, Q22 |
+| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅, 디자인 36번 반영 ✅(#67). 파비콘 `c_` 교체 PR #68 오픈(브랜치 `feat/favicon-c`). 다음은 PR-23(인기글, 토큰 등록됨) |
+| 지금 막힌 것 | 없음. 열린 질문은 Q16, Q18, Q22, Q23 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
@@ -20,7 +20,7 @@ _최종 갱신: 2026-11-07 · 기준 커밋 `0f2f41e`(main, #66 머지) · 기�
    - **환경:** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config. `sharp`는 0.33.5 고정. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
    - **Chrome:** 이 세션 끝에는 확장은 응답하나 이 세션의 탭 그룹이 없었다. 새 세션은 시작하자마자 `tabs_context_mcp {createIfEmpty:true}`로 탭을 열고, **눈에 보이는 변경은 실제 Chrome으로 매번 확인**한다(메모리 `feedback-verify-in-chrome`). 실제 Chrome 창은 406px 아래로 줄지 않으니 360px은 Playwright Chromium으로 잰다
    - **PR 규칙(메모리에 반영됨):** 작업이 끝나면 커밋·push·PR까지 바로 올리고 후속은 같은 브랜치에 커밋한다. **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(`tools/shoot.mjs`·`publish-shots.sh`). 새 의존성·CI 액션은 먼저 알린다
-2. **파비콘 교체(작은 PR)와 PR-23(인기글)을 이어서 한다**(#67 머지 후). ① **파비콘:** 디자인 34번 "파비콘 교체" — `cowork/design/favicon/final/`의 `favicon.ico`로 `src/app/favicon.ico`를 교체하고 `icon.svg`·`apple-icon.png`를 `src/app/`에 추가, `yarn build` 후 `out/`의 홈 HTML에 `rel="icon"`·`apple-touch-icon` 링크와 3개 파일이 있는지 확인(파일 규약 이름 그대로). 파비콘은 RGBA PNG 규칙(CONTEXT 9장)도 확인. PR을 올리면 REQUESTS로 알려 디자인이 실제 Chrome 탭을 확인한다. ② **PR-23:** `cowork/prd/004…` 5.5: `scripts/fetch-popular.mjs`가 GoatCounter 통계 API(`/api/v0/stats/hits`, 기간 지정, 토큰 `GOATCOUNTER_TOKEN`)에서 최근 30일을 받아 `/posts/<id>` 중 존재하고 draft 아닌 글만 조회수 내림차순 5편(같으면 최신 글 먼저)을 `.cache/popular.json`(`{ "items": [{ "id", "views" }] }`, 읽는 쪽은 PR-21의 `lib/popular.ts`)으로 쓴다. 배포 워크플로 `schedule`(하루 1회)과 Actions 캐시(직전 결과 → 빈 목록). API 실패·토큰 없음(로컬·포크 PR)에도 **빌드는 실패시키지 않는다**. 토큰은 빌드 단계에서만 쓰고 산출물·로그에 남기지 않는다. 권한 이름이 `Read statistics`인지 호출이 403이면 알려 달라고 했다
+2. **PR-23(인기글 데이터)부터**(파비콘 #68 머지 후, 토큰은 등록됨). `cowork/prd/004…` 5.5: `scripts/fetch-popular.mjs`가 GoatCounter 통계 API(`/api/v0/stats/hits`, 기간 지정, 토큰 `GOATCOUNTER_TOKEN`)에서 최근 30일을 받아 `/posts/<id>` 중 존재하고 draft 아닌 글만 조회수 내림차순 5편(같으면 최신 글 먼저)을 `.cache/popular.json`(`{ "items": [{ "id", "views" }] }`, 읽는 쪽은 PR-21의 `lib/popular.ts`)으로 쓴다. 배포 워크플로 `schedule`(하루 1회)과 Actions 캐시(직전 결과 → 빈 목록). API 실패·토큰 없음(로컬·포크 PR)에도 **빌드는 실패시키지 않는다**. 토큰은 빌드 단계에서만 쓰고 산출물·로그에 남기지 않는다. 권한 이름이 `Read statistics`인지 호출이 403이면 알려 달라고 했다
 3. **PR-19에서 남은 확인:** About CLS ≤ 0.1은 CI 3회 중앙값으로 본다(`lighthouserc.json`의 About 예외는 이 PR에서 지웠다). CI가 실패하면 폴백 `@font-face`(`ascent-override`·폴백 목록 확대, 디자인 22번 3장)를 조정하고 결과를 REQUESTS Q16으로 알린다
 4. 작성자 할 일(개발이 기다리는 것): **히어로 안·문구 선택**(디자인 25번 Q1, `index.html?hero=2b` 등으로 비교, PR-21 전), **`GOATCOUNTER_TOKEN` 발급 → 저장소 Secrets 등록**(PR-23 전), `custom-networking-karpenter-eni-troubleshooting.md` 제목 오타 `Kapenter`→`Karpenter`(디자인 25번 Q6, 파일명은 그대로)
 5. 이월(작성자 작업): 카카오·LinkedIn OG 미리보기(LinkedIn Post Inspector는 로그인 필요), Search Console·네이버 sitemap 재제출, 사이트 1차 완성 후 branch protection
@@ -68,6 +68,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-07 | **파비콘 `c_` 교체(#68).** 디자인 34번 인수대로 `cowork/design/favicon/final/`의 `favicon.ico`로 `src/app/favicon.ico` 교체, `icon.svg`·`apple-icon.png` 추가(파일 규약 이름 그대로, `layout.tsx`의 `icons` 설정 없이). `yarn build` 후 홈·About·글 HTML에 `rel="icon"`(ico 48x48·svg)·`apple-touch-icon`(180x180) 링크가 생기고 3개 파일이 `out/`에 있음을 확인. E2E `favicon.spec.ts`(3개 페이지의 링크 3종·파일 200·content-type, ICO 구조). **못 한 것:** 실제 Chrome 탭 아이콘(라이트·다크, 16px) 육안 확인 — 확장 프로그램으로 SVG 문서 스크린샷이 시간 초과, 디자인이 확인한다(REQUESTS Q23) | #68 머지 후 PR-23 |
 | 2026-11-07 | **디자인 36번 검토 반영(#67).** ① About 직함: 480px 미만에서 직함 줄을 아바타 행 아래 전폭으로(`display: contents`), 340px 이하는 직함·경력을 줄 단위로 나누고 구분점 숨김(360px 1줄, 320px 2줄) ② About 상단 경로 `~ / about`(`PostPath`에 `section` 옵션, 인쇄에서 숨김) ③ 홈 히어로 위 여백 0(첫 글 제목 하단 1280×720 449px, 360×640 453px, 시안 458/437) ④ 팔레트 닫기 버튼 보이는 글자: 640px 이상 `esc`, 미만 `닫기`(이름 `esc 닫기`는 둘 다 포함) ⑤ 인쇄 순서 문제(36번 3.2)는 PR-22에서 이미 about.css로 옮겨 5쪽(543KB). 36번 표의 의도 값(`.about-section` 16px, `.stack-token` inline 등)을 E2E로 고정. E2E `about.spec.ts`(경로·직함 1줄)·`resume.spec.ts`·`home.spec.ts`(상한 ±20px)·`search.spec.ts` 갱신. **못 한 것:** 실제 Chrome 확인(Playwright만), CI | #67 머지 후 파비콘, PR-23 |
 | 2026-11-07 | **PR-22 구현·PR 오픈(#66).** `yarn build:resume`(`scripts/build-resume-pdf.mjs`): out/을 임시 서버로 띄우고 다크 테마로 연 `/about`을 print 미디어 A4로 인쇄해 `out/resume.pdf` 생성. 검사(실패하면 종료 코드 1, 파일 삭제): 인쇄 배경 라이트, 헤더·푸터·바로가기·버튼 숨김, ≤ 1MB, ≤ 5쪽, 글꼴 ToUnicode 매핑에 이름·직함·회사·연락처·자격증 글자가 모두 있음(글자 검색 가능). **PR-19의 6쪽 원인을 찾아 5쪽·543KB로 맞춤:** 인쇄 레이아웃 규칙이 globals.css에 있어 나중에 로드되는 about.css 화면 규칙에 덮이고 있었다 → 인쇄 레이아웃을 about.css 끝 `@media print`로 이동(globals.css에는 라이트 토큰·숨김만). CI Quality(E2E 전)·deploy(build 뒤)에 `playwright install` + `build:resume` 단계 추가(새 의존성 없음). E2E `resume.spec.ts`(200·application/pdf·%PDF·≤1MB, 버튼 다운로드, 링크 URL 표시, 쪽 경계, 9pt). **작성자 요청:** 토큰 권한 안내(Read statistics만, 사이트 한정). **못 한 것:** PDF를 이미지로 본 것은 print 미디어 스크린샷(PDF 뷰어 없음), CI 리눅스 실행 | PR-22 머지 후 PR-23 |
 | 2026-11-07 | **PR-21 구현·PR 오픈(#64).** 홈을 시안대로: 히어로(`components/home/HeroTerminal`, `content/site.yaml`의 `$ history` + 문구, h1은 sr-only 사이트 이름, 커서 깜빡임은 여기 한 곳·reduced-motion 정지), 사이드바(`HomeSidebar`: popular는 `.cache/popular.json`(`lib/popular.ts`)이 없거나 비면 숨김, series는 `series.yaml` 전체·첫 글로 링크, tags는 글 수 상위 10개). 1024px 이상 오른쪽 열(sticky), 미만은 글 목록 아래(DOM 순서는 목록 다음). **태그는 태그 페이지(Phase 3)가 없어 눌러서 검색 팔레트를 그 태그로 연다**(`TagButton` + `search:open` 이벤트, 팔레트 `initialQuery`). 홈 OG는 `renderOg`로 생성(`app/og.png/route.tsx`, `site.yaml` 한 곳): **satori에서 하단 mono 줄의 한글이 깨지지 않음을 `out/og.png`로 확인**. `.gitignore`에 `/.cache/`. 헤더 로고는 480px 미만에서 `~/_`(DESIGN.md 규칙, 검색 버튼이 들어와 360px에서 헤더가 두 줄로 접혀서). E2E `home.spec.ts`. **작성자 요청으로 문구를 `실행해 본 것만 기록합니다`로 변경(PRD 5.6 description도 PR-24에서 같은 문구).** **시안과 다른 점(Q21):** 실제 레이아웃의 `main` 위쪽 여백 48px 때문에 첫 글 제목 하단이 360×640에서 약 486px(시안 437px), 1280×720도 그만큼 아래다. **못 한 것:** 실제 Chrome 확인(Playwright 스크린샷만), CI Lighthouse | PR-21 머지 후 PR-22 |
