@@ -1,0 +1,60 @@
+# About·resume.pdf·JSON-LD가 같이 읽는 프로필 원본 (PRD-004 4.2).
+# 문장은 기존 About(src/app/about, Bio)에서 그대로 옮겼다. 없앤 필드(featured, metric, stack 등)는 빌드 실패.
+name: 최한수
+nameEn: Choi Hansu
+handle: comstering
+role: DevOps · Cloud Native Engineer
+careerStart: 2022-05
+contacts:
+  email: comstering@gmail.com
+  github: https://github.com/comstering
+  linkedin: https://www.linkedin.com/in/hansu-choi-05775a244
+headline: 개발과 운영의 경계를 좁혀 비즈니스의 **연속성**을 만드는 엔지니어 최한수입니다.
+intro:
+  - 단순히 시스템을 구축하는 것을 넘어, 동료들이 복잡한 인프라 구조에 구애받지 않고 비즈니스 로직에만 몰입할 수 있는 환경을 설계하는 데 가치를 둡니다.
+  - 안정적인 시스템 운영을 위한 아키텍처를 고민하며, 다양한 직군과의 원활하게 소통하기 위해 기술적 지식을 넘어 도메인 전반을 이해하려고 노력합니다. 최선의 해결책을 찾기 위해 기록하고 공유하며 팀과 함께 성장하는 문화를 지향합니다.
+skills:
+  - group: platform
+    items: [Kubernetes, EKS, Karpenter, Helm, Docker, Kubernetes Operator, Istio, Cilium, Hubble, Kiali]
+  - group: cloud · iac
+    items: [AWS, Cloudflare, Terraform]
+  - group: ci/cd · workflow
+    items: [GitHub Actions (ARC), Argo Workflows, Argo CD, GitOps, Temporal]
+  - group: data · messaging
+    items: [Kafka, Kafka Connect, Debezium, Schema Registry, MongoDB, PostgreSQL, MySQL]
+  - group: auth · security
+    items: [Keycloak, Okta, OAuth 2.0 / OIDC, JWT, OAuth2 Proxy, External Secrets Operator]
+  - group: backend
+    items: [Kotlin, Spring Boot]
+  - group: observability
+    items: [Datadog]
+education:
+  - school: 공주대학교 (Kongju National University)
+    major: Computer Science
+    degree: Bachelor of Engineering (B.E.)
+    period: { start: 2016-03, end: 2022-02 }
+    coursework:
+      - Data Structures
+      - Algorithms
+      - Database Design
+      - Computer Networks
+      - Software Engineering
+      - Security
+certifications:
+  - name: "HashiCorp Certified: Terraform Associate (004)"
+    issuer: HashiCorp
+    date: 2026-04
+    verifyUrl: https://www.credly.com/badges/476460b7-b5dc-4918-804e-ea3a169435d2/public_url
+  - name: 정보처리기사 (Engineer Information Processing)
+    issuer: HRDK
+    date: 2021-06
+  - name: 정보보안산업기사 (Industrial Engineer Information Security)
+    issuer: KISA
+    date: 2021-06
+experiences:
+  - id: bob-10
+    title: BoB 10기
+    period: { start: 2021-07, end: 2022-03 }
+    description: 보안제품개발트랙에 참여하여 Host 기반 네트워크 제어 솔루션(ARP Spoofing 기반 네트워크 관제도구)을 개발했습니다. (Top 30)
+    tags: [security]
+    url: https://www.kitribob.kr/trainee_walk/projects

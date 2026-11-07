@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint .",
     "check:tokens": "bash scripts/check-design-tokens.sh",
+    "check:content": "node scripts/check-hardcoded-profile.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "test:e2e": "playwright test",
     "lhci": "lhci autorun"

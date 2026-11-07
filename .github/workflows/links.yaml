@@ -56,7 +56,9 @@ jobs:
         # v2.9.0(2026-07-09)을 커밋 SHA로 고정한다. 올릴 때는 릴리스를 확인하고 SHA와 주석을 함께 바꾼다
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          args: --config lychee.toml --no-progress --format markdown --output lychee-report.md --files-from files.txt
+          # lychee-action v2.9는 args의 --output과 output 입력을 함께 쓰면 실패한다. 출력 경로는 output 입력으로만 지정한다
+          args: --config lychee.toml --no-progress --format markdown --files-from files.txt
+          output: lychee-report.md
           fail: false
           jobSummary: true
 

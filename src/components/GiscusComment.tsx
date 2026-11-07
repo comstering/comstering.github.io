@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site-url";
 
 interface GiscusCommentsProps {
   repo: string;

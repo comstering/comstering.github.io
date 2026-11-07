@@ -45,6 +45,9 @@ jobs:
       - name: Check design tokens
         run: yarn check:tokens
 
+      - name: Check hardcoded profile data
+        run: yarn check:content
+
       # frontmatter 검증(content/*.yaml, posts/*.md)도 이 단계에서 수행된다.
       - name: Build
         run: yarn build

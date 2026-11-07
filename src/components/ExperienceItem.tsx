@@ -1,8 +1,10 @@
 export interface Experience {
+  id?: string;
   company: string;
   role?: string;
   period: string;
   projects: {
+    id?: string;
     title: string;
     description: string;
     period: string;
@@ -11,12 +13,13 @@ export interface Experience {
 }
 
 export const ExperienceItem = ({
+  id,
   company,
   role,
   period,
   projects,
 }: Experience) => (
-  <div className="min-w-0 space-y-6 border-l border-line pb-12 pl-6 last:pb-0 sm:pl-8">
+  <div id={id} className="min-w-0 space-y-6 border-l border-line pb-12 pl-6 last:pb-0 sm:pl-8">
     <div>
       <h3 className="text-h3 font-bold tracking-tight text-fg">{company}</h3>
       {role && <p className="mt-1 text-small text-fg">{role}</p>}
@@ -25,7 +28,8 @@ export const ExperienceItem = ({
     <div className="grid gap-4">
       {projects.map((project, idx) => (
         <div
-          key={idx}
+          key={project.id ?? idx}
+          id={project.id}
           className="min-w-0 rounded-lg border border-line bg-surface p-5 sm:p-6"
         >
           <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">

@@ -31,7 +31,6 @@ export const frontmatterSchema = z
     series: z.string().min(1).optional(),
     seriesOrder: z.number().int().positive().optional(),
     draft: z.boolean().default(false),
-    relatedProject: z.string().min(1).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.series && data.seriesOrder === undefined) {
