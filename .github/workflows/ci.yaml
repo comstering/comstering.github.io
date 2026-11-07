@@ -58,6 +58,10 @@ jobs:
       - name: Install Playwright browser
         run: yarn playwright install --with-deps chromium
 
+      # About을 print 미디어 A4로 인쇄해 out/resume.pdf를 만든다(크기·쪽 수·글자 검색 검사 포함, 실패하면 CI 실패). E2E가 이 파일을 쓴다
+      - name: Build resume.pdf
+        run: yarn build:resume
+
       - name: E2E
         run: yarn test:e2e
 
