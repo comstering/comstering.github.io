@@ -24,7 +24,9 @@ test("히어로: h1 하나(sr-only 사이트 이름), 명령 줄은 aria-hidden,
 test("첫 화면: 첫 글 제목이 스크롤 없이 보이고 가로로 넘치지 않는다", async ({ page }) => {
   await page.goto("/");
   const viewport = page.viewportSize()!;
-  const title = page.locator(".post-link, article h3").first();
+  // Suspense 폴백(정적 HTML)에도 같은 글 목록이 있어 숨겨진 복사본이 먼저 잡힐 수 있다 → 보이는 것만
+  await page.waitForLoadState("networkidle");
+  const title = page.locator("article h3:visible").first();
   const box = (await title.boundingBox())!;
   expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
   // 디자인 측정값(1280×720 458px, 360×640 437px)에 실제 레이아웃의 main 위쪽 여백 48px을 더한 값 안
