@@ -968,6 +968,18 @@ dialog.palette::backdrop {
   position: relative;
   cursor: pointer;
 }
+/* 640px 이상은 키 모양 `esc`, 미만(터치)은 글자 `닫기`. 접근 가능한 이름 `esc 닫기`는 둘 다 포함한다 */
+.palette__close-label {
+  display: none;
+}
+@media (max-width: 639px) {
+  .palette__close-key {
+    display: none;
+  }
+  .palette__close-label {
+    display: inline;
+  }
+}
 .palette__close::after {
   content: "";
   position: absolute;

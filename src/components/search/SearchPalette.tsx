@@ -178,7 +178,8 @@ const SearchPalette = ({
           aria-label="esc 닫기"
           onClick={onClose}
         >
-          esc
+          <span className="palette__close-key">esc</span>
+          <span className="palette__close-label">닫기</span>
         </button>
       </div>
 

@@ -102,3 +102,31 @@ test("인쇄: 다크 테마로 열어도 라이트 배경, 헤더·버튼·바�
   }
   await expect(page.locator(".about-intro__contacts")).toBeVisible();
 });
+
+test("상단 경로 `~ / about`이 있고 현재 위치(aria-current)이며 인쇄에서는 숨겨진다", async ({ page }) => {
+  await page.goto("/about");
+  const path = page.getByRole("navigation", { name: "현재 위치" });
+  await expect(path).toContainText("~");
+  await expect(path.locator('[aria-current="page"]')).toHaveText("about");
+  await expect(path.getByRole("link", { name: "~" })).toHaveAttribute("href", "/");
+  await page.emulateMedia({ media: "print" });
+  await expect(path).toBeHidden();
+});
+
+test("직함 줄은 360px에서도 아바타 행 아래 전폭으로 한 줄이다(디자인 36번 3.1)", async ({ page }) => {
+  await page.goto("/about");
+  const role = page.locator(".about-intro__role");
+  const lines = await role.evaluate(
+    (el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight)),
+  );
+  const width = page.viewportSize()!.width;
+  if (width <= 479) {
+    expect(lines).toBe(1);
+    // 아바타 아래에서 시작한다(전폭)
+    const avatar = (await page.locator(".about-intro__avatar").boundingBox())!;
+    const box = (await role.boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(avatar.y + avatar.height - 1);
+  } else {
+    expect(lines).toBe(1);
+  }
+});

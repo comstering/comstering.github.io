@@ -45,6 +45,29 @@
   line-height: 1.5;
   color: var(--fg);
 }
+/* 480px 미만: 직함 줄을 아바타 행 아래로 내려 전폭으로 쓴다(영문 직함이 아바타 옆 228px 열에서 3줄로 쪼개지는 것을 막음, 디자인 36번 3.1) */
+@media (max-width: 479px) {
+  .about-intro > div:first-of-type {
+    display: contents;
+  }
+  .about-intro__name {
+    grid-column: 2;
+    align-self: center;
+  }
+  .about-intro__role {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+}
+/* 340px 이하는 전폭에서도 두 줄이 되므로 직함과 경력을 줄 단위로 나누고 구분점은 숨긴다 */
+@media (max-width: 340px) {
+  .about-intro__role > span {
+    display: block;
+  }
+  .about-intro__role > span[aria-hidden] {
+    display: none;
+  }
+}
 .about-intro__contact {
   grid-column: 1 / -1;
   display: flex;

@@ -1,4 +1,5 @@
 import "./about.css";
+import { PostPath } from "@/components/post/PostPath";
 import { AboutIntro } from "@/components/about/AboutIntro";
 import { ExperienceSection } from "@/components/about/ExperienceSection";
 import { SectionHead } from "@/components/ui/SectionHead";
@@ -15,6 +16,10 @@ const About = () => {
 
   return (
     <div className="about pb-12">
+      {/* 시그니처 2번: 모든 페이지 상단의 경로. 인쇄(resume.pdf)에서는 숨긴다 */}
+      <div className="no-print">
+        <PostPath slug="about" section={null} />
+      </div>
       <AboutIntro profile={profile} />
 
       <ExperienceSection companies={companies} />

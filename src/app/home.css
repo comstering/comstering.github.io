@@ -42,13 +42,9 @@
 }
 
 /* 히어로 */
+/* 위쪽 여백은 없다: 레이아웃 main이 이미 위 48px을 준다(디자인 36번 3.3) */
 .hero {
-  padding-top: 32px;
-}
-@media (min-width: 640px) {
-  .hero {
-    padding-top: 56px;
-  }
+  padding-top: 0;
 }
 .hero__title {
   font-family: var(--font-mono);

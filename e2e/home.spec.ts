@@ -32,8 +32,8 @@ test("첫 화면: 첫 글 제목이 스크롤 없이 보이고 가로로 넘치�
     expect(box, "첫 글 제목이 아직 그려지지 않았다").not.toBeNull();
     const bottom = box!.y + box!.height;
     expect(bottom).toBeLessThanOrEqual(viewport.height);
-    // 디자인 측정값(1280×720 458px, 360×640 437px)에 실제 레이아웃의 main 위쪽 여백 48px을 더한 값 안
-    expect(bottom).toBeLessThanOrEqual(viewport.width >= 1024 ? 520 : 500);
+    // 디자인 측정값(1280×720 458px, 360×640 437px)에서 ±20px 이내(히어로 위 여백 0, 디자인 36번 3.3)
+    expect(bottom).toBeLessThanOrEqual(viewport.width >= 1024 ? 478 : 457);
   }).toPass({ timeout: 10000 });
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth),
