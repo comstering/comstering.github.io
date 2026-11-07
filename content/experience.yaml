@@ -52,7 +52,7 @@ companies:
           - Keycloak IdP Broker 패턴 적용으로 Okta 장애 시에도 Keycloak 자체 인증을 통한 서비스 연속성 확보
           - AWS Identity Center 연동을 통한 AWS 계정 접근 통제 및 임시 자격 증명 기반 보안 강화
           - 개인별 IAM User 250+ 계정을 Okta SSO 역할별 권한 관리 체계로 전환하여 IAM User 계정 완전 폐기 및 보안 강화
-          - Terraform IaC로 Okta 리소스 관리 자동화, 신규 애플리케이션 연동 시간 단축
+          - Terraform IaC로 Okta 및 Keycloak 리소스 관리 자동화, 신규 애플리케이션 연동 시간 단축
       - id: k8s-operator
         title: Kubernetes Operator 활용 인프라 운영 자동화
         period:
@@ -102,7 +102,7 @@ companies:
         title: Temporal 기반 분산 워크플로우 엔진 구축
         period:
           - start: 2025-05
-            end: 2026-03
+            end: 2025-09
           - start: 2026-01
             end: 2026-02
         description: 대규모 마이크로서비스 환경에서 복잡한 비즈니스 트랜잭션 및 Saga 패턴 구현을 위해 Temporal Workflow Engine 도입
