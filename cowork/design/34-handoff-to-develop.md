@@ -8,20 +8,23 @@
 
 | 항목 | 확정 내용 | 근거 |
 |---|---|---|
-| 홈 히어로 | `$ history`(+ 커서) / `실행해 본 것만 씁니다`. h1은 `sr-only` `Comstering's Dev Notes` | 28번 8장 |
+| 홈 히어로 | `$ history`(+ 커서) / `실행해 본 것만 기록합니다`(11-07 변경). h1은 `sr-only` `Comstering's Dev Notes` | 28번 8장 |
 | 홈 사이드바 | `popular`(데이터 없으면 숨김) · `series` · `tags`(상위 10, 글 수). 1024 이상 오른쪽 열, 미만은 글 목록 아래 | 25번 6장, 26번 Q2·Q4 |
 | About 첫 화면 | 사진 · 이름 · `직함 · 경력 N년+` · 버튼. **현재 회사 없음.** 클래스101 직함 `Software Engineer` | 30·31번 |
 | About 경력 | 전부 펼침, 회사 바로가기 3개(도착 강조 없음), 밀도 V3, 기술 태그 없음 | 25번 2장 |
 | 헤더 검색 | 글만 검색, 결과 제목·날짜·카테고리, `# 소제목` 보조 줄, 이름 `검색 (search)` | 25번 4장, 26번 Q3·Q5 |
 | 인쇄 `resume.pdf` | About을 `@media print` A4로. 작성자가 실제 Chrome 인쇄 미리보기 확인함(11-07) | 25번 3장, 32번 |
-| 홈 OG | **B안** 확정: 제목 `Comstering's Dev Notes`, 하단 `$ history`(accent) + `실행해 본 것만 씁니다` | 31번 3장, `site/og.html` |
+| 홈 OG | **B안** 확정: 제목 `Comstering's Dev Notes`, 하단 `$ history`(accent) + `실행해 본 것만 기록합니다` | 31번 3장, `site/og.html` |
 | `DESIGN.md` | 원칙 4 문장 확정(기획 33번), 시그니처 3번 예시 `// popular ────` | 32번, 33번 |
+| 파비콘 | **C `c_`** 확정(작성자 11-07). 파일 3개(`icon.svg`·`favicon.ico`·`apple-icon.png`)가 `favicon/final/`에 준비됨. Phase 2 PR 순서와 무관한 작은 PR | 35번 |
+
+> **문구 변경(11-07):** 홈 `tagline`은 `실행해 본 것만 기록합니다`로 확정돼 개발 PR-21에 반영됐다(`content/site.yaml`). 아래 28·31·32번 문서의 `실행해 본 것만 씁니다`는 변경 전 값이다. 디자인 시안(`index.html`·`og.html`)은 새 문구로 맞췄다.
 
 ## 1. PR별 입력
 
 ### PR-18 데이터 분리·검증 (화면 그대로)
 - PRD-004 문구 변경 **3건**: 기술 스택 7그룹(4.4), 클래스101 직함 `Software Engineer`(이전 `Web Developer (backend 중심)`), 현재 회사 표시 제거. JSON-LD `Person`에 `worksFor`를 넣지 않는다(5.6).
-- `site.yaml`: `title`(`Comstering's Dev Notes`), `command`(`history`), `tagline`(`실행해 본 것만 씁니다`). 히어로 확정값이 정해졌으므로 임시값이 아니라 이 값을 쓴다.
+- `site.yaml`: `title`(`Comstering's Dev Notes`), `command`(`history`), `tagline`(`실행해 본 것만 기록합니다`). 히어로 확정값이 정해졌으므로 임시값이 아니라 이 값을 쓴다.
 
 ### PR-19 About 다시 그리기 + CLS 예외 해제
 - 시안: `site/about.html`(생성물, 원본 `tools/build-phase2-mockups.py`). 규칙: 25번 2장, 31번 2장, 32번 "About".
@@ -40,18 +43,26 @@
 - 시안: `site/index.html`(생성물). 규칙: 28번 8장, 32번 "홈".
 - **첫 글 제목 하단 458px(1280×720) / 437px(360×640)**, 문구 한 줄, 가로 넘침 0. 커서 깜빡임은 사이트에서 이 한 곳만, `prefers-reduced-motion`이면 정지.
 - 인기글 데이터가 없는 상태(블록 숨김, 시리즈가 맨 위로)를 확인한다.
-- **홈 OG (B안):** `renderOg({ title: site.title, site: "comstering.github.io", meta: ["$ history", "실행해 본 것만 씁니다"] })`로 생성하면 문구가 `site.yaml` 한 곳에서 나온다(정적 `src/app/og.png`를 대체). 정적 이미지를 유지하더라도 내용은 B로 다시 만든다. 시안: `site/og.html`의 `home · B 확정`.
-  - **개발이 확인하기로 한 것(작성자):** 하단 mono 줄의 한글(`실행해 본 것만 씁니다`)이 satori 빌드에서 깨지지(□) 않는지. `renderOg`는 JetBrains Mono 400(라틴)과 Pretendard 700만 싣는다. About 카드의 `최한수`가 같은 자리에 한글을 이미 쓰지만, 디자인은 브라우저 렌더(`og.html`)까지만 확인했다. 깨지면 Pretendard 폴백을 mono 줄에 명시하는 쪽이 디자인 의견이다(글자 모양이 달라져도 허용).
+- **홈 OG (B안):** `renderOg({ title: site.title, site: "comstering.github.io", meta: ["$ history", "실행해 본 것만 기록합니다"] })`로 생성하면 문구가 `site.yaml` 한 곳에서 나온다(정적 `src/app/og.png`를 대체). 정적 이미지를 유지하더라도 내용은 B로 다시 만든다. 시안: `site/og.html`의 `home · B 확정`.
+  - **개발이 확인하기로 한 것(작성자):** 하단 mono 줄의 한글(`실행해 본 것만 기록합니다`)이 satori 빌드에서 깨지지(□) 않는지. `renderOg`는 JetBrains Mono 400(라틴)과 Pretendard 700만 싣는다. About 카드의 `최한수`가 같은 자리에 한글을 이미 쓰지만, 디자인은 브라우저 렌더(`og.html`)까지만 확인했다. 깨지면 Pretendard 폴백을 mono 줄에 명시하는 쪽이 디자인 의견이다(글자 모양이 달라져도 허용).
 
 ### PR-22 `resume.pdf`
 - 규칙: 25번 3장, 32번 "인쇄". 라이트 토큰 덮어쓰기가 구현의 `.dark` 클래스·`next-themes`와 충돌하지 않는지(25번 Q8), 한글 글꼴이 CI(리눅스)에 있는지, 텍스트 검색(G2-6).
 - 기준: A4 **5쪽**, ≤ 1MB(시안 렌더 629KB). 개발의 시험 산출물(6쪽)은 직함·연차·회사 바로가기 처리 전이라 쪽수가 달랐다. PR-19 이후 다시 비교해 달라.
+
+### 파비콘 교체 (작은 PR 하나, Phase 2 순서와 무관)
+- 입력: [35번](./35-favicon-proposal.md) 4장, 파일 `cowork/design/favicon/final/` (`icon.svg`, `favicon.ico`, `apple-icon.png`).
+- 할 일: `src/app/favicon.ico`를 `favicon/final/favicon.ico`로 **교체**하고, `src/app/icon.svg`·`src/app/apple-icon.png`를 **추가**한다. `src/app/layout.tsx`에는 `icons` 설정이 없고 `next.config`는 `output: "export"`라, 파일 규약만으로 `<link>`가 생기는지 `yarn build` 후 `out/`에서 확인한다(홈 HTML의 `rel="icon"`·`apple-touch-icon` 링크, 3개 파일이 `out/`에 있는지).
+- 파일 규약 이름은 `icon.svg`·`apple-icon.png`가 맞다. 이름을 바꾸지 않는다.
+- 완료 기준: 홈·글·About에서 탭 아이콘이 `c_`로 나온다(브라우저 파비콘 캐시 때문에 강력 새로고침/시크릿 창으로 확인). **디자인이 실제 Chrome 탭을 확인한다**(PR을 올리면 REQUESTS에 알려 달라).
+- 시안 소스를 바꿔야 하면 `favicon/final/*.svg`를 고치고 `node cowork/design/tools/build-favicon-final.mjs`로 ICO·PNG를 다시 만든다(디자인 몫).
 
 ## 2. 디자인이 확인하지 못한 것 (개발 PR에서 확인)
 
 - 홈 OG 한글 글리프(위, 개발 확인).
 - 실제 리눅스 CI의 About CLS(대역 측정 0.107~0.139 → 0.001~0.003).
 - PDF 텍스트 추출·한글 글꼴 포함(G2-6).
+- 파비콘: 실제 Chrome 탭, Safari·Firefox, Windows 작업 표시줄, iOS 홈 화면 추가 모양(디자인은 Chromium 렌더까지만 확인).
 - Safari·Firefox, 실기기, 스크린리더 낭독(검색 `role="status"` 포함), 정확한 360px의 실제 Chrome(창 최소폭 406px이라 Playwright로 잼).
 
 ## 3. 디자인 쪽 후속

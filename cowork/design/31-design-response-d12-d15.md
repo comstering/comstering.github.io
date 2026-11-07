@@ -47,6 +47,8 @@
 
 ## 3. D-12 홈 OG
 
+> **11-07 문구 변경:** 홈 하단 줄 문구는 `실행해 본 것만 씁니다`에서 `실행해 본 것만 기록합니다`로 바뀌었다(개발 `site.yaml`). 아래 표·본문의 옛 문구는 선택 당시 기록이다.
+
 현재 홈 OG는 정적 파일 `src/app/og.png`다(`Comstering's Dev Notes` + `blog` + `kubernetes, eks, terraform`). 다른 카드(글·About)는 `renderOg({ title, site, meta })` 템플릿으로 생성한다. `site/og.html`의 `site / home` 절에 3종을 같은 템플릿으로 그렸다.
 
 | 안 | 구성 | 평가 |

@@ -30,12 +30,14 @@
 | 경로 | 내용 |
 |---|---|
 | `README.md` | 파일 목록과 보는 방법. 문서를 추가하면 여기 표도 갱신 |
-| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, 최신 34). 질문·답이 오갈 때마다 새 번호. 현역은 04·18번, 12·19·21번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
+| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, 최신 36). 질문·답이 오갈 때마다 새 번호. 현역은 04·18번, 12·19·21번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
 | `design-system.html` | 디자인 시스템 문서(브라우저로 연다) |
 | `site/*.html` | 최종 시안: index, post, projects, project, about, tags, tag, 404, og. 그 밖에 `phase1-compare.html`(기록용), `og-render.html`, `og/*.png` |
 | `system/` | 시안 공용 `tokens.css`·`base.css`·`components.css`·`app.js`·`giscus-*.css` |
 | `tools/check-site.mjs` | 시안 검사 스크립트(아래 6장) |
 | `tools/build-phase2-mockups.py` | `about.html`·`index.html`·`system/search-index.js` 생성기(데이터 원본 `src/app/about/page.tsx`·`posts/`). 생성물 |
+| `tools/review-impl.mjs` | 빌드한 `out/`(구현)를 시안과 대조: 홈 첫 글 위치·사이드바·팔레트·About·인쇄(36번) |
+| `tools/build-favicon-final.mjs` | 확정 파비콘(`favicon/final/`)의 ICO·apple-icon 생성(35번) |
 | `tools/measure-about-first.mjs` | About 첫 화면 요소 위치·인쇄 쪽수 측정(31번) |
 | `tools/measure-fallback-cls.mjs` | About·홈 CLS 폴백 글꼴 보정 측정 |
 | `archive/phase0-summary.md` | Phase 0 디자인 요약 보관본(01~11번) |
@@ -55,10 +57,11 @@
 | 이미지 확대 | 원본 폭 > 표시 폭(720px)인 이미지에만 `<dialog>` 확대 | 12번 E3 |
 | 목차 숨김 | h2 3개 미만이면 숨기되 본문 위치는 그대로 | 12번 E7 |
 | 시리즈 label | 8자 이하 | 12번 E8 |
-| 직함·역할 | `DevOps · 클라우드 네이티브 엔지니어 · 경력 4년+`. 회사 성과와 개인 실습 글은 섞지 않고 개인 글은 `personal` 표기 | 10번 D4·D5 |
+| 직함·역할 | **`DevOps · Cloud Native Engineer · 경력 N년+`**(데이터 `profile.yaml`의 `role`이 원본, 영문). Phase 0의 한글 직함(10번 D4)은 PRD-004 4.2의 영문 `role`로 대체됨. 360px에서는 직함 줄이 줄바꿈되지 않게 아바타 행 아래 전폭으로 둔다(36번 3.1). `personal`/`work` 표기는 Phase 2에서 없어졌다 | 10번 D4, 36번 |
 | `?category=` 직접 진입 시 전체 목록이 잠깐 보임 | 허용 | 16번(삭제, `archive/phase1-summary.md` 3장) |
 | 글꼴 로딩 | Pretendard **단일 서브셋**(사이트가 쓰는 글자만, `wght 400–700`, 약 102KB) 자체 호스팅 + `font-display: swap`, **preload 없음**. `optional`은 쓰지 않는다(첫 방문이 시스템 글꼴로 보임). 구현은 개발 대기 | 19번 |
-| 홈 OG(Phase 2) | **B안 확정(작성자, 11-07):** 제목 `Comstering's Dev Notes`, 하단 mono 줄 `$ history`(accent) + `실행해 본 것만 씁니다`. 기존 `renderOg` 템플릿 그대로. 한글 글리프는 개발이 satori 빌드에서 확인 | 31번 3장, 34번 |
+| 파비콘 | **C `c_` 확정(작성자, 11-07).** 어두운 둥근 사각형(`canvas`) + 흰 `c`(`fg`) + 초록 커서 `_`(`accent`). 파일은 `favicon/final/`(`icon.svg`·`favicon.ico` 16·32·48·`apple-icon.png` 180 꽉 찬 정사각형). 소스 SVG를 고치면 `tools/build-favicon-final.mjs`로 다시 생성. 현재 파비콘(흰 바탕 필기체)은 16px에서 읽히지 않아 교체 | 35번 |
+| 홈 OG(Phase 2) | **B안 확정(작성자, 11-07):** 제목 `Comstering's Dev Notes`, 하단 mono 줄 `$ history`(accent) + `실행해 본 것만 기록합니다`. 기존 `renderOg` 템플릿 그대로. 한글 글리프는 개발이 satori 빌드에서 확인 | 31번 3장, 34번 |
 | `DESIGN.md` 원칙 4(Phase 2) | **홈은 블로그, About은 경력.** 서로 링크하지 않는다(헤더 `about`·저자 박스 일반 `about` 링크만 예외), 성과 수치 합산 금지, 외부 근거(PR·`verify ↗`·사이드 프로젝트 저장소)는 링크. `personal`/`work` 표기 없음. 시그니처 3번 예시는 `// popular ────` | 33번(기획 확정) |
 | About 첫 화면(Phase 2) | 사진 · 이름(한·영) · `직함 · 경력 N년+` · 버튼. **현재 회사는 두지 않는다**(회사는 experience에서만). 클래스101 직함은 `Software Engineer`. 버튼 하단 346px(360×640) | 30·31번 |
 | About 경력(Phase 2) | **전부 펼침**(접이식·`expand all` 없음). experience 위에 회사 바로가기 3개(`CJ 올리브영 · 클래스101 · 오픈소스`, 44px), 앵커 강조 없음. 길이는 기간 열 제거 + 간격·불릿 밀도로 줄임(데스크톱 −19%, 360px −9%, 본문 14px는 토큰 밖이라 안 씀). **About에는 기술 태그를 두지 않는다.** what i do·관련 글·`personal`/`work`·About↔블로그 링크 없음. 기술 스택은 7그룹 | 25번, 22번 2.5 |
@@ -66,7 +69,7 @@
 | About CLS | 폴백 글꼴 폭 보정 `@font-face { src: local(Noto Sans CJK KR…); size-adjust: 86.4% }`를 Pretendard 바로 뒤에. 풀폭 CJK 폴백(한글 1.0em)이 Pretendard(0.864em)보다 넓어 줄 수가 바뀌는 것이 원인 | 22번 3장, 25번 7장 |
 | 검색 | 헤더 `search ⌘K` + 팔레트를 이번 Phase에 사용. **글만** 검색(제목·설명·태그·카테고리·소제목), 결과 = 제목 · 날짜 · 카테고리, 빈 입력 = 최근 글 5편, 접근 가능한 이름 `검색 (search)`(보이는 글자 포함), 홈 글 검색창 없음 | 25번 4장 |
 | 홈 사이드바 | 인기글(순위 번호 5, 데이터 없으면 숨김) · 시리즈(편수) · 태그(상위 10). 1024 이상 오른쪽 열, 미만은 글 목록 아래. 카테고리·최근글·About 링크 없음 | 25번 6장 |
-| 홈 히어로 | **확정(11-05, 작성자): 2b, `$ history` + "실행해 본 것만 씁니다"(h2).** 터미널 명령 줄(`aria-hidden`, 커서 깜빡임은 이 한 곳만, reduced motion이면 정지) + 아래 `mute` 문구 `p`. h1은 `sr-only` `Comstering's Dev Notes`. 실명·직함·기술 태그·성과·`about me`/`resume` 버튼 없음. 첫 글 제목 437/458px(첫 화면 안). PRD-004 5.2 확정값 기재는 기획 몫 | 25·28번 |
+| 홈 히어로 | **확정(11-05, 작성자): 2b, `$ history` + 문구. 문구는 11-07에 "실행해 본 것만 기록합니다"로 변경(개발 `content/site.yaml`과 동일).** 터미널 명령 줄(`aria-hidden`, 커서 깜빡임은 이 한 곳만, reduced motion이면 정지) + 아래 `mute` 문구 `p`. h1은 `sr-only` `Comstering's Dev Notes`. 실명·직함·기술 태그·성과·`about me`/`resume` 버튼 없음. 첫 글 제목 437/458px(첫 화면 안). PRD-004 5.2 확정값 기재는 기획 몫 | 25·28번 |
 | 접근성 규칙 | 글자색은 `opacity`로 낮추지 않고 토큰을 쓴다(4.5:1). 버튼 이름은 보이는 글자를 포함한다. 제목 단계는 건너뛰지 않는다 | 19번 2장 |
 
 ## 5. 코드 규칙 (시안과 구현 공통)

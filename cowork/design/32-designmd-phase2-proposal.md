@@ -5,6 +5,8 @@
 기준 시안: `site/index.html`·`site/about.html`·`system/components.css`(Phase 2 구간) · 근거 문서 22·25·28·30번
 쓰는 개발 PR: PR-19 About, PR-20 검색, PR-21 홈, PR-22 PDF
 
+**✅ 반영됨 (2026-11-07, 개발 PR-19·20·21, 디자인 확인 36번):** 1·2·3장이 `DESIGN.md`에 들어갔다(`DESIGN.md`에 원칙 4, 시그니처 3번 `// popular`, 히어로·사이드바·검색·About·인쇄·글꼴 폴백 절이 있음을 확인함). 다만 인쇄 규칙은 `globals.css` 소스 순서 때문에 대부분 적용되지 않는다(36번 3.2).
+
 **상태(2026-11-07): 기획이 X-1을 확정했고([33번](./33-planning-response-designmd.md)) 1.2 문장과 1.6(시그니처 3번)이 바뀌었다. 개발이 PR-19에서 반영하면 된다.**
 
 **이 문서는 제안이다.** `/DESIGN.md`는 구현 세션이 합의된 것만 반영한다(CONTEXT 1장). 아래 "붙여 넣을 문구"는 `DESIGN.md`의 말투(짧은 평서문, 표)로 썼고, 값은 모두 시안 CSS에서 읽었다. 시안 클래스 이름은 설명용이며 구현은 Tailwind 토큰 유틸리티로 옮긴다.
@@ -48,7 +50,7 @@
 ### 홈
 
 - **순서:** 히어로 → 카테고리 칩(글 수) → 연도별 글 목록. 글 목록 위에 검색창을 두지 않는다(검색은 헤더 팔레트 하나).
-- **히어로:** 터미널 명령 줄 + 아래 문구 한 줄. 값은 `content/site.yaml`(`title`, `command`, `tagline`). 확정값은 `$ history` / `실행해 본 것만 씁니다`.
+- **히어로:** 터미널 명령 줄 + 아래 문구 한 줄. 값은 `content/site.yaml`(`title`, `command`, `tagline`). 확정값은 `$ history` / `실행해 본 것만 기록합니다`(11-07 `씁니다`에서 변경, 개발 `site.yaml`과 동일).
   - 명령 줄: JetBrains Mono 700, `clamp(1.5rem, 0.9rem + 2.6vw, 2.5rem)`, 자간 -0.02em, 행간 1.3, `$`는 `mute`. 커서는 `accent`(너비 0.55em, 높이 0.12em, 1.1s `steps(1)` 깜빡임, `prefers-reduced-motion`이면 정지). **사이트에서 깜빡이는 곳은 여기 하나뿐이다.**
   - 문구: `text-lead`(18px), `mute`, 행간 1.6, 최대 34rem, 명령 줄과 간격 16px.
   - 접근성: `<h1>` 안에 `sr-only`로 사이트 이름(`Comstering's Dev Notes`), 보이는 명령 줄은 `aria-hidden`. 문구는 h1 다음 `<p>`라 낭독된다.
