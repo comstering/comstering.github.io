@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# 빌드 입력(인기글 등). 커밋하지 않는다
+/.cache/
+
 # production
 /build
 

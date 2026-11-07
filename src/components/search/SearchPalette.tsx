@@ -13,6 +13,8 @@ import {
 interface SearchPaletteProps {
   open: boolean;
   onClose: () => void;
+  /** 처음 열 때 채울 검색어(홈 사이드바 태그) */
+  initialQuery?: string;
 }
 
 // 인덱스는 팔레트를 처음 열 때 한 번만 내려받는다(PRD-004 5.7). 실패하면 다음에 다시 시도한다.
@@ -42,14 +44,18 @@ const Marked = ({ text, query }: { text: string; query: string }) => {
 };
 
 // 헤더 검색 팔레트: 네이티브 <dialog>(포커스 가두기·Esc·배경 비활성은 브라우저가 한다) + combobox/listbox.
-const SearchPalette = ({ open, onClose }: SearchPaletteProps) => {
+const SearchPalette = ({
+  open,
+  onClose,
+  initialQuery = "",
+}: SearchPaletteProps) => {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [index, setIndex] = useState<SearchEntry[] | null>(null);
   const [failed, setFailed] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {

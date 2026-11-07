@@ -91,7 +91,7 @@ const PostsView: React.FC<PostsViewProps> = ({ posts, selected, onSelect }) => {
       <div
         role="group"
         aria-label="카테고리 필터"
-        className="no-scrollbar -my-1.5 flex gap-2 overflow-x-auto py-1.5"
+        className="no-scrollbar -my-1.5 mt-10 flex gap-2 overflow-x-auto py-1.5"
       >
         {categories.map(({ name, count }) => (
           <Chip
@@ -105,7 +105,7 @@ const PostsView: React.FC<PostsViewProps> = ({ posts, selected, onSelect }) => {
       </div>
 
       {groups.map(([year, items]) => (
-        <section key={year} aria-labelledby={`year-${year}`} className="mt-12">
+        <section key={year} aria-labelledby={`year-${year}`} className="mt-10">
           <h2
             id={`year-${year}`}
             className="border-b border-line pb-3 font-mono text-xs tracking-wide text-mute"

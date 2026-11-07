@@ -1,0 +1,204 @@
+/*
+ * 홈(디자인 25번 6장, 28번 8장, 32번 "홈"): 히어로 + 글 목록 + 사이드바(popular · series · tags).
+ * 1024px 이상은 오른쪽 열(sticky), 미만은 글 목록 아래.
+ */
+.home {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "hero" "list" "aside";
+  column-gap: 80px;
+  max-width: calc(var(--w-read) + var(--gutter) * 2);
+  margin-inline: auto;
+}
+@media (min-width: 1024px) {
+  .home {
+    max-width: var(--w-container);
+    grid-template-columns: minmax(0, var(--w-read)) minmax(0, 1fr);
+    grid-template-areas: "hero aside" "list aside";
+  }
+  .home__aside {
+    padding-top: 56px;
+  }
+  .home__aside-inner {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+}
+.home__hero {
+  grid-area: hero;
+}
+.home__list {
+  grid-area: list;
+}
+.home__aside {
+  grid-area: aside;
+}
+@media (max-width: 1023px) {
+  .home__aside {
+    margin-top: 64px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* 히어로 */
+.hero {
+  padding-top: 32px;
+}
+@media (min-width: 640px) {
+  .hero {
+    padding-top: 56px;
+  }
+}
+.hero__title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 0.9rem + 2.6vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.term__prompt {
+  margin-right: 0.35em;
+  color: var(--mute);
+}
+.hero__sub {
+  max-width: 34rem;
+  margin-top: 16px;
+  font-size: var(--text-lead);
+  line-height: 1.6;
+  color: var(--mute);
+}
+/* 사이트에서 깜빡이는 곳은 여기 하나뿐이다. prefers-reduced-motion이면 정지 */
+.cursor-blink {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.12em;
+  margin-left: 0.08em;
+  background: var(--accent);
+  vertical-align: baseline;
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+  }
+}
+
+/* 사이드바 */
+.home__aside .section-block + .section-block {
+  margin-top: 48px;
+}
+@media (max-width: 1023px) {
+  .home__aside .section-block + .section-block {
+    margin-top: 40px;
+  }
+}
+.rank-list {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.rank-list li {
+  border-bottom: 1px solid var(--line);
+}
+.rank-list a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  min-height: var(--tap);
+  padding-block: 12px;
+  transition: color var(--dur) var(--ease);
+}
+.rank-list a:hover {
+  color: var(--accent);
+}
+.rank-list__n {
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.rank-list__t {
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.feat-list {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.feat-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 2px 16px;
+  align-items: baseline;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.feat-row__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+}
+.feat-row__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color var(--dur) var(--ease);
+}
+.feat-row__title a {
+  display: block;
+  margin-block: -10px;
+  padding-block: 10px;
+}
+.feat-row__title a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.feat-row__metric {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--mute);
+}
+.feat-row:hover .feat-row__title {
+  color: var(--accent);
+}
+.feat-row:has(a:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.feat-row a:focus-visible {
+  outline: none;
+}
+.side-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+}
+.side-tags button {
+  min-height: var(--tap);
+  padding-block: 10px;
+  color: var(--mute);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease);
+}
+.side-tags button:hover {
+  color: var(--accent);
+}
+.side-tags small {
+  margin-left: 3px;
+  font-size: 11px;
+}

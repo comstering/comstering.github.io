@@ -22,7 +22,8 @@ export const Header: React.FC = () => {
           href="/"
           className="relative font-bold tracking-tight text-fg after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
         >
-          ~/comstering<span className="text-accent">_</span>
+          ~/<span className="max-[479px]:sr-only">comstering</span>
+          <span className="text-accent">_</span>
         </Link>
         <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-x-5 gap-y-1">
           {NAV_ITEMS.map(({ href, label, match }) => {

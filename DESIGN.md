@@ -125,7 +125,7 @@ comstering.github.io 디자인 시스템 (v1.4, Phase 2 반영). UI를 만들거
 
 ### 홈
 - **순서:** 히어로 → 카테고리 칩(글 수) → 연도별 글 목록. 글 목록 위에 검색창을 두지 않는다(검색은 헤더 팔레트 하나).
-- **히어로:** 터미널 명령 줄 + 아래 문구 한 줄. 값은 `content/site.yaml`(`title`, `command`, `tagline`). 확정값은 `$ history` / `실행해 본 것만 씁니다`.
+- **히어로:** 터미널 명령 줄 + 아래 문구 한 줄. 값은 `content/site.yaml`(`title`, `command`, `tagline`). 확정값은 `$ history` / `실행해 본 것만 기록합니다`.
   - 명령 줄: JetBrains Mono 700, `clamp(1.5rem, 0.9rem + 2.6vw, 2.5rem)`, 자간 -0.02em, 행간 1.3, `$`는 `mute`. 커서는 `accent`(너비 0.55em, 높이 0.12em, 1.1s `steps(1)` 깜빡임, `prefers-reduced-motion`이면 정지). **사이트에서 깜빡이는 곳은 여기 하나뿐이다.**
   - 문구: `text-lead`(18px), `mute`, 행간 1.6, 최대 34rem, 명령 줄과 간격 16px.
   - 접근성: `<h1>` 안에 `sr-only`로 사이트 이름(`Comstering's Dev Notes`), 보이는 명령 줄은 `aria-hidden`. 문구는 h1 다음 `<p>`라 낭독된다.
