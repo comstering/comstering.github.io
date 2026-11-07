@@ -37,7 +37,7 @@ node cowork/design/tools/measure-fallback-cls.mjs about.html   # D-5 CLS(폴백 
 - 격리된 worktree에서는 훅이 git 명령을 `rtk git …`으로 바꿔 격리 가드가 거부한다. 이때는 래퍼 없이 `/usr/bin/git`으로 직접 호출한다. 스크립트 본문에 "git"이 들어간 python도 가드가 막으므로 문서 수정은 Edit 도구로 한다.
 
 **저장소 상태**
-- **2026-11-07 Phase 2 디자인·기획 기록을 PR로 올렸다**(브랜치 `docs/phase2-design-prd`, 대상 `main`): Phase 2 시안, 22~34번 문서, README·CONTEXT·STATUS, `tools/`, `system/`, `site/*`, `cowork/prd/*`(기획 세션의 수정 포함). 머지 전에는 작성자의 작업 폴더 파일이 원본이다.
+- **2026-11-07 Phase 2 디자인·기획 기록을 PR #62로 올렸다**(브랜치 `docs/phase2-design-prd`, 대상 `main`): Phase 2 시안, 22~34번 문서, README·CONTEXT·STATUS, `tools/`, `system/`, `site/*`, `cowork/prd/*`(기획 세션의 수정 포함). 머지 전에는 작성자의 작업 폴더 파일이 원본이다.
 - **PR에 넣지 않은 것(내 것이 아님):** 루트 `resume.md`(작성자), 루트 `resume.pdf`(개발 세션이 작성자 요청으로 만든 시험 산출물, 개발 STATUS 참고), `.claude/launch.json`, `posts/custom-networking-karpenter-eni-troubleshooting.md`(제목 오타 수정은 개발 PR-18에서 이미 반영됨).
 - 올릴 때는 별도 worktree에서 새 브랜치로 만들고 `git add`는 파일을 지정해서 한다(`-A` 금지). **커밋·PR은 작성자가 요청할 때만 한다.**
 
@@ -49,7 +49,7 @@ node cowork/design/tools/measure-fallback-cls.mjs about.html   # D-5 CLS(폴백 
 | Phase 2 | PRD-004 approved. **디자인 시안 확정(2026-11-05)**: About·About 인쇄·헤더 검색·홈 히어로·사이드바. 개발은 PR-18 머지(#60)·PR-19 오픈(#61), PR-20 이후 대기(11-07 기준). 구현 입력은 25번 7장, 28번 8장, 31·32번 |
 | 열린 질문 | 디자인 쪽 없음(31번 Q1~Q3 종결). 개발 Q7~Q9(25번), 개발이 확인할 홈 OG 한글(34번) |
 | 지금 막힌 것 | 없음 |
-| 저장소 상태 | 11-07 디자인·기획 기록 PR 오픈(`docs/phase2-design-prd`). 작업 폴더를 개발·기획과 같이 쓰므로 PR은 별도 worktree에서 만든다 |
+| 저장소 상태 | 11-07 디자인·기획 기록 PR #62 오픈(`docs/phase2-design-prd`). 작업 폴더를 개발·기획과 같이 쓰므로 PR은 별도 worktree에서 만든다 |
 
 ## 다음 작업 (위에서부터)
 
