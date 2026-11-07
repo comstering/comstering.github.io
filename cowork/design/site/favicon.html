@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Favicon candidates · Comstering</title>
+<meta name="description" content="파비콘 후보 비교(35번)">
+<meta name="color-scheme" content="dark light">
+<script>(function(){var t=null;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light')document.documentElement.classList.add('dark')})()</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../system/tokens.css">
+<link rel="stylesheet" href="../system/base.css">
+<link rel="stylesheet" href="../system/components.css">
+<style>
+/* 시안 전용: 브라우저 탭 모사(파비콘이 놓이는 배경은 사이트 테마가 아니라 브라우저 테마를 따른다) */
+.fv-tabs { display: grid; gap: var(--s-4); }
+.fv-strip { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 8px 0; border-radius: var(--r-md) var(--r-md) 0 0; }
+.fv-strip--dark { background: #202124; }
+.fv-strip--light { background: #dee1e6; }
+.fv-tab { display: inline-flex; align-items: center; gap: 8px; height: 34px; min-width: 200px; padding: 0 12px; border-radius: 8px 8px 0 0; font-size: 12px; font-family: var(--font-sans); white-space: nowrap; }
+.fv-strip--dark .fv-tab { background: #35363a; color: #e8eaed; }
+.fv-strip--light .fv-tab { background: #fff; color: #202124; }
+.fv-tab img { width: 16px; height: 16px; display: block; }
+.fv-tab small { font-family: var(--font-mono); font-size: 10px; opacity: 0.6; margin-left: auto; }
+.fv-grid { display: grid; gap: var(--s-8); margin-top: var(--s-6); }
+.fv-card { border-top: 1px solid var(--line); padding-top: var(--s-6); display: grid; gap: var(--s-4); }
+.fv-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-6); }
+.fv-px { image-rendering: pixelated; }
+.fv-cap { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--mute); }
+.fv-verdict { max-width: 65ch; font-size: var(--text-sm); color: var(--mute); }
+.fv-verdict b { color: var(--fg); }
+.fv-on-light { padding: 10px; background: #dee1e6; border-radius: var(--r-sm); display: inline-block; }
+.fv-on-dark { padding: 10px; background: #202124; border-radius: var(--r-sm); display: inline-block; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<main id="main">
+<div class="container">
+  <header class="page-head">
+    <h1 class="page-head__title">파비콘 후보 5종</h1>
+    <p class="page-head__lead">현재 파비콘(흰 배경에 "Comstering's Dev Notes" 필기체)은 탭 크기에서 읽을 수 없어 교체한다. 후보는 모두 Terminal Graphite 색(canvas 어두운 사각형, fg 흰 글자, accent 커서)이고, 16px에서 읽히도록 획을 굵게 단순화했다. 브라우저 탭 배경은 사이트 테마가 아니라 브라우저 테마를 따르므로 <b>어두운 사각형을 깔아</b> 라이트·다크 탭 모두에서 보이게 했다.</p>
+  </header>
+
+  <section class="section" style="margin-top:var(--s-8)"><h2 class="sec-head"><span class="sec-head__label">tab · 실제 크기(16px)</span></h2>
+    <div class="fv-tabs">
+      <div class="fv-strip fv-strip--dark" role="img" aria-label="어두운 브라우저 탭에서 후보 비교">
+        <span class="fv-tab"><img src="../../../src/app/favicon.ico" alt=""> 지금<small>now</small></span>
+        <span class="fv-tab"><img src="../favicon/a-prompt.svg" alt=""> Dev Notes<small>A</small></span>
+        <span class="fv-tab"><img src="../favicon/b-prompt-green.svg" alt=""> Dev Notes<small>B</small></span>
+        <span class="fv-tab"><img src="../favicon/c-letter-c.svg" alt=""> Dev Notes<small>C</small></span>
+        <span class="fv-tab"><img src="../favicon/d-letter-h.svg" alt=""> Dev Notes<small>D</small></span>
+        <span class="fv-tab"><img src="../favicon/e-tilde-slash.svg" alt=""> Dev Notes<small>E</small></span>
+      </div>
+      <div class="fv-strip fv-strip--light" role="img" aria-label="밝은 브라우저 탭에서 후보 비교">
+        <span class="fv-tab"><img src="../../../src/app/favicon.ico" alt=""> 지금<small>now</small></span>
+        <span class="fv-tab"><img src="../favicon/a-prompt.svg" alt=""> Dev Notes<small>A</small></span>
+        <span class="fv-tab"><img src="../favicon/b-prompt-green.svg" alt=""> Dev Notes<small>B</small></span>
+        <span class="fv-tab"><img src="../favicon/c-letter-c.svg" alt=""> Dev Notes<small>C</small></span>
+        <span class="fv-tab"><img src="../favicon/d-letter-h.svg" alt=""> Dev Notes<small>D</small></span>
+        <span class="fv-tab"><img src="../favicon/e-tilde-slash.svg" alt=""> Dev Notes<small>E</small></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:var(--s-10)"><h2 class="sec-head"><span class="sec-head__label">candidates</span></h2>
+    <div class="fv-grid">
+
+      <article class="fv-card">
+        <h3>A · prompt <small class="mute">&gt;_ 흰 꺾쇠 + 초록 커서</small></h3>
+        <div class="fv-row">
+          <figure><img src="../favicon/a-prompt.svg" alt="A 후보 128px" width="128" height="128"><figcaption class="fv-cap">128</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/a-prompt-16.png" alt="A 16px 8배 확대" width="128" height="128"><figcaption class="fv-cap">16px ×8</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/a-prompt-32.png" alt="A 32px 4배 확대" width="128" height="128"><figcaption class="fv-cap">32px ×4</figcaption></figure>
+          <figure><img src="../favicon/png/a-prompt-48.png" alt="A 48px" width="48" height="48"><figcaption class="fv-cap">48</figcaption></figure>
+          <figure><img src="../favicon/png/a-prompt-180.png" alt="A 180px(홈 화면 아이콘)" width="90" height="90"><figcaption class="fv-cap">180 (apple, 50%)</figcaption></figure>
+        </div>
+        <p class="fv-verdict"><b>가장 단순하고 분명하다.</b> 꺾쇠와 밑줄 커서가 16px에서도 따로 보인다. 히어로 $ history_, 로고 ~/comstering_와 같은 "프롬프트 + 커서" 말투. 단점: 터미널 앱·개발 도구 아이콘과 거의 같은 모양이라 탭이 많을 때 우리 사이트로 구별되지 않고, 사이트 이름과의 연결이 없다.</p>
+      </article>
+
+      <article class="fv-card">
+        <h3>B · prompt green <small class="mute">초록 바탕 + 어두운 꺾쇠·커서</small></h3>
+        <div class="fv-row">
+          <figure><img src="../favicon/b-prompt-green.svg" alt="B 후보 128px" width="128" height="128"><figcaption class="fv-cap">128</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/b-prompt-green-16.png" alt="B 16px 8배 확대" width="128" height="128"><figcaption class="fv-cap">16px ×8</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/b-prompt-green-32.png" alt="B 32px 4배 확대" width="128" height="128"><figcaption class="fv-cap">32px ×4</figcaption></figure>
+          <figure><img src="../favicon/png/b-prompt-green-48.png" alt="B 48px" width="48" height="48"><figcaption class="fv-cap">48</figcaption></figure>
+          <figure><img src="../favicon/png/b-prompt-green-180.png" alt="B 180px" width="90" height="90"><figcaption class="fv-cap">180 (apple, 50%)</figcaption></figure>
+        </div>
+        <p class="fv-verdict"><b>탭 줄에서 가장 눈에 띈다.</b> 많은 탭 속에서 찾기 쉽다. 단점: 사이트 전체가 "어두운 그래파이트 + 커서 하나"인데 이 아이콘만 면 전체가 초록이라 accent를 아껴 쓰는 원칙(사용 비율 3% 이하)과 결이 다르다. 홈 화면 아이콘으로는 강하다.</p>
+      </article>
+
+      <article class="fv-card">
+        <h3>C · c_ <small class="mute">흰 c + 초록 커서</small></h3>
+        <div class="fv-row">
+          <figure><img src="../favicon/c-letter-c.svg" alt="C 후보 128px" width="128" height="128"><figcaption class="fv-cap">128</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/c-letter-c-16.png" alt="C 16px 8배 확대" width="128" height="128"><figcaption class="fv-cap">16px ×8</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/c-letter-c-32.png" alt="C 32px 4배 확대" width="128" height="128"><figcaption class="fv-cap">32px ×4</figcaption></figure>
+          <figure><img src="../favicon/png/c-letter-c-48.png" alt="C 48px" width="48" height="48"><figcaption class="fv-cap">48</figcaption></figure>
+          <figure><img src="../favicon/png/c-letter-c-180.png" alt="C 180px" width="90" height="90"><figcaption class="fv-cap">180 (apple, 50%)</figcaption></figure>
+        </div>
+        <p class="fv-verdict"><b>이름과 연결되고 탭에서도 구별된다.</b> comstering의 c에 로고 끝의 커서 _를 붙여 워드마크 ~/comstering_의 끝부분을 그대로 줄인 모양이다. 탭 크기(16px)에서 "c_"로 읽힌다. 단점: 둥근 획이라 16px에서 가장자리가 부드럽게 번지고, 아주 작게 보면 "c-"로도 보인다.</p>
+      </article>
+
+      <article class="fv-card">
+        <h3>D · h_ <small class="mute">흰 h + 초록 커서</small></h3>
+        <div class="fv-row">
+          <figure><img src="../favicon/d-letter-h.svg" alt="D 후보 128px" width="128" height="128"><figcaption class="fv-cap">128</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/d-letter-h-16.png" alt="D 16px 8배 확대" width="128" height="128"><figcaption class="fv-cap">16px ×8</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/d-letter-h-32.png" alt="D 32px 4배 확대" width="128" height="128"><figcaption class="fv-cap">32px ×4</figcaption></figure>
+          <figure><img src="../favicon/png/d-letter-h-48.png" alt="D 48px" width="48" height="48"><figcaption class="fv-cap">48</figcaption></figure>
+          <figure><img src="../favicon/png/d-letter-h-180.png" alt="D 180px" width="90" height="90"><figcaption class="fv-cap">180 (apple, 50%)</figcaption></figure>
+        </div>
+        <p class="fv-verdict"><b>history의 h.</b> 히어로 명령과 연결되고 형태가 단순해 16px에서도 잘 읽힌다. 단점: 이름(comstering)이 아니라 명령어에서 온 글자라, 히어로 명령이 바뀌면 의미가 사라진다. 흰 "h."가 마침표처럼도 보인다.</p>
+      </article>
+
+      <article class="fv-card">
+        <h3>E · ~/ <small class="mute">흰 물결 + 초록 슬래시</small></h3>
+        <div class="fv-row">
+          <figure><img src="../favicon/e-tilde-slash.svg" alt="E 후보 128px" width="128" height="128"><figcaption class="fv-cap">128</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/e-tilde-slash-16.png" alt="E 16px 8배 확대" width="128" height="128"><figcaption class="fv-cap">16px ×8</figcaption></figure>
+          <figure><img class="fv-px" src="../favicon/png/e-tilde-slash-32.png" alt="E 32px 4배 확대" width="128" height="128"><figcaption class="fv-cap">32px ×4</figcaption></figure>
+          <figure><img src="../favicon/png/e-tilde-slash-48.png" alt="E 48px" width="48" height="48"><figcaption class="fv-cap">48</figcaption></figure>
+          <figure><img src="../favicon/png/e-tilde-slash-180.png" alt="E 180px" width="90" height="90"><figcaption class="fv-cap">180 (apple, 50%)</figcaption></figure>
+        </div>
+        <p class="fv-verdict"><b>로고의 ~/를 그대로.</b> 워드마크의 시작과 직접 이어진다. 탭 크기에서도 ~/로 읽히지만, 물결의 굴곡이 2px 안팎이라 5종 중 획이 가장 가늘고 흐리다(16px 8배 확대 참고). 이름이나 커서 요소가 없어 "무슨 사이트인지"는 약하다.</p>
+      </article>
+
+    </div>
+  </section>
+</div>
+</main>
+</body>
+</html>
