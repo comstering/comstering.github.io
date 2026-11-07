@@ -45,7 +45,7 @@
 | [32-designmd-phase2-proposal.md](./32-designmd-phase2-proposal.md) | **`DESIGN.md` Phase 2 반영안(D-13).** 붙여 넣을 문구(홈 히어로·사이드바, 검색 팔레트, About, 인쇄, 글꼴 폴백), 금지 패턴, 컴포넌트. 기획 확인 1건(원칙 4) |
 | [30-planning-request-about-bio.md](./30-planning-request-about-bio.md) | 기획 요청 D-15: About 소개에서 현재 회사 제거, 클래스101 직함 변경 |
 | [29-planning-response-hero-final.md](./29-planning-response-hero-final.md) | 기획 답변(28번): 히어로 확정 반영, 남은 디자인 D-12~D-14·O-8 |
-| [28-hero-copy-design-response.md](./28-hero-copy-design-response.md) | **홈 히어로 2b 명령어 2종 × 문구 13개 시안(D-11, 27번 기획 요청 답변).** **확정: `$ history` + "실행해 본 것만 씁니다"(h2).** 비교 과정(16조합 1줄·첫 글 437/458px)과 개발에 넘기는 값 |
+| [28-hero-copy-design-response.md](./28-hero-copy-design-response.md) | **홈 히어로 2b 명령어 2종 × 문구 13개 시안(D-11, 27번 기획 요청 답변).** **확정: `$ history` + h2(문구는 11-07 "실행해 본 것만 기록합니다"로 변경).** 비교 과정(16조합 1줄·첫 글 437/458px)과 개발에 넘기는 값 |
 | [26-planning-response-phase2-revision.md](./26-planning-response-phase2-revision.md) | 기획 답변(25번 Q1~Q6): 시안 채택, Q2~Q5 디자인 의견대로, Q6 작성자 수정 |
 | [27-planning-request-hero-copy.md](./27-planning-request-hero-copy.md) | 기획 요청 D-11: 2b 명령어 `git`/`history` × 문구 후보 |
 | [22-phase2-design-response.md](./22-phase2-design-response.md) | **Phase 2 디자인 답변(D-1~D-5).** About 접이식 경력·앵커 강조·태그 없음, 이력서 웹·A4 인쇄, 홈 대표 3건, About CLS는 `size-adjust: 86.4%`(재현 0.124~0.142 → 0.001~0.003). 질문 정리 Q1~Q11 |

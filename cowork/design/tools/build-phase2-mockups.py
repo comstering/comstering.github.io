@@ -223,7 +223,7 @@ def about():
 
 
 # ------------------------------------------------------------------- home ----
-TAGLINE = "실행해 본 것만 씁니다"        # 확정(11-05): $ history + h2
+TAGLINE = "실행해 본 것만 기록합니다"      # 확정(11-05 $ history + h2, 11-07 문구를 씁니다→기록합니다로 변경, 개발 site.yaml과 동일)
 HERO_CMD = "history"
 POPULAR_SAMPLE = ["karpenter", "eks-custom-networking", "introduce-cilium-cni", "install-karpenter", "terraform-associate-004-review"]
 

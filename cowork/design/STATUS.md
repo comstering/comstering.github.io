@@ -27,6 +27,7 @@ node cowork/design/tools/measure-fallback-cls.mjs about.html   # D-5 CLS(폴백 
 ```
 
 **주의할 것 (겪은 함정)**
+- **생성기 한계(11-07):** `tools/build-phase2-mockups.py`는 About 데이터를 `src/app/about/page.tsx`에서 읽는데, 개발 PR-18·19가 데이터를 `content/*.yaml`로 옮기고 그 파일을 없애 **지금은 실행되지 않는다**(`const experiences` 못 찾음). About·홈 시안은 확정·구현이 끝나 다시 만들 일이 거의 없고, 홈 문구는 `index.html`을 직접 고쳤다. 다시 만들어야 하면 생성기가 `content/experience.yaml`·`profile.yaml`을 읽도록 고친다.
 - `about.html`·`index.html`은 **생성물**이다. 직접 고치면 다음 생성에서 사라진다. 고칠 때는 `tools/build-phase2-mockups.py`를 고친다(히어로 값은 `TAGLINE`·`HERO_CMD`, 클래스101 직함은 `ROLE_OVERRIDE`). 홈 글 목록(`.home__list`)만 `index.html`에서 읽어 재사용한다(손으로 관리). 생성기는 `index.html`을 껍데기(head·header·footer·팔레트)의 원본으로도 쓴다.
 - 공통 CSS·JS는 `system/`. 이번 Phase 규칙은 `components.css` 맨 끝 구간(Phase 2)과 `app.js`의 팔레트 구간.
 - **CSS를 일괄 치환할 때 한 줄에 `@media … { 규칙 }`가 같이 있는 줄을 조심한다.** `.intro__facts` 정규식이 `@media` 줄을 반쪽만 지워 중괄호가 깨진 적이 있다(576/575). 고친 뒤에는 `{`·`}` 개수를 세고 이전 Git 버전과 대조한다.
@@ -53,7 +54,7 @@ node cowork/design/tools/measure-fallback-cls.mjs about.html   # D-5 CLS(폴백 
 
 ## 다음 작업 (위에서부터)
 
-0. **파비콘은 C `c_` 확정(11-07), 개발 인수 완료(34번 "파비콘 교체", 파일 `favicon/final/`).** 개발이 작은 PR로 올리면 실제 Chrome 탭(라이트·다크, 16px)을 확인한다. 홈 tagline을 "실행해 본 것만 기록합니다"로 바꿀지(작성자 제안, 11-07)도 답 대기 — 확정하면 `TAGLINE`·og.html B 카드·28·31·32·34번을 고치고 기획에 PRD-004 5.2·5.6 갱신을 알린다.
+0. **파비콘 C `c_` 확정(11-07), 개발 인수 완료(34번, 파일 `favicon/final/`).** 개발이 작은 PR로 올리면 실제 Chrome 탭(라이트·다크, 16px)을 확인한다. 홈 문구는 `기록합니다`로 확정돼 개발에 반영됨(시안·문서 동기화 완료). **개발이 REQUESTS에 올린 디자인 확인 요청 Q19(32번 `✅ 반영됨` 표시)·Q20(모바일 팔레트 닫기 버튼)·Q21(첫 글 위치 +49px)에 답해야 한다.**
 
 1. **(종결 11-07) 31번 Q1~Q3.** OG B 확정, 원칙 4 확정(33번), 인쇄 미리보기 작성자 확인. 개발 인수는 34번.
 2. **O-8을 개발에 보낸다**(31번 5장을 개발이 `REQUESTS.md`에 번호로 링크). PR-20에서 검색 팔레트와 함께 처리.
