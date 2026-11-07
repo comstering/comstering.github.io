@@ -4,7 +4,7 @@
 
 작성: 디자인 세션 · 2026-11-07
 요청: 작성자(Chrome 탭에 뜨는 현재 파비콘을 다른 이미지로 교체)
-시안: `site/favicon.html`(비교 보드), 원본 `favicon/*.svg`, 렌더 `favicon/png/*`(16·32·48·180px), 렌더 스크립트 `tools/render-favicons.mjs`
+시안: 확정안 `favicon/final/`, 후보 C 원본 `favicon/c-letter-c.svg`·`favicon/png/c-letter-c-*`(16·32·48·180px). 비교에 썼던 후보 A·B·D·E 이미지, 비교 보드(`site/favicon.html`), 후보 렌더 스크립트(`tools/render-favicons.mjs`)는 확정 뒤 삭제했다(저장소 기록의 커밋 `3d52b6a`에서 복구 가능). 아래 2장 비교표는 그 보드를 보고 쓴 판단 기록이다
 
 ## 1. 결론
 
@@ -60,8 +60,5 @@ Next.js App Router 파일 규약(`src/app/`)에 맞춘 파일이다. 아래 3개
 ## 6. 재현
 
 ```bash
-python3 -m http.server 4175 &                              # 저장소 루트에서
-node cowork/design/tools/render-favicons.mjs               # 후보 SVG → favicon/png/*-{16,32,48,180}.png
-node cowork/design/tools/build-favicon-final.mjs           # favicon/final/ 소스 SVG → favicon.ico, apple-icon.png
-open http://localhost:4175/cowork/design/site/favicon.html # 비교 보드(탭 모사 + 확대)
+node cowork/design/tools/build-favicon-final.mjs           # 저장소 루트에서: favicon/final/ 소스 SVG → favicon.ico, apple-icon.png
 ```

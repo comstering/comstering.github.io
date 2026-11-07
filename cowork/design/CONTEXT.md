@@ -37,7 +37,7 @@
 | `tools/check-site.mjs` | 시안 검사 스크립트(아래 6장) |
 | `tools/build-phase2-mockups.py` | `about.html`·`index.html`·`system/search-index.js` 생성기(데이터 원본 `src/app/about/page.tsx`·`posts/`). 생성물 |
 | `tools/review-impl.mjs` | 빌드한 `out/`(구현)를 시안과 대조: 홈 첫 글 위치·사이드바·팔레트·About·인쇄(36번) |
-| `tools/render-favicons.mjs`·`tools/build-favicon-final.mjs` | 파비콘 후보 렌더, 확정안의 ICO·apple-icon 생성(35번) |
+| `tools/build-favicon-final.mjs` | 확정 파비콘(`favicon/final/`)의 ICO·apple-icon 생성(35번) |
 | `tools/measure-about-first.mjs` | About 첫 화면 요소 위치·인쇄 쪽수 측정(31번) |
 | `tools/measure-fallback-cls.mjs` | About·홈 CLS 폴백 글꼴 보정 측정 |
 | `archive/phase0-summary.md` | Phase 0 디자인 요약 보관본(01~11번) |
