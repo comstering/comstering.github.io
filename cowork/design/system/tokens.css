@@ -5,6 +5,15 @@
    proposed in 02-direction.md (line-strong, warn, overlay, code-hl).
    ========================================================================== */
 
+/* D-5 About CLS: 한글 폴백 글꼴의 글자 폭을 Pretendard에 맞춘다.
+   Pretendard 한글 advance 0.864em, 풀폭 CJK 글꼴(Noto Sans CJK KR 등)은 1.0em → 86.4%로 줄여 줄 수가 바뀌지 않게 한다.
+   Apple SD Gothic Neo는 0.865em로 이미 같아서 보정 대상이 아니다(local() 목록에 넣지 않는다). 근거: 22번 */
+@font-face {
+  font-family: "Pretendard Fallback";
+  src: local("Noto Sans CJK KR"), local("NotoSansCJKkr-Regular"), local("Noto Sans KR");
+  size-adjust: 86.4%;
+}
+
 :root {
   /* ---- color · light ---------------------------------------------------- */
   --canvas: #f3f6f4;
@@ -34,7 +43,7 @@
   --syntax-meta: #c4a7f5;
 
   /* ---- type ------------------------------------------------------------- */
-  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+  --font-sans: "Pretendard Variable", Pretendard, "Pretendard Fallback", -apple-system, BlinkMacSystemFont,
     system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 

@@ -403,7 +403,7 @@ a.tag:hover { color: var(--accent); }
    ========================================================================== */
 
 /* home: main 720 + aside 320 (≥1024) — keeps first post above the fold at 1280×720 */
-.home { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "hero" "aside" "list"; column-gap: var(--s-20); max-width: calc(var(--w-read) + var(--gutter) * 2); }
+.home { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "hero" "list" "aside"; column-gap: var(--s-20); max-width: calc(var(--w-read) + var(--gutter) * 2); }
 @media (min-width: 1024px) {
   .home { max-width: var(--w-container); grid-template-columns: minmax(0, var(--w-read)) minmax(0, 1fr); grid-template-areas: "hero aside" "list aside"; }
   .home__aside { padding-top: var(--s-14); }
@@ -413,7 +413,7 @@ a.tag:hover { color: var(--accent); }
 .home__aside { grid-area: aside; }
 .home__list { grid-area: list; }
 .home__aside .section-block + .section-block { margin-top: var(--s-12); }
-@media (max-width: 1023px) { .home__aside { margin-top: var(--s-12); } .home__aside .section-block:not(:first-child) { display: none; } .home__aside .feat-row:nth-child(n+2) { display: none; } }
+@media (max-width: 1023px) { .home__aside { margin-top: var(--s-16); padding-top: var(--s-2); border-top: 1px solid var(--line); } .home__aside .section-block + .section-block { margin-top: var(--s-10); } }
 .list-tools { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-12); }
 .list-tools .chip-row { flex: 1; min-width: 0; }
 
@@ -453,8 +453,6 @@ a.tag:hover { color: var(--accent); }
 .intro .avatar { --size: 72px; }
 .intro__name { font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; }
 .intro__name small { font-family: var(--font-mono); font-size: var(--text-meta); font-weight: 400; color: var(--mute); letter-spacing: 0; margin-left: 4px; }
-.intro__facts { display: flex; flex-wrap: wrap; gap: 2px var(--s-3); margin-top: var(--s-1); font-family: var(--font-mono); font-size: var(--text-meta); color: var(--mute); }
-.intro__facts b { color: var(--fg); font-weight: 500; }
 .intro__contact { grid-column: 1 / -1; }
 .intro__headline { grid-column: 1 / -1; margin-top: var(--s-4); font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem); font-weight: 600; line-height: 1.45; letter-spacing: -0.025em; }
 .intro__headline em, .intro__headline strong { font-style: normal; font-weight: 700; color: var(--fg); }
@@ -488,7 +486,7 @@ a.tag:hover { color: var(--accent); }
 .og__meta .cat { color: #5bf29b; }
 .og-frame { width: 100%; max-width: 1200px; aspect-ratio: 1200 / 630; overflow: hidden; border-radius: var(--r-md); border: 1px solid var(--line); }
 .og-frame .og { transform-origin: 0 0; }
-@media (max-width: 479px) { .intro__facts { flex-direction: column; } }
+.og-note { margin-top: var(--s-3); max-width: 65ch; font-size: var(--text-sm); color: var(--mute); }
 .series__head { padding: 0; border-bottom: 0; }
 .series__toggle { width: 100%; min-height: var(--tap); display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); padding: 0 var(--s-4); font-family: var(--font-mono); font-size: var(--text-cap); color: var(--mute); text-align: left; border-radius: var(--r-md); }
 .series__toggle:hover { color: var(--fg); }
@@ -554,8 +552,6 @@ a.tag:hover { color: var(--accent); }
 
 /* M2: role + years are the 5-second facts, so they sit right under the name in body type */
 .intro__role { margin-top: var(--s-1); font-size: var(--text-body); font-weight: 500; color: var(--fg); line-height: 1.5; }
-.intro__role + .intro__facts { margin-top: 2px; }
-
 /* M4: experience rows are links, so they carry the arrow like every other "next step" */
 /* the arrow sits at the row end, after the period, so it never collides with "A → B" titles */
 .tl-proj__period { display: inline-flex; align-items: center; gap: var(--s-2); }
@@ -608,3 +604,102 @@ dialog.lightbox::backdrop { background: var(--overlay); }
 /* D2: project ↔ personal posts. Personal-lab posts carry a mono "personal" tag */
 .personal { font-family: var(--font-mono); font-size: var(--text-cap); color: var(--mute); }
 .proof-note { margin-top: var(--s-2); font-size: var(--text-sm); color: var(--mute); }
+
+/* ==========================================================================
+   Phase 2 (25번)
+   ========================================================================== */
+
+/* ---- D-8 about: 경력 전부 펼침 ------------------------------------------- */
+.jump { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-2); }
+.jump a { display: inline-flex; align-items: center; min-height: var(--tap); padding-inline: var(--s-4); border: 1px solid var(--line-strong); border-radius: var(--r-md); font-size: var(--text-sm); color: var(--fg); transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.jump a:hover { border-color: var(--accent); color: var(--accent); }
+.tl-org[id], .about__sec[id] { scroll-margin-top: 0; } /* 앵커 위치는 html의 scroll-padding-top(header + 24px)이 맡는다 */
+.proj-list { margin-top: var(--s-4); display: grid; }
+/* 길이 줄이기(25번 2.3): 기간 열을 없애 본문을 전폭으로. 360px은 이미 한 열 */
+@media (min-width: 768px) { .timeline > .tl-org { grid-template-columns: 1fr; gap: var(--s-1); } .timeline > .tl-org .tl-org__period { padding-top: 0; } }
+.proj { padding-block: var(--s-3); border-top: 1px solid var(--line); }
+.proj:first-child { border-top: 0; padding-top: 0; }
+.proj__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 var(--s-4); }
+.proj__title { flex: 1 1 18rem; font-size: var(--text-sm); font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; }
+.proj__period { font-family: var(--font-mono); font-size: var(--text-cap); color: var(--mute); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.proj__desc { margin-top: var(--s-1); font-size: var(--text-sm); line-height: 1.6; color: var(--mute); }
+.proj__points { margin-top: var(--s-2); display: grid; gap: var(--s-1); font-size: var(--text-sm); line-height: 1.6; }
+.proj__points li { position: relative; padding-left: var(--s-3); }
+.proj__points li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 5px; height: 1px; background: var(--line-strong); }
+.intro__body { grid-column: 1 / -1; max-width: 65ch; display: grid; gap: var(--s-3); margin-top: var(--s-2); font-size: var(--text-body); line-height: var(--leading-body); color: var(--mute); }
+.oss-list { border-top: 1px solid var(--line); }
+.oss-row { display: grid; gap: 2px var(--s-4); grid-template-columns: 1fr auto; align-items: baseline; padding-block: var(--s-4); border-bottom: 1px solid var(--line); }
+.oss-row__title { font-weight: 600; }
+.oss-row__aside { font-family: var(--font-mono); font-size: var(--text-cap); color: var(--mute); text-align: right; white-space: nowrap; }
+.oss-row__sub { grid-column: 1 / -1; font-size: var(--text-sm); color: var(--mute); line-height: 1.7; }
+.oss-row__act { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+.print-only { display: none; }
+
+/* ---- D-9 about 인쇄 = resume.pdf ------------------------------------------
+   A4, 라이트 고정. 사진·헤더·푸터·버튼·회사 바로가기 숨김, 링크 URL 표시, 프로젝트 블록이 쪽 경계에서 갈리지 않게 */
+@media print {
+  @page { size: A4; margin: 13mm 14mm 14mm; }
+  :root, .dark {
+    --canvas: #fff; --surface: #fff; --surface-2: #f3f3f3; --fg: #111; --mute: #4a4a4a; --line: #cfcfcf; --line-strong: #8a8a8a;
+    --accent: #111; --accent-soft: transparent;
+  }
+  html, body { background: #fff !important; color: #111; font-size: 9.5pt; }
+  .site-header, .site-footer, .skip-link, .palette, .palette-backdrop, .toast, .no-print, .path, .avatar, .intro__contact, .jump, .tl-org__name .badge { display: none !important; }
+  .print-only { display: block; }
+  .read { max-width: none; padding-inline: 0; }
+  .intro { display: block; padding-top: 0; }
+  .intro__name { font-size: 20pt; }
+  .intro__role { font-size: 10.5pt; }
+  .about__contacts { margin-top: 3pt; font-family: var(--font-mono); font-size: 8.5pt; color: var(--mute); }
+  .intro__headline { margin-top: 8pt; font-size: 12pt; }
+  .intro__body { margin-top: 4pt; gap: 3pt; font-size: 9pt; line-height: 1.55; max-width: none; }
+  .section { margin-top: 12pt; }
+  .sec-head { margin-bottom: 4pt; font-size: 8.5pt; break-after: avoid; }
+  .tl-org { display: block; padding-block: 6pt; border-bottom: 0; }
+  .tl-org__period { padding-top: 0; font-size: 8.5pt; }
+  .tl-org__name { font-size: 11.5pt; break-after: avoid; }
+  .proj-list { margin-top: 4pt; }
+  .proj { padding-block: 5pt; break-inside: avoid; }
+  .proj__title, .proj__desc, .proj__points { font-size: 9pt; }
+  .proj__desc, .proj__points { line-height: 1.45; }
+  .proj__points { gap: 1pt; }
+  .oss-row, .def-list > li { padding-block: 3pt; break-inside: avoid; }
+  .oss-row__act { gap: 6pt; margin-top: 1pt; }
+  .badge--accent { height: auto; padding: 0; border: 0; background: none; font-size: 8pt; color: var(--mute); }
+  .def-list__action { grid-column: 1 / -1; text-align: left; }
+  .skills > div { padding-block: 2pt; grid-template-columns: 90pt 1fr; }
+  .stack-list { gap: 0 8pt; }
+  .stack-token { height: auto; padding: 0; border: 0; background: none; font-family: var(--font-sans); font-size: 9pt; color: #111; }
+  .stack-token:not(:last-child)::after { content: ","; }
+  .stack-list { display: block; } .stack-token { display: inline; margin-right: 3pt; }
+  /* 링크는 URL이 종이에도 보이게. 화살표 아이콘(::after 마스크)은 URL 문구로 바꾼다 */
+  a { color: inherit; text-decoration: none; }
+  a[href^="http"]::after, .link-arrow::after, .link-arrow[target="_blank"]::after, .link-arrow--ext::after, .icon-arrow::after { content: " (" attr(href) ")"; display: inline; width: auto; height: auto; margin: 0; background: none; -webkit-mask: none; -webkit-mask-image: none; mask: none; mask-image: none; transform: none; color: var(--mute); font-family: var(--font-sans); font-size: 8pt; word-break: break-all; }
+  .link-arrow { display: inline; padding: 0; font-family: var(--font-sans); font-size: inherit; color: inherit; }
+}
+
+/* ---- D-10 검색 팔레트: 결과 한 줄(제목 · 날짜 · 카테고리) + 소제목 일치 표시 ---- */
+.palette__item-main { display: grid; min-width: 0; }
+.palette__item-sub { font-family: var(--font-mono); font-size: 11px; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.palette__item-sub mark { background: none; color: var(--accent); }
+.palette__item-meta { white-space: normal; }
+@media (max-width: 639px) { .palette__item { grid-template-columns: 1fr; gap: 0; padding-block: 10px; } .palette__item-meta { grid-row: 2; } .palette__item-main { grid-row: 1; } }
+
+/* ---- D-6 홈 히어로 3안 ---------------------------------------------------- */
+.hero__sub { margin-top: var(--s-4); max-width: 34rem; font-size: var(--text-lead); line-height: 1.6; color: var(--mute); }
+.hero__title--term { font-family: var(--font-mono); font-size: clamp(1.5rem, 0.9rem + 2.6vw, 2.5rem); letter-spacing: -0.02em; line-height: 1.3; overflow-wrap: anywhere; }
+.term__prompt { color: var(--mute); margin-right: 0.35em; }
+.hero + .list-tools, .home__list .list-tools:first-child { margin-top: var(--s-10); }
+
+/* ---- D-7 홈 사이드바: 인기글 · 시리즈 · 태그 ------------------------------- */
+.home__aside .section-block[hidden] + .section-block { margin-top: 0; }
+.rank-list { border-top: 1px solid var(--line); counter-reset: r; }
+.rank-list li { border-bottom: 1px solid var(--line); }
+.rank-list a { position: relative; display: grid; grid-template-columns: 24px 1fr; gap: var(--s-3); align-items: baseline; min-height: var(--tap); padding-block: 12px; transition: color var(--dur) var(--ease); }
+.rank-list a:hover { color: var(--accent); }
+.rank-list__n { font-family: var(--font-mono); font-size: var(--text-cap); color: var(--mute); font-variant-numeric: tabular-nums; }
+.rank-list__t { font-size: var(--text-sm); font-weight: 500; line-height: 1.5; }
+.side-tags { display: flex; flex-wrap: wrap; gap: 0 var(--s-3); font-family: var(--font-mono); font-size: var(--text-meta); }
+.side-tags a { padding-block: 10px; color: var(--mute); transition: color var(--dur) var(--ease); }
+.side-tags a:hover { color: var(--accent); }
+.side-tags small { font-size: 11px; margin-left: 3px; }
