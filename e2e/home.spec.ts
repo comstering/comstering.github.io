@@ -24,13 +24,17 @@ test("히어로: h1 하나(sr-only 사이트 이름), 명령 줄은 aria-hidden,
 test("첫 화면: 첫 글 제목이 스크롤 없이 보이고 가로로 넘치지 않는다", async ({ page }) => {
   await page.goto("/");
   const viewport = page.viewportSize()!;
-  // Suspense 폴백(정적 HTML)에도 같은 글 목록이 있어 숨겨진 복사본이 먼저 잡힐 수 있다 → 보이는 것만
-  await page.waitForLoadState("networkidle");
-  const title = page.locator("article h3:visible").first();
-  const box = (await title.boundingBox())!;
-  expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
-  // 디자인 측정값(1280×720 458px, 360×640 437px)에 실제 레이아웃의 main 위쪽 여백 48px을 더한 값 안
-  expect(box.y + box.height).toBeLessThanOrEqual(viewport.width >= 1024 ? 520 : 500);
+  // 홈 목록은 하이드레이션 때 Suspense 폴백(정적 HTML)에서 클라이언트 렌더로 교체된다(useSearchParams).
+  // 교체 직전의 요소를 재면 boundingBox가 null이라 간헐적으로 실패하므로, 목록이 자리 잡을 때까지
+  // 측정과 검사를 통째로 다시 시도한다. 검사 기준 자체는 그대로다(모든 조건이 한 번에 만족해야 통과).
+  await expect(async () => {
+    const box = await page.locator("article h3").first().boundingBox();
+    expect(box, "첫 글 제목이 아직 그려지지 않았다").not.toBeNull();
+    const bottom = box!.y + box!.height;
+    expect(bottom).toBeLessThanOrEqual(viewport.height);
+    // 디자인 측정값(1280×720 458px, 360×640 437px)에 실제 레이아웃의 main 위쪽 여백 48px을 더한 값 안
+    expect(bottom).toBeLessThanOrEqual(viewport.width >= 1024 ? 520 : 500);
+  }).toPass({ timeout: 10000 });
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth),
   ).toBeLessThanOrEqual(0);
