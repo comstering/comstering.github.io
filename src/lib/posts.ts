@@ -32,7 +32,6 @@ export interface PostMetadata {
   seriesLabel?: string;
   seriesTotal?: number;
   draft: boolean;
-  relatedProject?: string;
   contentHtml: string;
   readingTime: number;
   headings: PostHeading[];
@@ -113,7 +112,6 @@ const toMetadata = (
     : undefined,
   seriesTotal: data.series ? seriesCounts().get(data.series) : undefined,
   draft: data.draft,
-  relatedProject: data.relatedProject,
   contentHtml,
   readingTime: estimateReadingTime(content),
   headings,

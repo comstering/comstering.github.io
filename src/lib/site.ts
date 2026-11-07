@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = "https://comstering.github.io";
-export const SITE_NAME = "Comstering's Dev Notes";
+import { loadProfile, loadSite } from "@/lib/content/profile";
+import { SITE_URL } from "@/lib/site-url";
+
+// 서버 전용(content/*.yaml을 읽음). 클라이언트 컴포넌트는 SITE_URL만 site-url.ts에서 가져온다.
+export { SITE_URL };
+export const SITE_NAME = loadSite().title;
 export const SITE_DESCRIPTION =
   "DevOps · Cloud Native Engineer Comstering의 개발 노트. Kubernetes, AWS, 오픈소스 기여와 일하는 방식을 기록합니다.";
 
+const profile = loadProfile();
 export const AUTHOR = {
-  name: "최한수",
-  jobTitle: "DevOps · Cloud Native Engineer",
-  github: "https://github.com/comstering",
-  linkedin: "https://www.linkedin.com/in/hansu-choi-05775a244",
-  email: "comstering@gmail.com",
+  name: profile.name,
+  jobTitle: profile.role,
+  github: profile.contacts.github,
+  linkedin: profile.contacts.linkedin,
+  email: profile.contacts.email,
 } as const;
 
 // About 데이터(src/app/about)를 수정하면 이 날짜도 함께 갱신한다. (sitemap lastModified)
