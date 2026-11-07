@@ -123,7 +123,10 @@ test("Esc로 닫으면 열기 전 자리로 포커스가 돌아온다", async ({
 test("터치용 닫기 버튼(esc)으로 닫을 수 있다", async ({ page }) => {
   await page.goto("/");
   await open(page);
-  await palette(page).getByRole("button", { name: "esc 닫기" }).click();
+  const close = palette(page).getByRole("button", { name: "esc 닫기" });
+  // 보이는 글자: 640px 이상은 키 모양 esc, 미만(터치)은 닫기. 이름은 둘 다 포함한다
+  await expect(close).toContainText((page.viewportSize()?.width ?? 0) >= 640 ? "esc" : "닫기");
+  await close.click();
   await expect(palette(page)).toBeHidden();
 });
 

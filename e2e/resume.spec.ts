@@ -54,3 +54,24 @@ test("인쇄: 인쇄 규칙이 화면 규칙에 덮이지 않는다(프로젝트
   const size = await page.locator(".proj__title").first().evaluate((el) => getComputedStyle(el).fontSize);
   expect(size).toBe("12px"); // 9pt
 });
+
+test("인쇄: 시안의 인쇄 값이 화면 규칙에 덮이지 않고 계산된다(디자인 36번 3.2)", async ({ page }) => {
+  await page.goto("/about");
+  await page.emulateMedia({ media: "print" });
+  const computed = await page.evaluate(() => {
+    const px = (selector: string, property: string) =>
+      getComputedStyle(document.querySelector(selector)!).getPropertyValue(property);
+    return {
+      introDisplay: px(".about-intro", "display"),
+      sectionMargin: px(".about-section", "margin-top"),
+      headline: px(".about-intro__headline", "font-size"),
+      stackToken: px(".stack-token", "display"),
+      skillColumns: px(".skills > div", "grid-template-columns"),
+    };
+  });
+  expect(computed.introDisplay).toBe("block");
+  expect(computed.sectionMargin).toBe("16px"); // 12pt
+  expect(computed.headline).toBe("16px"); // 12pt
+  expect(computed.stackToken).toBe("inline"); // 칩 테두리 대신 쉼표 글자
+  expect(computed.skillColumns).not.toContain("160px");
+});
