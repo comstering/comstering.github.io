@@ -118,7 +118,7 @@ ${rows.join("\n")}
 - ❌ 차단선 미달 · ⚠️ 목표선 미달 · ✅ 통과
 - 차단선: ${line(blockTier)}
 - 목표선: ${line(targetTier)}
-- 측정: \`throttlingMethod: devtools\`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 ${runCount}회 중앙값, 모범사례는 \`is-on-https\` 제외(로컬 http라 항상 실패). 차단선은 CI 실패 조건이에요. 단 About의 성능·CLS·TBT는 경고만 해요(Phase 2 PR-19에서 About을 다시 만들 때까지의 예외, 기준 숫자는 그대로).
+- 측정: \`throttlingMethod: devtools\`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 ${runCount}회 중앙값, 모범사례는 \`is-on-https\` 제외(로컬 http라 항상 실패). 차단선은 CI 실패 조건이에요.
 - 상세 리포트는 이 실행의 아티팩트 \`e2e-lighthouse-reports\`에 있어요.
 `,
 );

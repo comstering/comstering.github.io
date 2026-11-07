@@ -10,6 +10,15 @@
   src: url("/_font/pretendard-subset.woff2") format("woff2-variations");
 }
 
+/* 한글 폴백 폭 보정(디자인 32번 "글꼴 폴백"): 풀폭 CJK 폴백(1.0em)이 Pretendard(0.864em)보다 넓어
+   소개 문단의 줄 수가 글꼴 도착 뒤 바뀌는 것이 About CLS의 원인이다. Apple SD Gothic Neo는 이미 0.865em라 넣지 않는다. */
+@font-face {
+  font-family: "Pretendard Fallback";
+  src: local("Noto Sans CJK KR"), local("NotoSansCJKkr-Regular"),
+    local("Noto Sans KR");
+  size-adjust: 86.4%;
+}
+
 @variant dark (&:where(.dark, .dark *));
 
 /*
@@ -98,7 +107,7 @@
   --color-code-line: var(--code-line);
   --color-code-hl: var(--code-hl);
 
-  --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system,
+  --font-sans: "Pretendard Variable", Pretendard, "Pretendard Fallback", system-ui, -apple-system,
     "Segoe UI", sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo,
     monospace;
@@ -132,6 +141,8 @@
 
 html {
   color-scheme: light;
+  /* 앵커 도착 위치는 여기 하나로 맞춘다(헤더 + 24px). 항목에 scroll-margin-top을 또 주지 않는다 */
+  scroll-padding-top: calc(var(--header-h) + 24px);
 }
 html.dark {
   color-scheme: dark;
@@ -260,7 +271,6 @@ body {
 
 /* 글 본문: 제목 앵커, 코드 복사 버튼, 이미지/표 */
 .prose :where(h2, h3, h4) {
-  scroll-margin-top: 5.5rem;
   letter-spacing: -0.02em;
 }
 .prose .heading-anchor {
@@ -794,5 +804,186 @@ dialog.lightbox::backdrop {
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+/*
+ * 인쇄(resume.pdf = /about의 print 미디어, 디자인 32번 "인쇄"). 항상 라이트: 다크 테마로 열어도 흰 배경.
+ * 라이트 토큰 덮어쓰기에 hex가 필요해 이 파일(globals.css)에만 둔다.
+ */
+/* 인쇄 때만 보이는 요소(about.css보다 먼저 선언되므로 print 블록의 display:block이 항상 이긴다) */
+.print-only {
+  display: none;
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 14mm 14mm;
+  }
+  :root,
+  .dark {
+    color-scheme: light;
+    --canvas: #fff;
+    --surface: #fff;
+    --surface-2: #f3f3f3;
+    --fg: #111;
+    --mute: #4a4a4a;
+    --line: #cfcfcf;
+    --line-strong: #8a8a8a;
+    --accent: #111;
+    --accent-soft: transparent;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #111;
+    font-size: 9.5pt;
+  }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .no-print,
+  .badge-now,
+  .reading-progress {
+    display: none !important;
+  }
+  .print-only {
+    display: block;
+  }
+  main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .about {
+    max-width: none;
+    padding-bottom: 0;
+  }
+  .about-intro {
+    display: block;
+    padding-top: 0;
+  }
+  .about-intro__name {
+    font-size: 20pt;
+  }
+  .about-intro__role {
+    font-size: 10.5pt;
+  }
+  .about-intro__contacts {
+    margin-top: 3pt;
+    font-family: var(--font-mono);
+    font-size: 8.5pt;
+    color: var(--mute);
+  }
+  .about-intro__headline {
+    margin-top: 8pt;
+    font-size: 12pt;
+  }
+  .about-intro__body {
+    margin-top: 4pt;
+    gap: 3pt;
+    max-width: none;
+    font-size: 9pt;
+    line-height: 1.55;
+  }
+  .about-section {
+    margin-top: 12pt;
+  }
+  .about-section h2 {
+    margin-bottom: 4pt;
+    font-size: 8.5pt;
+    break-after: avoid;
+  }
+  .tl-org {
+    padding-block: 6pt;
+    border-bottom: 0;
+  }
+  .tl-org__period {
+    font-size: 8.5pt;
+  }
+  .tl-org__name {
+    font-size: 11.5pt;
+    break-after: avoid;
+  }
+  .proj-list {
+    margin-top: 4pt;
+  }
+  .proj {
+    padding-block: 5pt;
+    break-inside: avoid;
+  }
+  .proj__title,
+  .proj__desc,
+  .proj__points {
+    font-size: 9pt;
+  }
+  .proj__desc,
+  .proj__points {
+    line-height: 1.45;
+  }
+  .proj__points {
+    gap: 1pt;
+  }
+  .oss-row,
+  .def-list > li {
+    padding-block: 3pt;
+    break-inside: avoid;
+  }
+  .oss-row__act {
+    gap: 6pt;
+    margin-top: 1pt;
+  }
+  .def-list__action {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+  .skills > div {
+    padding-block: 2pt;
+    grid-template-columns: 90pt 1fr;
+  }
+  .stack-list {
+    display: block;
+  }
+  .stack-token {
+    display: inline;
+    height: auto;
+    margin-right: 3pt;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-sans);
+    font-size: 9pt;
+    color: #111;
+  }
+  .stack-token:not(:last-child)::after {
+    content: ",";
+  }
+  /* 링크는 URL이 종이에도 보이게. 화살표 아이콘(마스크)은 URL 문구로 바꾼다 */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a[href^="http"]::after,
+  .link-ext::after {
+    content: " (" attr(href) ")";
+    display: inline;
+    width: auto;
+    height: auto;
+    margin: 0;
+    background: none;
+    -webkit-mask: none;
+    mask: none;
+    transform: none;
+    color: var(--mute);
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    word-break: break-all;
+  }
+  .link-ext {
+    display: inline;
+    font-family: var(--font-sans);
+  }
+  .link-row {
+    min-height: 0;
+    font-size: inherit;
   }
 }

@@ -1,0 +1,361 @@
+/*
+ * About 화면(디자인 25번 2장, 32번 "About"). 시안 components.css의 .intro·.jump·.tl-org·.proj·.oss-row·.skills·.def-list를
+ * 토큰 변수로 옮겼다. 인쇄(resume.pdf) 규칙은 라이트 토큰 덮어쓰기에 hex가 필요해 globals.css의 @media print에 있다.
+ */
+.about {
+  max-width: var(--w-read);
+  margin-inline: auto;
+}
+
+/* 첫 화면 */
+.about-intro {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px 20px;
+  align-items: center;
+  padding-top: 24px;
+}
+.about-intro__avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  object-fit: cover;
+}
+.about-intro__name {
+  font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.about-intro__name small {
+  margin-left: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--mute);
+}
+.about-intro__role {
+  margin-top: 4px;
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--fg);
+}
+.about-intro__contact {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.about-intro__headline {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+.about-intro__headline strong {
+  font-weight: 700;
+}
+.about-intro__body {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  max-width: 65ch;
+  margin-top: 8px;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--mute);
+}
+
+/* 외부 링크 화살표 */
+.link-ext {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.link-ext::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--dur) var(--ease);
+}
+.link-ext:hover::after {
+  transform: translate(2px, -2px);
+}
+.link-row {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--mute);
+  transition: color var(--dur) var(--ease);
+}
+.link-row:hover {
+  color: var(--accent);
+}
+
+.about-section {
+  margin-top: 64px;
+}
+.about-section > .sec-gap {
+  margin-bottom: 8px;
+}
+
+/* experience: 회사 바로가기 + 전부 펼친 타임라인 */
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding-inline: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  font-size: var(--text-small);
+  color: var(--fg);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.jump a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tl-org {
+  padding-block: 32px;
+  border-bottom: 1px solid var(--line);
+}
+.tl-org__period {
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.tl-org__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.tl-org__role {
+  margin-top: 2px;
+  font-size: var(--text-small);
+  color: var(--mute);
+}
+.badge-now {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding-inline: 7px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+.proj-list {
+  display: grid;
+  margin-top: 16px;
+}
+.proj {
+  min-width: 0;
+  padding-block: 12px;
+  border-top: 1px solid var(--line);
+}
+.proj:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.proj__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 16px;
+}
+.proj__title {
+  flex: 1 1 min(18rem, 100%);
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+.proj__period {
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+  white-space: normal;
+}
+.proj__desc {
+  margin-top: 4px;
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: var(--mute);
+}
+.proj__points {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+  font-size: var(--text-small);
+  line-height: 1.6;
+}
+.proj__points li {
+  position: relative;
+  overflow-wrap: anywhere;
+  padding-left: 12px;
+}
+.proj__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 5px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* open source · side */
+.oss-list {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.oss-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 16px;
+  align-items: baseline;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.oss-row__title {
+  font-weight: 600;
+}
+.oss-row__title {
+  min-width: 0;
+}
+.oss-row__aside {
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+  text-align: right;
+  white-space: normal;
+}
+.oss-row__sub {
+  grid-column: 1 / -1;
+  font-size: var(--text-small);
+  line-height: 1.7;
+  color: var(--mute);
+}
+.oss-row__act {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* skills */
+.skills {
+  display: grid;
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.skills > div {
+  display: grid;
+  gap: 8px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.skills dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--mute);
+}
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stack-token {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding-inline: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+}
+@media (min-width: 640px) {
+  .skills > div {
+    grid-template-columns: 160px 1fr;
+    align-items: baseline;
+  }
+}
+
+/* certifications · education */
+.def-list {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.def-list > li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  align-items: baseline;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.def-list__title {
+  font-size: var(--text-body);
+  font-weight: 600;
+}
+.def-list__sub {
+  grid-column: 1;
+  font-size: var(--text-small);
+  color: var(--mute);
+}
+.def-list__title,
+.def-list__sub {
+  min-width: 0;
+}
+.def-list__aside {
+  min-width: 0;
+  grid-row: 1;
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: var(--text-cap);
+  color: var(--mute);
+  text-align: right;
+  white-space: normal;
+  font-variant-numeric: tabular-nums;
+}
+.def-list__action {
+  grid-column: 2;
+  text-align: right;
+}

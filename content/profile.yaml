@@ -27,7 +27,7 @@ skills:
   - group: backend
     items: [Kotlin, Spring Boot]
   - group: observability
-    items: [Datadog]
+    items: [Datadog, OpenTelemetry, Prometheus]
 education:
   - school: 공주대학교 (Kongju National University)
     major: Computer Science
