@@ -79,3 +79,30 @@ test("본문 폭 이하 이미지는 확대 표시가 없다", async ({ page }) 
   await expect(small).not.toHaveAttribute("role", "button");
   await expect(small).not.toHaveClass(/zoomable/);
 });
+
+test("O-8: 확대 창이 열린 동안 배경 스크롤이 잠기고 닫으면 위치가 그대로다", async ({
+  page,
+}) => {
+  await page.goto(BIG);
+  const img = page.locator(".prose img.zoomable").first();
+  await img.scrollIntoViewIfNeeded();
+  const before = await page.evaluate(() => window.scrollY);
+  await img.click();
+  const dialog = page.locator("dialog.lightbox");
+  await expect(dialog).toBeVisible();
+  expect(
+    await page.evaluate(() => getComputedStyle(document.documentElement).overflow),
+  ).toBe("hidden");
+  await page.mouse.wheel(0, 800);
+  await page.keyboard.press("PageDown");
+  expect(await page.evaluate(() => window.scrollY)).toBe(before);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect
+    .poll(() =>
+      page.evaluate(() => getComputedStyle(document.documentElement).overflow),
+    )
+    .not.toBe("hidden");
+  expect(await page.evaluate(() => window.scrollY)).toBe(before);
+});

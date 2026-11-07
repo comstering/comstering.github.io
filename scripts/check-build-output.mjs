@@ -1,12 +1,13 @@
 // `yarn build` 산출물(out/) 검사. 하나라도 어긋나면 비정상 종료한다.
 //   1) 모든 글 HTML의 og:image 경로가 out/ 안에 실제로 존재
-//   2) rss.xml / sitemap.xml 이 올바른 XML이고, 항목 수가 발행된 글 수와 일치
+//   2) rss.xml / sitemap.xml 이 올바른 XML이고, 항목 수가 발행된 글 수와 일치(search-index.json도 글 수·모양·크기)
 //   3) 산출물에 adsbygoogle 문자열이 없음 (AdSense 제거 유지)
 //   4) 빌드 CSS에 무효가 된 font 단축 속성이 없음 (`font:400 var(--x),var(--y)`)
 //   5) 글 본문 이미지가 모두 변환본(/_img)이고 파일이 있으며 200KB 이하, width·height 지정 (G1-5)
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 import { XMLValidator } from "fast-xml-parser";
 
 const OUT = path.resolve(process.env.OUT_DIR ?? "out");
@@ -98,6 +99,31 @@ checkXml("sitemap.xml", (xml) => {
     fail(`sitemap.xml: URL ${urls}개, 글 ${postFiles.length}개 + 홈·About 2개로 일치해야 합니다`);
   }
 });
+
+// 검색 인덱스(PRD-004 5.7): 글 수와 같고, 항목 모양이 맞고, gzip 50KB(글 100편 기준 목표)를 넘지 않는다
+{
+  const indexPath = path.join(OUT, "search-index.json");
+  if (!fs.existsSync(indexPath)) {
+    fail("search-index.json: 파일이 없습니다");
+  } else {
+    const index = JSON.parse(fs.readFileSync(indexPath, "utf8"));
+    if (!Array.isArray(index) || index.length !== postFiles.length) {
+      fail(`search-index.json: 항목 ${index.length}개, 발행된 글 ${postFiles.length}개로 일치해야 합니다`);
+    } else if (
+      index.some(
+        (item) =>
+          typeof item.t !== "string" ||
+          typeof item.d !== "string" ||
+          !Array.isArray(item.h) ||
+          !String(item.u).startsWith("/posts/"),
+      )
+    ) {
+      fail("search-index.json: 항목 모양(t, d, h, u)이 맞지 않습니다");
+    }
+    const gzipped = zlib.gzipSync(fs.readFileSync(indexPath)).length;
+    if (gzipped > 50 * 1024) fail(`search-index.json: gzip ${Math.round(gzipped / 1024)}KB로 50KB를 넘습니다`);
+  }
+}
 
 // 3) adsbygoogle
 const walk = (dir) =>

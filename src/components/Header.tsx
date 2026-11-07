@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
+import { SearchButton } from "./search/SearchButton";
 import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
@@ -40,7 +41,10 @@ export const Header: React.FC = () => {
               </Link>
             );
           })}
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <SearchButton />
+            <ThemeToggle />
+          </div>
         </nav>
       </Container>
     </header>

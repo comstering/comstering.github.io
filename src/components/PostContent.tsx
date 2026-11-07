@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 
 interface PostContentProps {
   html: string;
@@ -77,7 +78,10 @@ export const PostContent = ({ html }: PostContentProps) => {
     // 확대: 변환본이 본문 폭보다 넓은 이미지(img.zoomable)에만 붙는다
     let lightbox: HTMLDialogElement | null = null;
     let from: HTMLElement | null = null;
-    const onClose = () => from?.focus(); // 닫으면 누른 이미지로 포커스를 돌려준다
+    const onClose = () => {
+      unlockScroll(); // 확대 창이 열린 동안 배경 스크롤을 잠갔다(O-8)
+      from?.focus(); // 닫으면 누른 이미지로 포커스를 돌려준다
+    };
     const openImage = (img: HTMLImageElement) => {
       if (!lightbox) {
         lightbox = createLightbox();
@@ -92,6 +96,7 @@ export const PostContent = ({ html }: PostContentProps) => {
         img.closest("figure")?.querySelector("figcaption")?.textContent ?? "";
       from = img;
       lightbox.showModal();
+      lockScroll();
     };
     const onImageClick = (event: MouseEvent) => {
       const img = (event.target as HTMLElement).closest<HTMLImageElement>(
@@ -116,6 +121,7 @@ export const PostContent = ({ html }: PostContentProps) => {
       root.removeEventListener("click", onImageClick);
       root.removeEventListener("keydown", onImageKey);
       lightbox?.removeEventListener("close", onClose);
+      if (lightbox?.open) unlockScroll();
       lightbox?.remove();
       timers.forEach((timer) => window.clearTimeout(timer));
     };
