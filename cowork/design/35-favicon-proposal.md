@@ -1,5 +1,7 @@
 # 35. 파비콘 디자인 제안
 
+> **확정 (2026-11-07, 작성자): C `c_`.** 개발에 넘길 파일 세트는 `favicon/final/`에 만들었다(4장). 개발 인수 항목은 [34번](./34-handoff-to-develop.md) 1장 "파비콘".
+
 작성: 디자인 세션 · 2026-11-07
 요청: 작성자(Chrome 탭에 뜨는 현재 파비콘을 다른 이미지로 교체)
 시안: `site/favicon.html`(비교 보드), 원본 `favicon/*.svg`, 렌더 `favicon/png/*`(16·32·48·180px), 렌더 스크립트 `tools/render-favicons.mjs`
@@ -31,30 +33,35 @@
 - 후보는 아직 **데스크톱 탭·북마크용**이다. 확정하면 아래 패키지를 만든다.
 - 어두운 사각형 + 1px `line` 테두리는 라이트 탭에서 사각형 윤곽이 또렷하고 다크 탭에서는 배경과 가까워 자연스럽다(보드의 "tab" 절 참고).
 
-## 4. 확정되면 개발에 넘기는 것
+## 4. 개발에 넘기는 파일 (`cowork/design/favicon/final/`)
 
-Next.js App Router 파일 규약(`src/app/`)에 맞춘 4개 파일을 디자인이 만들어 `cowork/design/favicon/final/`에 둔다.
+Next.js App Router 파일 규약(`src/app/`)에 맞춘 파일이다. 아래 3개를 `src/app/`에 넣는다.
 
-| 파일 | 용도 | 비고 |
+| 파일 | 용도 | 내용 |
 |---|---|---|
-| `icon.svg` | 현대 브라우저 탭(벡터) | 지금 SVG 그대로 |
-| `favicon.ico` | 구형·북마크·일부 도구 | 16·32·48px 포함 |
-| `apple-icon.png` | iOS 홈 화면 | 180×180, **둥근 모서리·테두리 없는 꽉 찬 정사각형**(iOS가 마스크를 씌움) |
-| `icon-512.png` | 선택(PWA·카카오 등) | 필요할 때만 |
+| `icon.svg` | 현대 브라우저 탭(벡터) → `src/app/icon.svg` | 32×32, 어두운 둥근 사각형(`#0C0F0E`, rx 7, 1px `#1F2A26` 테두리) + 흰 `c`(`#E6EDE9`) + 초록 커서(`#5BF29B`) |
+| `favicon.ico` | 구형 브라우저·북마크·일부 도구 → `src/app/favicon.ico` **교체** | 16·32·48px PNG 내장(3.5KB) |
+| `apple-icon.png` | iOS 홈 화면 → `src/app/apple-icon.png` | 180×180, **둥근 모서리·테두리 없는 꽉 찬 정사각형**(iOS가 마스크를 씌운다), 글자·커서 가로 여백 20px/20px로 정중앙 |
 
-개발은 `src/app/favicon.ico`를 교체하고 `icon.svg`·`apple-icon.png`를 추가한다(별도 `<link>` 불필요). 교체 후 캐시 때문에 탭 아이콘이 한동안 이전 것으로 보일 수 있다(브라우저 파비콘 캐시, 강력 새로고침으로 확인).
+그 밖: `apple-icon.svg`(apple-icon.png의 소스), `icon-48.png`(확인용)은 개발에 필요 없다. `icon-512.png`(PWA·공유용)는 만들지 않았다. 지금 사이트에 매니페스트가 없고 작성자가 필요하다고 한 적이 없다.
 
-## 5. 질문
+**개발 확인:**
+- `src/app/layout.tsx`에 `icons` 메타데이터가 따로 없으므로 파일 규약만으로 `<link rel="icon">`이 생긴다. `yarn build` 후 `out/`의 홈 HTML에 `icon.svg`·`favicon.ico`·`apple-icon.png` 링크가 있는지, 파일이 `out/`에 복사됐는지 본다(정적 export).
+- 교체 직후에는 브라우저 파비콘 캐시 때문에 탭 아이콘이 이전 것으로 보일 수 있다. 강력 새로고침이나 시크릿 창으로 확인한다.
+- 탭 모양(라이트·다크 탭, 16px)은 디자인이 실제 Chrome으로 확인한다(검토 요청해 달라).
 
-| # | 질문 | 대상 |
+## 5. 질문 (종결)
+
+| # | 질문 | 답 |
 |---|---|---|
-| Q1 | **어느 안으로 할까?**(추천 C, 대안 A) | 작성자 |
-| Q2 | `icon-512.png`(PWA·공유용)이 필요한가? 지금 사이트에는 매니페스트가 없어 기본은 만들지 않는다 | 작성자 |
+| Q1 | 어느 안으로 할까? | ✅ **C `c_` 확정**(작성자 11-07) |
+| Q2 | `icon-512.png`가 필요한가? | 만들지 않았다. 필요해지면 `favicon/final/icon.svg`에서 512px로 렌더(`tools/build-favicon-final.mjs`의 `render`) |
 
 ## 6. 재현
 
 ```bash
 python3 -m http.server 4175 &                              # 저장소 루트에서
-node cowork/design/tools/render-favicons.mjs               # favicon/*.svg → favicon/png/*-{16,32,48,180}.png
+node cowork/design/tools/render-favicons.mjs               # 후보 SVG → favicon/png/*-{16,32,48,180}.png
+node cowork/design/tools/build-favicon-final.mjs           # favicon/final/ 소스 SVG → favicon.ico, apple-icon.png
 open http://localhost:4175/cowork/design/site/favicon.html # 비교 보드(탭 모사 + 확대)
 ```

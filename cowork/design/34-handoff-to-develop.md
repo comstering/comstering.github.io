@@ -16,6 +16,9 @@
 | 인쇄 `resume.pdf` | About을 `@media print` A4로. 작성자가 실제 Chrome 인쇄 미리보기 확인함(11-07) | 25번 3장, 32번 |
 | 홈 OG | **B안** 확정: 제목 `Comstering's Dev Notes`, 하단 `$ history`(accent) + `실행해 본 것만 씁니다` | 31번 3장, `site/og.html` |
 | `DESIGN.md` | 원칙 4 문장 확정(기획 33번), 시그니처 3번 예시 `// popular ────` | 32번, 33번 |
+| 파비콘 | **C `c_`** 확정(작성자 11-07). 파일 3개(`icon.svg`·`favicon.ico`·`apple-icon.png`)가 `favicon/final/`에 준비됨. Phase 2 PR 순서와 무관한 작은 PR | 35번 |
+
+> **주의(11-07 작성자 검토 중):** 홈 `tagline`을 `실행해 본 것만 씁니다`에서 `실행해 본 것만 기록합니다`로 바꾸는 안이 나왔다(`씁니다`가 어색하다는 의견). 확정되면 28번 8장 값과 PRD-004 5.2·5.6이 바뀐다. **PR-21 시작 전에 최종 문구를 확인한다**(`site.yaml`의 `tagline`, 홈 `description`, 홈 OG 하단 줄).
 
 ## 1. PR별 입력
 
@@ -47,11 +50,19 @@
 - 규칙: 25번 3장, 32번 "인쇄". 라이트 토큰 덮어쓰기가 구현의 `.dark` 클래스·`next-themes`와 충돌하지 않는지(25번 Q8), 한글 글꼴이 CI(리눅스)에 있는지, 텍스트 검색(G2-6).
 - 기준: A4 **5쪽**, ≤ 1MB(시안 렌더 629KB). 개발의 시험 산출물(6쪽)은 직함·연차·회사 바로가기 처리 전이라 쪽수가 달랐다. PR-19 이후 다시 비교해 달라.
 
+### 파비콘 교체 (작은 PR 하나, Phase 2 순서와 무관)
+- 입력: [35번](./35-favicon-proposal.md) 4장, 파일 `cowork/design/favicon/final/` (`icon.svg`, `favicon.ico`, `apple-icon.png`).
+- 할 일: `src/app/favicon.ico`를 `favicon/final/favicon.ico`로 **교체**하고, `src/app/icon.svg`·`src/app/apple-icon.png`를 **추가**한다. `src/app/layout.tsx`에는 `icons` 설정이 없고 `next.config`는 `output: "export"`라, 파일 규약만으로 `<link>`가 생기는지 `yarn build` 후 `out/`에서 확인한다(홈 HTML의 `rel="icon"`·`apple-touch-icon` 링크, 3개 파일이 `out/`에 있는지).
+- 파일 규약 이름은 `icon.svg`·`apple-icon.png`가 맞다. 이름을 바꾸지 않는다.
+- 완료 기준: 홈·글·About에서 탭 아이콘이 `c_`로 나온다(브라우저 파비콘 캐시 때문에 강력 새로고침/시크릿 창으로 확인). **디자인이 실제 Chrome 탭을 확인한다**(PR을 올리면 REQUESTS에 알려 달라).
+- 시안 소스를 바꿔야 하면 `favicon/final/*.svg`를 고치고 `node cowork/design/tools/build-favicon-final.mjs`로 ICO·PNG를 다시 만든다(디자인 몫).
+
 ## 2. 디자인이 확인하지 못한 것 (개발 PR에서 확인)
 
 - 홈 OG 한글 글리프(위, 개발 확인).
 - 실제 리눅스 CI의 About CLS(대역 측정 0.107~0.139 → 0.001~0.003).
 - PDF 텍스트 추출·한글 글꼴 포함(G2-6).
+- 파비콘: 실제 Chrome 탭, Safari·Firefox, Windows 작업 표시줄, iOS 홈 화면 추가 모양(디자인은 Chromium 렌더까지만 확인).
 - Safari·Firefox, 실기기, 스크린리더 낭독(검색 `role="status"` 포함), 정확한 360px의 실제 Chrome(창 최소폭 406px이라 Playwright로 잼).
 
 ## 3. 디자인 쪽 후속

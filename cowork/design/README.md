@@ -24,6 +24,7 @@
 | [archive/README.md](./archive/README.md) | **보관 폴더 안내.** 요약본 2개, 원문이 남은 12·19·21번, 삭제한 번호(01~03, 05~11, 13~17, 20)의 위치와 Git 복구 방법 |
 | `tools/check-site.mjs` | 시안 8개 화면(index·post·tag·about·projects·project·tags·404) × PC·모바일 검사 스크립트 |
 | `tools/render-favicons.mjs` | 파비콘 후보 SVG를 16·32·48·180px PNG로 렌더(35번) |
+| `tools/build-favicon-final.mjs` | 확정 파비콘(`favicon/final/`)의 `favicon.ico`(16·32·48)·`apple-icon.png`(180)를 소스 SVG에서 생성(35번) |
 | `tools/measure-about-first.mjs` | About 첫 화면 요소 위치(360×640, 1280×720)와 인쇄(A4) 쪽수 측정(31번) |
 | `tools/build-phase2-mockups.py` | `site/about.html`·`site/index.html`·`system/search-index.js` 생성기. 데이터 원본은 `src/app/about/page.tsx`, `posts/`, `content/series.yaml`. 생성물이라 고칠 때는 스크립트를 고친다(홈 글 목록은 index.html에서 읽어 재사용) |
 | `tools/measure-fallback-cls.mjs` | D-5 About·홈 CLS 재현·검증(폴백 글꼴 폭 보정 전후) |
@@ -37,7 +38,7 @@
 | [23-planning-response-phase2.md](./23-planning-response-phase2.md) | 기획 답변(22번 Q1~Q8). **2026-11-02 재검토로 일부 철회**(관련 글 확대, 이력서 3쪽, 접이식 채택 등). 유효: 기술 태그 없음, 사진 유지, 기간 표시, `shortTitle` 없음 |
 | [24-planning-request-phase2-revision.md](./24-planning-request-phase2-revision.md) | **기획 요청: Phase 2 재검토 반영(D-6~D-10).** 홈=블로그·About=경력, About↔블로그 링크 없음, 경력 전부 펼침, `/resume` 페이지 없이 About 인쇄 → PDF, 홈 히어로 3안·사이드바, 헤더 검색 팔레트 |
 | [25-phase2-revision-design-response.md](./25-phase2-revision-design-response.md) | **Phase 2 재검토 디자인 답변(D-6~D-10, 24번 기획 요청).** About 전부 펼침·회사 바로가기·길이 줄이기(V3 −19%), About 인쇄 = `resume.pdf`(A4 5쪽), 헤더 검색 팔레트(글만), 홈 히어로 3안(+2b) 비교, 사이드바(인기글·시리즈·태그). 질문 Q1~Q9 |
-| [35-favicon-proposal.md](./35-favicon-proposal.md) | **파비콘 제안.** 현재(흰 바탕 필기체)는 탭에서 읽히지 않아 교체. 후보 5종(`>_`, `>_` 초록, `c_`, `h_`, `~/`)을 16px 탭 모사로 비교, 추천 C `c_`. 확정 시 개발에 넘길 파일(icon.svg·favicon.ico·apple-icon.png). 보드 `site/favicon.html` |
+| [35-favicon-proposal.md](./35-favicon-proposal.md) | **파비콘 제안.** 현재(흰 바탕 필기체)는 탭에서 읽히지 않아 교체. 후보 5종(`>_`, `>_` 초록, `c_`, `h_`, `~/`)을 16px 탭 모사로 비교. **C `c_` 확정(작성자 11-07).** 개발에 넘길 파일은 `favicon/final/`(icon.svg·favicon.ico·apple-icon.png). 보드 `site/favicon.html` |
 | [34-handoff-to-develop.md](./34-handoff-to-develop.md) | **개발 인수 문서(PR-18~22).** 확정 사항 표, PR별 입력·기준 수치, 개발이 확인할 것(홈 OG 한글, About CLS, PDF), 디자인이 확인하지 못한 것 |
 | [33-planning-response-designmd.md](./33-planning-response-designmd.md) | 기획 답변(31·32번): `DESIGN.md` 원칙 4 문장 확정, 시그니처 3번 `// popular`, 홈 OG는 B 의견 |
 | [31-design-response-d12-d15.md](./31-design-response-d12-d15.md) | **디자인 답변(기획 29·30번): About 현재 회사 제거·클래스101 직함(D-15, 첫 화면 −23px, 인쇄 5쪽 유지), 홈 OG 3종(D-12, 추천 B), 문서 정리(D-14), O-8 개발 발송.** 질문 Q1~Q3 |
