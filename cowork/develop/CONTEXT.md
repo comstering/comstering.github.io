@@ -146,3 +146,5 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **claude chrome 확장이 안 될 때**: 이 프로젝트의 화면 확인은 `cowork/develop/tools/shoot.mjs`(Playwright Chromium)로 하고 PR 본문에 실제 Chrome이 아니라고 밝힌다
 - **페이지 CSS(`about.css`·`home.css`)는 `globals.css`보다 나중에 로드돼 같은 선택자 우선순위면 이긴다.** 인쇄(`@media print`) 레이아웃 규칙을 globals.css에 두면 화면 규칙에 덮여 시안 크기가 안 먹는다(PR-22에서 쪽 수가 6쪽으로 나온 원인). 인쇄 레이아웃은 `about.css` 끝의 `@media print`에, 라이트 토큰 덮어쓰기·숨김(hex 필요)만 globals.css에 둔다
 - **홈 글 목록은 하이드레이션 때 정적 HTML에서 클라이언트 렌더로 교체된다**(`useSearchParams`). 교체 직전 요소를 재면 `boundingBox()`가 null이라 E2E가 간헐 실패하므로 위치·크기 검사는 `expect(async () => …).toPass()`로 통째로 재시도한다(PR-21 CI)
+- **인기글(`scripts/fetch-popular.mjs`)은 배포 워크플로에서만 돈다**(PR CI·로컬은 토큰이 없어 `.cache/popular.json`이 비어 홈 popular 블록이 숨겨진다). 로컬에서 보려면 `.cache/popular.json`에 `{ "items": [{ "id": "<글 id>", "views": 10 }] }`를 직접 만들고 `yarn build`(`.cache/`는 gitignore). GitHub는 저장소 활동이 60일 없으면 `schedule`을 끈다 → 그때는 Actions 탭에서 Deploy를 수동 실행한다
+

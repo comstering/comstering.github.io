@@ -2,9 +2,12 @@ name: Deploy
 
 # main에 머지되면 자동 배포한다. 문제가 생기면 Actions 탭에서 workflow_dispatch로
 # 이전 커밋을 골라 다시 배포할 수 있다.
+# 매일 03:00 KST(UTC 18:00)에도 같은 빌드를 다시 돌려 홈의 인기글(최근 30일 조회수 상위 5편)을 갱신한다(PRD-004 5.5).
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "0 18 * * *"
   workflow_dispatch:
 
 jobs:
@@ -30,6 +33,20 @@ jobs:
         with:
           path: public/_img
           key: img-${{ hashFiles('public/images/**', 'scripts/optimize-images.mjs') }}
+
+      # 인기글: 직전 결과를 복원해 두면 통계 API가 실패해도 그 값을 쓴다(실행 끝에 이번 결과가 새 키로 저장된다)
+      - name: Restore popular posts cache
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: popular-${{ github.run_id }}
+          restore-keys: popular-
+
+      # GoatCounter 통계 API → .cache/popular.json. 토큰은 이 단계에서만 쓰고, 실패해도 빌드는 계속된다(scripts/fetch-popular.mjs)
+      - name: Fetch popular posts
+        run: node scripts/fetch-popular.mjs
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
 
       - name: Build
         run: yarn build
