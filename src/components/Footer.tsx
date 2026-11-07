@@ -5,7 +5,7 @@ const linkClass =
   "inline-flex min-h-(--tap) items-center px-2 transition-colors first:pl-0 hover:text-accent";
 
 export const Footer: React.FC = () => (
-  <footer className="mt-24 border-t border-line">
+  <footer className="site-footer mt-24 border-t border-line">
     <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-6 font-mono text-xs text-mute">
       <p>&copy; {new Date().getFullYear()} comstering</p>
       <nav aria-label="외부 링크" className="flex flex-wrap">

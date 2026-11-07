@@ -1,6 +1,7 @@
 companies:
   - id: cj-oliveyoung
     name: CJ Olive Young
+    shortName: CJ 올리브영
     role: DevOps · Cloud Native Engineer
     period:
       start: 2024-06
@@ -171,6 +172,7 @@ companies:
           - Braze 이메일 발송 인프라 구축 및 Route53 SPF/DKIM 레코드 관리로 이메일 전송 성공률 98% 이상 유지 (2025.01)
   - id: class101
     name: CLASS 101
+    shortName: 클래스101
     role: Software Engineer
     period:
       start: 2022-05

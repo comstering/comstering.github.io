@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
+    <header className="site-header sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
       <Container className="flex min-h-16 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2 font-mono text-sm">
         <Link
           href="/"

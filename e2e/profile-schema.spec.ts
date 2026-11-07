@@ -143,7 +143,8 @@ test("site.yaml은 title·command·tagline 필수", () => {
 });
 
 test("기간 표시와 경력 연차", () => {
-  expect(formatPeriod({ start: "2024-06" })).toBe("2024.06 ~ Present");
+  expect(formatPeriod({ start: "2024-06" })).toBe("2024.06 ~ now");
+  expect(formatPeriod({ start: "2026-03", end: "2026-03" })).toBe("2026.03");
   expect(formatPeriod([{ start: "2025-05", end: "2026-03" }, { start: "2026-01", end: "2026-02" }])).toBe(
     "2025.05 ~ 2026.03, 2026.01 ~ 2026.02",
   );

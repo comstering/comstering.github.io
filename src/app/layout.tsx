@@ -40,7 +40,7 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => (
       <ThemeProvider>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-on"
+          className="skip-link sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-on"
         >
           본문으로 건너뛰기
         </a>

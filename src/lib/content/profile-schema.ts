@@ -67,6 +67,8 @@ export const experienceSchema = z.strictObject({
       z.strictObject({
         id: text,
         name: text,
+        /** 회사 바로가기 링크 글자 (없으면 name) */
+        shortName: text.optional(),
         role: text,
         period: range,
         projects: z.array(
@@ -164,12 +166,13 @@ export const checkExperience = (data: ExperienceData): string[] => {
   return issues;
 };
 
-// PR-18은 화면 그대로: 기존 표기("2026.03 ~ 2026.03", Present). 같은 달 한 번·now 표기는 PR-19에서 바꾼다.
+// 기간 표시(PRD-004 4.3): 같은 달은 한 번, 진행 중은 now, 기간이 여러 개면 쉼표.
 const dot = (value: string) => value.replace("-", ".");
 export const formatPeriod = (p: Period | undefined): string =>
   ranges(p)
     .map((r) => {
-      if (!r.end) return `${dot(r.start)} ~ Present`;
+      if (!r.end) return `${dot(r.start)} ~ now`;
+      if (r.end === r.start) return dot(r.start);
       return `${dot(r.start)} ~ ${dot(r.end)}`;
     })
     .join(", ");
