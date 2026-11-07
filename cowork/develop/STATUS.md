@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-07 · 기준 커밋 `19af2b5`(main, #63 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 34번 인수 문서(2026-11-07)_
+_최종 갱신: 2026-11-07 · 기준 커밋 `315338c`(main, #64 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 34번 인수 문서(2026-11-07)_
 
 이 문서는 **지금 진행 중인 Phase의 상태와 다음 작업**만 담는다. 끝난 Phase는 [archive](./archive/README.md)에 요약돼 있다(Phase 0 안정화, Phase 1 읽기 경험).
 
@@ -10,8 +10,8 @@ _최종 갱신: 2026-11-07 · 기준 커밋 `19af2b5`(main, #63 머지) · 기�
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | 완료. [요약](./archive/phase0-summary.md) |
 | Phase 1 읽기 경험 (PRD-003) | 완료. [요약](./archive/phase1-summary.md). About 성능·CLS·TBT `warn` 예외는 PR-19까지 |
-| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~20 ✅, PR-21 오픈(브랜치 `feat/pr-21-home`). 인수 문서는 `cowork/design/34-handoff-to-develop.md` |
-| 지금 막힌 것 | 없음. PR-21 머지 후 PR-22(`resume.pdf`). PR-23 전에 작성자가 `GOATCOUNTER_TOKEN` 등록. 열린 질문은 Q16~Q21 |
+| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~21 ✅, PR-22 오픈(브랜치 `feat/pr-22-resume-pdf`). 작성자가 `GOATCOUNTER_TOKEN`(Read statistics, 사이트 `comstering.goatcounter.com`만)을 Secrets에 등록함(2026-11-07) |
+| 지금 막힌 것 | 없음. PR-22 머지 후 PR-23(인기글, 토큰 등록됨). 열린 질문은 Q16, Q18~Q21 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
@@ -20,7 +20,7 @@ _최종 갱신: 2026-11-07 · 기준 커밋 `19af2b5`(main, #63 머지) · 기�
    - **환경:** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config. `sharp`는 0.33.5 고정. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
    - **Chrome:** 이 세션 끝에는 확장은 응답하나 이 세션의 탭 그룹이 없었다. 새 세션은 시작하자마자 `tabs_context_mcp {createIfEmpty:true}`로 탭을 열고, **눈에 보이는 변경은 실제 Chrome으로 매번 확인**한다(메모리 `feedback-verify-in-chrome`). 실제 Chrome 창은 406px 아래로 줄지 않으니 360px은 Playwright Chromium으로 잰다
    - **PR 규칙(메모리에 반영됨):** 작업이 끝나면 커밋·push·PR까지 바로 올리고 후속은 같은 브랜치에 커밋한다. **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(`tools/shoot.mjs`·`publish-shots.sh`). 새 의존성·CI 액션은 먼저 알린다
-2. **PR-22(`resume.pdf` 생성)부터**(PR-21 머지 후). 입력: `cowork/design/34-handoff-to-develop.md` 1장 PR-22, 디자인 25번 3장·32번 "인쇄". 인쇄 CSS는 PR-19에서 `globals.css`의 `@media print`로 이미 있다. `scripts/build-resume-pdf.mjs`(Playwright print A4, 시험 스크립트 `cowork/develop/tools/resume-pdf-prototype.mjs` 참고)를 만들고 CI·deploy 워크플로에 PDF 단계를 넣는다. 확인: 라이트 토큰 덮어쓰기가 `.dark`·`next-themes`와 충돌하지 않는지(PR-19 E2E로 확인됨), CI 리눅스 한글 글꼴, 텍스트 검색(G2-6), ≤ 1MB, 쪽 경계. 기준은 A4 5쪽이나 PR-19 시점 Playwright 결과는 6쪽·559KB였다(REQUESTS Q17에 결과 기록). 새 의존성·CI 액션은 먼저 알린다
+2. **PR-23(인기글 데이터)부터**(PR-22 머지 후, 토큰은 등록됨). `cowork/prd/004…` 5.5: `scripts/fetch-popular.mjs`가 GoatCounter 통계 API(`/api/v0/stats/hits`, 기간 지정, 토큰 `GOATCOUNTER_TOKEN`)에서 최근 30일을 받아 `/posts/<id>` 중 존재하고 draft 아닌 글만 조회수 내림차순 5편(같으면 최신 글 먼저)을 `.cache/popular.json`(`{ "items": [{ "id", "views" }] }`, 읽는 쪽은 PR-21의 `lib/popular.ts`)으로 쓴다. 배포 워크플로 `schedule`(하루 1회)과 Actions 캐시(직전 결과 → 빈 목록). API 실패·토큰 없음(로컬·포크 PR)에도 **빌드는 실패시키지 않는다**. 토큰은 빌드 단계에서만 쓰고 산출물·로그에 남기지 않는다. 권한 이름이 `Read statistics`인지 호출이 403이면 알려 달라고 했다
 3. **PR-19에서 남은 확인:** About CLS ≤ 0.1은 CI 3회 중앙값으로 본다(`lighthouserc.json`의 About 예외는 이 PR에서 지웠다). CI가 실패하면 폴백 `@font-face`(`ascent-override`·폴백 목록 확대, 디자인 22번 3장)를 조정하고 결과를 REQUESTS Q16으로 알린다
 4. 작성자 할 일(개발이 기다리는 것): **히어로 안·문구 선택**(디자인 25번 Q1, `index.html?hero=2b` 등으로 비교, PR-21 전), **`GOATCOUNTER_TOKEN` 발급 → 저장소 Secrets 등록**(PR-23 전), `custom-networking-karpenter-eni-troubleshooting.md` 제목 오타 `Kapenter`→`Karpenter`(디자인 25번 Q6, 파일명은 그대로)
 5. 이월(작성자 작업): 카카오·LinkedIn OG 미리보기(LinkedIn Post Inspector는 로그인 필요), Search Console·네이버 sitemap 재제출, 사이트 1차 완성 후 branch protection
@@ -37,8 +37,8 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 | PR-18 | 데이터 분리·검증(`profile.yaml`·`experience.yaml`·`site.yaml`, zod) | 없음(화면 그대로) | ✅ 머지 | #60 |
 | PR-19 | About 다시 그리기 + **About CLS ≤ 0.1·예외 해제** + `DESIGN.md` 반영 | `about.html`, 2장, D-5 폴백 `@font-face` | ✅ 머지 | #61 |
 | PR-20 | 헤더 검색 팔레트(`/search-index.json`, 홈 검색창 제거) + O-8 스크롤 잠금 | 4장, 소제목 인덱스, `role="status"` | ✅ 머지 | #63 |
-| PR-21 | 홈 히어로·사이드바(인기글·시리즈·태그)·홈 OG | 5·6장, 확정 히어로 `$ history`, `og.html` B안 | 🔍 PR 오픈(브랜치 `feat/pr-21-home`) | #64 |
-| PR-22 | `resume.pdf` 생성(`scripts/build-resume-pdf.mjs`, CI·배포 단계) | 3장 `@media print`, 한글 글꼴 | ⏳ 대기 | |
+| PR-21 | 홈 히어로·사이드바(인기글·시리즈·태그)·홈 OG | 5·6장, 확정 히어로 `$ history`, `og.html` B안 | ✅ 머지 | #64 |
+| PR-22 | `resume.pdf` 생성(`scripts/build-resume-pdf.mjs`, CI·배포 단계) | 25번 3장, 32번 "인쇄" | 🔍 PR 오픈(브랜치 `feat/pr-22-resume-pdf`) | #66 |
 | PR-23 | 인기글 데이터(GoatCounter, 일 1회) | | ⏳ 대기(`GOATCOUNTER_TOKEN` 필요) | |
 | PR-24 | SEO(JSON-LD `Person` 등) | | ⏳ 대기 | |
 | PR-25 | 게이트·E2E J1·5초 테스트·문서 | | ⏳ 대기 | |
@@ -68,6 +68,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-07 | **PR-22 구현·PR 오픈(#66).** `yarn build:resume`(`scripts/build-resume-pdf.mjs`): out/을 임시 서버로 띄우고 다크 테마로 연 `/about`을 print 미디어 A4로 인쇄해 `out/resume.pdf` 생성. 검사(실패하면 종료 코드 1, 파일 삭제): 인쇄 배경 라이트, 헤더·푸터·바로가기·버튼 숨김, ≤ 1MB, ≤ 5쪽, 글꼴 ToUnicode 매핑에 이름·직함·회사·연락처·자격증 글자가 모두 있음(글자 검색 가능). **PR-19의 6쪽 원인을 찾아 5쪽·543KB로 맞춤:** 인쇄 레이아웃 규칙이 globals.css에 있어 나중에 로드되는 about.css 화면 규칙에 덮이고 있었다 → 인쇄 레이아웃을 about.css 끝 `@media print`로 이동(globals.css에는 라이트 토큰·숨김만). CI Quality(E2E 전)·deploy(build 뒤)에 `playwright install` + `build:resume` 단계 추가(새 의존성 없음). E2E `resume.spec.ts`(200·application/pdf·%PDF·≤1MB, 버튼 다운로드, 링크 URL 표시, 쪽 경계, 9pt). **작성자 요청:** 토큰 권한 안내(Read statistics만, 사이트 한정). **못 한 것:** PDF를 이미지로 본 것은 print 미디어 스크린샷(PDF 뷰어 없음), CI 리눅스 실행 | PR-22 머지 후 PR-23 |
 | 2026-11-07 | **PR-21 구현·PR 오픈(#64).** 홈을 시안대로: 히어로(`components/home/HeroTerminal`, `content/site.yaml`의 `$ history` + 문구, h1은 sr-only 사이트 이름, 커서 깜빡임은 여기 한 곳·reduced-motion 정지), 사이드바(`HomeSidebar`: popular는 `.cache/popular.json`(`lib/popular.ts`)이 없거나 비면 숨김, series는 `series.yaml` 전체·첫 글로 링크, tags는 글 수 상위 10개). 1024px 이상 오른쪽 열(sticky), 미만은 글 목록 아래(DOM 순서는 목록 다음). **태그는 태그 페이지(Phase 3)가 없어 눌러서 검색 팔레트를 그 태그로 연다**(`TagButton` + `search:open` 이벤트, 팔레트 `initialQuery`). 홈 OG는 `renderOg`로 생성(`app/og.png/route.tsx`, `site.yaml` 한 곳): **satori에서 하단 mono 줄의 한글이 깨지지 않음을 `out/og.png`로 확인**. `.gitignore`에 `/.cache/`. 헤더 로고는 480px 미만에서 `~/_`(DESIGN.md 규칙, 검색 버튼이 들어와 360px에서 헤더가 두 줄로 접혀서). E2E `home.spec.ts`. **작성자 요청으로 문구를 `실행해 본 것만 기록합니다`로 변경(PRD 5.6 description도 PR-24에서 같은 문구).** **시안과 다른 점(Q21):** 실제 레이아웃의 `main` 위쪽 여백 48px 때문에 첫 글 제목 하단이 360×640에서 약 486px(시안 437px), 1280×720도 그만큼 아래다. **못 한 것:** 실제 Chrome 확인(Playwright 스크린샷만), CI Lighthouse | PR-21 머지 후 PR-22 |
 | 2026-11-07 | **PR-20 구현·PR 오픈(#63).** 헤더 `search ⌘K` 버튼(`components/search/SearchButton`, 단축키 Cmd/Ctrl+K·`/`)과 네이티브 `<dialog>` 팔레트(`SearchPalette`, `next/dynamic`으로 처음 열 때 코드와 `/search-index.json`을 받음). 인덱스는 `app/search-index.json/route.ts`(글 14편, h2·h3 포함, gzip 약 3KB), 검색 규칙은 `lib/search.ts`(제목 > 설명·태그·카테고리 > 소제목, 최신 우선). 홈 `PostsBlock`의 검색 입력 제거(카테고리 필터 URL 그대로). **O-8:** `lib/scroll-lock.ts`로 팔레트·이미지 확대 `<dialog>`가 열린 동안 배경 스크롤 잠금(스크롤바 폭 보정, 겹쳐도 안전). `check:output`에 검색 인덱스 검사 추가. E2E `search.spec.ts`(G2-8 J: 3개 페이지, 규칙, 포커스 복귀, status, 스크롤 잠금)·`images.spec.ts` O-8. **작성자 요청:** 로컬에서 고친 경력 문구 2건(Okta·Keycloak 자동화, Temporal 두 번째 기간 `2025-09`)을 이 PR에 포함. **디자인에 알릴 것(Q20):** 모바일 전체 화면 팔레트에 닫기 수단이 없어 `esc` 표시를 버튼(`esc 닫기`)으로 만들었다. **못 한 것:** Safari·모바일 Safari 스크롤 잠금, 스크린리더 낭독, CI Lighthouse 값 | PR-20 머지 후 PR-21 |
 | 2026-11-07 | **PR-19 구현·PR 오픈.** About을 디자인 시안대로 다시 그림(`components/about/AboutIntro`·`ExperienceSection`, `app/about/about.css`): 첫 화면(직함 · 경력 N년+, 버튼 4개, 현재 회사 없음), 회사 바로가기 3개, 경력 전부 펼침(h2→h3→h4), 오픈소스·skills 7그룹·자격증·학력/활동. 기간 표기는 PRD 규칙(같은 달 한 번, `now`). 인쇄 `@media print`는 `globals.css`(A4, 라이트 고정, URL 표시, 쪽 경계), 폴백 `@font-face`(size-adjust 86.4%)와 `html{scroll-padding-top}`, `ExperienceItem`·`ActivityCard`·`Bio` 삭제. **`lighthouserc.json`의 About 예외 해제.** `DESIGN.md`에 32번 1·2·3장 반영(v1.4). **작성자 요청 반영:** skills observability에 OpenTelemetry·Prometheus 추가(PRD-004 4.4 표에도 반영 필요 → 기획). E2E `about.spec.ts`(G2-3·첫 화면·바로가기·인쇄), 글자 200% 넘침 수정. **못 한 것:** 실제 Chrome 확인, CI 리눅스 CLS 값, PDF는 Playwright로 6쪽·559KB(시안 기준 5쪽, PR-22에서 맞춤) | PR-19 머지 후 PR-20 |

@@ -73,7 +73,7 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 1. `git checkout main && git pull`, 새 브랜치 `feat/<주제>`. 이전 PR이 머지되기 전에는 그 브랜치 위에서 이어 가지 않는다(파일이 겹침)
 2. STATUS.md의 "다음 작업" 절 + PRD 해당 PR 절 + 최종 시안을 읽는다
 3. 구현
-4. 검증(전부): `yarn lint` → `yarn check:tokens` → `yarn build` → `yarn check:output` → `yarn test:e2e`(**build 후**, `out/`을 띄운다). 새 기능에는 E2E를 같이 추가한다
+4. 검증(전부): `yarn lint` → `yarn check:tokens` → `yarn build` → `yarn check:output` → `yarn build:resume`(PDF 생성, Playwright 브라우저 필요) → `yarn test:e2e`(**build·build:resume 후**, `out/`을 띄운다). 새 기능에는 E2E를 같이 추가한다
 5. **화면이 바뀌는 PR은 PC·Mobile 스크린샷을 PR 본문에 넣는다**(7장). CI·문서만 바뀌는 PR은 생략
 6. 커밋 → push → `gh pr create`. CI(`Quality`)가 돌고 Lighthouse 점수 댓글이 자동으로 달린다
 7. **기록**: STATUS.md(진행 표, 다음 작업, 세션 기록), REQUESTS.md 갱신(4.5장). 사용자가 시키지 않아도 한다
@@ -85,7 +85,8 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 yarn dev                 # 개발 서버 (draft 글도 보임)
 yarn build               # 정적 export → out/ (frontmatter 검증 포함)
 yarn check:tokens        # 디자인 토큰 금지 패턴
-yarn check:output        # og:image, rss, sitemap, adsbygoogle
+yarn check:output        # og:image, rss, sitemap, adsbygoogle, search-index.json
+yarn build:resume        # out/about → out/resume.pdf (A4 print, ≤ 5쪽·1MB·글자 검색 검사). e2e/resume.spec.ts가 이 파일을 쓴다
 yarn test:e2e            # Playwright (먼저 yarn build). desktop 1280x720 + mobile 360x640
 yarn lhci                # Lighthouse CI (결과는 .lighthouseci/)
 node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
@@ -143,3 +144,5 @@ cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screensh
 - **Next 16 이후(2026-11-01)**: `next lint`가 없다. `yarn lint`는 `eslint .`이고 설정은 `eslint.config.mjs`(flat, `eslint-config-next/core-web-vitals`·`typescript`)다. 린트 제외는 그 파일의 `ignores`에 쓴다. 빌드는 Turbopack이 기본이라 `src/app/favicon.ico`처럼 앱 폴더의 이미지는 **RGBA PNG**여야 한다(팔레트 PNG는 "The PNG is not in RGBA format"으로 실패). `useEffect` 안에서 바로 `setState`하면 `react-hooks/set-state-in-effect`로 린트 실패한다(mounted 플래그는 `useSyncExternalStore`). `tsconfig.json`은 Next가 `yarn build` 때 자동으로 고친다
 - **react-icons 5.7**에서 `SiAmazon`·`SiLinkedin` 같은 브랜드 아이콘이 `react-icons/si`에서 제거됐다. 쓰기 전에 `grep -o "SiXxx" node_modules/react-icons/si/index.d.ts`로 있는지 본다(대체: `react-icons/fa`의 `FaAws`·`FaLinkedin`)
 - **claude chrome 확장이 안 될 때**: 이 프로젝트의 화면 확인은 `cowork/develop/tools/shoot.mjs`(Playwright Chromium)로 하고 PR 본문에 실제 Chrome이 아니라고 밝힌다
+- **페이지 CSS(`about.css`·`home.css`)는 `globals.css`보다 나중에 로드돼 같은 선택자 우선순위면 이긴다.** 인쇄(`@media print`) 레이아웃 규칙을 globals.css에 두면 화면 규칙에 덮여 시안 크기가 안 먹는다(PR-22에서 쪽 수가 6쪽으로 나온 원인). 인쇄 레이아웃은 `about.css` 끝의 `@media print`에, 라이트 토큰 덮어쓰기·숨김(hex 필요)만 globals.css에 둔다
+- **홈 글 목록은 하이드레이션 때 정적 HTML에서 클라이언트 렌더로 교체된다**(`useSearchParams`). 교체 직전 요소를 재면 `boundingBox()`가 null이라 E2E가 간헐 실패하므로 위치·크기 검사는 `expect(async () => …).toPass()`로 통째로 재시도한다(PR-21 CI)

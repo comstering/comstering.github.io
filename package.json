@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "check:tokens": "bash scripts/check-design-tokens.sh",
     "check:content": "node scripts/check-hardcoded-profile.mjs",
+    "build:resume": "node scripts/build-resume-pdf.mjs",
     "check:output": "node scripts/check-build-output.mjs",
     "test:e2e": "playwright test",
     "lhci": "lhci autorun"
