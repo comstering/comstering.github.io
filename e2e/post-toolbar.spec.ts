@@ -120,7 +120,7 @@ test("시리즈가 아닌 글: 시리즈 박스가 없다", async ({ page }) => 
 test("홈 목록 메타에 시리즈 위치가 나온다", async ({ page }) => {
   await page.goto("/");
   const item = page.locator("article", {
-    hasText: "Custom network Kapenter ENI troubleshooting", // 글 제목 그대로(오타 포함)
+    hasText: "Custom network Karpenter ENI troubleshooting", // 글 제목 그대로
   });
   await expect(item).toContainText("series eks 5/5");
 });
