@@ -29,14 +29,14 @@ jobs:
         run: yarn install
 
       - name: Cache optimized images
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: public/_img
           key: img-${{ hashFiles('public/images/**', 'scripts/optimize-images.mjs') }}
 
       # 인기글: 직전 결과를 복원해 두면 통계 API가 실패해도 그 값을 쓴다(실행 끝에 이번 결과가 새 키로 저장된다)
       - name: Restore popular posts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache
           key: popular-${{ github.run_id }}
