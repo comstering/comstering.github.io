@@ -24,6 +24,16 @@ companies:
         points:
           - Debezium MySQL/PostgreSQL Connector 4개 기반의 Kafka Connect로 US몰 DB 변경 데이터를 13개 Topic의 CDC Event로 Kafka Broker에 발행
           - Event 형식을 Avro로 구성하고 데이터엔지니어링팀과 협업하여 Consumer 시스템이 US몰 데이터를 가져갈 수 있는 이벤트 제공 체계 구성
+      - id: us-mall-search-log
+        title: US몰 검색 데이터 적재 아키텍처 재설계
+        period:
+          start: 2026-06
+          end: 2026-07
+        description: US몰 사용자 검색 데이터를 적재·관리하려는 개발팀 요청에 대해 AWS Firehose 기반 설계를 Kafka 기반 구조로 재제안하고 구현
+        points:
+          - 백엔드 서비스가 Avro Event를 Kafka로 발행하고 S3 Sink Connector와 OpenSearch Sink Connector가 각각 적재하는 아키텍처를 제안·구현
+          - Firehose 예상 비용(us-east-1 기준 월 $350~700)을 제거하고 기존 Kafka·Kafka Connect 리소스를 그대로 활용
+          - 7일 retention 기준 2개 Topic에 검색 Event 약 270만 건, 검색어 Event 약 34만 건이 적재되는 규모로 운영
       - id: us-local-e-commerce-launched
         title: CJ 올리브영 US몰 런칭
         period:
