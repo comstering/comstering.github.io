@@ -2,14 +2,14 @@
 
 **프로젝트**: comstering.github.io
 **목적**: DevOps · Cloud Native Engineer 최한수(Comstering)의 개발 블로그와 프로필 사이트
-**마지막 업데이트**: 2026-11-08 (Phase 2 PR-25 작업 시점)
+**마지막 업데이트**: 2026-11-08 (Phase 2 개발 완료·보관 시점)
 
 이 문서는 **요약과 배포 정보**만 담는다. 진행 중인 작업·다음 작업·측정 기준값은 [cowork/develop/STATUS.md](./cowork/develop/STATUS.md), 규칙과 함정은 [.claude/rules/](./.claude/rules/README.md), 결정과 요구사항은 [cowork/prd/](./cowork/prd/README.md)에 있다. 여기에 진행 상황을 복사하지 않는다(어긋난다).
 
 ## 현재 상태
 
 - Phase 0(안정화), Phase 1(읽기 경험)은 끝났다([개발 요약](./cowork/develop/archive/README.md)).
-- **Phase 2(포트폴리오, PRD-004) 진행 중.** About 재작성·검색 팔레트·홈 히어로와 사이드바·`resume.pdf` 생성·인기글(GoatCounter)·SEO(JSON-LD)까지 머지됐고, 남은 것은 PR-25(게이트·문서)다.
+- **Phase 2(포트폴리오, PRD-004) 개발 완료**(PR-18~25, [개발 요약](./cowork/develop/archive/phase2-summary.md)). About 재작성·검색 팔레트·홈 히어로와 사이드바·`resume.pdf` 생성·인기글(GoatCounter)·SEO(JSON-LD)·게이트 기록까지 머지됐다. 남은 것은 작성자의 G2-1 5초 테스트와 PR-24 Rich Results Test. 다음은 Phase 3(기획이 PRD를 쓴 뒤).
 - 디자인은 Terminal Graphite 디자인 시스템([DESIGN.md](./DESIGN.md)), 자동 배포 가동.
 
 ### 기능 개요
