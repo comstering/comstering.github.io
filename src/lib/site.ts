@@ -7,7 +7,7 @@ import { SITE_URL } from "@/lib/site-url";
 export { SITE_URL };
 export const SITE_NAME = loadSite().title;
 export const SITE_DESCRIPTION =
-  "DevOps · Cloud Native Engineer Comstering의 개발 노트. Kubernetes, AWS, 오픈소스 기여와 일하는 방식을 기록합니다.";
+  "실행해 본 것만 기록합니다. DevOps · Cloud Native 개발 블로그. Kubernetes, AWS, Terraform과 오픈소스 기여를 직접 실행하며 정리합니다.";
 
 const profile = loadProfile();
 export const AUTHOR = {

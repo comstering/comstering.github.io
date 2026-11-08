@@ -4,6 +4,7 @@
 //   3) 산출물에 adsbygoogle 문자열이 없음 (AdSense 제거 유지)
 //   4) 빌드 CSS에 무효가 된 font 단축 속성이 없음 (`font:400 var(--x),var(--y)`)
 //   5) 글 본문 이미지가 모두 변환본(/_img)이고 파일이 있으며 200KB 이하, width·height 지정 (G1-5)
+//   6) 홈 WebSite·About Person JSON-LD(worksFor 없음)와 홈 description 길이 80~160자 (PRD-004 5.6)
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -199,6 +200,44 @@ if (!cssText.includes("/_font/pretendard-subset.woff2")) {
   fail("빌드 CSS가 글꼴 서브셋(/_font/pretendard-subset.woff2)을 참조하지 않습니다");
 }
 
+// 6) JSON-LD와 홈 description
+const jsonLdOf = (html, where) => {
+  const found = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  return found.flatMap(([, raw]) => {
+    try {
+      return [JSON.parse(raw)];
+    } catch {
+      fail(`${where}: JSON-LD가 올바른 JSON이 아닙니다`);
+      return [];
+    }
+  });
+};
+
+const homeHtml = read("index.html");
+const webSite = jsonLdOf(homeHtml, "index.html").find((data) => data["@type"] === "WebSite");
+if (!webSite) fail("index.html: WebSite JSON-LD가 없습니다");
+else if (!webSite.name || !String(webSite.url).startsWith(SITE_URL)) {
+  fail("index.html: WebSite JSON-LD의 name 또는 url이 올바르지 않습니다");
+}
+
+const description = homeHtml.match(/<meta name="description" content="([^"]*)"/)?.[1];
+const descriptionLength = description ? [...description].length : 0;
+if (descriptionLength < 80 || descriptionLength > 160) {
+  fail(`index.html: description이 ${descriptionLength}자입니다 (80~160자)`);
+}
+
+const aboutHtml = read("about.html");
+const profilePage = jsonLdOf(aboutHtml, "about.html").find((data) => data["@type"] === "ProfilePage");
+const person = profilePage?.mainEntity;
+if (person?.["@type"] !== "Person") {
+  fail("about.html: ProfilePage > Person JSON-LD가 없습니다");
+} else {
+  for (const key of ["name", "jobTitle", "sameAs", "alumniOf", "hasCredential"]) {
+    if (!person[key] || person[key].length === 0) fail(`about.html: Person.${key}가 비어 있습니다`);
+  }
+  if ("worksFor" in person) fail("about.html: Person.worksFor는 넣지 않습니다 (PRD-004 5.6)");
+}
+
 if (errors.length > 0) {
   console.error(`산출물 검사 실패 (${errors.length}건):`);
   for (const message of errors) console.error(`  - ${message}`);
@@ -208,5 +247,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 고유 PNG 1200×630, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하, 글꼴 서브셋 단일 woff2`,
+  `산출물 검사 통과: 글 ${postFiles.length}편, og:image 고유 PNG 1200×630, rss·sitemap 유효, adsbygoogle 0건, CSS font 단축 속성 정상, 본문 이미지 ${imageCount}개 변환본·200KB 이하, 글꼴 서브셋 단일 woff2, 홈 WebSite·About Person JSON-LD, 홈 description ${descriptionLength}자`,
 );

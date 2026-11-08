@@ -1,6 +1,7 @@
 import "./home.css";
 import { HeroTerminal } from "@/components/home/HeroTerminal";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
+import { JsonLd } from "@/components/JsonLd";
 import { PostsBlock } from "@/components/PostsBlock";
 import { loadSite } from "@/lib/content/profile";
 import { loadSeriesRegistry } from "@/lib/content/registry";
@@ -12,6 +13,7 @@ import {
   pageAlternates,
   pageOpenGraph,
 } from "@/lib/site";
+import { buildWebSiteJsonLd } from "@/lib/structured-data";
 
 export const metadata = {
   alternates: pageAlternates("/"),
@@ -59,6 +61,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <JsonLd data={buildWebSiteJsonLd()} />
       <section className="home__hero hero" aria-labelledby="hero-title">
         <HeroTerminal site={site} />
       </section>
