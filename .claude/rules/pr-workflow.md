@@ -1,5 +1,7 @@
 # 개발 PR 작업 흐름 (반드시 이 순서)
 
+> **개발 세션 전용이다.** 디자인·기획 세션은 이 흐름 대신 [commit-and-pr.md](./commit-and-pr.md)를 따른다.
+
 개발 세션이 PR 하나를 만들 때의 순서다. 작업은 PRD 순서대로 PR 하나씩 하고, 머지 전에 다음 PR로 가지 않는다.
 
 1. `git fetch` 후 `origin/main` 기준으로 새 브랜치 `feat/<주제>`(`git checkout -b feat/<주제> origin/main`). worktree 세션이면 그 worktree 안에서 한다

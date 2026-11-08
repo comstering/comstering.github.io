@@ -39,6 +39,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Claude Code 로컬 파일 (세션 worktree, 개인 설정). 커밋하지 않는다
+/.claude/worktrees/
+/.claude/settings.local.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
