@@ -13,6 +13,7 @@ comstering.github.io 디자인 시스템 (v1.4, Phase 2 반영). UI를 만들거
 | 이름 | comstering |
 | 컨셉 | **Terminal Graphite**. 어두운 그래파이트 위에 형광 그린 커서 하나. "정확하고 조용한" 인상 |
 | 워드마크 | `~/comstering_` (JetBrains Mono 700). 커서 `_`만 accent. 480px 미만에서는 `~/_` |
+| 파비콘 | `c_`(둥근 C + accent 커서). 앱 폴더의 파일 규약 이름 그대로: `src/app/favicon.ico`(16·32px), `icon.svg`, `apple-icon.png`(180px, RGBA). `layout.tsx`에 `icons` 설정을 두지 않는다 |
 | 보이스 | 짧은 존댓말 + 다음 행동. UI 라벨은 영어 소문자 모노(`copy`, `next →`). 대문자 라벨, 느낌표, 사과문체를 쓰지 않는다 |
 
 ### 시그니처 5가지
@@ -160,7 +161,7 @@ comstering.github.io 디자인 시스템 (v1.4, Phase 2 반영). UI를 만들거
 - **skills:** 7그룹(platform / cloud · iac / ci/cd · workflow / data · messaging / auth · security / backend / observability). 그룹과 항목은 `content/profile.yaml`이 원본이다.
 
 ### 인쇄 (`resume.pdf`)
-`/resume` 페이지는 없다. `/about`을 Playwright로 **print 미디어 A4**에 인쇄해 `resume.pdf`를 만든다. 규칙은 한 벌의 `@media print`(`globals.css`)다.
+`/resume` 페이지는 없다. `/about`을 Playwright로 **print 미디어 A4**에 인쇄해 `resume.pdf`를 만든다. 인쇄 레이아웃 규칙은 `about.css` 끝의 `@media print`에 두고, 라이트 토큰 덮어쓰기·숨김(hex 필요)만 `globals.css`에 둔다(`globals.css`에 레이아웃을 두면 나중에 로드되는 `about.css`의 화면 규칙에 덮인다).
 
 | 규칙 | 값 |
 |---|---|
@@ -212,11 +213,11 @@ comstering.github.io 디자인 시스템 (v1.4, Phase 2 반영). UI를 만들거
 
 ## 10. 진행 상황
 
-Phase 0 안정화(PRD-002)를 PR 단위로 진행한다. 이 문서는 PR-0에서 v1.3 기준으로 갱신했다.
+PR 단위로 진행한다. 이 문서는 PR-0에서 v1.3, PR-19에서 v1.4(Phase 2 반영)로 갱신했다.
 
 | PR | 내용 | 상태 |
 |---|---|---|
 | PR-0 ~ PR-5 | 토큰 v1.3, 죽은 코드 정리, frontmatter v2, SEO·RSS·푸터, 서드파티·Giscus, 글 상세 v1.3 | 완료 |
 | PR-6 ~ PR-8 | About·404 토큰 정리, PR CI, 자동 배포 재개 | 완료 |
 | Phase 1 (PR-9 ~ PR-17) | categories 다중화, 본문(코드·콜아웃·표), 글 상단 바(목차·시리즈), 관련 글, 이미지 파이프라인·확대, 글꼴 서브셋, OG 자동 생성, 읽기 진행률, 성능 게이트 | 완료. 측정은 `cowork/develop/CONTEXT.md` 6장 |
-| Phase 2 (PR-18 ~ PR-25) | 데이터 분리, About 다시 그리기, 헤더 검색, 홈 히어로·사이드바, resume.pdf, 인기글, SEO, 게이트 | 진행 중 (PR-18·19 반영) |
+| Phase 2 (PR-18 ~ PR-25) | 데이터 분리, About 다시 그리기, 헤더 검색, 홈 히어로·사이드바, resume.pdf, 인기글, SEO, 게이트 | PR-18~24 완료(검색·히어로·사이드바·resume.pdf·인기글·SEO·파비콘 반영), PR-25 진행 중 |

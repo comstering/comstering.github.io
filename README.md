@@ -91,6 +91,43 @@ draft: true               # 선택. 기본 false
 - **읽기 진행률**: 글 상세 헤더 아래의 얇은 바(CSS만 사용, 지원하지 않는 브라우저에서는 숨김).
 - **링크 검사**: `Links` 워크플로가 매주 월요일에 모든 글의 외부 링크를 검사하고, 깨진 링크가 있으면 이슈를 만듭니다(PR에서는 바뀐 글만, 실패시키지 않음). 예외는 `lychee.toml`.
 
+## 경력 수정 방법
+
+About과 `resume.pdf`는 같은 데이터에서 나옵니다. 코드(`src/`)에 경력 문구를 쓰지 않고 아래 파일만 고칩니다.
+
+| 파일 | 내용 |
+| --- | --- |
+| `content/profile.yaml` | 이름·직함·연락처·소개·기술 스택(7그룹)·학력·자격증 |
+| `content/experience.yaml` | 회사별 프로젝트(`companies`), 오픈소스(`openSource`), 사이드 프로젝트(`sideProjects`) |
+| `content/site.yaml` | 사이트 이름, 홈 히어로 문구 |
+
+1. 파일을 고칩니다. 프로젝트는 `id`(영문 kebab-case, 파일 전체에서 유일), `title`, `description`, `points`(성과 한 줄씩)를 갖고, 기간 `period`는 선택입니다.
+2. 기간은 `YYYY-MM` 문자열입니다. 한 달이면 `start`와 `end`를 같게, 진행 중이면 `end`를 생략하고(화면에는 `now`), 중단 후 재개는 기간을 여러 개로 씁니다. 프로젝트 기간은 회사 기간 안이어야 합니다.
+3. 고친 뒤 확인합니다. 형식이 틀리면 빌드가 실패하고 어느 파일의 어느 항목인지 알려 줍니다.
+
+```bash
+yarn check:content   # src/에 프로젝트 제목이 하드코딩됐는지 검사
+yarn build           # content/*.yaml 검증 포함
+yarn build:resume    # out/resume.pdf 생성 (5쪽 이하·1MB 이하·글자 검색 가능을 검사, Playwright 브라우저 필요)
+```
+
+4. About 데이터를 고쳤으면 `src/lib/site.ts`의 `ABOUT_LAST_MODIFIED`(sitemap의 수정일)도 오늘 날짜로 바꿉니다.
+5. `resume.pdf`는 저장소에 두지 않고 CI와 배포 때 새로 만듭니다. 경력을 고치면 PDF도 자동으로 따라 바뀝니다.
+
+지워진 필드(`featured`, `metric`, `stack`, `relatedPosts`, `capabilities`, `resume`)를 쓰면 이유와 함께 빌드가 실패합니다. About과 글은 서로 링크하지 않습니다.
+
+## 인기글 (GoatCounter 토큰)
+
+홈 사이드바의 인기글은 GoatCounter 통계에서 최근 30일 조회수 상위 5편입니다. `Deploy` 워크플로가 매일 03:00 KST와 `main` push 때 `scripts/fetch-popular.mjs`로 받아 다시 빌드합니다.
+
+1. GoatCounter 사이트 설정의 API 토큰 화면에서 토큰을 만듭니다. 권한은 **`Read statistics`만** 줍니다.
+2. 저장소 Settings → Secrets and variables → Actions에 `GOATCOUNTER_TOKEN`으로 등록합니다.
+3. 배포 로그의 `인기글:` 줄을 봅니다. 성공이면 `인기글: 최근 30일 N편 (…)`, 실패면 `통계를 받지 못했습니다 (원인)`입니다. 403이면 토큰 권한 문제입니다.
+
+- 토큰이 없거나 API가 실패해도 **빌드는 성공**합니다. 직전 결과(Actions 캐시)를 쓰고, 그것도 없으면 인기글 블록이 숨겨집니다.
+- 저장소 활동이 60일 없으면 GitHub이 `schedule`을 끕니다. 그때는 Actions 탭에서 `Deploy`를 수동 실행합니다.
+- 로컬에서 보려면 `.cache/popular.json`에 `{ "items": [{ "id": "<글 id>", "views": 10 }] }`를 직접 만들고 `yarn build`합니다(`.cache/`는 커밋되지 않습니다).
+
 ## 문서
 
 - 디자인 시스템: [DESIGN.md](./DESIGN.md)

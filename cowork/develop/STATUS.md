@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-08 · 기준 커밋 `7b07fbb`(main, #71 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
+_최종 갱신: 2026-11-08 · 기준 커밋 `main`(#75 머지 후) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
 
 이 문서는 **지금 진행 중인 Phase의 상태와 다음 작업**만 담는다. 끝난 Phase는 [archive](./archive/README.md)에 요약돼 있다(Phase 0 안정화, Phase 1 읽기 경험).
 
@@ -10,8 +10,8 @@ _최종 갱신: 2026-11-08 · 기준 커밋 `7b07fbb`(main, #71 머지) · 기�
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | 완료. [요약](./archive/phase0-summary.md) |
 | Phase 1 읽기 경험 (PRD-003) | 완료. [요약](./archive/phase1-summary.md). About 성능·CLS·TBT `warn` 예외는 PR-19까지 |
-| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅, 디자인 36번 반영 ✅, 파비콘 ✅(#68). PR-23(인기글) ✅(#69), PR-24(SEO) ✅(#72). 남은 것: PR-25(게이트·문서) |
-| 지금 막힌 것 | 없음. PR-23의 실제 GoatCounter 응답은 2026-11-08 배포 로그로 확인됐다(`인기글: 최근 30일 5편`). 열린 질문은 Q16, Q18, Q24 |
+| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅, 디자인 36번 반영 ✅, 파비콘 ✅(#68). PR-23(인기글) ✅(#69), PR-24(SEO) ✅(#72). PR-25(게이트·문서) PR 오픈(브랜치 `feat/pr-25-gates`). **Phase 2 마무리는 작성자의 G2-1 5초 테스트(지인 3명)와 PR-24 라이브 Rich Results Test만 남음** |
+| 지금 막힌 것 | 없음. PR-23의 실제 GoatCounter 응답은 2026-11-08 배포 로그로 확인됐다(`인기글: 최근 30일 5편`). 열린 질문은 Q16, Q18, Q24. G2-1은 사람 테스트라 개발이 할 수 없음(방법·기록 표는 루트 `CONTEXT.md`) |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
@@ -21,7 +21,7 @@ _최종 갱신: 2026-11-08 · 기준 커밋 `7b07fbb`(main, #71 머지) · 기�
    - **Chrome:** 이 세션 끝에는 확장은 응답하나 이 세션의 탭 그룹이 없었다. 새 세션은 시작하자마자 `tabs_context_mcp {createIfEmpty:true}`로 탭을 열고, **눈에 보이는 변경은 실제 Chrome으로 매번 확인**한다(메모리 `feedback-verify-in-chrome`). 실제 Chrome 창은 406px 아래로 줄지 않으니 360px은 Playwright Chromium으로 잰다
    - **규칙 위치(2026-11-08):** 코드·접근성 규칙, PR 순서, 함정은 `.claude/rules/`로 옮겼다(`rules/README.md` 표). 새 함정은 거기에 한 줄 추가한다
    - **PR 규칙(메모리에 반영됨):** 작업이 끝나면 커밋·push·PR까지 바로 올리고 후속은 같은 브랜치에 커밋한다. **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(`tools/shoot.mjs`·`publish-shots.sh`). 새 의존성·CI 액션은 먼저 알린다
-2. **PR-25(게이트·E2E J1·5초 테스트·문서)부터.** PRD-004 6장 PR-25 행: E2E J1(G2-4), G2-3 검사, 5초 테스트(G2-1), `README.md`에 "경력 수정 방법"·"인기글 토큰", `DESIGN.md`·`CONTEXT.md` 갱신, G2-1~G2-8 기록. 작성자 확인 대기: PR-24 라이브 Rich Results Test(`/`, `/about`), REQUESTS Q24(기획)
+2. **PR-25 머지 후:** Phase 2는 코드·문서가 끝난다. 작성자 확인 대기: ① G2-1 5초 테스트 3명(루트 `CONTEXT.md` "G2-1 5초 테스트 방법과 결과" 표에 기록, 보여 줄 화면은 PR-25 본문 스크린샷) ② PR-24 라이브 Rich Results Test(`/`, `/about`, 오류 0) ③ REQUESTS Q24(기획). 그다음 Phase 3(탐색·확장)은 기획이 PRD를 쓴 뒤 시작한다(PRD-001 로드맵)
 3. **PR-19에서 남은 확인:** About CLS ≤ 0.1은 CI 3회 중앙값으로 본다(`lighthouserc.json`의 About 예외는 이 PR에서 지웠다). CI가 실패하면 폴백 `@font-face`(`ascent-override`·폴백 목록 확대, 디자인 22번 3장)를 조정하고 결과를 REQUESTS Q16으로 알린다
 4. 작성자 할 일(개발이 기다리는 것): **히어로 안·문구 선택**(디자인 25번 Q1, `index.html?hero=2b` 등으로 비교, PR-21 전), **`GOATCOUNTER_TOKEN` 발급 → 저장소 Secrets 등록**(PR-23 전), `custom-networking-karpenter-eni-troubleshooting.md` 제목 오타 `Kapenter`→`Karpenter`(디자인 25번 Q6, 파일명은 그대로)
 5. 이월(작성자 작업): 카카오·LinkedIn OG 미리보기(LinkedIn Post Inspector는 로그인 필요), Search Console·네이버 sitemap 재제출, 사이트 1차 완성 후 branch protection
@@ -42,7 +42,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 | PR-22 | `resume.pdf` 생성(`scripts/build-resume-pdf.mjs`, CI·배포 단계) | 25번 3장, 32번 "인쇄" | ✅ 머지 | #66 |
 | PR-23 | 인기글 데이터(`scripts/fetch-popular.mjs`, 배포 `schedule` 일 1회, Actions 캐시) | | ✅ 머지, 라이브 5편 확인 | #69 |
 | PR-24 | SEO(JSON-LD `Person` 등) | | ✅ 머지 | #72 |
-| PR-25 | 게이트·E2E J1·5초 테스트·문서 | | ⏳ 대기 | |
+| PR-25 | 게이트·E2E J1·5초 테스트·문서 | | 🔍 PR 오픈(브랜치 `feat/pr-25-gates`), G2-1은 작성자 테스트 대기 | PR 번호는 오픈 후 |
 
 ## 사용자에게 보이는 현재 상태 (라이브 사이트, #57 머지 기준)
 
@@ -69,6 +69,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-08 | **PR-25 구현·PR 오픈.** ① E2E `j1.spec.ts`(G2-4: 홈 → 상단바 about → 회사 바로가기 → resume.pdf 다운로드, 200·`application/pdf`). G2-3 E2E는 PR-19에서 이미 있음 ② `README.md`에 "경력 수정 방법"(파일 3종, 기간 규칙, 검증 명령, `ABOUT_LAST_MODIFIED` 갱신)·"인기글 (GoatCounter 토큰)" 추가 ③ 루트 `CONTEXT.md`에 G2-1~G2-8 게이트 기록(근거 포함) ④ `DESIGN.md`: 파비콘 항목 추가, 인쇄 규칙 위치 정정(`about.css`), 진행 표 갱신 ⑤ **`ABOUT_LAST_MODIFIED`가 2026-04-28로 낡아 있어** 2026-11-08로 갱신(sitemap 수정일, 주석도 content 파일로 정정). 검증: lint·tokens·content·build·output·build:resume(5쪽 550KB)·E2E 265개 통과. **G2-1(사람 5초 테스트)은 못 했다:** 1280×720·360×640 첫 화면 스크린샷을 PR 본문에 붙임. **못 한 것:** CI, 실제 Chrome(화면 변경 없음) | PR-25 머지 후 작성자 G2-1·Rich Results Test |
 | 2026-11-08 | **Actions Node 20 경고 정리 PR.** CI 로그의 `Node.js 20 is deprecated` 경고 원인인 `actions/cache@v4`(ci 1곳, deploy 2곳) → `@v6`, `actions/upload-artifact@v4`(ci 1곳) → `@v7`(둘 다 `action.yml`이 `node24`). 쓰는 입력은 그대로. LHCI의 `GitHub token not set` 경고는 업로드 대상이 `filesystem`이라 상태 체크가 안 돌아 의미 없어 그대로 둠(작성자 결정). **못 한 것:** `deploy.yaml`은 PR에서 안 돌아서 머지 후 첫 배포 로그의 `Cache restored`·`Cache saved`(인기글 캐시)를 확인해야 한다 | PR 머지 후 첫 배포 로그 확인, 이어서 PR-25 |
 | 2026-11-08 | **문서 정리 + experience.yaml 검토 PR.** ① 작성자가 미커밋으로 고친 `content/experience.yaml`(US몰 런칭 프로젝트 추가, Istio ambient mode, `security-ops` 기간 삭제)을 그대로 한 커밋에 넣고, 표기 정리(`CJ 올리브영`, `이커머스`, `마이크로서비스`, `Ambient Mode`)를 다음 커밋으로 분리. ② `.claude/rules` 이관 점검: `pr-workflow`에 `check:content` 누락, 없는 STATUS "시안 대비 차이" 절 참조(ui.md·develop README·CONTEXT 4.5), CONTEXT 6장의 낡은 Lighthouse 설명(About 예외는 PR-19에서 해제), CLAUDE.md 명령·CI·구조 누락, **루트 CONTEXT.md가 2026-10-27(Phase 0, Next 15) 내용**, AGENTS.md가 Next 15.2.4 시절 복사본, README 스택 `Next.js 15` → 수정. ③ E2E `about.spec.ts`의 프로젝트 수 21 하드코딩을 YAML에서 읽도록 변경(프로젝트 추가로 깨졌음). 검증: lint·tokens·content·build·output·build:resume(5쪽 548KB)·E2E 전체. Q22·Q23은 디자인 37번(#70)으로 닫음. **작성자 답 반영:** US몰 `런칭 이후 인프라 장애 0건`, 인프라 항목에 `us-east-1 단일 리전·EKS 1개` 명시, Istio ambient는 필요한 구간에 Waypoint Proxy가 있어 JWT 줄을 `Waypoint Proxy를 추가하고 AuthorizationPolicy로…`로 수정, US몰 기간 겹침은 동시 진행 맞음(그대로). **못 한 것:** CI, 실제 Chrome(화면 변경은 About 경력 항목 1개 추가뿐) | 이 PR 머지 후 PR-25 |
 | 2026-11-08 | **규칙을 `.claude/rules/`로 이동(작성자 요청).** develop CONTEXT 4·4.6·5·7·8·9장, design CONTEXT 5·7장, design README 작업 규칙, prd README 파일명 규칙을 주제별 rules 12개로 옮기고(경로 지정: ui·a11y·css·posts·next-build·e2e·cowork-docs·prd-docs·design-docs, 항상: commit-and-pr·git-shell·pr-workflow) 원래 자리는 링크로 바꿈. **커밋 규칙 확정:** 개발 세션은 묻지 않고 커밋·PR, 디자인·기획 세션은 다른 세션에 넘기는 시점마다 커밋·PR(CLAUDE.md도 수정). design README의 `Cowork` 표기를 `Claude Code`로. **못 한 것:** 새 세션에서 경로 지정 rules가 실제로 불려오는지 확인 | PR 머지 후 STATUS "다음 작업" |

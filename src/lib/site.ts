@@ -18,8 +18,8 @@ export const AUTHOR = {
   email: profile.contacts.email,
 } as const;
 
-// About 데이터(src/app/about)를 수정하면 이 날짜도 함께 갱신한다. (sitemap lastModified)
-export const ABOUT_LAST_MODIFIED = "2026-04-28";
+// About 데이터(content/profile.yaml, experience.yaml)를 수정하면 이 날짜도 함께 갱신한다. (sitemap lastModified)
+export const ABOUT_LAST_MODIFIED = "2026-11-08";
 
 export const DEFAULT_OG_IMAGE = "/og.png";
 
