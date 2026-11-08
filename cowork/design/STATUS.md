@@ -83,6 +83,7 @@ node cowork/design/tools/measure-fallback-cls.mjs about.html   # D-5 CLS(폴백 
 | 날짜 | 내용 |
 |---|---|
 | 2026-10-27 ~ 10-31 | 디자인 검토·답변 이력(시안 v1.0→v1.4, 개발 Q5·Q7~Q10·Q14 답변, PR-9~PR-14 구현 검토, impeccable audit 16/20). 상세는 `archive/phase0-summary.md`, `archive/phase1-summary.md` |
+| 2026-11-08 | **`.claude/rules` 점검(작성자 요청).** 링크·파일 참조 이상 없음. 경로 지정 규칙은 Read·Write·Edit 때 불려오고 Bash는 `cat`·`head`만 해당(공식 문서)임을 확인해 `rules/README.md`에 적음. 이번 세션에서 worktree 안 Edit 때 `prd-docs`·`cowork-docs`가 실제로 불려옴. **작성자 요청으로 PRD-001·004의 옛 문구 "씁니다"를 "기록합니다"로 정정**(기획 폴더지만 작성자 지시, 현재값만 바꾸고 11-05 결정 기록은 유지). **못 한 것:** 새 세션에서 항상 읽히는 규칙 목록 확인, Bash만 쓰는 디자인 작업 경로 |
 | 2026-11-01 | **Phase 0·1 종료·보관.** 요약 2개를 `archive/`에 작성. 원문 01~21번 중 12·19·21번만 `archive/`로 이동, 04·18번은 유지, 나머지 삭제(Git `0012ede`에서 복구). 로컬 세션에서 Chrome 156으로 빌드 산출물 확인, 새 항목 O-8 |
 | 2026-11-02 ~ 11-03 | 기획 재검토(23·24번) 반영, **Phase 2 시안 재작업.** About 전부 펼침·회사 바로가기·밀도 V3(데스크톱 −19%), About 인쇄 `@media print`(A4 5쪽, 22번 `resume.html`은 삭제), 헤더 검색 팔레트(글만, `system/search-index.js`), 홈 히어로 3안+2b·사이드바. D-5 폴백 보정 0.107~0.139 → 0.001~0.003(대역 측정). 22번은 일부 철회, 25번 답변·질문 9건 |
 | 2026-11-04 | 세션 종료 전 인수인계 정리 |
