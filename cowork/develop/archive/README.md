@@ -6,5 +6,6 @@
 | --- | --- | --- | --- |
 | Phase 0 안정화 (PRD-002) | [phase0-summary.md](./phase0-summary.md) | 2026-10-26 ~ 10-28 | #10 ~ #26 |
 | Phase 1 읽기 경험 (PRD-003) | [phase1-summary.md](./phase1-summary.md) | 2026-10-28 ~ 11-01 | #27 ~ #57 |
+| Phase 2 포트폴리오 (PRD-004) | [phase2-summary.md](./phase2-summary.md) | 2026-11-04 ~ 11-08 | #60 ~ #76 |
 
-Phase 2(PRD-004)가 끝나면 같은 형식으로 `phase2-summary.md`를 추가한다.
+Phase 3이 끝나면 같은 형식으로 `phase3-summary.md`를 추가한다.

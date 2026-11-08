@@ -17,13 +17,13 @@
 
 1. 이 문서, [STATUS.md](./STATUS.md), [REQUESTS.md](./REQUESTS.md)
 2. 저장소 `CLAUDE.md`, `DESIGN.md`(토큰 규칙), `README.md`(글 작성 규칙)
-3. 다음 작업의 PRD: 지금은 `cowork/prd/004_portfolio_projects-and-about.md`의 해당 PR 절(0장 확정 요약·결정 상태를 먼저)
+3. 다음 작업의 PRD: `cowork/prd/README.md`의 목록에서 진행 중인 Phase의 PRD(0장 확정 요약·결정 상태를 먼저). 지금은 Phase 3 PRD를 기다리는 중
 4. 구현 전에 **최종 시안의 마크업·CSS와 대조**한다: `cowork/design/site/*.html`, `cowork/design/system/components.css`. 해당 영역의 디자인 답변(`cowork/design/`의 최신 번호 문서)도 읽는다
 5. 메모리(`~/.claude/projects/.../memory/`)의 feedback 항목
 
 ## 3. 이전 Phase 결정
 
-Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 측정 방식, About 예외 등)과 근거는 [archive/phase1-summary.md](./archive/phase1-summary.md) 3·4장, [archive/phase0-summary.md](./archive/phase0-summary.md) 3장에 있다. 글 작성 규칙은 저장소 `README.md`가 기준이다. **새 결정은 해당 Phase의 PRD와 REQUESTS.md에 두고, 이 문서에는 규칙만 적는다.**
+Phase 0·1·2에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 측정 방식, About 데이터·이력서·검색·인기글 등)과 근거는 [archive/phase2-summary.md](./archive/phase2-summary.md) 3장, [archive/phase1-summary.md](./archive/phase1-summary.md) 3·4장, [archive/phase0-summary.md](./archive/phase0-summary.md) 3장에 있다. 글 작성 규칙은 저장소 `README.md`가 기준이다. **새 결정은 해당 Phase의 PRD와 REQUESTS.md에 두고, 이 문서에는 규칙만 적는다.**
 
 ## 4. 규칙은 `.claude/rules/`에 있다
 
