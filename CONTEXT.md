@@ -2,7 +2,7 @@
 
 **프로젝트**: comstering.github.io
 **목적**: DevOps · Cloud Native Engineer 최한수(Comstering)의 개발 블로그와 프로필 사이트
-**마지막 업데이트**: 2026-11-08 (Phase 2 PR-24 머지 시점)
+**마지막 업데이트**: 2026-11-08 (Phase 2 PR-25 작업 시점)
 
 이 문서는 **요약과 배포 정보**만 담는다. 진행 중인 작업·다음 작업·측정 기준값은 [cowork/develop/STATUS.md](./cowork/develop/STATUS.md), 규칙과 함정은 [.claude/rules/](./.claude/rules/README.md), 결정과 요구사항은 [cowork/prd/](./cowork/prd/README.md)에 있다. 여기에 진행 상황을 복사하지 않는다(어긋난다).
 
@@ -19,6 +19,28 @@
 - SEO: `metadataBase`, canonical, OG/Twitter, JSON-LD(글 `BlogPosting`, 홈 `WebSite`, About `ProfilePage > Person`), `/rss.xml`, sitemap
 - 인기글: 배포 워크플로가 GoatCounter 통계(최근 30일)를 하루 한 번 받아 홈 사이드바에 표시
 - 품질: PR CI(`Quality`)가 lint·토큰·콘텐츠·빌드·산출물 검사·E2E·Lighthouse를 돌린다(순서와 기준값은 `cowork/develop/CONTEXT.md` 6장)
+
+## Phase 2 게이트 기록 (PRD-004 3장, 2026-11-08 로컬·CI·라이브 기준)
+
+| 게이트 | 결과 | 근거 |
+| --- | --- | --- |
+| G2-1 채용 5초 테스트 3명 | **미실시(사람 테스트)** | 첫 화면 이름·직함·경력·email·resume.pdf가 1280×720·360×640에서 스크롤 없이 보임은 E2E(`about.spec.ts` 첫 화면)와 스크린샷으로 확인. 지인 3명 결과는 아래 표에 기록 |
+| G2-2 하드코딩 0건, About·PDF 같은 데이터 | 통과 | `yarn check:content`(제목 25개·파일 69개, CI). `resume.pdf`는 `/about`을 인쇄해 만들어 같은 `content/*.yaml`에서 나옴 |
+| G2-3 About ↔ 글 링크 0건 | 통과 | E2E `about.spec.ts` G2-3 |
+| G2-4 J1 시나리오 | 통과 | E2E `j1.spec.ts`: 홈 → 상단바 about → 회사 바로가기 → resume.pdf 다운로드(200, `application/pdf`) |
+| G2-5 성능 차단선·접근성 100·SEO 100, About 예외 해제 | 통과 | CI Lighthouse(PR #74, 3회 중앙값): 홈·About·글 성능 99, 접근성 100, SEO 100, LCP 1.7~1.8s, CLS ≤ 0.03, TBT ≤ 74ms. `lighthouserc.json`에 About 예외 없음(PR-19) |
+| G2-6 resume.pdf | 통과 | `yarn build:resume`: 5쪽·550KB, 글자 412종 검색 가능, 라이트 배경, 쪽 경계 검사. E2E `resume.spec.ts` |
+| G2-7 인기글 | 통과 | 라이브 배포 로그 `인기글: 최근 30일 5편`(2026-11-08, 캐시 복원·저장 포함). 토큰 없음·API 실패에도 빌드 성공은 E2E `popular.spec.ts`(모의 서버) |
+| G2-8 검색 | 통과 | E2E `search.spec.ts`(`⌘K`·`/` → 검색어 → ↓ → Enter, 3개 페이지). 처음 열 때 불러와 Lighthouse 차단선 유지 |
+
+### G2-1 5초 테스트 방법과 결과
+
+- 방법: About 첫 화면(1280×720 PC, 360×640 모바일)을 5초 보여 주고 숨긴 뒤 **이름·직무·연차·연락 방법**을 말하게 한다. 3명 모두 4가지를 말하면 통과.
+- 보여 줄 화면: `yarn build && yarn serve out` 후 `/about`을 해당 크기로 연다(PR-25 본문에 같은 크기의 스크린샷을 붙였다).
+
+| 일시 | 사람(익명) | 기기 | 이름 | 직무 | 연차 | 연락 방법 | 비고 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| | | | | | | | 아직 안 했다 |
 
 ## 알려진 이슈 / 확인 필요
 
