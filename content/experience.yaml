@@ -11,7 +11,7 @@ companies:
         period:
           start: 2026-08
           end: 2026-09
-        description: Bitnami 무료 컨테이너 이미지·Helm Chart 제공 중단(2025.08)에 대응해 Schema Registry를 Apicurio Registry로 전환
+        description: Bitnami 무료 컨테이너 이미지 제공 중단과 Helm Chart 업데이트 중단(2025.08)에 대응해 Schema Registry를 Apicurio Registry로 전환
         points:
           - Operator Lifecycle Manager(OLM)로 OperatorHub의 Apicurio Operator를 Subscription하여 설치하는 Operator Pattern 기반 구성
           - 서울·버지니아 2개 리전의 Topic 407개, Subject 732개, Schema 버전 900개를 모두 마이그레이션하여 Schema 불일치 없이 100% 무중단 전환 완료
