@@ -10,9 +10,10 @@
 
 ## 환경 함정 (worktree 세션 + rtk 훅)
 
-- **`git`이 거부되면** 훅이 `git`을 `rtk git`으로 바꾸고, worktree 격리 가드가 "git을 명시하지 않은 형태"로 보고 막는다. 이때는 `/usr/bin/git`을 직접 쓴다. `rtk proxy git …`도 같은 이유로 막힌다.
-- **`git -C <경로>`는 쓰지 않는다.** 가드가 다른 체크아웃으로 리다이렉트하는 것으로 보고 거부한다. worktree 안에서 옵션 없이 일반 명령을 쓴다.
-- **명령 문자열에 `git`이 들어간 긴 텍스트(heredoc 본문, `github` 포함 경로·URL)를 넣으면** 가드가 같은 이유로 거부한다. PR 본문은 scratchpad(`$CLAUDE_JOB_DIR/tmp`)에 파일로 쓰고 `gh pr create --body-file <경로>`로 넘긴다. 스크립트로 파일을 고칠 땐 Edit 도구를 쓴다.
+- **rtk는 1.1.0 이상(`rtk hook claude` 훅)을 쓴다.** 0.45.0(`rtk-rewrite.sh` 훅)에서는 훅이 `git`을 `rtk git`으로 바꿔 격리 가드가 모든 `git`을 거부했다(`git status`도). 1.1.0에서는 일반 `git`과 `&&` 체인이 통과한다. 다시 거부되면 `brew upgrade rtk`와 `rtk init -g --auto-patch` 뒤 Claude Code를 다시 시작하고, 급하면 `/usr/bin/git`을 직접 쓴다.
+- **명령에 `rtk git …`·`rtk proxy git …`를 직접 쓰지 않는다.** 가드가 "rtk 뒤의 git"을 검증할 수 없다며 거부한다. 그냥 `git …`을 쓰면 훅이 알아서 처리한다.
+- **`git -C <경로>`(`.` 포함)는 쓰지 않는다.** 가드가 다른 체크아웃으로 리다이렉트하는 것으로 보고 거부한다. worktree 안에서 옵션 없이 일반 명령을 쓴다.
+- **명령 문자열에 `git`이 들어간 긴 텍스트(heredoc 본문, `github` 포함 경로·URL)를 넣으면** 가드가 "너무 복잡하다"며 거부한다(rtk와 무관). PR 본문은 scratchpad(`$CLAUDE_JOB_DIR/tmp`)에 파일로 쓰고 `gh pr create --body-file <경로>`로 넘긴다. 스크립트로 파일을 고칠 땐 Edit 도구를 쓴다.
 - **stash는 모든 worktree와 공유된다.** 다른 세션이 pop할 수 있으므로 기본 `git stash`를 쓰지 않는다. 작업을 잠시 치울 땐 임시 WIP 커밋을 쓴다.
 - 이미 worktree 안에 있으면 `EnterWorktree`로 새 worktree를 만들 수 없다. 그 worktree 안에서 `origin/main` 기준 새 브랜치를 만든다.
 
