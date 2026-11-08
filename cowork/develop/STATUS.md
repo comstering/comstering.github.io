@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-07 · 기준 커밋 `e5b46d4`(main, #68 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
+_최종 갱신: 2026-11-08 · 기준 커밋 `e5b46d4`(main, #68 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
 
 이 문서는 **지금 진행 중인 Phase의 상태와 다음 작업**만 담는다. 끝난 Phase는 [archive](./archive/README.md)에 요약돼 있다(Phase 0 안정화, Phase 1 읽기 경험).
 
@@ -16,9 +16,10 @@ _최종 갱신: 2026-11-07 · 기준 커밋 `e5b46d4`(main, #68 머지) · 기�
 ## 다음 작업 (새 세션은 여기서 시작)
 
 1. `git checkout main && git pull`, `gh pr list`로 열린 PR을 본다(tracked 변경이 있으면 `git stash` 후 pull, `git stash -u` 금지).
-   - **로컬 미커밋 파일을 구분한다.** 커밋하지 않는다: 기획·디자인 세션 파일(`cowork/prd/*`, `cowork/design/`의 22~25번·`site/*`·`system/*`·`tools/*`, 작성자가 별도 PR로 올림), `resume.pdf`(2026-11-04 시험 산출물, 6쪽, PR-22에서 빌드 때 자동 생성할 것), `resume.md`(작성자 파일), `.claude/launch.json`. 커밋할 때는 항상 파일을 지정해 `git add`한다
+   - **로컬 미커밋 파일을 구분한다.** 커밋하지 않는다: 기획·디자인 세션 파일(`cowork/prd/*`, `cowork/design/*`, 그 세션이 넘기는 시점마다 직접 PR을 올림), `resume.pdf`(2026-11-04 시험 산출물, 6쪽, PR-22에서 빌드 때 자동 생성할 것), `resume.md`(작성자 파일), `.claude/launch.json`. 커밋할 때는 항상 파일을 지정해 `git add`한다
    - **환경:** Next 16.4.3(Turbopack), React 19.3.1, Tailwind 4.3.3, eslint는 `eslint .` + flat config. `sharp`는 0.33.5 고정. 보류한 메이저: typescript 7, eslint 10, lucide-react 1.x, @types/node 26, sharp 0.35(필요하면 사용자 검토 후 따로)
    - **Chrome:** 이 세션 끝에는 확장은 응답하나 이 세션의 탭 그룹이 없었다. 새 세션은 시작하자마자 `tabs_context_mcp {createIfEmpty:true}`로 탭을 열고, **눈에 보이는 변경은 실제 Chrome으로 매번 확인**한다(메모리 `feedback-verify-in-chrome`). 실제 Chrome 창은 406px 아래로 줄지 않으니 360px은 Playwright Chromium으로 잰다
+   - **규칙 위치(2026-11-08):** 코드·접근성 규칙, PR 순서, 함정은 `.claude/rules/`로 옮겼다(`rules/README.md` 표). 새 함정은 거기에 한 줄 추가한다
    - **PR 규칙(메모리에 반영됨):** 작업이 끝나면 커밋·push·PR까지 바로 올리고 후속은 같은 브랜치에 커밋한다. **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(`tools/shoot.mjs`·`publish-shots.sh`). 새 의존성·CI 액션은 먼저 알린다
 2. **PR-24(SEO)부터**(#69 머지 후). `cowork/prd/004…` 5.6: About `Person` JSON-LD를 `profile.yaml`에서(name, alternateName, jobTitle, sameAs, alumniOf, hasCredential, **`worksFor` 없음**), 홈 `WebSite` JSON-LD(`name: Comstering's Dev Notes`, `url`), 홈 `description`(= `SITE_DESCRIPTION`, RSS에도 쓰임)을 "실행해 본 것만 기록합니다. DevOps · Cloud Native 개발 블로그." + 주제(Kubernetes, AWS, 오픈소스) 한 줄로 80~160자(**문구는 작성자가 `씁니다`→`기록합니다`로 바꿨다**, PRD에 옛 문구가 남아 있음), About 인덱스 `sitemap`은 그대로(`/resume.pdf` 넣지 않음). 수용: Rich Results Test 오류 0(작성자가 확인), `check:output`에 JSON-LD 검사 추가 고려. 현재 `app/about/layout.tsx`의 Person은 `AUTHOR`(site.ts)에서 오고 `alumniOf`·`hasCredential`이 없다
 3. **PR-19에서 남은 확인:** About CLS ≤ 0.1은 CI 3회 중앙값으로 본다(`lighthouserc.json`의 About 예외는 이 PR에서 지웠다). CI가 실패하면 폴백 `@font-face`(`ascent-override`·폴백 목록 확대, 디자인 22번 3장)를 조정하고 결과를 REQUESTS Q16으로 알린다
@@ -68,6 +69,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-08 | **규칙을 `.claude/rules/`로 이동(작성자 요청).** develop CONTEXT 4·4.6·5·7·8·9장, design CONTEXT 5·7장, design README 작업 규칙, prd README 파일명 규칙을 주제별 rules 12개로 옮기고(경로 지정: ui·a11y·css·posts·next-build·e2e·cowork-docs·prd-docs·design-docs, 항상: commit-and-pr·git-shell·pr-workflow) 원래 자리는 링크로 바꿈. **커밋 규칙 확정:** 개발 세션은 묻지 않고 커밋·PR, 디자인·기획 세션은 다른 세션에 넘기는 시점마다 커밋·PR(CLAUDE.md도 수정). design README의 `Cowork` 표기를 `Claude Code`로. **못 한 것:** 새 세션에서 경로 지정 rules가 실제로 불려오는지 확인 | PR 머지 후 PR-24 |
 | 2026-11-07 | **PR-23 구현·PR 오픈(#69).** `scripts/fetch-popular.mjs`: GoatCounter `/api/v0/stats/hits`(Bearer `GOATCOUNTER_TOKEN`, 최근 30일, limit 100, `more`면 `exclude_paths`로 이어 받음)에서 `/posts/<id>`(끝 슬래시·쿼리 정규화, 같은 글 합산) 중 존재하고 draft 아닌 글을 조회수 내림차순(같으면 최신 글 먼저) 5편 → `.cache/popular.json`(`generatedAt`, `items`). **빌드를 절대 막지 않는다**(토큰 없음·API 실패·이상한 응답이면 직전 결과 유지, 없으면 빈 목록, 종료 코드 항상 0, 로그에 토큰 없음). 배포 워크플로: `schedule` 매일 03:00 KST, `actions/cache`로 `.cache` 복원·저장(`popular-<run_id>`, restore-keys `popular-`), `Fetch popular posts` 단계(토큰은 이 단계 env만). CI(PR)에는 넣지 않아 포크·로컬은 빈 목록 → 홈 popular 숨김. E2E `popular.spec.ts`(모의 GoatCounter 서버로 요청 모양·가공·여러 쪽·실패 5종·토큰 비출력·명령 실행 종료 코드, 28개). **못 한 것:** 실제 API 응답 모양 확인(토큰 없이는 401, 문서의 모양을 가정), 첫 배포 로그 | #69 머지 후 PR-24 |
 | 2026-11-07 | **파비콘 `c_` 교체(#68).** 디자인 34번 인수대로 `cowork/design/favicon/final/`의 `favicon.ico`로 `src/app/favicon.ico` 교체, `icon.svg`·`apple-icon.png` 추가(파일 규약 이름 그대로, `layout.tsx`의 `icons` 설정 없이). `yarn build` 후 홈·About·글 HTML에 `rel="icon"`(ico 48x48·svg)·`apple-touch-icon`(180x180) 링크가 생기고 3개 파일이 `out/`에 있음을 확인. E2E `favicon.spec.ts`(3개 페이지의 링크 3종·파일 200·content-type, ICO 구조). **못 한 것:** 실제 Chrome 탭 아이콘(라이트·다크, 16px) 육안 확인 — 확장 프로그램으로 SVG 문서 스크린샷이 시간 초과, 디자인이 확인한다(REQUESTS Q23) | #68 머지 후 PR-23 |
 | 2026-11-07 | **디자인 36번 검토 반영(#67).** ① About 직함: 480px 미만에서 직함 줄을 아바타 행 아래 전폭으로(`display: contents`), 340px 이하는 직함·경력을 줄 단위로 나누고 구분점 숨김(360px 1줄, 320px 2줄) ② About 상단 경로 `~ / about`(`PostPath`에 `section` 옵션, 인쇄에서 숨김) ③ 홈 히어로 위 여백 0(첫 글 제목 하단 1280×720 449px, 360×640 453px, 시안 458/437) ④ 팔레트 닫기 버튼 보이는 글자: 640px 이상 `esc`, 미만 `닫기`(이름 `esc 닫기`는 둘 다 포함) ⑤ 인쇄 순서 문제(36번 3.2)는 PR-22에서 이미 about.css로 옮겨 5쪽(543KB). 36번 표의 의도 값(`.about-section` 16px, `.stack-token` inline 등)을 E2E로 고정. E2E `about.spec.ts`(경로·직함 1줄)·`resume.spec.ts`·`home.spec.ts`(상한 ±20px)·`search.spec.ts` 갱신. **못 한 것:** 실제 Chrome 확인(Playwright만), CI | #67 머지 후 파비콘, PR-23 |

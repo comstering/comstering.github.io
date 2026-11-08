@@ -10,8 +10,8 @@
 - 저장소: `comstering.github.io` (public). Next.js 16(Turbopack) 정적 export, GitHub Pages. 한국어 블로그 + 포트폴리오.
 - 세 세션이 나눠서 일한다. **기획**(`cowork/prd`), **디자인**(`cowork/design`), **개발**(이 폴더, Claude Code). 개발은 기획·디자인이 확정한 것만 구현한다. 확정 전 내용은 구현 기준이 아니다.
 - 작성자(사용자)가 PR을 직접 머지한다. 머지하고 "pull하고 다음 작업"이라고 말하면 아래 5장 흐름대로 다음 PR로 간다.
-- **`cowork/develop/`는 저장소에 커밋해서 관리한다**(2026-10-28 작성자 결정). 작업 PR에 같이 넣는다: STATUS·REQUESTS 갱신분이 코드와 한 PR에 들어가야 이력이 맞는다. `cowork/prd`·`cowork/design`은 기획·디자인 세션 몫이라 작성자가 별도 PR로 올린다. 개발 세션은 이 둘을 읽기만 하고 커밋하지 않는다.
-- `.claude/launch.json`, `resume.md`, 다른 세션이 남긴 미커밋 변경(예: `CLAUDE.md` 일부)은 작성자 파일이므로 건드리지 않고 `git add`에 포함하지 않는다. 커밋할 때는 항상 파일을 지정해서 `git add`한다(`git add -A` 금지).
+- **`cowork/develop/`는 저장소에 커밋해서 관리한다**(2026-10-28 작성자 결정). 작업 PR에 같이 넣는다: STATUS·REQUESTS 갱신분이 코드와 한 PR에 들어가야 이력이 맞는다. `cowork/prd`·`cowork/design`은 기획·디자인 세션이 넘기는 시점마다 직접 PR을 올린다. 개발 세션은 이 둘을 읽기만 하고 커밋하지 않는다.
+- **개발 세션은 작업이 끝나면 묻지 않고 커밋 → push → PR까지 한다**(2026-11-08 작성자 결정). 규칙은 [`.claude/rules/commit-and-pr.md`](../../.claude/rules/commit-and-pr.md), 커밋할 파일 고르는 법은 [`git-shell.md`](../../.claude/rules/git-shell.md).
 
 ## 2. 읽는 순서 (새 세션)
 
@@ -25,15 +25,22 @@
 
 Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 측정 방식, About 예외 등)과 근거는 [archive/phase1-summary.md](./archive/phase1-summary.md) 3·4장, [archive/phase0-summary.md](./archive/phase0-summary.md) 3장에 있다. 글 작성 규칙은 저장소 `README.md`가 기준이다. **새 결정은 해당 Phase의 PRD와 REQUESTS.md에 두고, 이 문서에는 규칙만 적는다.**
 
-## 4. 코드 규칙과 알아 둘 구조
+## 4. 규칙은 `.claude/rules/`에 있다
 
-- UI는 `DESIGN.md` 토큰만 쓴다. hex, `dark:` 색, Tailwind 기본 팔레트(`gray-*` 등)는 `yarn check:tokens`가 실패시킨다. 글 목록은 세로 리스트(카드 그리드 금지)
-- 글: `posts/*.md`(파일명=URL), frontmatter는 `src/lib/content/schema.ts`의 zod가 빌드 때 검증. 태그는 `content/tags.yaml`, 시리즈는 `content/series.yaml`(label 8자 이하)
-- 본문 파이프라인: `src/lib/posts.ts`(remark → rehype). 코드 블록은 `src/lib/content/rehype-code-meta.ts`, 콜아웃·표는 `rehype-article-blocks.ts`, 아이콘은 `hast-icons.ts`. 코드 복사 클릭은 `PostContent.tsx`에서 이벤트 위임
-- **이미지**: 원본은 `public/images`(git), `yarn build`/`yarn dev` 전에 `scripts/optimize-images.mjs`가 sharp로 `public/_img/*.webp`(git 제외)와 `manifest.json`을 만든다. 본문 `<img>`는 `rehype-images.ts`가 변환본·`width`/`height`·lazy·확대 표시를 채우고, `postbuild`(`prune-output.mjs`)가 배포물에서 본문 원본을 뺀다. 새 이미지는 `public/images/posts/contents/<slug>/`에 PNG/JPG로 두면 된다. 변환 방식을 바꾸면 `PIPELINE_VERSION`을 올린다. `thumbnails/`는 변환하지 않는다(PR-15 전까지 og:image)
-- 홈 필터는 `PostsBlock.tsx`(Suspense 폴백이 전체 목록이라 정적 HTML에 14편이 모두 들어간다)
-- 정적 export 제약: 서버 기능·런타임 searchParams 없음. `useSearchParams`는 `<Suspense>` 안에서만
-- 커밋·PR 문체: `feat:/fix:/refactor:/chore:` + 영어 제목, 본문은 한국어. 커밋 끝에 `Co-Authored-By`·`Claude-Session` 줄, PR 본문 끝에 `🤖 Generated with [Claude Code]` + 세션 링크(세션이 알려 주는 값을 쓴다)
+매번 지켜야 하는 코드 규칙·접근성 규칙·PR 순서·함정은 2026-11-08부터 [`.claude/rules/`](../../.claude/rules/README.md)에 있다. Claude Code가 자동으로 읽는다(경로가 지정된 파일은 그 경로를 다룰 때만). 이 문서에는 역할·읽는 순서·명령·기준값만 남긴다.
+
+| 주제 | 파일 |
+| --- | --- |
+| 커밋·PR 시점 | [commit-and-pr.md](../../.claude/rules/commit-and-pr.md) |
+| git·셸, 커밋·PR 문체 | [git-shell.md](../../.claude/rules/git-shell.md) |
+| PR 작업 순서, 검증, 스크린샷 | [pr-workflow.md](../../.claude/rules/pr-workflow.md) |
+| 디자인 토큰, 레이아웃, 시안 대조 | [ui.md](../../.claude/rules/ui.md) |
+| 접근성 | [a11y.md](../../.claude/rules/a11y.md) |
+| CSS 함정 | [css.md](../../.claude/rules/css.md) |
+| 글·이미지·본문 파이프라인 | [posts.md](../../.claude/rules/posts.md) |
+| Next 16·정적 export·의존성 | [next-build.md](../../.claude/rules/next-build.md) |
+| E2E·CI 함정 | [e2e.md](../../.claude/rules/e2e.md) |
+| cowork 문서 공통 | [cowork-docs.md](../../.claude/rules/cowork-docs.md) |
 
 ## 4.5 기록 규칙 (매번)
 
@@ -43,17 +50,11 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 | 머지 확인("pull") 때 | STATUS.md 진행 표 | ✅ 머지로 바꾸고 기준 커밋·"한눈에 보기" 갱신 |
 | 디자인·기획에 묻거나 답을 받을 때 | REQUESTS.md | 질문 번호 추가, 답이 오면 closed |
 | 시안과 다르게 구현했거나 동작이 바뀔 때 | STATUS.md "시안 대비 차이" / 별도 확인 요청 절 | 항목·이유 |
-| 새 함정·명령·규칙을 알았을 때 | CONTEXT.md 6~8장 | 한 줄 추가 |
+| 새 함정·규칙을 알았을 때 | 맞는 `.claude/rules/*.md` (없으면 새 파일 + `rules/README.md` 표) | 한 줄 추가 |
+| 새 명령·기준값을 알았을 때 | 이 문서 6장 | 한 줄 추가 |
 | 세션을 끝내거나 사용자가 자리를 비울 때 | STATUS.md "세션 기록" | 한 일, 남은 일, 다음에 바로 할 첫 명령 |
 
 기록 위치는 이 폴더(`cowork/develop`)다. 기획·디자인 문서(`cowork/prd`, `cowork/design`)는 그쪽 세션이 쓴다. 개발은 거기서 읽기만 하고 필요한 요청은 REQUESTS.md에 적는다.
-
-## 4.6 접근성 규칙 (디자인 19번 Q9)
-
-- 글자색을 `opacity`로 낮추지 않는다. 토큰(`text-mute` 등)을 쓴다(대비 4.5:1). 장식(`aria-hidden`)은 예외
-- 버튼의 접근 가능한 이름은 **보이는 글자를 포함**한다. 보이는 글자와 다른 `aria-label`을 붙이지 않는다(WCAG 2.5.3)
-- 제목 단계를 건너뛰지 않는다(h2 다음 h4 금지). 시각 크기는 클래스로 정하고 태그는 구조대로 쓴다
-- `e2e/accessibility.spec.ts`가 위 규칙을 검사한다. Lighthouse 접근성 100은 CI에서 `error`
 
 ## 4.7 개발에서 쓸 수 있는 skill (프로젝트 `.claude/skills/`, 목록·복구는 저장소 `SKILLS.md`)
 
@@ -66,18 +67,11 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 | Tailwind v4 토큰·컴포넌트 패턴 | `tailwind-design-system` (토큰 이름·값은 `DESIGN.md`가 기준) |
 | 일회성 스크립트 점검(스크린샷·콘솔 로그) | `webapp-testing` (Python Playwright라 `pip install playwright` 필요, 설치 전 사용자에게 알린다) |
 
-새 skill은 설치 전에 내용을 읽고 `SKILLS.md`에 검토 결과를 적는다. 설치는 `npx skills add <repo> --skill <이름> --agent claude-code -y`를 **한 번에 하나씩** 직접 실행한다(zsh는 변수를 공백으로 나누지 않아 반복문으로 돌리면 명령이 깨진다).
+새 skill은 설치 전에 내용을 읽고 `SKILLS.md`에 검토 결과를 적는다. 설치는 `npx skills add <repo> --skill <이름> --agent claude-code -y`를 **한 번에 하나씩** 직접 실행한다([git-shell.md](../../.claude/rules/git-shell.md)).
 
-## 5. PR 작업 흐름 (반드시 이 순서)
+## 5. PR 작업 흐름
 
-1. `git checkout main && git pull`, 새 브랜치 `feat/<주제>`. 이전 PR이 머지되기 전에는 그 브랜치 위에서 이어 가지 않는다(파일이 겹침)
-2. STATUS.md의 "다음 작업" 절 + PRD 해당 PR 절 + 최종 시안을 읽는다
-3. 구현
-4. 검증(전부): `yarn lint` → `yarn check:tokens` → `yarn build` → `yarn check:output` → `yarn build:resume`(PDF 생성, Playwright 브라우저 필요) → `yarn test:e2e`(**build·build:resume 후**, `out/`을 띄운다). 새 기능에는 E2E를 같이 추가한다
-5. **화면이 바뀌는 PR은 PC·Mobile 스크린샷을 PR 본문에 넣는다**(7장). CI·문서만 바뀌는 PR은 생략
-6. 커밋 → push → `gh pr create`. CI(`Quality`)가 돌고 Lighthouse 점수 댓글이 자동으로 달린다
-7. **기록**: STATUS.md(진행 표, 다음 작업, 세션 기록), REQUESTS.md 갱신(4.5장). 사용자가 시키지 않아도 한다
-8. 작업자에게 보고: 한 일 / 검증 결과 / 못 한 것 / 디자이너·기획이 봐야 할 것 / 다음 작업. 머지는 기다린다
+[`.claude/rules/pr-workflow.md`](../../.claude/rules/pr-workflow.md)를 따른다(main pull → 브랜치 → 구현 → 검증 전부 → 스크린샷 → 커밋·PR → 기록 → 보고).
 
 ## 6. 명령과 CI
 
@@ -99,52 +93,23 @@ node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 
 ## 7. 스크린샷·브라우저 확인 방법
 
-- **실제 Chrome(Claude in Chrome) 확인이 원칙**이다. 도구 `mcp__claude-in-chrome__*`가 세션에 있으면 ToolSearch로 불러서 PC 폭·모바일 폭·콘솔 에러를 확인한다(자세한 요령은 메모리 `feedback-verify-in-chrome`). 도구가 없으면 Playwright Chromium으로 확인하고 **PR 본문에 "실제 Chrome 확인은 못 했다"고 적는다**
-- 스크린샷은 `yarn dev`가 아니라 **정적 빌드**로 찍는다(dev는 draft를 보여 줌)
-
-```bash
-yarn build && (yarn serve out -l 4000 --no-clipboard &)
-node cowork/develop/tools/shoot.mjs /tmp/shots-<PR> home=/ post=/posts/<slug>@h1   # 이름=경로[@선택자] → <이름>-pc.png / -mobile.png
-pkill -f "serve out"
-cowork/develop/tools/publish-shots.sh <PR번호> /tmp/shots-<PR>   # pr-screenshots 브랜치에 올리고 raw URL 기준 출력
-```
-
-- PR 본문 표: `| | PC | Mobile |` 행마다 `![](<URL>/<이름>-pc.png)`. 다시 올릴 땐 `?v=2`로 캐시를 피한다
-- 기존 글에 없는 요소(콜아웃, `$ ` 셸 등)는 `posts/zz-preview.md` 같은 **임시 글**을 만들어 찍고 **커밋 전에 지운다**(`git status`로 확인)
-- 임시 파일은 세션 scratchpad나 `/tmp`에 둔다. 세션이 끝나면 scratchpad는 사라진다
+[`.claude/rules/pr-workflow.md`](../../.claude/rules/pr-workflow.md)의 "화면 확인과 스크린샷"에 있다. 도구는 `tools/shoot.mjs`, `tools/publish-shots.sh`.
 
 ## 8. 함정 (겪은 것)
 
-- **CSS `font:` 단축 속성에 `var()`를 여러 개 쓰지 않는다.** 빌드 CSS 압축이 `font:400 var(--a),var(--b)`로 쉼표를 끼워 넣어 선언이 통째로 무효가 된다(dev 서버에서는 정상으로 보여 PR 스크린샷으로는 안 잡힌다, PR-12). `font-family`·`font-size`·`font-weight`로 나눠 쓴다. `check:output`이 빌드 CSS에서 이 패턴을 잡는다
-- **화면 확인은 `yarn build` 결과(`out/`)로 한다.** dev 서버와 빌드 CSS가 다를 수 있다
-- **`sharp`는 0.33.5로 고정한다(`--exact`).** Next.js가 자체로 `sharp@^0.33.5`를 선택 의존성으로 가져와서, 새 버전(0.35.x)을 같이 설치하면 libvips 버전 두 개가 한 `node_modules/@img` 아래 섞여 **리눅스 CI에서만** `libvips-cpp.so: cannot open shared object file`로 빌드가 실패한다(맥에서는 통과해서 PR #38 첫 CI가 실패함). 올리려면 Next가 쓰는 버전과 함께 올릴 때 리눅스 CI로 확인한다
-- **CI에서만 나오는 문제가 있다.** 리눅스 CI Lighthouse는 맥 로컬과 글꼴·CPU가 달라 CLS가 다르게 나온다(About 로컬 0 vs CI 0.125). Lighthouse 단계를 `error`로 올리기 전에 CI 결과를 본다. 리포트는 아티팩트 `e2e-lighthouse-reports`(`.lighthouseci`)에서 받는다(`gh run download <run> -n e2e-lighthouse-reports`)
-- **전역 `:focus-visible`(globals.css)은 Tailwind 레이어 밖이라 `outline-none` 유틸리티가 안 먹는다.** 포커스 링을 끄려면 `globals.css`에 일반 CSS 규칙(예: `.post-link:focus-visible`)을 추가한다
-- **링크가 `::before`로 행 전체를 덮으면** Playwright `locator.click()`이 대상이 가로채였다며 30초를 기다린다. 좌표(`page.mouse.click`)로 누른다
-- **여러 세션이 같은 문서(REQUESTS.md)에 질문 번호를 붙이면 충돌한다.** 새 번호를 쓰기 전에 `git fetch` 후 `origin/main`의 마지막 번호를 확인한다
-- **실험 결과를 저장소 안 폴더에 남기지 않는다.** `.lighthouseci`처럼 다른 세션이 읽는 폴더에 실험(글꼴 2MB 등) 측정을 남겼다가 기획이 그 값(성능 56)을 근거로 삼았다(Q11). 실험은 scratchpad 경로로 출력하고, 끝나면 정상 빌드로 다시 측정해 둔다
-- **STATUS.md를 구간(`s.index(a)`~`s.index(b)`)으로 통째로 바꾸면 그 사이 절이 지워진다.** PR-13 때 "다음 작업"~"PR-13 동작" 사이의 PR 표·현재 상태·측정값 절이 사라졌고 PR #47 전까지 모르고 있었다. 치환 전에 구간 안에 있는 `## ` 제목을 출력해 보고, 바꾼 뒤에는 `grep -n "^## " STATUS.md`로 절 목록을 확인한다
-- **`git stash -u`를 쓰지 않는다.** 작성자의 미추적 파일(`resume.md`, `.claude/launch.json`)까지 stash에 들어간다(한 번 겪고 `stash pop`으로 복구). 작업 중 브랜치를 옮길 땐 먼저 커밋하고 `git rebase --onto`를 쓴다
-- 셸 heredoc에 백틱이 든 텍스트를 넣을 땐 `<<'EOF'`(따옴표)로 쓴다. 안 그러면 셸이 백틱 안을 실행한다
+겪은 함정은 다룰 파일에 맞춰 `.claude/rules/`에 나눠 두었다. 새 함정도 거기에 한 줄 추가한다(4.5장).
 
-- **`overflow-x-auto` 컨테이너는 안쪽 요소의 `::after` 히트 영역 확장을 위아래로 잘라 낸다**(overflow-y도 auto가 됨). 칩 줄에 `py-1.5 -my-1.5`로 여유를 줘서 해결(Q14). **그리드·플렉스 자식에는 `min-w-0`**을 붙인다. 안 붙이면 글자를 키울 때 내용 폭만큼 늘어나 가로 넘침이 난다(About 카드 185px). 확인은 E2E `글자 200%에서 가로로 넘치지 않는다`와 Chrome에서 `html{font-size:200%}` 주입
-- 헤더는 `flex-wrap`이라 360px·글자 200%에서 세 줄(약 217px)로 접힌다. 진행률 바는 `top: var(--header-h)`(64px) 고정이라 이때는 헤더 안쪽에 겹친다(가장자리 경우라 두었다)
-- macOS `sed -i`는 `sed -i '' 's/…/…/'` 형식이어야 한다. 실패하면 `&&` 뒤 명령이 안 돈다
-- hast 속성 값은 문자열이어야 한다(`strokeWidth: "2"`). 숫자를 넣으면 `next build`가 타입 오류
-- `output: "export"`라 `generateStaticParams`에 없는 경로는 404. `dynamicParams = false`
-- E2E는 `out/`을 쓰므로 코드를 고치고 `yarn build` 없이 테스트하면 이전 결과로 돈다
-- 시안에 있는 클래스·마크업을 먼저 대조하지 않으면 PR 후에 시안과 어긋난 곳이 나온다(PR-11에서 겪음: 아이콘·`warning` 라벨·`$ ` 프롬프트 분리·표 흐림 방향)
-- `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 현재 PRD(004)와 `cowork/design/`의 최신 번호 문서를 기준으로 본다
+- CSS(`font:` 단축 속성, 전역 `:focus-visible`, `overflow-x-auto`, 인쇄 CSS 순서) → [css.md](../../.claude/rules/css.md)
+- 레이아웃(`min-w-0`, 헤더 줄바꿈), 시안 대조 → [ui.md](../../.claude/rules/ui.md)
+- sharp 고정, react-icons, Next 16 린트·RGBA PNG, 정적 export, 인기글 → [next-build.md](../../.claude/rules/next-build.md)
+- E2E `out/` 재빌드, `::before` 클릭, 하이드레이션 재시도, CI 전용 CLS → [e2e.md](../../.claude/rules/e2e.md)
+- hast 속성 문자열 → [posts.md](../../.claude/rules/posts.md)
+- `git stash -u`, REQUESTS 번호 충돌, 실험 결과 위치, macOS `sed`, heredoc → [git-shell.md](../../.claude/rules/git-shell.md)
+- STATUS.md 구간 치환 → [cowork-docs.md](../../.claude/rules/cowork-docs.md)
 
 ## 9. 작성자 선호
 
 - 한국어로, 간결하게 보고한다. 결과를 숨기지 않는다: 실패·못 한 것·확인 안 된 것은 그대로 쓴다
 - 작업은 PRD 순서대로 PR 하나씩. 머지 전에 다음 PR로 가지 않는다
+- 작업이 끝나면 묻지 않고 커밋·PR까지 올린다. 머지는 작성자가 한다
 - 새 skill·전역 도구는 설치 전에 확인받는다(`SKILLS.md`). 외부 서비스로 내보내는 작업도 먼저 묻는다
-- **Next 16 이후(2026-11-01)**: `next lint`가 없다. `yarn lint`는 `eslint .`이고 설정은 `eslint.config.mjs`(flat, `eslint-config-next/core-web-vitals`·`typescript`)다. 린트 제외는 그 파일의 `ignores`에 쓴다. 빌드는 Turbopack이 기본이라 `src/app/favicon.ico`처럼 앱 폴더의 이미지는 **RGBA PNG**여야 한다(팔레트 PNG는 "The PNG is not in RGBA format"으로 실패). `useEffect` 안에서 바로 `setState`하면 `react-hooks/set-state-in-effect`로 린트 실패한다(mounted 플래그는 `useSyncExternalStore`). `tsconfig.json`은 Next가 `yarn build` 때 자동으로 고친다
-- **react-icons 5.7**에서 `SiAmazon`·`SiLinkedin` 같은 브랜드 아이콘이 `react-icons/si`에서 제거됐다. 쓰기 전에 `grep -o "SiXxx" node_modules/react-icons/si/index.d.ts`로 있는지 본다(대체: `react-icons/fa`의 `FaAws`·`FaLinkedin`)
-- **claude chrome 확장이 안 될 때**: 이 프로젝트의 화면 확인은 `cowork/develop/tools/shoot.mjs`(Playwright Chromium)로 하고 PR 본문에 실제 Chrome이 아니라고 밝힌다
-- **페이지 CSS(`about.css`·`home.css`)는 `globals.css`보다 나중에 로드돼 같은 선택자 우선순위면 이긴다.** 인쇄(`@media print`) 레이아웃 규칙을 globals.css에 두면 화면 규칙에 덮여 시안 크기가 안 먹는다(PR-22에서 쪽 수가 6쪽으로 나온 원인). 인쇄 레이아웃은 `about.css` 끝의 `@media print`에, 라이트 토큰 덮어쓰기·숨김(hex 필요)만 globals.css에 둔다
-- **홈 글 목록은 하이드레이션 때 정적 HTML에서 클라이언트 렌더로 교체된다**(`useSearchParams`). 교체 직전 요소를 재면 `boundingBox()`가 null이라 E2E가 간헐 실패하므로 위치·크기 검사는 `expect(async () => …).toPass()`로 통째로 재시도한다(PR-21 CI)
-- **인기글(`scripts/fetch-popular.mjs`)은 배포 워크플로에서만 돈다**(PR CI·로컬은 토큰이 없어 `.cache/popular.json`이 비어 홈 popular 블록이 숨겨진다). 로컬에서 보려면 `.cache/popular.json`에 `{ "items": [{ "id": "<글 id>", "views": 10 }] }`를 직접 만들고 `yarn build`(`.cache/`는 gitignore). GitHub는 저장소 활동이 60일 없으면 `schedule`을 끈다 → 그때는 Actions 탭에서 Deploy를 수동 실행한다
-

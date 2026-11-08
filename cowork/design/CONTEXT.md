@@ -74,12 +74,11 @@
 
 ## 5. 코드 규칙 (시안과 구현 공통)
 
-- 색은 토큰만 쓴다. hex, `dark:` 색상 클래스, Tailwind 기본 팔레트(`gray-*`, `sky-*` 등)는 금지. 구현 쪽 `yarn check:tokens`가 `src/`에서 검사한다.
-- 시안은 `system/`의 토큰·컴포넌트만 쓴다. 시안 표시는 `.ph` 클래스(구현에서는 검사에 걸리므로 시안 단계에만 쓴다).
-- 모든 시안은 360px에서 가로 넘침 0. 터치 대상은 가능하면 44px.
-- `<img>`에는 `alt`를 둔다(장식은 `alt=""`). h1은 화면당 1개.
-- PRD 기능 ID(F-PO-03 등)와 문제 ID(P1 등)를 그대로 인용한다. 디자인 문서 번호는 `12번 E1`처럼 쓴다.
-- 접근성: 글자색을 `opacity`로 낮추지 않는다(`mute`는 6.53:1, `opacity 0.7`이면 3.73:1로 AA 미달). 버튼의 접근 가능한 이름(`aria-label`)은 보이는 글자를 포함해야 한다. 제목 단계(`h2`→`h3`)를 건너뛰지 않는다.
+2026-11-08부터 [`.claude/rules/`](../../.claude/rules/README.md)에 있다. 디자인 세션도 Claude Code라 자동으로 읽힌다.
+
+- 토큰·레이아웃·시안 규칙 → [ui.md](../../.claude/rules/ui.md)
+- 접근성(opacity 금지, 보이는 글자를 포함한 이름, 제목 단계) → [a11y.md](../../.claude/rules/a11y.md)
+- 번호 문서·README 목록·인용 규칙 → [design-docs.md](../../.claude/rules/design-docs.md), [cowork-docs.md](../../.claude/rules/cowork-docs.md)
 
 ## 6. 검증하는 법
 
@@ -96,12 +95,9 @@ node cowork/design/tools/check-site.mjs <스크린샷 저장 폴더>
 
 ## 7. 작업 규칙
 
-(이 규칙의 원본은 저장소 `/CLAUDE.md`의 "세션별 기록 (cowork)" 절이다. 세션 시작 때 자동으로 읽힌다.)
+(세션별 기록 원칙은 저장소 `/CLAUDE.md`의 "세션별 기록 (cowork)" 절, 문서 규칙은 [design-docs.md](../../.claude/rules/design-docs.md)에 있다. 둘 다 세션 시작 때 자동으로 읽힌다.)
 
 1. **작업이 끝날 때마다 STATUS.md를 갱신한다**(할 일 체크, 변경 이력 한 줄, 최종 갱신 날짜). 세션이 갑자기 끝나도 다음 세션이 이어갈 수 있어야 한다.
 2. 새 질문·답변은 `NN-주제.md`로 추가하고 `README.md` 파일 목록에 한 줄 넣는다. 이 폴더의 답은 개발 쪽 `REQUESTS.md`에 **번호만 링크**한다(개발의 규칙).
 3. 결정이 바뀌면 이 문서 4장도 고친다.
-4. 확인하지 못한 것은 "못 했다"고 적는다. 측정값에는 환경(로컬 서버, 브라우저)을 같이 적는다.
-5. 기획 결정이 필요한 것은 사용자에게 알리고, 문서에는 "기획 결정 대기"로 표시한다.
-6. 저장소에 쓰지 않고 한 시안·측정은 재현할 수 있게 방법을 문서에 적는다.
-7. `cowork/`(prd·design·develop)는 저장소에 커밋한다(PR #32로 prd·design, #33으로 develop). 저장소가 public이므로 비밀·연락처·내부 수치는 쓰지 않는다. 커밋·푸시는 사용자가 요청할 때만 한다. 개발 세션이 같은 작업 폴더를 쓰는 중이면 브랜치를 바꾸지 말고 `origin/main` 기준 별도 `git worktree`에서 PR을 만든다.
+4. **다른 세션에 문서를 넘기는 시점마다 묻지 않고 커밋 → push → PR을 연다**(2026-11-08 작성자 결정). 언제가 넘기는 시점인지, 개발 세션과 작업 폴더가 겹칠 때 worktree를 쓰는 법은 [commit-and-pr.md](../../.claude/rules/commit-and-pr.md).
