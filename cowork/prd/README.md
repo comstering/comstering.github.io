@@ -10,8 +10,8 @@ comstering.github.io를 발전시키기 위한 기획서를 모아 두는 곳이
 
 | ID | 파일 | 영역 | 제목 | 상태 |
 | --- | --- | --- | --- | --- |
-| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v2.1 | active |
-| PRD-004 | [004_portfolio_projects-and-about.md](./004_portfolio_projects-and-about.md) | portfolio | Phase 2 포트폴리오 (About 강화·이력서 PDF·홈 블로그 정비·검색) | approved (11-02 최종) |
+| PRD-001 | [001_site_master-plan.md](./001_site_master-plan.md) | site | 전체 기획서 (마스터 PRD) v2.3 | active |
+| PRD-005 | [005_discovery_search-and-tags.md](./005_discovery_search-and-tags.md) | discovery | Phase 3 탐색 (태그·시리즈 페이지, 한글 검색) | review |
 
 ### 보관 (archive)
 
@@ -20,9 +20,8 @@ comstering.github.io를 발전시키기 위한 기획서를 모아 두는 곳이
 | 파일 | 내용 |
 | --- | --- |
 | [archive/phase-0-1_summary.md](./archive/phase-0-1_summary.md) | Phase 0~1 요약: 유효한 결정, 콘텐츠 규칙, 품질 기준, 게이트 결과, 철회한 결정, 협업 방식, Phase 2로 넘어간 것 |
+| [archive/phase-2_summary.md](./archive/phase-2_summary.md) | Phase 2(포트폴리오) 요약: 유효한 방향(홈=블로그, About=경력), 데이터 규칙, 화면 결정, 게이트 결과, 철회한 결정, 협업 방식 변화, Phase 3로 넘어간 것. 원문 PRD-004는 2026-11-08 삭제 |
 
-### 작성 예정 (마스터 PRD 로드맵 기준)
+### 작성 예정
 
-| 예정 파일명 | 로드맵 단계 |
-| --- | --- |
-| `005_discovery_search-and-tags.md` | Phase 3 탐색(태그 페이지, 검색 초성·별칭. 검색 팔레트 본체는 Phase 2로 이동). **작성 전에 작성자에게 먼저 물을 것: ① 커스텀 도메인 사용 여부 ② 영문 About 필요 여부** (2026-10-31 약속) |
+없음. Phase 3 이후는 PRD-001 7장 백로그와 분기 KPI 점검으로 정한다.

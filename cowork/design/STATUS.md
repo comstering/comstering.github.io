@@ -67,4 +67,4 @@ node cowork/design/tools/measure-about-first.mjs                # About 첫 화�
 | 2026-11-01 | Phase 0·1 종료·보관. 원문 01~21번 중 12·19·21번만 `archive/`에 남김 |
 | 2026-11-02 ~ 11-07 | Phase 2 이력(재검토 반영, 히어로 확정, About 현재 회사 제거, 홈 OG B, `DESIGN.md` 반영안, 개발 인수, 파비콘 C `c_`, 개발 Q19~Q23 답변·PR-19~22 검토). 상세는 `archive/phase2-summary.md` |
 | 2026-11-08 | `.claude/rules` 점검: 링크·참조 이상 없음, 경로 지정 규칙은 Read·Write·Edit 때 불려오고 Bash는 `cat`·`head`만 해당(공식 문서). 작성자 지시로 PRD-001·004의 옛 문구 "씁니다"를 "기록합니다"로 정정(#73) |
-| 2026-11-08 | **Phase 2 종료·보관(작성자 요청).** `archive/phase2-summary.md` 작성, 25·31·32·36번을 `archive/`로 이동하고 안의 링크를 고침, 나머지 13개 번호 삭제(복구는 `archive/README.md`). README·CONTEXT·STATUS 갱신. **못 한 것:** 개발 STATUS·PRD-004의 옛 번호 링크 2곳은 해당 세션 몫으로 알림 |
+| 2026-11-08 | **Phase 2 종료·보관(작성자 요청).** `archive/phase2-summary.md` 작성, 25·31·32·36번을 `archive/`로 이동하고 안의 링크를 고침, 나머지 13개 번호 삭제(복구는 `archive/README.md`). README·CONTEXT·STATUS 갱신. 기획의 PRD 정리(004 보관, 005 추가, 001·README 갱신)는 기획이 끝낸 작업이라 이 PR에 함께 담음. 개발 STATUS의 25번 링크 경로 1곳 수정 |
