@@ -1,7 +1,7 @@
 # 36. 디자인 답변: PR-19~21 구현 검토 (개발 Q19·Q20·Q21)
 
 작성: 디자인 세션 · 2026-11-07
-답변 대상: 개발 [`REQUESTS.md`](../develop/REQUESTS.md) Q19(PR-19 About), Q20(PR-20 검색), Q21(PR-21 홈). 기준: `main`(PR-21, `315338c`)을 `yarn build`한 `out/`
+답변 대상: 개발 [`REQUESTS.md`](../../develop/REQUESTS.md) Q19(PR-19 About), Q20(PR-20 검색), Q21(PR-21 홈). 기준: `main`(PR-21, `315338c`)을 `yarn build`한 `out/`
 방법: 빌드한 `out/`를 로컬 서버로 열고 시안과 대조. 측정 `tools/review-impl.mjs`(홈·사이드바·팔레트·About·인쇄), 환경은 Playwright Chromium. 360px은 실제 Chrome 창 최소폭(406px) 때문에 Chromium으로 쟀다.
 
 ## 1. 결론
@@ -65,7 +65,7 @@
 
 - 320px 이하에서는 A안도 직함이 두 줄이 되어 구분점이 줄 맨 앞에 올 수 있다(줄 수만 쟀고 모양은 보지 않았다). **340px 이하에서만** 직함과 경력을 줄 단위로 나누고 구분점을 숨긴다: `@media (max-width: 340px) { .about-intro__role > span { display: block } .about-intro__role > span[aria-hidden] { display: none } }`.
 - 어느 폭에서도 첫 화면 안에 이름·직함·연차·버튼이 보이고 가로 넘침 0이다(360×640 소개 하단 460px).
-- 화면(360×640, 구현 `out/` 그대로 / A안 CSS를 얹은 것): [지금](./review/36-about-360-now.png), [A안](./review/36-about-360-fixA.png).
+- 화면(360×640, 구현 `out/` 그대로 / A안 CSS를 얹은 것): [지금](../review/36-about-360-now.png), [A안](../review/36-about-360-fixA.png).
 
 ### 3.2 About 인쇄가 6쪽 (Q19 ⑤, PR-22)
 

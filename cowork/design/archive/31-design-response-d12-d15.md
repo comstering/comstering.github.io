@@ -1,7 +1,7 @@
 # 31. 디자인 답변: About 문구 변경(D-15), 홈 OG(D-12), 문서 정리(D-14), O-8
 
 작성: 디자인 세션 · 2026-11-05
-답변 대상: 기획 [30번](./30-planning-request-about-bio.md)(D-15), [29번](./29-planning-response-hero-final.md) 2장(D-12·D-14·O-8). `DESIGN.md` 반영안(D-13)은 [32번](./32-designmd-phase2-proposal.md).
+답변 대상: 기획 30번(D-15), 29번 2장(D-12·D-14·O-8). `DESIGN.md` 반영안(D-13)은 [32번](./32-designmd-phase2-proposal.md).
 시안: `site/about.html`(D-15, 생성기 `tools/build-phase2-mockups.py`), `site/og.html`(D-12), 측정 `tools/measure-about-first.mjs`
 
 ## 1. 결론

@@ -30,7 +30,7 @@
 | 경로 | 내용 |
 |---|---|
 | `README.md` | 파일 목록과 보는 방법. 문서를 추가하면 여기 표도 갱신 |
-| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, 최신 37). 질문·답이 오갈 때마다 새 번호. 현역은 04·18번, 12·19·21번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
+| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, **최신 37, 다음은 38**). 질문·답이 오갈 때마다 새 번호. 현역은 04번뿐이고, 12·19·21·25·31·32·36번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
 | `design-system.html` | 디자인 시스템 문서(브라우저로 연다) |
 | `site/*.html` | 최종 시안: index, post, projects, project, about, tags, tag, 404, og. 그 밖에 `phase1-compare.html`(기록용), `og-render.html`, `og/*.png` |
 | `system/` | 시안 공용 `tokens.css`·`base.css`·`components.css`·`app.js`·`giscus-*.css` |
@@ -42,6 +42,7 @@
 | `tools/measure-fallback-cls.mjs` | About·홈 CLS 폴백 글꼴 보정 측정 |
 | `archive/phase0-summary.md` | Phase 0 디자인 요약 보관본(01~11번) |
 | `archive/phase1-summary.md` | Phase 1 디자인 요약 보관본(결정·검토 결과·함정·못 한 것). 원문은 `archive/README.md`의 번호표로 찾는다 |
+| `archive/phase2-summary.md` | Phase 2 디자인 요약 보관본(18~37번: 결과·확정 결정·구현 검토·함정·못 한 것·Phase 3로 넘기는 것) |
 
 ## 4. 확정된 디자인 결정 (되돌릴 때는 근거 문서 번호를 확인)
 
