@@ -1,7 +1,7 @@
 # 25. Phase 2 재검토 디자인 답변: About·인쇄·검색·홈 (D-6 ~ D-10)
 
 작성: 디자인 세션 · 2026-11-03
-답변 대상: 기획 [24번](./24-planning-request-phase2-revision.md), 기준 [`prd/004`](../prd/004_portfolio_projects-and-about.md) (2026-11-02 최종, 5장)
+답변 대상: 기획 24번, 기준 [`prd/004`](../../prd/004_portfolio_projects-and-about.md) (2026-11-02 최종, 5장)
 쓰는 개발 PR: PR-19 About, PR-20 검색, PR-21 홈, PR-22 PDF·인기글
 시안: `site/about.html`(D-8·D-9), `site/index.html`(D-6·D-7, 비교 도구 포함), 모든 시안의 헤더 검색(D-10), 검색 인덱스 `system/search-index.js`
 

@@ -21,7 +21,8 @@
 | [STATUS.md](./STATUS.md) | **지금 상태와 다음 작업.** 열린 항목, 확인된 것, 변경 이력. 작업이 끝날 때마다 갱신 |
 | [archive/phase0-summary.md](./archive/phase0-summary.md) | **Phase 0 디자인 요약 보관본.** 01~11번(진단·방향·명세·시안·기획 검토·v1.3·사용자 결정)의 핵심 |
 | [archive/phase1-summary.md](./archive/phase1-summary.md) | **Phase 1 디자인 요약 보관본.** 결과, 확정 결정, 구현 검토 결과, 함정, 못 한 것, Phase 2로 넘기는 것. |
-| [archive/README.md](./archive/README.md) | **보관 폴더 안내.** 요약본 2개, 원문이 남은 12·19·21번, 삭제한 번호(01~03, 05~11, 13~17, 20)의 위치와 Git 복구 방법 |
+| [archive/phase2-summary.md](./archive/phase2-summary.md) | **Phase 2 디자인 요약 보관본.** 18~37번(홈=블로그·About=경력, 히어로·검색·인쇄·OG·파비콘 결정, PR-19~22 검토, 함정, 못 한 것, Phase 3로 넘기는 것) |
+| [archive/README.md](./archive/README.md) | **보관 폴더 안내.** 요약본 3개, 원문이 남은 12·19·21·25·31·32·36번, 삭제한 번호의 위치와 복구 방법 |
 | `tools/check-site.mjs` | 시안 8개 화면(index·post·tag·about·projects·project·tags·404) × PC·모바일 검사 스크립트 |
 | `tools/review-impl.mjs` | 구현(`out/`)과 시안 대조 측정(36번) |
 | `tools/build-favicon-final.mjs` | 확정 파비콘(`favicon/final/`)의 `favicon.ico`(16·32·48)·`apple-icon.png`(180)를 소스 SVG에서 생성(35번) |
@@ -32,27 +33,6 @@
 | `site/*.html` | **최종 화면 시안 9종**: home, post, projects, project, about, tags, tag, 404, og. 그 밖에 `phase1-compare.html`(Phase 1 비교), `og-render.html`(OG 렌더용 단독 페이지)과 생성 결과 `og/*.png` |
 | `system/` | 시안이 공유하는 `tokens.css` · `base.css` · `components.css` · `app.js` · `giscus-{dark,light}.css` |
 | [04-design-system.md](./04-design-system.md) | 디자인 시스템 명세 (v1.3 + v1.4 D5) (DESIGN.md 반영 후보) |
-| [12-phase1-design-response.md](./archive/12-phase1-design-response.md) | **Phase 1 답변**: categories B안 추천, 목록 썸네일 제거 추천(09 A안 철회), PRD-003 의견 E1~E9, v1.4 반영 |
-| [18-planning-request-phase2.md](./18-planning-request-phase2.md) | **기획 요청: Phase 2 디자인 D-1~D-4 (2026-10-30 개정, About 강화).** About 경력 시안(관련 글·앵커·펼침), 이력서 시안, About 갱신, 홈 히어로·대표 프로젝트. `/projects`·상세·Mermaid는 취소. 기준 PRD-004 |
-| [19-design-answer-q9-font-a11y.md](./archive/19-design-answer-q9-font-a11y.md) | **디자인 답변(개발 Q9): 글꼴 로딩·접근성 98→100·게이트 문구.** 단일 서브셋+`swap` 권장(측정), 접근성 3건(칩 숫자 대비·복사 버튼 이름·About 제목 단계), 시안 결함 2건 수정 |
-| [23-planning-response-phase2.md](./23-planning-response-phase2.md) | 기획 답변(22번 Q1~Q8). **2026-11-02 재검토로 일부 철회**(관련 글 확대, 이력서 3쪽, 접이식 채택 등). 유효: 기술 태그 없음, 사진 유지, 기간 표시, `shortTitle` 없음 |
-| [24-planning-request-phase2-revision.md](./24-planning-request-phase2-revision.md) | **기획 요청: Phase 2 재검토 반영(D-6~D-10).** 홈=블로그·About=경력, About↔블로그 링크 없음, 경력 전부 펼침, `/resume` 페이지 없이 About 인쇄 → PDF, 홈 히어로 3안·사이드바, 헤더 검색 팔레트 |
-| [25-phase2-revision-design-response.md](./25-phase2-revision-design-response.md) | **Phase 2 재검토 디자인 답변(D-6~D-10, 24번 기획 요청).** About 전부 펼침·회사 바로가기·길이 줄이기(V3 −19%), About 인쇄 = `resume.pdf`(A4 5쪽), 헤더 검색 팔레트(글만), 홈 히어로 3안(+2b) 비교, 사이드바(인기글·시리즈·태그). 질문 Q1~Q9 |
-| [37-design-review-pr22-favicon.md](./37-design-review-pr22-favicon.md) | **디자인 답변(개발 Q22·Q23): 36번 수정 반영·PR-22 `resume.pdf`·파비콘 검토.** 수정 요청 4건 모두 반영 확인, `resume.pdf` 5쪽·543KB(실제 Chrome PDF 뷰어 확인), 파비콘 링크·파일·16/32px 확인, 배포 반영 확인. 열린 디자인 요청 없음 |
-| [36-design-review-pr19-21.md](./36-design-review-pr19-21.md) | **디자인 답변(개발 Q19~Q21): PR-19~21 구현 검토.** 빌드한 `out/`를 시안과 측정 대조. 승인 다수, **수정 요청 4건**: About 직함 360px 3줄(A안 CSS), About 인쇄 6쪽의 원인(`@media print` 소스 순서, 블록을 맨 뒤에 두면 5쪽), 홈 첫 글 +49px(히어로 위 여백 0), About 상단 경로 복원. 홈 OG 한글 정상 |
-| [35-favicon-proposal.md](./35-favicon-proposal.md) | **파비콘 제안.** 현재(흰 바탕 필기체)는 탭에서 읽히지 않아 교체. 후보 5종(`>_`, `>_` 초록, `c_`, `h_`, `~/`)을 16px 탭 모사로 비교. **C `c_` 확정(작성자 11-07).** 개발에 넘길 파일은 `favicon/final/`(icon.svg·favicon.ico·apple-icon.png). 후보 A·B·D·E 이미지와 비교 보드는 확정 뒤 삭제 |
-| [34-handoff-to-develop.md](./34-handoff-to-develop.md) | **개발 인수 문서(PR-18~22).** 확정 사항 표, PR별 입력·기준 수치, 개발이 확인할 것(홈 OG 한글, About CLS, PDF), 디자인이 확인하지 못한 것 |
-| [33-planning-response-designmd.md](./33-planning-response-designmd.md) | 기획 답변(31·32번): `DESIGN.md` 원칙 4 문장 확정, 시그니처 3번 `// popular`, 홈 OG는 B 의견 |
-| [31-design-response-d12-d15.md](./31-design-response-d12-d15.md) | **디자인 답변(기획 29·30번): About 현재 회사 제거·클래스101 직함(D-15, 첫 화면 −23px, 인쇄 5쪽 유지), 홈 OG 3종(D-12, 추천 B), 문서 정리(D-14), O-8 개발 발송.** 질문 Q1~Q3 |
-| [32-designmd-phase2-proposal.md](./32-designmd-phase2-proposal.md) | **`DESIGN.md` Phase 2 반영안(D-13).** 붙여 넣을 문구(홈 히어로·사이드바, 검색 팔레트, About, 인쇄, 글꼴 폴백), 금지 패턴, 컴포넌트. 기획 확인 1건(원칙 4) |
-| [30-planning-request-about-bio.md](./30-planning-request-about-bio.md) | 기획 요청 D-15: About 소개에서 현재 회사 제거, 클래스101 직함 변경 |
-| [29-planning-response-hero-final.md](./29-planning-response-hero-final.md) | 기획 답변(28번): 히어로 확정 반영, 남은 디자인 D-12~D-14·O-8 |
-| [28-hero-copy-design-response.md](./28-hero-copy-design-response.md) | **홈 히어로 2b 명령어 2종 × 문구 13개 시안(D-11, 27번 기획 요청 답변).** **확정: `$ history` + h2(문구는 11-07 "실행해 본 것만 기록합니다"로 변경).** 비교 과정(16조합 1줄·첫 글 437/458px)과 개발에 넘기는 값 |
-| [26-planning-response-phase2-revision.md](./26-planning-response-phase2-revision.md) | 기획 답변(25번 Q1~Q6): 시안 채택, Q2~Q5 디자인 의견대로, Q6 작성자 수정 |
-| [27-planning-request-hero-copy.md](./27-planning-request-hero-copy.md) | 기획 요청 D-11: 2b 명령어 `git`/`history` × 문구 후보 |
-| [22-phase2-design-response.md](./22-phase2-design-response.md) | **Phase 2 디자인 답변(D-1~D-5).** About 접이식 경력·앵커 강조·태그 없음, 이력서 웹·A4 인쇄, 홈 대표 3건, About CLS는 `size-adjust: 86.4%`(재현 0.124~0.142 → 0.001~0.003). 질문 정리 Q1~Q11 |
-| [23-planning-response-phase2.md](./23-planning-response-phase2.md) | **기획 답변: 22번 Q1~Q8.** 시안 채택, 관련 글 확대(Q1), 이력서 3쪽 규칙(Q4), 나머지는 시안대로. 시안 수정 R1·R2 |
-| [21-impeccable-audit.md](./archive/21-impeccable-audit.md) | **impeccable audit(컴포넌트~페이지).** 합계 16/20 Good: 접근성 3·성능 3·테마 4·반응형 3·구현 3. P1 1건(코드 블록 키보드 접근), P2 2건(글자 200% 넘침, 터치 대상) → 개발 Q14. 번들 감지기는 실행하지 못함 |
 
 ### 보는 방법
 
@@ -62,4 +42,4 @@
 
 [`.claude/rules/design-docs.md`](../../.claude/rules/design-docs.md)에 있다(번호 문서, 시안, `✅ 반영됨` 표시, 인용 규칙). 커밋·PR 시점은 [commit-and-pr.md](../../.claude/rules/commit-and-pr.md).
 
-_최종 갱신: 2026-11-08 (작업 규칙을 `.claude/rules/`로 이동. v1.4 확정, Phase 2 시안 확정, 개발 PR-18~22·파비콘 검토 37번. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-11-08 (Phase 2 종료·보관: 18~37번 중 25·31·32·36번만 archive로, 나머지는 삭제. 현재 상태는 STATUS.md)_
