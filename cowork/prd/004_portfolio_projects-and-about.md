@@ -378,7 +378,7 @@ flowchart LR
 
 ## 8. 디자인 요청
 
-디자인 24번(삭제됨, 복구법은 `cowork/design/archive/README.md`)에 정리했다.
+디자인 24번(`cowork/design/24-planning-request-phase2-revision.md`)에 정리했다.
 
 | # | 내용 |
 | --- | --- |
