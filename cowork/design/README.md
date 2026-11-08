@@ -38,6 +38,7 @@
 | [23-planning-response-phase2.md](./23-planning-response-phase2.md) | 기획 답변(22번 Q1~Q8). **2026-11-02 재검토로 일부 철회**(관련 글 확대, 이력서 3쪽, 접이식 채택 등). 유효: 기술 태그 없음, 사진 유지, 기간 표시, `shortTitle` 없음 |
 | [24-planning-request-phase2-revision.md](./24-planning-request-phase2-revision.md) | **기획 요청: Phase 2 재검토 반영(D-6~D-10).** 홈=블로그·About=경력, About↔블로그 링크 없음, 경력 전부 펼침, `/resume` 페이지 없이 About 인쇄 → PDF, 홈 히어로 3안·사이드바, 헤더 검색 팔레트 |
 | [25-phase2-revision-design-response.md](./25-phase2-revision-design-response.md) | **Phase 2 재검토 디자인 답변(D-6~D-10, 24번 기획 요청).** About 전부 펼침·회사 바로가기·길이 줄이기(V3 −19%), About 인쇄 = `resume.pdf`(A4 5쪽), 헤더 검색 팔레트(글만), 홈 히어로 3안(+2b) 비교, 사이드바(인기글·시리즈·태그). 질문 Q1~Q9 |
+| [37-design-review-pr22-favicon.md](./37-design-review-pr22-favicon.md) | **디자인 답변(개발 Q22·Q23): 36번 수정 반영·PR-22 `resume.pdf`·파비콘 검토.** 수정 요청 4건 모두 반영 확인, `resume.pdf` 5쪽·543KB(실제 Chrome PDF 뷰어 확인), 파비콘 링크·파일·16/32px 확인, 배포 반영 확인. 열린 디자인 요청 없음 |
 | [36-design-review-pr19-21.md](./36-design-review-pr19-21.md) | **디자인 답변(개발 Q19~Q21): PR-19~21 구현 검토.** 빌드한 `out/`를 시안과 측정 대조. 승인 다수, **수정 요청 4건**: About 직함 360px 3줄(A안 CSS), About 인쇄 6쪽의 원인(`@media print` 소스 순서, 블록을 맨 뒤에 두면 5쪽), 홈 첫 글 +49px(히어로 위 여백 0), About 상단 경로 복원. 홈 OG 한글 정상 |
 | [35-favicon-proposal.md](./35-favicon-proposal.md) | **파비콘 제안.** 현재(흰 바탕 필기체)는 탭에서 읽히지 않아 교체. 후보 5종(`>_`, `>_` 초록, `c_`, `h_`, `~/`)을 16px 탭 모사로 비교. **C `c_` 확정(작성자 11-07).** 개발에 넘길 파일은 `favicon/final/`(icon.svg·favicon.ico·apple-icon.png). 후보 A·B·D·E 이미지와 비교 보드는 확정 뒤 삭제 |
 | [34-handoff-to-develop.md](./34-handoff-to-develop.md) | **개발 인수 문서(PR-18~22).** 확정 사항 표, PR별 입력·기준 수치, 개발이 확인할 것(홈 OG 한글, About CLS, PDF), 디자인이 확인하지 못한 것 |
@@ -61,4 +62,4 @@
 
 [`.claude/rules/design-docs.md`](../../.claude/rules/design-docs.md)에 있다(번호 문서, 시안, `✅ 반영됨` 표시, 인용 규칙). 커밋·PR 시점은 [commit-and-pr.md](../../.claude/rules/commit-and-pr.md).
 
-_최종 갱신: 2026-11-08 (작업 규칙을 `.claude/rules/`로 이동. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-11-08 (작업 규칙을 `.claude/rules/`로 이동. v1.4 확정, Phase 2 시안 확정, 개발 PR-18~22·파비콘 검토 37번. 현재 상태는 STATUS.md)_

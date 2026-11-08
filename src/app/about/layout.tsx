@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
-import {
-  AUTHOR,
-  SITE_URL,
-  pageAlternates,
-  pageOpenGraph,
-} from "@/lib/site";
+import { pageAlternates, pageOpenGraph } from "@/lib/site";
+import { buildAboutJsonLd } from "@/lib/structured-data";
 
 const DESCRIPTION =
   "DevOps · Cloud Native Engineer 최한수(Comstering)의 경력, 프로젝트, 오픈소스 기여를 소개합니다.";
@@ -26,17 +22,7 @@ export const metadata: Metadata = {
 
 const AboutLayout = ({ children }: { children: ReactNode }) => (
   <>
-    <JsonLd
-      data={{
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: AUTHOR.name,
-        alternateName: "Comstering",
-        jobTitle: AUTHOR.jobTitle,
-        url: `${SITE_URL}/about`,
-        sameAs: [AUTHOR.github, AUTHOR.linkedin],
-      }}
-    />
+    <JsonLd data={buildAboutJsonLd()} />
     {children}
   </>
 );

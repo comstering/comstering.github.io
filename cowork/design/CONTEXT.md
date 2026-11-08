@@ -30,7 +30,7 @@
 | 경로 | 내용 |
 |---|---|
 | `README.md` | 파일 목록과 보는 방법. 문서를 추가하면 여기 표도 갱신 |
-| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, 최신 36). 질문·답이 오갈 때마다 새 번호. 현역은 04·18번, 12·19·21번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
+| `NN-*.md` | 시간순 대화·결정 기록. **번호 재사용 금지**(삭제된 번호 포함, 최신 37). 질문·답이 오갈 때마다 새 번호. 현역은 04·18번, 12·19·21번은 `archive/`, 나머지는 삭제(위치는 `archive/README.md`) |
 | `design-system.html` | 디자인 시스템 문서(브라우저로 연다) |
 | `site/*.html` | 최종 시안: index, post, projects, project, about, tags, tag, 404, og. 그 밖에 `phase1-compare.html`(기록용), `og-render.html`, `og/*.png` |
 | `system/` | 시안 공용 `tokens.css`·`base.css`·`components.css`·`app.js`·`giscus-*.css` |
