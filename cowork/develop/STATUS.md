@@ -1,6 +1,6 @@
 # 개발 진행 현황
 
-_최종 갱신: 2026-11-08 · 기준 커밋 `d74065d`(main, #69 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
+_최종 갱신: 2026-11-08 · 기준 커밋 `7b07fbb`(main, #71 머지) · 기준 기획서 PRD-004(2026-11-05 최종) · 디자인 36번 검토(2026-11-07)_
 
 이 문서는 **지금 진행 중인 Phase의 상태와 다음 작업**만 담는다. 끝난 Phase는 [archive](./archive/README.md)에 요약돼 있다(Phase 0 안정화, Phase 1 읽기 경험).
 
@@ -10,8 +10,8 @@ _최종 갱신: 2026-11-08 · 기준 커밋 `d74065d`(main, #69 머지) · 기�
 | --- | --- |
 | Phase 0 안정화 (PRD-002) | 완료. [요약](./archive/phase0-summary.md) |
 | Phase 1 읽기 경험 (PRD-003) | 완료. [요약](./archive/phase1-summary.md). About 성능·CLS·TBT `warn` 예외는 PR-19까지 |
-| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅, 디자인 36번 반영 ✅, 파비콘 ✅(#68). PR-23(인기글) ✅(#69), PR-24(SEO) PR 오픈(브랜치 `feat/pr-24-seo`). 남은 것: PR-25(게이트·문서) |
-| 지금 막힌 것 | 없음. PR-23의 실제 GoatCounter 응답은 2026-11-08 배포 로그로 확인됐다(`인기글: 최근 30일 5편`). 열린 질문은 Q16, Q18, Q22, Q23, Q24(디자인 37번 #70이 머지되면 Q22·Q23 닫음) |
+| Phase 2 포트폴리오 (PRD-004) | **진행 중.** PR-18~22 ✅, 디자인 36번 반영 ✅, 파비콘 ✅(#68). PR-23(인기글) ✅(#69), PR-24(SEO) ✅(#72). 남은 것: PR-25(게이트·문서) |
+| 지금 막힌 것 | 없음. PR-23의 실제 GoatCounter 응답은 2026-11-08 배포 로그로 확인됐다(`인기글: 최근 30일 5편`). 열린 질문은 Q16, Q18, Q24 |
 
 ## 다음 작업 (새 세션은 여기서 시작)
 
@@ -21,7 +21,7 @@ _최종 갱신: 2026-11-08 · 기준 커밋 `d74065d`(main, #69 머지) · 기�
    - **Chrome:** 이 세션 끝에는 확장은 응답하나 이 세션의 탭 그룹이 없었다. 새 세션은 시작하자마자 `tabs_context_mcp {createIfEmpty:true}`로 탭을 열고, **눈에 보이는 변경은 실제 Chrome으로 매번 확인**한다(메모리 `feedback-verify-in-chrome`). 실제 Chrome 창은 406px 아래로 줄지 않으니 360px은 Playwright Chromium으로 잰다
    - **규칙 위치(2026-11-08):** 코드·접근성 규칙, PR 순서, 함정은 `.claude/rules/`로 옮겼다(`rules/README.md` 표). 새 함정은 거기에 한 줄 추가한다
    - **PR 규칙(메모리에 반영됨):** 작업이 끝나면 커밋·push·PR까지 바로 올리고 후속은 같은 브랜치에 커밋한다. **눈에 보이는 결과물이 있으면 PC·Mobile 스크린샷을 PR을 열 때 본문에 넣는다**(`tools/shoot.mjs`·`publish-shots.sh`). 새 의존성·CI 액션은 먼저 알린다
-2. **PR-24(SEO) 머지 후 PR-25로.** (PR-24 상세 요구는 아래, 구현은 끝남) `cowork/prd/004…` 5.6: About `Person` JSON-LD를 `profile.yaml`에서(name, alternateName, jobTitle, sameAs, alumniOf, hasCredential, **`worksFor` 없음**), 홈 `WebSite` JSON-LD(`name: Comstering's Dev Notes`, `url`), 홈 `description`(= `SITE_DESCRIPTION`, RSS에도 쓰임)을 "실행해 본 것만 기록합니다. DevOps · Cloud Native 개발 블로그." + 주제(Kubernetes, AWS, 오픈소스) 한 줄로 80~160자(**문구는 작성자가 `씁니다`→`기록합니다`로 바꿨다**, PRD에 옛 문구가 남아 있음), About 인덱스 `sitemap`은 그대로(`/resume.pdf` 넣지 않음). 수용: Rich Results Test 오류 0(작성자가 확인), `check:output`에 JSON-LD 검사 추가 고려. 현재 `app/about/layout.tsx`의 Person은 `AUTHOR`(site.ts)에서 오고 `alumniOf`·`hasCredential`이 없다
+2. **PR-25(게이트·E2E J1·5초 테스트·문서)부터.** PRD-004 6장 PR-25 행: E2E J1(G2-4), G2-3 검사, 5초 테스트(G2-1), `README.md`에 "경력 수정 방법"·"인기글 토큰", `DESIGN.md`·`CONTEXT.md` 갱신, G2-1~G2-8 기록. 작성자 확인 대기: PR-24 라이브 Rich Results Test(`/`, `/about`), REQUESTS Q24(기획)
 3. **PR-19에서 남은 확인:** About CLS ≤ 0.1은 CI 3회 중앙값으로 본다(`lighthouserc.json`의 About 예외는 이 PR에서 지웠다). CI가 실패하면 폴백 `@font-face`(`ascent-override`·폴백 목록 확대, 디자인 22번 3장)를 조정하고 결과를 REQUESTS Q16으로 알린다
 4. 작성자 할 일(개발이 기다리는 것): **히어로 안·문구 선택**(디자인 25번 Q1, `index.html?hero=2b` 등으로 비교, PR-21 전), **`GOATCOUNTER_TOKEN` 발급 → 저장소 Secrets 등록**(PR-23 전), `custom-networking-karpenter-eni-troubleshooting.md` 제목 오타 `Kapenter`→`Karpenter`(디자인 25번 Q6, 파일명은 그대로)
 5. 이월(작성자 작업): 카카오·LinkedIn OG 미리보기(LinkedIn Post Inspector는 로그인 필요), Search Console·네이버 sitemap 재제출, 사이트 1차 완성 후 branch protection
@@ -41,7 +41,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 | PR-21 | 홈 히어로·사이드바(인기글·시리즈·태그)·홈 OG | 5·6장, 확정 히어로 `$ history`, `og.html` B안 | ✅ 머지 | #64 |
 | PR-22 | `resume.pdf` 생성(`scripts/build-resume-pdf.mjs`, CI·배포 단계) | 25번 3장, 32번 "인쇄" | ✅ 머지 | #66 |
 | PR-23 | 인기글 데이터(`scripts/fetch-popular.mjs`, 배포 `schedule` 일 1회, Actions 캐시) | | ✅ 머지, 라이브 5편 확인 | #69 |
-| PR-24 | SEO(JSON-LD `Person` 등) | | 🔍 PR 오픈(브랜치 `feat/pr-24-seo`) | PR 번호는 오픈 후 |
+| PR-24 | SEO(JSON-LD `Person` 등) | | ✅ 머지 | #72 |
 | PR-25 | 게이트·E2E J1·5초 테스트·문서 | | ⏳ 대기 | |
 
 ## 사용자에게 보이는 현재 상태 (라이브 사이트, #57 머지 기준)
@@ -69,6 +69,7 @@ PRD-004 기준(2026-11-02 최종). 한 번에 PR 하나, 사용자가 머지하�
 
 | 날짜 | 한 일 | 남은 일 / 다음 첫 명령 |
 | --- | --- | --- |
+| 2026-11-08 | **문서 정리 + experience.yaml 검토 PR.** ① 작성자가 미커밋으로 고친 `content/experience.yaml`(US몰 런칭 프로젝트 추가, Istio ambient mode, `security-ops` 기간 삭제)을 그대로 한 커밋에 넣고, 표기 정리(`CJ 올리브영`, `이커머스`, `마이크로서비스`, `Ambient Mode`)를 다음 커밋으로 분리. ② `.claude/rules` 이관 점검: `pr-workflow`에 `check:content` 누락, 없는 STATUS "시안 대비 차이" 절 참조(ui.md·develop README·CONTEXT 4.5), CONTEXT 6장의 낡은 Lighthouse 설명(About 예외는 PR-19에서 해제), CLAUDE.md 명령·CI·구조 누락, **루트 CONTEXT.md가 2026-10-27(Phase 0, Next 15) 내용**, AGENTS.md가 Next 15.2.4 시절 복사본, README 스택 `Next.js 15` → 수정. ③ E2E `about.spec.ts`의 프로젝트 수 21 하드코딩을 YAML에서 읽도록 변경(프로젝트 추가로 깨졌음). 검증: lint·tokens·content·build·output·build:resume(5쪽 548KB)·E2E 전체. Q22·Q23은 디자인 37번(#70)으로 닫음. **작성자 답 반영:** US몰 `런칭 이후 인프라 장애 0건`, 인프라 항목에 `us-east-1 단일 리전·EKS 1개` 명시, Istio ambient는 필요한 구간에 Waypoint Proxy가 있어 JWT 줄을 `Waypoint Proxy를 추가하고 AuthorizationPolicy로…`로 수정, US몰 기간 겹침은 동시 진행 맞음(그대로). **못 한 것:** CI, 실제 Chrome(화면 변경은 About 경력 항목 1개 추가뿐) | 이 PR 머지 후 PR-25 |
 | 2026-11-08 | **규칙을 `.claude/rules/`로 이동(작성자 요청).** develop CONTEXT 4·4.6·5·7·8·9장, design CONTEXT 5·7장, design README 작업 규칙, prd README 파일명 규칙을 주제별 rules 12개로 옮기고(경로 지정: ui·a11y·css·posts·next-build·e2e·cowork-docs·prd-docs·design-docs, 항상: commit-and-pr·git-shell·pr-workflow) 원래 자리는 링크로 바꿈. **커밋 규칙 확정:** 개발 세션은 묻지 않고 커밋·PR, 디자인·기획 세션은 다른 세션에 넘기는 시점마다 커밋·PR(CLAUDE.md도 수정). design README의 `Cowork` 표기를 `Claude Code`로. **못 한 것:** 새 세션에서 경로 지정 rules가 실제로 불려오는지 확인 | PR 머지 후 STATUS "다음 작업" |
 | 2026-11-08 | **PR-24 구현·PR 오픈.** 홈 `WebSite` JSON-LD와 About `ProfilePage > Person`(`src/lib/structured-data.ts`, `profile.yaml`에서: name, alternateName=handle, jobTitle, sameAs, alumniOf=학력, hasCredential=자격증(발급처·Credly URL), **worksFor 없음**). 홈 description을 `실행해 본 것만 기록합니다. …`(97자)로 교체(RSS·메타에 반영). `check:output`에 JSON-LD·description 길이(80~160자) 검사 추가. E2E `seo.spec.ts`(3개). **확인한 것:** PR-23 머지 후 배포와 일 1회 schedule 배포 성공, 로그 `인기글: 최근 30일 5편` → 실제 응답 모양 확인됨. **못 한 것:** Rich Results Test·Schema Markup Validator(라이브 URL 필요, 작성자), 눈에 보이는 변경 없음 | PR-24 머지 후 PR-25, Q24는 기획이 답 |
 | 2026-11-07 | **PR-23 구현·PR 오픈(#69).** `scripts/fetch-popular.mjs`: GoatCounter `/api/v0/stats/hits`(Bearer `GOATCOUNTER_TOKEN`, 최근 30일, limit 100, `more`면 `exclude_paths`로 이어 받음)에서 `/posts/<id>`(끝 슬래시·쿼리 정규화, 같은 글 합산) 중 존재하고 draft 아닌 글을 조회수 내림차순(같으면 최신 글 먼저) 5편 → `.cache/popular.json`(`generatedAt`, `items`). **빌드를 절대 막지 않는다**(토큰 없음·API 실패·이상한 응답이면 직전 결과 유지, 없으면 빈 목록, 종료 코드 항상 0, 로그에 토큰 없음). 배포 워크플로: `schedule` 매일 03:00 KST, `actions/cache`로 `.cache` 복원·저장(`popular-<run_id>`, restore-keys `popular-`), `Fetch popular posts` 단계(토큰은 이 단계 env만). CI(PR)에는 넣지 않아 포크·로컬은 빈 목록 → 홈 popular 숨김. E2E `popular.spec.ts`(모의 GoatCounter 서버로 요청 모양·가공·여러 쪽·실패 5종·토큰 비출력·명령 실행 종료 코드, 28개). **못 한 것:** 실제 API 응답 모양 확인(토큰 없이는 401, 문서의 모양을 가정), 첫 배포 로그 | #69 머지 후 PR-24 |

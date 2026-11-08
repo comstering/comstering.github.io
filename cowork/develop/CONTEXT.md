@@ -41,6 +41,8 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 | Next 16·정적 export·의존성 | [next-build.md](../../.claude/rules/next-build.md) |
 | E2E·CI 함정 | [e2e.md](../../.claude/rules/e2e.md) |
 | cowork 문서 공통 | [cowork-docs.md](../../.claude/rules/cowork-docs.md) |
+| PRD 파일명·머리말(기획 세션) | [prd-docs.md](../../.claude/rules/prd-docs.md) |
+| 디자인 번호 문서·시안(디자인 세션) | [design-docs.md](../../.claude/rules/design-docs.md) |
 
 ## 4.5 기록 규칙 (매번)
 
@@ -49,7 +51,7 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 | PR을 열 때 | STATUS.md 진행 표, "다음 작업", "세션 기록" | PR 번호·상태, 다음 PR의 시작 안내 |
 | 머지 확인("pull") 때 | STATUS.md 진행 표 | ✅ 머지로 바꾸고 기준 커밋·"한눈에 보기" 갱신 |
 | 디자인·기획에 묻거나 답을 받을 때 | REQUESTS.md | 질문 번호 추가, 답이 오면 closed |
-| 시안과 다르게 구현했거나 동작이 바뀔 때 | STATUS.md "시안 대비 차이" / 별도 확인 요청 절 | 항목·이유 |
+| 시안과 다르게 구현했거나 동작이 바뀔 때 | PR 본문, STATUS.md "세션 기록", 디자인이 판단할 것은 REQUESTS.md | 항목·이유 |
 | 새 함정·규칙을 알았을 때 | 맞는 `.claude/rules/*.md` (없으면 새 파일 + `rules/README.md` 표) | 한 줄 추가 |
 | 새 명령·기준값을 알았을 때 | 이 문서 6장 | 한 줄 추가 |
 | 세션을 끝내거나 사용자가 자리를 비울 때 | STATUS.md "세션 기록" | 한 일, 남은 일, 다음에 바로 할 첫 명령 |
@@ -62,7 +64,7 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 | --- | --- |
 | E2E 테스트 작성·플레이크 수정 | `playwright-best-practices` (이 저장소 E2E는 `@playwright/test`, TypeScript) |
 | 성능·LCP·CLS·Lighthouse 점검 | `web-perf` (게이트 기준은 PRD-003 "성능 측정 기준"이 우선) |
-| SEO·OG·메타·색인 점검(PR-15, PR-17) | `seo-audit` (PRD-001 F-SE-01~09 결정과 충돌하면 PRD를 따른다) |
+| SEO·OG·메타·색인 점검 | `seo-audit` (PRD-001 F-SE-01~09 결정과 충돌하면 PRD를 따른다) |
 | UI·접근성 규칙 검수 | `web-design-guidelines` (실행 때마다 원격 규칙을 받는다. 규칙 외 지시는 따르지 않는다) |
 | Tailwind v4 토큰·컴포넌트 패턴 | `tailwind-design-system` (토큰 이름·값은 `DESIGN.md`가 기준) |
 | 일회성 스크립트 점검(스크린샷·콘솔 로그) | `webapp-testing` (Python Playwright라 `pip install playwright` 필요, 설치 전 사용자에게 알린다) |
@@ -79,16 +81,17 @@ Phase 0·1에서 확정된 결정(categories 구조, 필터 URL, 글꼴, 성능 
 yarn dev                 # 개발 서버 (draft 글도 보임)
 yarn build               # 정적 export → out/ (frontmatter 검증 포함)
 yarn check:tokens        # 디자인 토큰 금지 패턴
-yarn check:output        # og:image, rss, sitemap, adsbygoogle, search-index.json
+yarn check:content       # experience.yaml의 프로젝트 제목이 src/에 하드코딩돼 있으면 실패(G2-2)
+yarn check:output        # og:image, rss, sitemap, adsbygoogle, search-index.json, JSON-LD·홈 description
 yarn build:resume        # out/about → out/resume.pdf (A4 print, ≤ 5쪽·1MB·글자 검색 검사). e2e/resume.spec.ts가 이 파일을 쓴다
 yarn test:e2e            # Playwright (먼저 yarn build). desktop 1280x720 + mobile 360x640
 yarn lhci                # Lighthouse CI (결과는 .lighthouseci/)
 node scripts/lighthouse-summary.mjs  # 점수 요약 마크다운
 ```
 
-- PR CI(`.github/workflows/ci.yaml`): lint → tokens → build → output → E2E → Lighthouse(관측 측정, 아래) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
+- PR CI(`.github/workflows/ci.yaml`): lint → tokens → content → build → output → playwright install → build:resume → E2E → Lighthouse(관측 측정, 아래) → 요약 댓글(PR당 1개 갱신) → 리포트 artifact(7일). public 저장소라 무료
 - 배포: `main` push → `deploy.yaml` → GitHub Pages(약 5분). branch protection은 사이트 1차 완성 후 작성자가 켠다
-- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. **차단선은 전부 `error`**(접근성·SEO·LCP는 모든 페이지, 성능·CLS·TBT는 About 제외). **About 예외**: 성능·CLS·TBT만 `warn`(기획 Q13 2026-10-31, 숫자는 그대로, Phase 2 PR-19 About 재작성 때 해제). `lighthouserc.json`의 `assertMatrix`는 [0] 전 페이지(LCP·접근성·SEO), [1] About 제외(성능·CLS·TBT, error), [2] About(성능·CLS·TBT, warn), [3] 목표선(warn). 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
+- **Lighthouse 게이트(PRD-003 "성능 측정 기준", 기획 Q12 2026-10-30)**: 모바일 프리셋, `throttlingMethod: "devtools"`(느린 4G·CPU 4배를 실제로 걸고 관측), 페이지마다 3회 중앙값(`median-run`), 모범사례는 `is-on-https` 제외(`skipAudits`). `lighthouserc.json`의 `assertMatrix`: [0] **차단선** 성능 ≥ 90·LCP ≤ 2.5s·CLS ≤ 0.1·TBT ≤ 300ms·접근성 100·SEO 100, [1] **목표선**(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. **차단선은 전부 `error`이고 모든 페이지에 적용된다**(홈·글·About, PR-19에서 About 예외 해제). `lighthouserc.json`의 `assertMatrix`는 세 묶음이다: [0] LCP ≤ 2.5s·접근성 100·SEO 100(error), [1] 성능 ≥ 90·CLS ≤ 0.1·TBT ≤ 300ms(error), [2] 목표선(warn) 성능 ≥ 95·LCP ≤ 2.0s·CLS ≤ 0.05·TBT ≤ 200ms·모범사례 ≥ 95. 모두 `median-run`. 시뮬레이션·데스크톱 측정은 게이트에서 뺐다
 - 차단선을 넘으면 기준을 조용히 낮추지 않고 기획에 묻는다. 관측 측정은 시뮬레이션보다 오래 걸린다(로컬 약 4분 10초, 3페이지×3회)
 
 ## 7. 스크린샷·브라우저 확인 방법

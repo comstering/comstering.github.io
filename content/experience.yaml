@@ -6,6 +6,17 @@ companies:
     period:
       start: 2024-06
     projects:
+      - id: us-local-e-commerce-launched
+        title: CJ 올리브영 US몰 런칭
+        period:
+          start: 2025-12
+          end: 2026-05
+        description: 올리브영 USA 로컬 이커머스 서비스(US몰) 신규 런칭을 위한 인프라 구축
+        points:
+          - AWS us-east-1 단일 리전, EKS 클러스터 1개 기반으로 20개 이상의 마이크로서비스가 동작하는 US몰 인프라 구축
+          - 연관 도메인 서비스끼리 6개 이상의 DB Cluster로 묶고 서비스별 논리적 DB를 분리하는 DB 아키텍처 설계
+          - 무중단(Zero Downtime) 런칭 달성
+          - 런칭 이후 인프라 장애 0건
       - id: oauth2-proxy-zero-trust
         title: OAuth2 Proxy 기반의 Zero Trust 인증 게이트웨이 구축 및 인프라 보안 강화
         period:
@@ -118,10 +129,9 @@ companies:
           end: 2025-05
         description: 마이크로서비스 간 East-West 트래픽에 대한 mTLS 암호화 및 세밀한 인가 정책 적용
         points:
-          - Istio Sidecar Proxy 기반 자동 mTLS 암호화로 서비스 간 통신 100% 암호화 달성
-          - AuthorizationPolicy를 통한 JWT Claims 기반 서비스 간 접근 제어 구현
+          - Istio Ambient Mode 기반 자동 mTLS 암호화로 서비스 간 통신 100% 암호화 달성
+          - 필요한 구간에 Waypoint Proxy를 추가하고 AuthorizationPolicy로 JWT Claims 기반 서비스 간 접근 제어 구현
           - RBAC(Role-Based Access Control) 정책 적용으로 최소 권한 원칙(Principle of Least Privilege) 준수
-          - Istio Ingress Gateway 최적화로 외부 트래픽 TLS Termination 성능 개선
       - id: kafka-stability
         title: Kafka 에코시스템 안정성 및 운영 효율성 강화
         period:
@@ -161,9 +171,6 @@ companies:
           - ARC(Actions Runner Controller) Self-hosted Runner 운영으로 빌드 비용 월 99% 절감
       - id: security-ops
         title: 보안 및 운영 효율성 개선 프로젝트
-        period:
-          start: 2024-07
-          end: 2025-12
         description: 보안 강화 및 인프라 운영 최적화를 위한 다양한 개선 작업 수행
         points:
           - AWS KMS Envelope Encryption 아키텍처 구현으로 민감 데이터 암호화 및 키 관리 자동화 (2025.12)

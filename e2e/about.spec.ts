@@ -1,4 +1,14 @@
+import fs from "node:fs";
+import path from "node:path";
 import { expect, test } from "@playwright/test";
+import { parse } from "yaml";
+
+// 경력 프로젝트 수는 데이터(experience.yaml)에서 센다. 프로젝트를 추가해도 테스트를 고치지 않게 한다.
+const projectCount = (
+  parse(fs.readFileSync(path.join(process.cwd(), "content", "experience.yaml"), "utf8")) as {
+    companies: { projects: unknown[] }[];
+  }
+).companies.reduce((sum, company) => sum + company.projects.length, 0);
 
 // PRD-004 5.1·G2-3, 디자인 25번 2장·31번 2장: About 다시 그리기.
 test("G2-3: About 안에 블로그 글(/posts/) 링크가 없다", async ({ page }) => {
@@ -53,7 +63,7 @@ test("경력은 전부 펼쳐져 있고 접기 UI가 없다", async ({ page }) =
   await page.goto("/about");
   await expect(page.locator("main details")).toHaveCount(0);
   await expect(page.getByRole("button", { name: /expand/i })).toHaveCount(0);
-  await expect(page.locator("article.proj")).toHaveCount(21);
+  await expect(page.locator("article.proj")).toHaveCount(projectCount);
   await expect(page.locator("article.proj").first().locator("li").first()).toBeVisible();
 });
 
