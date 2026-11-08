@@ -6,6 +6,15 @@ companies:
     period:
       start: 2024-06
     projects:
+      - id: schema-registry-apicurio
+        title: Schema Registry를 Apicurio Registry로 전환
+        period:
+          start: 2026-08
+          end: 2026-09
+        description: Bitnami 오픈소스 이미지 제공 중단(2025.08)에 대응해 Schema Registry를 Apicurio Registry로 전환
+        points:
+          - Operator Lifecycle Manager(OLM)로 OperatorHub의 Apicurio Operator를 Subscription하여 설치하는 Operator Pattern 기반 구성
+          - 기존 Schema Registry의 Schema를 모두 마이그레이션하여 Schema 불일치 없이 100% 전환 완료
       - id: us-mall-cdc
         title: US몰 데이터 파이프라인을 위한 CDC Event 발행
         period:
