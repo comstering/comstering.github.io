@@ -13,8 +13,8 @@ companies:
           end: 2026-05
         description: 올리브영 USA 로컬 이커머스 서비스(US몰) 신규 런칭을 위한 인프라 구축
         points:
-          - AWS us-east-1 단일 리전, EKS 클러스터 1개 기반으로 15개 이상의 마이크로서비스가 동작하는 US몰 인프라 구축
-          - 연관 도메인 서비스끼리 4개 DB Cluster로 묶고 서비스별 논리적 DB를 분리하는 DB 아키텍처 설계
+          - AWS us-east-1 단일 리전, EKS 클러스터 1개 기반으로 20개 이상의 마이크로서비스가 동작하는 US몰 인프라 구축
+          - 연관 도메인 서비스끼리 6개 이상의 DB Cluster로 묶고 서비스별 논리적 DB를 분리하는 DB 아키텍처 설계
           - 무중단(Zero Downtime) 런칭 달성
           - 런칭 이후 인프라 장애 0건
       - id: oauth2-proxy-zero-trust
