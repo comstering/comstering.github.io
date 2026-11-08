@@ -220,4 +220,4 @@ PR 단위로 진행한다. 이 문서는 PR-0에서 v1.3, PR-19에서 v1.4(Phase
 | PR-0 ~ PR-5 | 토큰 v1.3, 죽은 코드 정리, frontmatter v2, SEO·RSS·푸터, 서드파티·Giscus, 글 상세 v1.3 | 완료 |
 | PR-6 ~ PR-8 | About·404 토큰 정리, PR CI, 자동 배포 재개 | 완료 |
 | Phase 1 (PR-9 ~ PR-17) | categories 다중화, 본문(코드·콜아웃·표), 글 상단 바(목차·시리즈), 관련 글, 이미지 파이프라인·확대, 글꼴 서브셋, OG 자동 생성, 읽기 진행률, 성능 게이트 | 완료. 측정은 `cowork/develop/CONTEXT.md` 6장 |
-| Phase 2 (PR-18 ~ PR-25) | 데이터 분리, About 다시 그리기, 헤더 검색, 홈 히어로·사이드바, resume.pdf, 인기글, SEO, 게이트 | PR-18~24 완료(검색·히어로·사이드바·resume.pdf·인기글·SEO·파비콘 반영), PR-25 진행 중 |
+| Phase 2 (PR-18 ~ PR-25) | 데이터 분리, About 다시 그리기, 헤더 검색, 홈 히어로·사이드바, resume.pdf, 인기글, SEO, 게이트 | 완료(검색·히어로·사이드바·resume.pdf·인기글·SEO·파비콘 반영) |
