@@ -34,7 +34,7 @@ jobs:
 
       # 변환한 이미지(public/_img)는 원본이 같으면 그대로 쓴다 (scripts/optimize-images.mjs가 해시로 판단)
       - name: Cache optimized images
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: public/_img
           key: img-${{ hashFiles('public/images/**', 'scripts/optimize-images.mjs') }}
@@ -95,7 +95,7 @@ jobs:
 
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: e2e-lighthouse-reports
           include-hidden-files: true # .lighthouseci는 점으로 시작해서 기본으로는 올라가지 않는다
