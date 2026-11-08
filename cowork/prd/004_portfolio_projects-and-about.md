@@ -5,9 +5,10 @@ title: Phase 2 포트폴리오 (About 강화·이력서 PDF·홈 블로그 정�
 status: approved
 owner: comstering
 created: 2026-10-29
-updated: 2026-11-05
+updated: 2026-11-08
 related: [PRD-001]
 changelog:
+  - 2026-11-08 홈 문구를 "실행해 본 것만 기록합니다"로 정정(작성자 결정, 개발 PR-21 반영). 5.2·5.6의 현재값을 새 문구로 바꾸고, 11-05 항목은 당시 기록이라 그대로 둠
   - 2026-11-05 작성자 요청: About 소개(첫 화면·인쇄본)에서 현재 회사 표시 제거, JSON-LD worksFor 제외. 클래스101 직함을 Software Engineer로 변경
   - 2026-11-05 홈 히어로 확정(작성자): `$ history` + "실행해 본 것만 씁니다". 5.2 확정값, 5.6 description 문구 확정, 결정 대기 없음
   - 2026-11-05 히어로는 2b 방향(작성자). 명령어 `git log --oneline` / `history` 2종 × 문구 후보 시안 요청(디자인 27번). 홈 SEO에 description 문구·WebSite 구조화 데이터 추가
@@ -42,7 +43,7 @@ changelog:
 | Temporal 기간 | About 값 그대로 2개 기간(중단 후 재개) |
 | 합산 수치 | 두지 않는다 |
 | 제외 | `/projects`, 프로젝트 상세, `/resume` 페이지, 홈 대표 프로젝트, what i do, About·글 사이 링크, 홈 글 검색창, Mermaid 구조도, 헤더 `projects` 메뉴, 영문판, MDX. 검색의 초성·별칭(F-SR-03)과 태그 페이지(F-SR-04)는 Phase 3 |
-| 결정 대기 | 없음. 홈 히어로는 `$ history` + "실행해 본 것만 씁니다"로 확정(2026-11-05, 디자인 28번) |
+| 결정 대기 | 없음. 홈 히어로는 `$ history` + "실행해 본 것만 씁니다"로 확정(2026-11-05, 디자인 28번). 문구는 이후 "실행해 본 것만 기록합니다"로 바뀜(2026-11-08, changelog) |
 
 ## 1. 목표
 
@@ -225,15 +226,15 @@ sideProjects:                                     # Lomeone
 
 ```
 $ history_
-실행해 본 것만 씁니다
+실행해 본 것만 기록합니다
 ```
 
 | 항목 | 값 |
 | --- | --- |
 | 명령 줄 | `$ history` + 커서 `_`. 화면 낭독기에서는 숨김(`aria-hidden`). 커서 깜빡임은 사이트에서 이 한 곳, `prefers-reduced-motion`이면 정지 |
 | h1 | `Comstering's Dev Notes`를 `sr-only`로(화면에는 보이지 않고 낭독기·검색엔진이 읽음). 페이지당 h1 1개 |
-| 문구 | `실행해 본 것만 씁니다` (h1 다음 `p`, 낭독됨) |
-| 데이터 | `content/site.yaml`: `title: Comstering's Dev Notes`, `command: history`, `tagline: 실행해 본 것만 씁니다` |
+| 문구 | `실행해 본 것만 기록합니다` (h1 다음 `p`, 낭독됨) |
+| 데이터 | `content/site.yaml`: `title: Comstering's Dev Notes`, `command: history`, `tagline: 실행해 본 것만 기록합니다` |
 | 선택 이유 | 문구의 핵심이 "실행해 보고"라, 실행한 명령의 기록인 `history`와 뜻이 맞는다. 성공·실패를 가리지 않고 직접 해 본 것을 남긴다는 약속이다. 개발자가 아니어도 history = 기록으로 읽힌다 |
 | 약속 | 실행해 보지 않은 내용을 글에 쓰지 않는다(작성 원칙, PRD-001 6.2) |
 | 첫 화면 | 첫 글 제목 하단 437px(360×640) / 458px(1280×720), 문구 1줄 |
@@ -293,7 +294,7 @@ $ history_
 | --- | --- |
 | JSON-LD | About: `Person`(name, alternateName, jobTitle, sameAs, alumniOf, hasCredential)을 `profile.yaml`에서. `worksFor`는 넣지 않는다(소개에 현재 회사를 두지 않는 방침과 맞춤, 2026-11-05) |
 | sitemap | 변경 없음(`/resume.pdf`는 넣지 않음) |
-| 홈 메타 | 홈 `title`은 `Comstering's Dev Notes`(지금 `SITE_NAME` 그대로). `description`(= `SITE_DESCRIPTION`, RSS 설명에도 쓰임)은 "실행해 본 것만 씁니다. DevOps · Cloud Native 개발 블로그."를 기본으로 하고, 다루는 주제(Kubernetes, AWS, 오픈소스)를 한 줄 덧붙여 80~160자로 맞춘다 |
+| 홈 메타 | 홈 `title`은 `Comstering's Dev Notes`(지금 `SITE_NAME` 그대로). `description`(= `SITE_DESCRIPTION`, RSS 설명에도 쓰임)은 "실행해 본 것만 기록합니다. DevOps · Cloud Native 개발 블로그."를 기본으로 하고, 다루는 주제(Kubernetes, AWS, 오픈소스)를 한 줄 덧붙여 80~160자로 맞춘다 |
 | WebSite | 홈에 `WebSite` JSON-LD(`name: Comstering's Dev Notes`, `url`). 검색 결과에 사이트 이름이 제대로 나오게 |
 
 ### 5.7 검색 팔레트 (F-SR-01·02)
