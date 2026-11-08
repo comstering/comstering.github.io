@@ -180,6 +180,7 @@ companies:
         title: 보안 및 운영 효율성 개선 프로젝트
         description: 보안 강화 및 인프라 운영 최적화를 위한 다양한 개선 작업 수행
         points:
+          - ISMS-P 인증 유지 심사(2025.04, 2026.04), ISO/IEC 27001 최초 인증 심사(2025.08)·유지 심사(2026.09)에서 인프라·클라우드·암호화·로깅·모니터링 등 DevOps 관리 영역 전반의 심사 인터뷰 담당
           - OAuth2 Proxy 기반 Zero Trust 인증 게이트웨이로 환경별(Dev/QA/Stg) 접근을 Keycloak·Okta SSO와 통합하고 Istio AuthorizationPolicy로 리소스 단위 접근 제어 구현 (2026.03)
           - AWS KMS Envelope Encryption 아키텍처 구현으로 민감 데이터 암호화 및 키 관리 자동화 (2025.12)
           - External Secrets Operator 도입으로 Kubernetes Secret과 AWS Secrets Manager 동기화 자동화, 시크릿 로테이션 프로세스 구축 (2025.08)
