@@ -7,15 +7,15 @@ companies:
       start: 2024-06
     projects:
       - id: us-local-e-commerce-launched
-        title: CJ Oliveyoung US몰 런칭
+        title: CJ 올리브영 US몰 런칭
         period:
           start: 2025-12
           end: 2026-05
-        description: 올리브영 USA Local E-커머스 런칭
+        description: 올리브영 USA 로컬 이커머스 서비스(US몰) 신규 런칭을 위한 인프라 구축
         points:
-          - US몰 기반 인프라 구축
-          - Micro Service DB 아키텍처 설계
-          - Zero Down Time Launched
+          - US몰 서비스 인프라 구축
+          - 마이크로서비스별 DB 아키텍처 설계
+          - 무중단(Zero Downtime) 런칭 달성
           - 인프라 장애 0건
       - id: oauth2-proxy-zero-trust
         title: OAuth2 Proxy 기반의 Zero Trust 인증 게이트웨이 구축 및 인프라 보안 강화
@@ -129,7 +129,7 @@ companies:
           end: 2025-05
         description: 마이크로서비스 간 East-West 트래픽에 대한 mTLS 암호화 및 세밀한 인가 정책 적용
         points:
-          - Istio ambient mode 기반 자동 mTLS 암호화로 서비스 간 통신 100% 암호화 달성
+          - Istio Ambient Mode 기반 자동 mTLS 암호화로 서비스 간 통신 100% 암호화 달성
           - AuthorizationPolicy를 통한 JWT Claims 기반 서비스 간 접근 제어 구현
           - RBAC(Role-Based Access Control) 정책 적용으로 최소 권한 원칙(Principle of Least Privilege) 준수
       - id: kafka-stability

@@ -2,10 +2,10 @@
 
 개발 세션이 PR 하나를 만들 때의 순서다. 작업은 PRD 순서대로 PR 하나씩 하고, 머지 전에 다음 PR로 가지 않는다.
 
-1. `git checkout main && git pull`, 새 브랜치 `feat/<주제>`
+1. `git fetch` 후 `origin/main` 기준으로 새 브랜치 `feat/<주제>`(`git checkout -b feat/<주제> origin/main`). worktree 세션이면 그 worktree 안에서 한다
 2. `cowork/develop/STATUS.md`의 "다음 작업" 절 + PRD 해당 PR 절 + 최종 시안(`cowork/design/site/*.html`, `system/components.css`)을 읽는다
 3. 구현
-4. 검증(전부): `yarn lint` → `yarn check:tokens` → `yarn build` → `yarn check:output` → `yarn build:resume`(PDF 생성, Playwright 브라우저 필요) → `yarn test:e2e`(**build·build:resume 후**, `out/`을 띄운다). 새 기능에는 E2E를 같이 추가한다
+4. 검증(전부): `yarn lint` → `yarn check:tokens` → `yarn check:content` → `yarn build` → `yarn check:output` → `yarn build:resume`(PDF 생성, Playwright 브라우저 필요) → `yarn test:e2e`(**build·build:resume 후**, `out/`을 띄운다). 새 기능에는 E2E를 같이 추가한다
 5. **화면이 바뀌는 PR은 PC·Mobile 스크린샷을 PR 본문에 넣는다**(아래). CI·문서만 바뀌는 PR은 생략
 6. 커밋 → push → `gh pr create`([commit-and-pr.md](./commit-and-pr.md)). CI(`Quality`)가 돌고 Lighthouse 점수 댓글이 자동으로 달린다
 7. **기록**: `cowork/develop/STATUS.md`(진행 표, 다음 작업, 세션 기록), `REQUESTS.md`. 사용자가 시키지 않아도 한다

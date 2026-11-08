@@ -14,7 +14,10 @@ yarn build        # Production build (static export)
 yarn start        # Start production server
 yarn lint         # Run ESLint
 yarn check:tokens # DESIGN.md 금지 패턴 검사 (src/)
+yarn check:content # experience.yaml 제목이 src/에 하드코딩됐는지 검사
 yarn check:output # 빌드 산출물 검사 (yarn build 이후, out/)
+yarn build:resume # out/about을 인쇄해 out/resume.pdf 생성 (yarn build 이후, Playwright 브라우저 필요)
+yarn test:e2e     # Playwright E2E (yarn build·build:resume 이후, out/ 사용)
 ```
 
 ## Tech Stack
@@ -33,6 +36,8 @@ yarn check:output # 빌드 산출물 검사 (yarn build 이후, out/)
   - rehype-highlight (code syntax highlighting)
   - rehype-external-links (external link handling)
 - **Deployment**: GitHub Actions (`.github/workflows/deploy.yaml`) → GitHub Pages
+- **Data**: yaml + zod (`content/*.yaml`을 빌드 때 검증)
+- **Test**: Playwright(E2E), Lighthouse CI
 - **Package Manager**: Yarn
 
 ## Architecture
@@ -55,9 +60,10 @@ src/
 └── context/          # React Context providers (e.g., theme)
 
 posts/                # Markdown blog posts (*.md files)
-content/              # tags.yaml(정규 태그), series.yaml(시리즈 레지스트리)
+content/              # tags.yaml(정규 태그), series.yaml(시리즈 레지스트리), profile·experience·site.yaml(About·홈 데이터)
+e2e/                  # Playwright 테스트
 public/               # Static assets
-scripts/              # CI 검사 스크립트 (check-design-tokens, check-build-output)
+scripts/              # 빌드·CI 스크립트 (check-*, build-resume-pdf, fetch-popular 등)
 cowork/prd/           # 기획서 (PRD-001 마스터, 진행 중인 Phase의 PRD, 끝난 Phase는 archive/)
 cowork/design/        # 디자인 시스템 명세와 시안
 ```
@@ -84,7 +90,7 @@ cowork/design/        # 디자인 시스템 명세와 시안
 
 - **UI 작업 전**: [DESIGN.md](./DESIGN.md)의 토큰과 규칙을 확인한다. 명세 원본과 시안은 `cowork/design/`.
 - **기능 작업 전**: 해당 영역의 PRD를 확인한다. `cowork/prd/README.md`의 목록에서 찾는다 (마스터 PRD-001, 진행 중인 Phase의 PRD. 끝난 Phase 요약은 `cowork/prd/archive/`).
-- **현재 상태와 알려진 이슈**: [CONTEXT.md](./CONTEXT.md)
+- **현재 상태**: [CONTEXT.md](./CONTEXT.md)(요약과 배포 정보). 진행 중인 작업과 다음 작업은 `cowork/develop/STATUS.md`
 - **개발 세션 시작 시 (항상 먼저)**: `cowork/develop/CONTEXT.md` → `cowork/develop/STATUS.md`를 읽고 STATUS.md의 "다음 작업"부터 이어 간다. 작업(PR 오픈, 머지 확인, 결정, 세션 종료)이 끝날 때마다 사용자가 시키지 않아도 `cowork/develop/STATUS.md`와 `REQUESTS.md`를 갱신한다. `cowork/`는 저장소에 커밋한다(public 저장소라 비밀·연락처·내부 수치는 쓰지 않는다)
 
 ## 세션별 기록 (cowork)
@@ -108,10 +114,10 @@ cowork/design/        # 디자인 시스템 명세와 시안
 
 ## CI
 
-`pull_request`(대상 `main`)마다 `.github/workflows/ci.yaml`의 **Quality** 잡이 돈다: `yarn install --frozen-lockfile` → `yarn lint` → `yarn check:tokens` → `yarn build`(frontmatter 검증 포함) → `yarn check:output`. 로컬에서 PR 전에 같은 순서로 확인할 수 있다.
+`pull_request`(대상 `main`)마다 `.github/workflows/ci.yaml`의 **Quality** 잡이 돈다: `yarn install --frozen-lockfile` → `yarn lint` → `yarn check:tokens` → `yarn check:content` → `yarn build`(frontmatter·콘텐츠 검증 포함) → `yarn check:output` → `playwright install` → `yarn build:resume` → `yarn test:e2e` → `yarn lhci`(Lighthouse) → 요약 댓글. 로컬에서 PR 전에 같은 순서로 확인할 수 있다. 자세한 순서와 기준값은 `cowork/develop/CONTEXT.md` 6장, PR 순서는 [.claude/rules/pr-workflow.md](./.claude/rules/pr-workflow.md).
 
 - `check:tokens`: `src/`(`globals.css` 제외)에서 Tailwind 기본 팔레트 색 클래스, `dark:`, hex 색상, 시안 표시(`ph`)를 찾으면 실패
-- `check:output`: 모든 글의 og:image 파일 존재, `rss.xml`·`sitemap.xml` 유효성과 항목 수, `adsbygoogle` 0건
+- `check:output`: 모든 글의 og:image 파일 존재, `rss.xml`·`sitemap.xml`·`search-index.json` 유효성과 항목 수, JSON-LD·홈 description 길이, `adsbygoogle` 0건
 
 ## Path Aliases
 

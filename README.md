@@ -4,7 +4,7 @@ DevOps · Cloud Native Engineer **Comstering**의 개발 블로그와 프로필 
 Kubernetes, AWS, 오픈소스 기여, 일하는 방식을 기록합니다.
 
 - 사이트: https://comstering.github.io
-- 스택: Next.js 15 (App Router, 정적 export) · React 19 · TypeScript · Tailwind CSS v4 · Markdown 블로그
+- 스택: Next.js 16 (App Router, 정적 export) · React 19 · TypeScript · Tailwind CSS v4 · Markdown 블로그
 
 ## 개발
 
@@ -27,7 +27,9 @@ public/       정적 파일 (이미지, ads.txt 등)
 src/app/      페이지 (홈, 글 상세, About, 404, sitemap, robots)
 src/components/  UI 컴포넌트 (ui/ 는 공통 컴포넌트)
 src/lib/      글 파싱 등 유틸리티
-cowork/       기획서(prd)와 디자인 시안/명세(design)
+content/      About·홈 데이터와 태그·시리즈(YAML, 빌드 때 검증)
+cowork/       기획서(prd), 디자인 시안/명세(design), 개발 진행 기록(develop)
+.claude/rules 에이전트가 매번 지키는 규칙과 함정
 DESIGN.md     디자인 시스템 (UI 작업 전에 확인)
 ```
 

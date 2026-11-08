@@ -18,5 +18,5 @@ paths:
 ## 구현 전에 시안과 대조
 
 - 구현 전에 최종 시안의 마크업·CSS(`cowork/design/site/*.html`, `cowork/design/system/components.css`)와 해당 영역의 최신 디자인 답변(`cowork/design/`의 최신 번호 문서)을 대조한다. 안 하면 PR 후에 시안과 어긋난 곳이 나온다(PR-11에서 겪음: 아이콘·`warning` 라벨·`$ ` 프롬프트 분리·표 흐림 방향).
-- 시안과 다르게 구현한 곳은 숨기지 않고 `cowork/develop/STATUS.md`의 "시안 대비 차이"에 적는다.
+- 시안과 다르게 구현한 곳은 숨기지 않고 PR 본문과 `cowork/develop/STATUS.md`의 "세션 기록"에 적고, 디자인이 판단할 것은 `REQUESTS.md`에 질문으로 남긴다.
 - `cowork/design/README.md`의 일부 문구가 뒤처질 수 있다. 의심되면 현재 PRD와 `cowork/design/`의 최신 번호 문서를 기준으로 본다.
