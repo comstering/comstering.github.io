@@ -1,6 +1,6 @@
 # cowork/design
 
-디자인 담당(Claude, Cowork)의 작업 공간. 기획서(PRD)를 사용자가 보기 편한 화면으로 옮기기 위한 분석, 제안, 시안을 여기서 관리한다.
+디자인 담당(Claude Code)의 작업 공간. 기획서(PRD)를 사용자가 보기 편한 화면으로 옮기기 위한 분석, 제안, 시안을 여기서 관리한다.
 
 ## 문서 관계
 
@@ -60,8 +60,6 @@
 
 ## 작업 규칙
 
-- 파일명은 `NN-주제.md`. 시안은 `site/<page>.html`이고, 모든 시안은 `system/`의 토큰과 컴포넌트만 쓴다.
-- PRD 기능 ID(F-PO-03 등)와 문제 ID(P1 등)를 그대로 인용해 추적 가능하게 한다.
-- DESIGN.md에 반영된 항목은 해당 문서에 `✅ 반영됨 (날짜)` 표시.
+[`.claude/rules/design-docs.md`](../../.claude/rules/design-docs.md)에 있다(번호 문서, 시안, `✅ 반영됨` 표시, 인용 규칙). 커밋·PR 시점은 [commit-and-pr.md](../../.claude/rules/commit-and-pr.md).
 
-_최종 갱신: 2026-11-07 (v1.4 확정, Phase 2 시안 확정, 개발 PR-18~22·파비콘 검토 37번. 현재 상태는 STATUS.md)_
+_최종 갱신: 2026-11-08 (작업 규칙을 `.claude/rules/`로 이동. v1.4 확정, Phase 2 시안 확정, 개발 PR-18~22·파비콘 검토 37번. 현재 상태는 STATUS.md)_
